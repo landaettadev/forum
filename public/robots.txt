@@ -1,0 +1,21 @@
+# robots.txt for TransForo
+
+# Allow all search engines
+User-agent: *
+Allow: /
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /mi-cuenta/
+Disallow: /mensajes/
+Disallow: /nuevo-hilo/
+Disallow: /api/
+
+# Disallow login/register pages from indexing
+Disallow: /login
+Disallow: /registro
+Disallow: /recuperar-contrasena
+Disallow: /verificacion
+
+# Sitemap location
+Sitemap: https://transforo.com/sitemap.xml

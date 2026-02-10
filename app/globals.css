@@ -1,0 +1,156 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Shadcn UI variables - Light Theme */
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    --primary: 271 81% 56%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 214 32% 91%;
+    --secondary-foreground: 222 47% 11%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 271 81% 56%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 271 81% 56%;
+    --radius: 0.5rem;
+
+    /* Forum Custom Variables - Elegant Light Theme */
+    --forum-bg: 210 40% 98%;
+    --forum-surface: 0 0% 100%;
+    --forum-surface-alt: 210 40% 98%;
+    --forum-surface-hover: 210 40% 96%;
+    --forum-border: 214 32% 91%;
+    --forum-text-primary: 222 47% 11%;
+    --forum-text-secondary: 215 25% 27%;
+    --forum-text-muted: 215 16% 47%;
+    --forum-link: 217 91% 60%;
+    --forum-link-hover: 217 91% 50%;
+    --forum-link-visited: 271 76% 53%;
+    --forum-accent: 271 81% 56%;
+    --forum-accent-hover: 271 81% 46%;
+    --forum-accent-muted: 271 81% 56% / 0.12;
+    --forum-online: 142 71% 45%;
+    --forum-mod: 24 95% 53%;
+    --forum-admin: 0 84% 60%;
+    --forum-vip: 45 93% 47%;
+    --forum-verified: 199 89% 48%;
+  }
+
+  .dark {
+    /* Shadcn UI variables - Dark Theme */
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
+    --card: 217 33% 17%;
+    --card-foreground: 210 40% 98%;
+    --popover: 217 33% 17%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 271 81% 56%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 217 19% 27%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217 19% 27%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 271 81% 56%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217 19% 27%;
+    --input: 217 19% 27%;
+    --ring: 271 81% 56%;
+
+    /* Forum Custom Variables - Elegant Dark Theme */
+    --forum-bg: 222 47% 11%;
+    --forum-surface: 217 33% 17%;
+    --forum-surface-alt: 217 19% 27%;
+    --forum-surface-hover: 217 19% 32%;
+    --forum-border: 217 19% 27%;
+    --forum-text-primary: 210 40% 98%;
+    --forum-text-secondary: 215 20% 65%;
+    --forum-text-muted: 215 16% 47%;
+    --forum-link: 217 91% 60%;
+    --forum-link-hover: 217 91% 70%;
+    --forum-link-visited: 271 76% 70%;
+    --forum-accent: 271 81% 56%;
+    --forum-accent-hover: 271 81% 66%;
+    --forum-accent-muted: 271 81% 56% / 0.15;
+    --forum-online: 142 71% 45%;
+    --forum-mod: 24 95% 53%;
+    --forum-admin: 0 84% 60%;
+    --forum-vip: 45 93% 47%;
+    --forum-verified: 199 89% 48%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-[hsl(var(--forum-bg))] text-[hsl(var(--forum-text-primary))] antialiased;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Helvetica Neue', Arial, sans-serif;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+  }
+
+  a {
+    @apply text-[hsl(var(--forum-link))] hover:text-[hsl(var(--forum-link-hover))] transition-all duration-200;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply tracking-tight;
+  }
+}
+
+@layer components {
+  .forum-surface {
+    @apply bg-[hsl(var(--forum-surface))] border border-[hsl(var(--forum-border))] rounded;
+  }
+
+  .forum-surface-alt {
+    @apply bg-[hsl(var(--forum-surface-alt))];
+  }
+
+  .forum-text-muted {
+    @apply text-[hsl(var(--forum-text-muted))];
+  }
+
+  .forum-text-secondary {
+    @apply text-[hsl(var(--forum-text-secondary))];
+  }
+
+  .badge-admin {
+    @apply bg-[hsl(var(--forum-admin))] text-white text-xs px-2 py-0.5 rounded font-semibold;
+  }
+
+  .badge-mod {
+    @apply bg-[hsl(var(--forum-mod))] text-white text-xs px-2 py-0.5 rounded font-semibold;
+  }
+
+  .badge-vip {
+    @apply bg-[hsl(var(--forum-vip))] text-white text-xs px-2 py-0.5 rounded font-semibold;
+  }
+
+  .badge-verified {
+    @apply bg-[hsl(var(--forum-verified))] text-white text-xs px-2 py-0.5 rounded font-semibold;
+  }
+
+  .online-indicator {
+    @apply w-2 h-2 rounded-full bg-[hsl(var(--forum-online))];
+  }
+}

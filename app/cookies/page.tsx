@@ -1,0 +1,17 @@
+import { Header } from '@/components/layout/header';
+import { Footer } from '@/components/layout/footer';
+import { CookiesContent } from '@/components/pages/cookies-content';
+
+export const metadata = {
+  title: 'Cookies - TransForo',
+};
+
+export default function CookiesPage() {
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Header />
+      <CookiesContent />
+      <Footer />
+    </div>
+  );
+}

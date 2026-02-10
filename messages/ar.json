@@ -1,0 +1,2251 @@
+{
+  "badges": {
+    "newbie": "مبتدئ",
+    "active": "نشط",
+    "veteran": "محنك",
+    "legend": "أسطورة",
+    "admin": "مدير",
+    "moderator": "مشرف",
+    "verified": "موثق",
+    "contributions": "مساهمات"
+  },
+  "moderation": {
+    "title": "Moderation",
+    "history": "Moderation History",
+    "suspensions": "Suspensions",
+    "ipBans": "IP Bans",
+    "action": "Action",
+    "reason": "السبب *",
+    "date": "Date",
+    "moderator": "Moderator",
+    "targetUser": "Target User",
+    "details": "Details",
+    "actions": {
+      "warn": "Warning",
+      "delete_post": "Delete post",
+      "delete_thread": "Delete thread",
+      "edit_post": "Edit post",
+      "edit_thread": "Edit thread",
+      "lock_thread": "Lock thread",
+      "unlock_thread": "Unlock thread",
+      "pin_thread": "Pin thread",
+      "unpin_thread": "Unpin thread",
+      "ban": "Ban",
+      "unban": "Unban",
+      "suspend": "Suspend",
+      "unsuspend": "Unsuspend",
+      "ip_ban": "IP Ban",
+      "ip_unban": "IP Unban",
+      "verify": "Verify",
+      "unverify": "Unverify",
+      "promote": "Promote",
+      "demote": "Demote",
+      "delete_user": "Delete user"
+    },
+    "suspension": {
+      "title": "Suspend User",
+      "permanent": "Permanent",
+      "temporary": "Temporary",
+      "duration": "Duration",
+      "hours": "Hours",
+      "days": "Days",
+      "weeks": "Weeks",
+      "months": "Months",
+      "startsAt": "Starts at",
+      "expiresAt": "Expires at",
+      "liftSuspension": "Lift suspension",
+      "userSuspended": "User suspended",
+      "suspendedUntil": "Suspended until"
+    },
+    "ipBan": {
+      "title": "Ban IP",
+      "ipAddress": "IP Address",
+      "banIp": "Ban IP",
+      "unbanIp": "Unban IP",
+      "permanent": "Permanent",
+      "temporary": "Temporary",
+      "activeBans": "Active bans",
+      "expiredBans": "Expired bans"
+    },
+    "noRecords": "No moderation records",
+    "confirmAction": "تأكيد الإجراء",
+    "warnings": {
+      "title": "Warnings",
+      "newWarning": "New Warning",
+      "reason": "Reason",
+      "description": "Description",
+      "points": "Points",
+      "active": "Active",
+      "expired": "Expired",
+      "expiresAt": "Expires at",
+      "issuedBy": "Issued by",
+      "noWarnings": "No warnings"
+    },
+    "filters": {
+      "title": "Content Filters",
+      "newFilter": "New Filter",
+      "word": "Word",
+      "url": "URL",
+      "phrase": "Phrase",
+      "pattern": "Pattern",
+      "replacement": "Replacement",
+      "regex": "Regular expression",
+      "active": "Active",
+      "inactive": "Inactive"
+    },
+    "reports": {
+      "title": "Reports",
+      "pending": "Pending",
+      "reviewing": "Reviewing",
+      "resolved": "Resolved",
+      "dismissed": "Dismissed",
+      "priority": "Priority",
+      "category": "Category",
+      "assignToMe": "Assign to me",
+      "resolve": "Resolve",
+      "dismiss": "Dismiss"
+    },
+    "roles": {
+      "superMod": "Super Moderator",
+      "basicMod": "Moderator",
+      "countryMod": "Country Moderator",
+      "user": "User"
+    },
+    "superBan": {
+      "title": "Super Ban",
+      "warning": "This action will permanently delete the user and all their content",
+      "confirm": "Are you absolutely sure?"
+    },
+    "deletePost": "حذف المنشور",
+    "deleteThread": "حذف الموضوع",
+    "lockThread": "قفل الموضوع",
+    "unlockThread": "فتح الموضوع",
+    "suspendUser": "تعليق المستخدم",
+    "prohibitLinks": "حظر الروابط",
+    "banPermanently": "حظر دائم",
+    "deleteAllContent": "حذف كل المحتوى",
+    "postDeleted": "تم حذف المنشور",
+    "postDeleteError": "خطأ في حذف المنشور",
+    "threadDeleted": "تم حذف الموضوع",
+    "threadDeleteError": "خطأ في حذف الموضوع",
+    "threadLocked": "تم قفل الموضوع",
+    "threadUnlocked": "تم فتح الموضوع",
+    "threadModError": "خطأ في تعديل الموضوع",
+    "provideReason": "يجب تقديم سبب",
+    "userSuspended": "تم تعليق المستخدم لمدة {days} يوم",
+    "suspendError": "خطأ في التعليق",
+    "adminOnlyBan": "فقط المسؤولون يمكنهم الحظر",
+    "userBanned": "تم حظر المستخدم دائماً",
+    "banError": "خطأ في الحظر",
+    "adminOnlyDelete": "فقط المسؤولون يمكنهم حذف كل المحتوى",
+    "allContentDeleted": "تم حذف كل المحتوى",
+    "linksAllowed": "يمكن للمستخدم نشر الروابط",
+    "linksForbidden": "الروابط محظورة لهذا المستخدم",
+    "permissionError": "خطأ في تعديل الأذونات",
+    "suspendTitle": "تعليق المستخدم",
+    "suspendDesc": "لن يتمكن المستخدم من الوصول للمنتدى خلال فترة التعليق.",
+    "durationDays": "المدة (أيام)",
+    "reasonPlaceholder": "اشرح السبب...",
+    "cancel": "إلغاء",
+    "processing": "جاري المعالجة...",
+    "suspend": "تعليق",
+    "confirmDelete": "تأكيد الحذف",
+    "confirmDeleteDesc": "لا يمكن التراجع عن هذا الإجراء. هل أنت متأكد؟",
+    "reasonOptional": "السبب (اختياري)",
+    "deleteReasonPlaceholder": "سبب الحذف..."
+  },
+  "ratings": {
+    "likes": "Likes",
+    "dislikes": "Dislikes",
+    "reputation": "Reputation",
+    "rate": "Rate"
+  },
+  "customBadges": {
+    "title": "الشارات",
+    "newBadge": "شارة جديدة",
+    "assignBadge": "تعيين شارة",
+    "manageBadges": "إدارة الشارات",
+    "positive": "إيجابي",
+    "negative": "سلبي",
+    "neutral": "محايد",
+    "special": "خاص",
+    "assignedBy": "معين بواسطة",
+    "reason": "السبب"
+  },
+  "autoBadges": {
+    "email_verified": {
+      "name": "بريد إلكتروني موثق",
+      "description": "تم التحقق من عنوان البريد الإلكتروني"
+    },
+    "admin": {
+      "name": "مدير",
+      "description": "مدير المنتدى مع صلاحيات كاملة"
+    },
+    "super_mod": {
+      "name": "مشرف عام",
+      "description": "مشرف بصلاحيات متقدمة"
+    },
+    "moderator": {
+      "name": "مشرف",
+      "description": "مشرف المجتمع"
+    },
+    "verified_account": {
+      "name": "حساب موثق",
+      "description": "تم التحقق من الهوية بواسطة الفريق"
+    },
+    "vip": {
+      "name": "VIP",
+      "description": "عضو VIP مع مزايا حصرية"
+    },
+    "escort": {
+      "name": "مرافق",
+      "description": "ملف مرافق"
+    },
+    "escort_verified": {
+      "name": "مرافق موثق",
+      "description": "مرافق مع هوية موثقة"
+    },
+    "escort_top_rated": {
+      "name": "مرافق متميز",
+      "description": "مرافق بسمعة ممتازة (90%+)"
+    },
+    "trusted": {
+      "name": "موثوق",
+      "description": "مستخدم ذو سمعة جيدة (+50 إعجاب)"
+    },
+    "highly_rated": {
+      "name": "عالي التقييم",
+      "description": "سمعة ممتازة (+100 إعجاب)"
+    },
+    "legendary": {
+      "name": "أسطوري",
+      "description": "سمعة أسطورية (+500 إعجاب)"
+    },
+    "active_poster": {
+      "name": "نشط",
+      "description": "أكثر من 50 منشوراً"
+    },
+    "prolific_writer": {
+      "name": "كاتب غزير",
+      "description": "أكثر من 200 منشور"
+    },
+    "thread_creator": {
+      "name": "منشئ مواضيع",
+      "description": "أنشأ أكثر من 20 موضوعاً"
+    },
+    "veteran": {
+      "name": "محنك",
+      "description": "عضو لأكثر من سنة"
+    },
+    "founding_member": {
+      "name": "عضو مؤسس",
+      "description": "من أوائل أعضاء المنتدى"
+    },
+    "helpful": {
+      "name": "مفيد",
+      "description": "حصل على أكثر من 100 شكر"
+    },
+    "community_pillar": {
+      "name": "ركيزة المجتمع",
+      "description": "أكثر من 1000 نقطة مجمعة"
+    }
+  },
+  "common": {
+    "home": "الرئيسية",
+    "search": "بحث",
+    "login": "تسجيل الدخول",
+    "register": "تسجيل",
+    "logout": "تسجيل الخروج",
+    "myAccount": "حسابي",
+    "messages": "الرسائل",
+    "favorites": "المفضلة",
+    "alerts": "التنبيهات",
+    "admin": "المدير",
+    "settings": "الإعدادات",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "loading": "جاري التحميل...",
+    "error": "خطأ",
+    "success": "نجاح",
+    "online": "متصل",
+    "offline": "غير متصل",
+    "deleteImage": "حذف الصورة",
+    "deleting": "جاري الحذف...",
+    "sending": "جاري الإرسال...",
+    "sendReport": "إرسال البلاغ",
+    "publishing": "جاري النشر...",
+    "publishReply": "نشر الرد",
+    "saved": "محفوظ",
+    "searchConversations": "البحث في المحادثات...",
+    "delete": "حذف",
+    "maxImagesError": "الحد الأقصى {max} صور",
+    "invalidFile": "ملف غير صالح",
+    "imageUploaded": "تم رفع الصورة",
+    "imageUploadError": "خطأ في الرفع",
+    "unexpectedUploadError": "خطأ غير متوقع",
+    "avatarUpdated": "تم تحديث الصورة",
+    "avatarUploadError": "خطأ في الصورة",
+    "allNotificationsRead": "تم قراءة الكل",
+    "notificationDeleted": "تم حذف الإشعار",
+    "messageSendError": "خطأ في الإرسال",
+    "viewOriginal": "عرض الأصلي",
+    "deletedUser": "مستخدم محذوف",
+    "editNumber": "تعديل #{num}",
+    "editReason": "السبب: {reason}",
+    "collapse": "طي",
+    "expand": "توسيع",
+    "notifications": "الإشعارات",
+    "noNotifications": "لا توجد إشعارات",
+    "markAllAsRead": "تحديد الكل",
+    "markAsRead": "تحديد كمقروء",
+    "viewAllNotifications": "عرض الكل",
+    "noConversations": "لا توجد محادثات",
+    "startNew": "بدء جديدة",
+    "previous": "السابق",
+    "next": "التالي",
+    "backToPreviousPage": "العودة إلى الصفحة السابقة"
+  },
+  "home": {
+    "description": "مجتمع للمراجعات والتجارب مع خدمات المرافقة. شارك آراءك الصادقة واعثر على أفضل الخيارات في مدينتك.",
+    "noCountriesAvailable": "لا توجد بلدان متاحة",
+    "migrationRequired": "مطلوب ترحيل قاعدة البيانات",
+    "runCommand": "نفذ الأمر التالي:",
+    "orCopy": "أو انسخ محتوى",
+    "yourCountry": "بلدك"
+  },
+  "account": {
+    "title": "حسابي",
+    "profileTab": "الملف الشخصي",
+    "threadsTab": "مواضيعي",
+    "settingsTab": "الإعدادات",
+    "editProfile": "تعديل الملف",
+    "updateInfo": "حدّث بياناتك",
+    "username": "اسم المستخدم",
+    "usernameNoChange": "لا يمكن تغيير اسم المستخدم",
+    "avatarUrl": "رابط الصورة الرمزية",
+    "bio": "نبذة",
+    "bioPlaceholder": "أخبرنا عن نفسك...",
+    "signature": "التوقيع",
+    "signaturePlaceholder": "سيظهر توقيعك في نهاية مشاركاتك...",
+    "country": "البلد",
+    "city": "المدينة",
+    "countryPlaceholder": "السعودية",
+    "cityPlaceholder": "الرياض",
+    "saveChanges": "حفظ التغييرات",
+    "saving": "جاري الحفظ...",
+    "updateSuccess": "تم تحديث الملف الشخصي بنجاح",
+    "updateError": "خطأ في تحديث الملف الشخصي",
+    "myThreads": "مواضيعي",
+    "threadsCreated": "المواضيع المنشأة",
+    "noThreadsCreated": "لم تنشئ مواضيع بعد",
+    "createFirstThread": "أنشئ أول موضوع",
+    "replies": "ردود",
+    "views": "مشاهدات",
+    "inForum": "في",
+    "settings": "الإعدادات",
+    "accountSettings": "إعدادات الحساب",
+    "notifications": "الإشعارات",
+    "notificationsDesc": "إدارة تفضيلات الإشعارات",
+    "privacy": "الخصوصية",
+    "privacyDesc": "تحكم في من يرى ملفك",
+    "verification": "التحقق",
+    "verificationDesc": "تحقق من حسابك",
+    "requestVerification": "طلب التحقق"
+  },
+  "nav": {
+    "forums": "المنتديات",
+    "rules": "القواعد",
+    "vip": "VIP",
+    "verification": "التحقق",
+    "newThread": "موضوع جديد",
+    "ads": "الإعلانات"
+  },
+  "auth": {
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "username": "اسم المستخدم",
+    "usernamePlaceholder": "اسم المستخدم الخاص بك",
+    "emailPlaceholder": "you@email.com",
+    "forgotPassword": "نسيت كلمة المرور؟",
+    "noAccount": "ليس لديك حساب؟",
+    "hasAccount": "لديك حساب بالفعل؟",
+    "loginTitle": "تسجيل الدخول",
+    "loginDescription": "سجل الدخول إلى حسابك للمشاركة في المنتدى",
+    "registerTitle": "إنشاء حساب",
+    "registerDescription": "انضم إلى مجتمع TransForo",
+    "loginButton": "تسجيل الدخول",
+    "loginButtonLoading": "جاري تسجيل الدخول...",
+    "registerButton": "إنشاء حساب",
+    "registerButtonLoading": "جاري إنشاء الحساب...",
+    "loginSuccess": "مرحبًا بعودتك",
+    "registerSuccess": "تم إنشاء الحساب بنجاح",
+    "registerSuccessDesc": "مرحبًا بك في TransForo",
+    "loginError": "خطأ في تسجيل الدخول",
+    "registerError": "خطأ في التسجيل",
+    "unexpectedError": "خطأ غير متوقع",
+    "passwordsMismatch": "كلمات المرور غير متطابقة",
+    "passwordTooShort": "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل",
+    "mustAcceptRules": "يجب قبول قواعد المنتدى",
+    "ageConfirmation": "أبلغ من العمر 18 عامًا وأوافق على",
+    "forumRules": "قواعد المنتدى",
+    "registerHere": "سجل هنا",
+    "loginHere": "سجل الدخول هنا"
+  },
+  "forum": {
+    "title": "المنتديات",
+    "description": "استكشف منتديات المجتمع",
+    "region": "المنطقة",
+    "country": "البلد",
+    "subforums": "منتديات فرعية",
+    "threads": "المواضيع",
+    "posts": "المشاركات",
+    "lastPost": "آخر مشاركة",
+    "newThread": "موضوع جديد",
+    "reply": "رد",
+    "views": "المشاهدات",
+    "replies": "الردود",
+    "by": "بواسطة",
+    "in": "في",
+    "postedIn": "نشر في",
+    "startedBy": "بدأ بواسطة",
+    "noThreads": "لا توجد مواضيع بعد",
+    "beFirst": "كن أول من يبدأ موضوعاً",
+    "backToForum": "العودة للمنتدى",
+    "createThread": "إنشاء موضوع",
+    "threadTitle": "عنوان الموضوع",
+    "threadContent": "المحتوى",
+    "submit": "نشر",
+    "cancel": "إلغاء",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "quote": "اقتباس",
+    "report": "إبلاغ",
+    "sticky": "مثبت",
+    "locked": "مغلق",
+    "pinned": "مثبت",
+    "categories": "التصنيفات",
+    "noSubforums": "لا توجد منتديات فرعية في هذا التصنيف",
+    "private": "خاص",
+    "forumsByRegion": "المنتديات حسب المنطقة",
+    "exploreForums": "استكشف المنتديات المنظمة حسب القارة والبلد والمدينة",
+    "capacityHigh": "عالية",
+    "capacityMedium": "متوسطة",
+    "noCountriesInContinent": "لا توجد دول في هذه القارة",
+    "geographicForums": "منتديات جغرافية",
+    "forumsComingSoon": "المنتديات الإقليمية ستتوفر قريباً.",
+    "runMigration": "قم بتشغيل ترحيل قاعدة البيانات لتفعيل هذه الميزة.",
+    "backToForums": "العودة للمنتديات",
+    "forumsAndCommunities": "منتديات ومجتمعات في {country}",
+    "citiesAndRegions": "المدن والمناطق",
+    "forumOf": "منتدى {name}",
+    "threadsCount": "{count} مواضيع",
+    "noRegionsAvailable": "لا توجد مناطق متاحة",
+    "noRegionsConfigured": "لا توجد مدن أو مناطق مكونة لهذا البلد بعد.",
+    "generalForumsOf": "منتديات عامة في {country}",
+    "recentThreads": "مواضيع حديثة",
+    "noThreadsYet": "لا توجد مواضيع بعد",
+    "beFirstToCreate": "كن أول من ينشئ موضوعاً في {name}",
+    "justNow": "الآن",
+    "minutesAgo": "منذ {count} دقيقة",
+    "today": "اليوم في",
+    "yesterday": "أمس في",
+    "mentionPlaceholder": "استخدم @اسم_المستخدم للإشارة",
+    "createFirstThread": "إنشاء أول موضوع",
+    "repliesCount": "{count} ردود",
+    "viewsCount": "{count} مشاهدات",
+    "regionNorthAmerica": "North America",
+    "regionLatinAmerica": "Latin America",
+    "regionWesternEurope": "Western Europe",
+    "regionEurope": "Europe",
+    "regionAsia": "Asia",
+    "regionOceania": "Oceania",
+    "regionAfrica": "Africa",
+    "regionMiddleEast": "Middle East",
+    "tagReview": "مراجعة",
+    "tagAsk": "سؤال",
+    "tagGeneral": "عام",
+    "selectTag": "اختر وسماً",
+    "tagRequired": "يجب اختيار وسم",
+    "subscribe": "الاشتراك في الموضوع",
+    "unsubscribe": "إلغاء الاشتراك",
+    "bookmarked": "محفوظ",
+    "bookmarkSave": "حفظ",
+    "publishing": "جاري النشر...",
+    "publishReply": "نشر الرد",
+    "replyToThread": "الرد على الموضوع",
+    "replyPlaceholder": "اكتب ردك... استخدم @اسم المستخدم للإشارة",
+    "replyingAs": "الرد باسم",
+    "mustLoginToReply": "يجب تسجيل الدخول للرد على هذا الموضوع",
+    "mustLoginToReplyShort": "يجب تسجيل الدخول للرد",
+    "replyTooShort": "يجب أن يكون الرد 3 أحرف على الأقل",
+    "replySuccess": "تم نشر الرد",
+    "replyError": "خطأ في نشر الرد",
+    "loginButton": "تسجيل الدخول",
+    "registerButton": "التسجيل",
+    "addedToFavorites": "تمت الإضافة إلى المفضلة",
+    "removedFromFavorites": "تمت الإزالة من المفضلة",
+    "mustLoginToBookmark": "يجب تسجيل الدخول لحفظ المفضلة",
+    "bookmarkError": "خطأ في حفظ المفضلة",
+    "removeFromFavorites": "إزالة من المفضلة",
+    "addToFavorites": "إضافة إلى المفضلة",
+    "mustLoginToSubscribe": "سجل الدخول للاشتراك",
+    "subscribed": "تم الاشتراك في الموضوع",
+    "unsubscribedMsg": "تم إلغاء الاشتراك",
+    "subscribeError": "خطأ في تغيير الاشتراك",
+    "subscribedLabel": "مشترك",
+    "subscribeLabel": "اشتراك",
+    "mustLoginToThank": "سجل الدخول لتقديم الشكر",
+    "cantThankOwnPost": "لا يمكنك شكر منشورك الخاص",
+    "thanksSent": "تم إرسال الشكر!",
+    "thanksError": "خطأ في الشكر",
+    "thanked": "مشكور",
+    "thanks": "شكراً",
+    "removeThanks": "إزالة الشكر",
+    "thankThisPost": "شكر هذا المنشور",
+    "mustLoginToQuote": "سجل الدخول للاقتباس",
+    "quoteAdded": "تمت إضافة الاقتباس",
+    "quoteThisPost": "اقتبس هذا المنشور",
+    "mustLoginToReact": "سجل الدخول للتفاعل",
+    "reactError": "خطأ في التفاعل",
+    "reactionLike": "إعجاب",
+    "reactionLove": "أحببته",
+    "reactionLaugh": "هاها",
+    "reactionWow": "واو",
+    "reactionSad": "حزين",
+    "reactionFire": "نار",
+    "reactionPerfect": "ممتاز",
+    "noPostsInThread": "لا توجد مشاركات في هذا الموضوع.",
+    "threadClosedNoReplies": "هذا الموضوع مغلق ولا يمكن إضافة المزيد من الردود.",
+    "subforum": "منتدى فرعي",
+    "hotTag": "ساخن",
+    "visitsCount": "مشاهدات",
+    "responsesCount": "ردود",
+    "unknownUser": "مستخدم",
+    "selectTagPlaceholder": "اختيار العلامة"
+  },
+  "thread": {
+    "createTitle": "إنشاء موضوع جديد",
+    "createDescription": "شارك محتواك مع المجتمع",
+    "titleLabel": "عنوان الموضوع",
+    "titlePlaceholder": "مثال: خدمات في دبي - متاح",
+    "contentLabel": "المحتوى",
+    "contentPlaceholder": "اكتب محتوى موضوعك...",
+    "selectForum": "اختر منتدى",
+    "forumLabel": "المنتدى",
+    "postingIn": "النشر في:",
+    "change": "تغيير",
+    "publish": "نشر الموضوع",
+    "publishing": "جاري النشر...",
+    "cancel": "إلغاء",
+    "minTitleHint": "5 أحرف كحد أدنى. استخدم عنواناً وصفياً.",
+    "minContentHint": "10 أحرف كحد أدنى. يمكنك إدراج صور بلصقها مباشرة أو باستخدام زر الصورة.",
+    "minTitle": "5 أحرف كحد أدنى",
+    "minContent": "10 أحرف كحد أدنى",
+    "nsfwLabel": "محتوى للبالغين",
+    "nsfwDescription": "حدد إذا كان يحتوي على محتوى صريح",
+    "loadingEditor": "جاري تحميل المحرر...",
+    "loginRequired": "يجب تسجيل الدخول",
+    "titleMinError": "يجب أن يحتوي العنوان على 5 أحرف على الأقل",
+    "contentMinError": "يجب أن يحتوي المحتوى على 10 أحرف على الأقل",
+    "selectForumError": "اختر منتدى فرعي",
+    "createSuccess": "تم إنشاء الموضوع بنجاح",
+    "createError": "خطأ في إنشاء الموضوع",
+    "unexpectedError": "خطأ غير متوقع",
+    "pollDescription": "أضف استطلاعاً لموضوعك"
+  },
+  "reply": {
+    "title": "Reply to thread",
+    "placeholder": "Write your reply...",
+    "submit": "Post reply",
+    "submitting": "Posting...",
+    "replyingAs": "Replying as",
+    "loginRequired": "You must login to reply to this thread",
+    "success": "Reply posted",
+    "error": "Error posting reply"
+  },
+  "profile": {
+    "bio": "السيرة الذاتية",
+    "location": "الموقع",
+    "website": "الموقع الإلكتروني",
+    "socialLinks": "الروابط الاجتماعية",
+    "joinedOn": "انضم في",
+    "profileViews": "مشاهدات الملف",
+    "posts": "المنشورات",
+    "threads": "المواضيع",
+    "thanksReceived": "شكر مستلم",
+    "thanksGiven": "شكر مرسل",
+    "editProfile": "تعديل الملف الشخصي",
+    "viewProfile": "عرض الملف الشخصي",
+    "memberSince": "عضو منذ",
+    "lastSeen": "آخر ظهور",
+    "follow": "متابعة",
+    "sendMessage": "إرسال رسالة",
+    "reactions": "التفاعلات",
+    "followers": "المتابعون",
+    "following": "يتابع",
+    "reputation": "السمعة",
+    "recentActivity": "النشاط الأخير",
+    "publications": "المنشورات",
+    "about": "حول",
+    "repliedIn": "رد في",
+    "noRecentActivity": "لا يوجد نشاط حديث",
+    "threadsCreated": "المواضيع المنشأة",
+    "in": "في",
+    "replies": "ردود",
+    "noThreadsYet": "لم ينشئ مواضيع بعد",
+    "noPosts": "لا توجد منشورات",
+    "unknown": "غير معروف",
+    "totalPosts": "إجمالي المنشورات",
+    "points": "النقاط",
+    "signature": "التوقيع",
+    "postsCount": "Posts",
+    "verified": "Verified",
+    "bioPlaceholder": "Tell us about yourself...",
+    "signaturePlaceholder": "Your signature will appear at the end of your posts...",
+    "country": "Country",
+    "city": "City",
+    "avatarUrl": "Avatar URL",
+    "saveChanges": "Save changes",
+    "saving": "Saving...",
+    "updateSuccess": "Profile updated successfully",
+    "updateError": "Error updating profile",
+    "usernameNoChange": "Username cannot be changed"
+  },
+  "messages": {
+    "title": "الرسائل الخاصة",
+    "newMessage": "رسالة جديدة",
+    "noMessages": "لا توجد رسائل بعد",
+    "noMessagesDescription": "الرسائل التي ترسلها وتستقبلها ستظهر هنا",
+    "sendPlaceholder": "اكتب رسالة...",
+    "send": "إرسال",
+    "sending": "جاري الإرسال...",
+    "loading": "جاري تحميل المحادثات...",
+    "searchConversations": "البحث في المحادثات...",
+    "searchUsers": "البحث عن مستخدمين...",
+    "searching": "جاري البحث...",
+    "noUsersFound": "لم يتم العثور على مستخدمين",
+    "selectConversation": "اختر محادثة",
+    "emptyMessageError": "لا يمكن أن تكون الرسالة فارغة",
+    "sendError": "خطأ في إرسال الرسالة",
+    "messageSent": "تم إرسال الرسالة",
+    "unexpectedError": "خطأ غير متوقع",
+    "loadingConversation": "جاري تحميل المحادثة...",
+    "noMessagesInConversation": "لا توجد رسائل في هذه المحادثة",
+    "sendFirstMessage": "أرسل الرسالة الأولى للبدء",
+    "enterToSend": "اضغط Enter للإرسال، Shift+Enter لسطر جديد"
+  },
+  "editor": {
+    "paragraph": "Paragraph",
+    "heading1": "Heading 1",
+    "heading2": "Heading 2",
+    "heading3": "Heading 3",
+    "bold": "Bold",
+    "italic": "Italic",
+    "underline": "Underline",
+    "strikethrough": "Strikethrough",
+    "list": "List",
+    "orderedList": "Ordered list",
+    "alignLeft": "Left",
+    "alignCenter": "Center",
+    "alignRight": "Right",
+    "insertLink": "Insert link",
+    "linkUrl": "Link URL",
+    "insertLinkButton": "Insert",
+    "removeLink": "Remove link",
+    "insertImage": "Insert image",
+    "imageUrl": "Image URL",
+    "insertFromUrl": "Insert from URL",
+    "uploadFromDevice": "Upload from your device",
+    "insertEmoji": "Insert emoji",
+    "quote": "Quote",
+    "codeBlock": "Code block",
+    "insertTable": "Insert table",
+    "undo": "Undo",
+    "redo": "Redo",
+    "preview": "Preview",
+    "reply": "Reply",
+    "dictate": "Dictate",
+    "attachFiles": "Attach files",
+    "placeholder": "Write your content...",
+    "loginToUpload": "You must login to upload images",
+    "uploading": "Uploading image...",
+    "uploadSuccess": "Image uploaded successfully",
+    "uploadError": "Error uploading image",
+    "minCharacters": "Minimum 10 characters. You can insert images by pasting them or using the image button.",
+    "or": "or",
+    "comingSoon": "قريباً"
+  },
+  "verification": {
+    "title": "التحقق من الحساب",
+    "description": "Verify your identity to access private areas and gain more trust",
+    "verified": "Verified Account",
+    "verifiedDescription": "Your account has been successfully verified",
+    "pending": "Verification under review",
+    "pendingDescription": "Your request is being reviewed",
+    "request": "Request verification",
+    "benefits": "فوائد التحقق",
+    "benefit1": "الوصول إلى المناطق الخاصة",
+    "benefit2": "شارة التحقق على ملفك الشخصي",
+    "benefit3": "ثقة أكبر من المجتمع",
+    "benefit4": "دعم ذو أولوية",
+    "step1": "الخطوة 1: أنشئ رمزك",
+    "step2": "الخطوة 2: التقط صورتك",
+    "step3": "الخطوة 3: ارفع صورتك",
+    "generateCode": "إنشاء رمز",
+    "copyCode": "Copy",
+    "photoUrl": "Photo URL",
+    "submitRequest": "Submit verification request",
+    "submitting": "جارٍ إرسال الطلب...",
+    "submitSuccess": "Request submitted",
+    "submitSuccessDescription": "The moderation team will review it soon",
+    "estimatedTime": "وقت المراجعة المقدر: 24-48 ساعة",
+    "breadcrumb": "التحقق",
+    "subtitle": "تحقق من هويتك للوصول إلى المناطق الخاصة والحصول على مزيد من الثقة",
+    "codeCopied": "تم نسخ الرمز",
+    "generateCodeFirst": "أنشئ رمز تحقق أولاً",
+    "enterPhotoUrl": "أدخل رابط صورة التحقق",
+    "submitError": "خطأ في إرسال الطلب",
+    "requestSent": "تم إرسال الطلب",
+    "requestSentDesc": "سيراجعه فريق الإشراف قريباً",
+    "unexpectedError": "خطأ غير متوقع",
+    "loading": "جارٍ التحميل...",
+    "accountVerified": "الحساب موثق",
+    "accountVerifiedDesc": "تم التحقق من حسابك بنجاح",
+    "fullAccess": "لديك وصول كامل لجميع مناطق المنتدى بما في ذلك الأقسام الخاصة.",
+    "inReview": "التحقق قيد المراجعة",
+    "inReviewDesc": "طلبك قيد المراجعة",
+    "inReviewInfo": "تم إرسال طلب التحقق وهو قيد المراجعة من فريق الإشراف. ستتلقى إشعاراً عند الموافقة.",
+    "verificationCode": "رمز التحقق",
+    "requestVerification": "طلب التحقق",
+    "followSteps": "اتبع هذه الخطوات للتحقق من حسابك",
+    "step1Desc": "أنشئ رمزاً فريداً يجب كتابته على ورقة مع اسم المستخدم (@{username}) وتاريخ اليوم.",
+    "yourCode": "رمز التحقق الخاص بك",
+    "copy": "نسخ",
+    "step2Desc": "التقط صورة واضحة وأنت تحمل ورقة مكتوب عليها:",
+    "yourCodeItem": "رمزك: {code}",
+    "yourUserItem": "مستخدمك: @{username}",
+    "todayDate": "تاريخ اليوم: {date}",
+    "step3Desc": "ارفع صورتك على خدمة مثل Imgur أو ImgBB والصق الرابط هنا:",
+    "photoUrlLabel": "رابط الصورة *",
+    "submitVerification": "إرسال طلب التحقق"
+  },
+  "favorites": {
+    "title": "My Favorites",
+    "description": "Threads you have saved as favorites",
+    "empty": "You have no favorites yet",
+    "emptyDesc": "Click the heart on any thread to add it to your favorites",
+    "added": "تمت الإضافة إلى المفضلة",
+    "removed": "تمت الإزالة من المفضلة",
+    "addToFavorites": "إضافة إلى المفضلة",
+    "removeFromFavorites": "إزالة من المفضلة",
+    "loginRequired": "سجل الدخول لحفظ المفضلة",
+    "error": "خطأ في حفظ المفضلة"
+  },
+  "chat": {
+    "title": "محادثة",
+    "messages": "الرسائل",
+    "noConversations": "لا توجد محادثات",
+    "backToConversations": "عودة",
+    "placeholder": "اكتب رسالة..."
+  },
+  "search": {
+    "title": "البحث في المنتدى",
+    "placeholder": "البحث في المواضيع، المشاركات، المستخدمين...",
+    "button": "بحث",
+    "searching": "جاري البحث...",
+    "all": "الكل",
+    "threads": "المواضيع",
+    "posts": "المشاركات",
+    "users": "المستخدمون",
+    "noResults": "لم يتم العثور على نتائج",
+    "tryOther": "جرّب مصطلحات بحث أخرى",
+    "resultsFor": "تم العثور على {count} نتيجة لـ \"{query}\"",
+    "enterTerm": "أدخل مصطلح البحث للبدء",
+    "by": "بواسطة",
+    "inForum": "في",
+    "replies": "ردود",
+    "verified": "موثقة"
+  },
+  "admin": {
+    "title": "Admin Panel",
+    "description": "Forum management and moderation",
+    "totalUsers": "Total Users",
+    "pendingReports": "Pending Reports",
+    "pendingVerifications": "Pending Verifications",
+    "verifications": "Verifications",
+    "reports": "Reports",
+    "stats": "Statistics",
+    "approve": "Approve",
+    "reject": "Reject",
+    "resolve": "Resolve",
+    "noPendingVerifications": "No pending requests",
+    "noPendingReports": "No pending reports",
+    "approveSuccess": "Verification approved",
+    "rejectSuccess": "Verification rejected",
+    "resolveSuccess": "Report resolved",
+    "noPermission": "You don't have permission to access the admin panel",
+    "errorApprovingVerification": "Error approving verification",
+    "errorUpdatingProfile": "Error updating profile",
+    "errorRejectingVerification": "Error rejecting verification",
+    "errorResolvingReport": "Error resolving report",
+    "userManagement": "User Management",
+    "userManagementDesc": "Manage users, roles, suspensions and IPs",
+    "geoForumManagement": "Geographic Forum Management",
+    "geoForumManagementDesc": "Manage countries, cities and subforums",
+    "moderationHistory": "Moderation History",
+    "moderationHistoryDesc": "View moderation actions taken",
+    "warningSystem": "Warning System",
+    "warningSystemDesc": "Manage warnings and user points",
+    "contentFilters": "Content Filters",
+    "contentFiltersDesc": "Block prohibited words and URLs",
+    "reportCenter": "Report Center",
+    "reportCenterDesc": "View and manage user reports",
+    "suspensions": "Suspensions",
+    "suspensionsDesc": "Manage suspensions and bans",
+    "badges": "Badges",
+    "badgesDesc": "Manage custom badges and escorts",
+    "verificationRequests": "Verification Requests",
+    "verificationRequestsDesc": "Review and approve verification requests",
+    "loading": "Loading...",
+    "submitted": "Submitted",
+    "viewPhoto": "View photo",
+    "reviewCommunityReports": "Review community reports",
+    "reportNum": "Report",
+    "reportedBy": "Reported by",
+    "reason": "Reason",
+    "generalStats": "General Statistics",
+    "forumMetrics": "Forum metrics"
+  },
+  "sidebar": {
+    "forumStats": "إحصائيات المنتدى",
+    "totalUsers": "المستخدمون المسجلون",
+    "totalThreads": "المواضيع المنشأة",
+    "totalPosts": "المشاركات المنشورة",
+    "onlineNow": "متصل الآن",
+    "noUsersOnline": "لا يوجد مستخدمون متصلون",
+    "staffOnline": "الطاقم متصل",
+    "recentActivity": "النشاط الأخير",
+    "recentActivityDesc": "ستظهر آخر أنشطة المنتدى هنا",
+    "usefulLinks": "روابط مفيدة",
+    "rules": "قواعد المنتدى",
+    "verification": "التحقق",
+    "advancedSearch": "بحث متقدم",
+    "faq": "الأسئلة الشائعة / المساعدة",
+    "contact": "اتصل بنا",
+    "reputation": "السمعة والشارات",
+    "onlineUsersTitle": "المستخدمون المتصلون",
+    "noUsersConnected": "لا يوجد مستخدمون متصلون",
+    "topReputation": "أعلى سمعة",
+    "noReputationData": "لا توجد بيانات سمعة",
+    "adminRole": "مدير",
+    "modRole": "مشرف"
+  },
+  "footer": {
+    "description": "مجتمع مهني لمشاركة التجارب والتواصل.",
+    "viewAllForums": "عرض جميع المنتديات",
+    "gallery": "معرض الوسائط",
+    "legal": "قانوني",
+    "rights": "جميع الحقوق محفوظة."
+  },
+  "time": {
+    "ago": "منذ"
+  },
+  "language": {
+    "select": "Language",
+    "es": "Español",
+    "en": "English",
+    "pt": "Português",
+    "fr": "Français"
+  },
+  "notifications": {
+    "title": "الإشعارات",
+    "markAllRead": "تحديد الكل كمقروء",
+    "noNotifications": "لا توجد إشعارات",
+    "viewAll": "عرض الكل",
+    "unread": "{count} غير مقروءة",
+    "types": {
+      "mention": "أشار إليك",
+      "reply": "رد",
+      "quote": "اقتبسك",
+      "thanks": "شكر منشورك",
+      "reaction": "تفاعل مع منشورك",
+      "new_badge": "شارة جديدة",
+      "reputation": "تغيير السمعة",
+      "private_message": "رسالة جديدة",
+      "thread_reply": "رد جديد",
+      "follow": "يتابعك"
+    },
+    "loginRequired": "تسجيل الدخول",
+    "loginRequiredDesc": "يجب تسجيل الدخول لعرض إشعاراتك",
+    "loginButton": "تسجيل الدخول",
+    "markAll": "تحديد الكل",
+    "all": "الكل",
+    "unreadFilter": "غير مقروءة",
+    "allMarkedRead": "تم تحديد الكل كمقروءة",
+    "deleted": "تم حذف الإشعار",
+    "markAsRead": "تحديد كمقروء",
+    "deleteNotif": "حذف",
+    "delete": "Delete",
+    "newReply": "New reply to your thread",
+    "newMention": "You were mentioned",
+    "newFollower": "New follower",
+    "newMessage": "New private message",
+    "thanks": "Thanks received"
+  },
+  "legal": {
+    "terms": "الشروط والأحكام",
+    "privacy": "سياسة الخصوصية",
+    "cookies": "سياسة ملفات تعريف الارتباط",
+    "cookieBannerTitle": "🍪 This site uses cookies",
+    "cookieBannerDescription": "We use essential cookies for site functionality and optional cookies to improve your experience. By clicking \"Accept all\", you consent to the use of all cookies. You can manage your preferences at any time.",
+    "acceptAll": "Accept all",
+    "acceptEssential": "Essential only",
+    "learnMore": "Learn more",
+    "privacyPolicy": "Privacy Policy"
+  },
+  "errors": {
+    "notFound": "Page not found",
+    "notFoundDescription": "The page you're looking for doesn't exist or has been moved",
+    "serverError": "Server error",
+    "serverErrorDescription": "Something went wrong. Please try again",
+    "goHome": "Go home",
+    "goBack": "Go back",
+    "tryAgain": "حاول مرة أخرى",
+    "contactSupport": "اتصل بالدعم",
+    "somethingWentWrong": "حدث خطأ ما!",
+    "unexpectedError": "حدث خطأ غير متوقع. تم إبلاغ فريقنا ونعمل على إصلاحه.",
+    "errorId": "معرف الخطأ",
+    "backHome": "العودة للرئيسية",
+    "needHelp": "تحتاج مساعدة؟",
+    "problemPersists": "إذا استمرت المشكلة:",
+    "step1": "حاول إعادة تحميل الصفحة أو مسح ذاكرة التخزين المؤقت للمتصفح",
+    "step2": "تحقق من اتصالك بالإنترنت",
+    "includeErrorId": "وقم بتضمين معرف الخطأ إذا كان متاحاً",
+    "devErrorDetails": "تفاصيل الخطأ (مرئي فقط في وضع التطوير)"
+  },
+  "gallery": {
+    "title": "Multimedia Gallery",
+    "description": "Photos and videos shared by the community",
+    "noImages": "No images yet",
+    "noImagesDesc": "Images shared in posts will appear here",
+    "viewsCount": "{count} مشاهدات"
+  },
+  "contact": {
+    "title": "اتصل بنا",
+    "description": "Get in touch with us",
+    "emailLabel": "Email",
+    "responseTime": "وقت الاستجابة",
+    "responseTimeValue": "24-48 ساعة عمل",
+    "prioritySupport": "دعم أولوي",
+    "prioritySupportDesc": "للمستخدمين المميزين والموثقين",
+    "sendMessage": "أرسل لنا رسالة",
+    "sendMessageDesc": "Fill out the form and we'll respond as soon as possible",
+    "name": "الاسم",
+    "email": "البريد الإلكتروني",
+    "subject": "الموضوع",
+    "message": "الرسالة",
+    "send": "Send message",
+    "sending": "جاري الإرسال...",
+    "success": "Message sent successfully",
+    "error": "Error sending message",
+    "beforeContact": "قبل الاتصال بنا",
+    "beforeContactDesc": "We recommend checking our FAQ section where you can find answers to the most common questions.",
+    "moderationNote": "إذا كان استفسارك يتعلق بالإشراف أو البلاغات، استخدم نظام البلاغات المدمج في المنتدى للحصول على رد أسرع.",
+    "queryTypes": "أنواع الاستفسارات",
+    "technicalProblems": "Technical problems with the account",
+    "verificationQueries": "Verification inquiries",
+    "suggestionsImprovements": "Suggestions and improvements",
+    "collaborationsAdvertising": "Collaborations and advertising",
+    "dataDeleteRequests": "Data deletion requests",
+    "subtitle": "هل لديك سؤال أو اقتراح؟ نحن هنا للمساعدة",
+    "formDesc": "أكمل النموذج وسنرد عليك في أقرب وقت",
+    "sendBtn": "إرسال الرسالة",
+    "messageSent": "تم إرسال الرسالة",
+    "messageSentDesc": "سنرد عليك في أقرب وقت",
+    "beforeContactDesc1": "ننصحك بمراجعة قسم",
+    "faq": "الأسئلة الشائعة",
+    "beforeContactDesc2": "حيث يمكنك العثور على إجابات للأسئلة الأكثر شيوعاً.",
+    "queryType1": "مشاكل تقنية في الحساب",
+    "queryType2": "استفسارات التحقق",
+    "queryType3": "اقتراحات وتحسينات",
+    "queryType4": "تعاون وإعلانات",
+    "queryType5": "طلبات حذف البيانات"
+  },
+  "rules": {
+    "title": "القواعد وشروط الاستخدام",
+    "subtitle": "هذا مساحة مخصصة للبالغين فقط. بالدخول، تؤكد أنك تجاوزت 18 عامًا وتوافق على الالتزام بالقواعد التالية المصممة لضمان بيئة آمنة ومحترمة ومهنية.",
+    "lastUpdated": "آخر تحديث",
+    "respect": {
+      "title": "الاحترام والتعايش",
+      "description": "نتعامل مع جميع الأشخاص بكرامة واحترام. أي شكل من أشكال التمييز أو المضايقة أو الإهانات أو السلوك العدائي تجاه المستخدمين الآخرين محظور تمامًا.",
+      "details": [
+        "لن يتم التسامح مع التعليقات المسيئة القائمة على الهوية الجنسية أو التوجه الجنسي أو العرق أو الدين أو الجنسية",
+        "المضايقة أو الملاحقة أو التخويف سيؤدي إلى حظر فوري",
+        "يجب أن يكون النقد بنّاءً وليس شخصيًا أبدًا",
+        "احترم قرارات وحدود كل شخص"
+      ]
+    },
+    "adults": {
+      "title": "محتوى للبالغين فقط (+18)",
+      "description": "هذا الموقع مخصص حصريًا للأشخاص الذين تزيد أعمارهم عن 18 عامًا (أو سن الرشد القانوني في منطقتك). بالتسجيل، تقسم أنك تستوفي هذا الشرط.",
+      "details": [
+        "مشاركة المحتوى الذي يتضمن قاصرين بأي شكل محظور",
+        "انتحال العمر غير مسموح",
+        "يمكن للمسؤولين طلب التحقق من العمر في أي وقت"
+      ]
+    },
+    "content": {
+      "title": "المحتوى المسموح",
+      "description": "يجب أن يكون كل المحتوى متعلقًا بغرض المنتدى: مشاركة التجارب والمراجعات وخدمات المرافقة المهنية بطريقة محترمة.",
+      "details": [
+        "لا يُسمح بالرسائل المزعجة أو الإعلانات غير المصرح بها أو الترويج لخدمات خارجية",
+        "المنشورات التي تحتوي على محتوى غير قانوني وفقًا للقانون الدولي محظورة",
+        "يجب أن تكون المراجعات صادقة ومبنية على تجارب حقيقية",
+        "لا يُسمح بطلبات أو عروض خدمات تنتهك القانون"
+      ]
+    },
+    "privacy": {
+      "title": "الخصوصية والبيانات الشخصية",
+      "description": "نحمي خصوصية جميع المستخدمين. مشاركة المعلومات الشخصية لأطراف ثالثة دون موافقتهم محظورة تمامًا.",
+      "details": [
+        "لا تنشر أرقام هواتف أو عناوين أو بيانات شخصية للآخرين",
+        "لا تشارك المحادثات الخاصة دون إذن",
+        "لا تحاول التعرف على المستخدمين الآخرين أو كشف هويتهم",
+        "استخدم المناطق الخاصة في المنتدى للمعلومات الحساسة"
+      ]
+    },
+    "safety": {
+      "title": "السلامة الشخصية",
+      "description": "سلامتك أولوية. نوصي بممارسة لقاءات آمنة وعدم مشاركة معلومات قد تعرض سلامتك للخطر.",
+      "details": [
+        "تحقق دائمًا من الهوية قبل اللقاءات الشخصية",
+        "أخبر شخصًا تثق به عن أنشطتك",
+        "لا تشارك معلومات مالية حساسة",
+        "أبلغ عن أي موقف مشبوه أو خطير"
+      ]
+    },
+    "verification": {
+      "title": "نظام التحقق",
+      "description": "نقدم نظام تحقق طوعي لزيادة الثقة في المجتمع. المستخدمون الموثقون لديهم وصول إلى مناطق حصرية.",
+      "details": [
+        "التحقق سري والبيانات محمية",
+        "الملفات الشخصية الموثقة تحصل على شارة مرئية",
+        "يمكنك طلب التحقق في أي وقت"
+      ]
+    },
+    "legal": {
+      "title": "الامتثال القانوني",
+      "description": "يعمل هذا المنتدى وفقًا للقوانين المعمول بها. لا يُسمح بأي نشاط غير قانوني.",
+      "details": [
+        "الاتجار بالبشر أو أي شكل من أشكال الاستغلال محظور",
+        "الخدمات التي تتضمن مخدرات أو مواد غير قانونية غير مسموح بها",
+        "نلتزم بقوانين حماية البيانات (GDPR، CCPA)",
+        "نتعاون مع السلطات عند الحاجة قانونيًا"
+      ]
+    },
+    "noExploitation": {
+      "title": "عدم التسامح مع الاستغلال",
+      "description": "لدينا سياسة عدم تسامح مطلقة تجاه أي شكل من أشكال الاتجار بالبشر أو الاستغلال أو الإكراه. أبلغ عن أي شبهة فورًا.",
+      "details": [
+        "أبلغ عن أي مؤشر على الاستغلال أو الاتجار",
+        "منشورات الأطراف الثالثة دون موافقتهم القابلة للتحقق غير مسموح بها",
+        "نتعاون بنشاط مع منظمات مكافحة الاتجار"
+      ]
+    },
+    "discretion": {
+      "title": "التكتم والسرية",
+      "description": "نقدّر التكتم. ما يُشارك في المنتدى يجب أن يبقى في المنتدى.",
+      "details": [
+        "لا تشارك محتوى المنتدى على وسائل التواصل الاجتماعي دون إذن",
+        "احترم سرية المستخدمين الآخرين",
+        "لقطات الشاشة غير المصرح بها قد تؤدي إلى الحظر"
+      ]
+    },
+    "reports": {
+      "title": "البلاغات والإشراف",
+      "description": "إذا وجدت محتوى ينتهك القواعد، أبلغ عنه فورًا. فريق الإشراف لدينا يراجع كل حالة بسرية.",
+      "details": [
+        "استخدم زر الإبلاغ للمحتوى غير الملائم",
+        "البلاغات مجهولة وسرية",
+        "البلاغات الكاذبة تُعاقب أيضًا",
+        "يمكنك التواصل مع المشرفين مباشرة للحالات العاجلة"
+      ]
+    },
+    "warning": {
+      "title": "عواقب عدم الامتثال",
+      "description": "انتهاكات هذه القواعد ستؤدي إلى إجراءات قد تشمل: تحذير، تعليق مؤقت، حظر دائم، إبلاغ السلطات (في حالات النشاط غير القانوني)، وحذف جميع المحتوى المرتبط."
+    }
+  },
+  "report": {
+    "title": "Report",
+    "reportContent": "إبلاغ عن المحتوى",
+    "selectReason": "اختر سببًا",
+    "description": "أخبرنا لماذا تعتقد أن هذا المحتوى ينتهك إرشادات المجتمع.",
+    "descriptionPlaceholder": "Provide more details...",
+    "submit": "Submit report",
+    "submitting": "Submitting...",
+    "success": "Report submitted",
+    "alreadyReported": "لقد أبلغت بالفعل عن هذا المحتوى",
+    "error": "Error submitting report",
+    "reasons": {
+      "spam": "Spam",
+      "harassment": "Harassment or bullying",
+      "inappropriate": "Inappropriate content",
+      "off_topic": "Off topic",
+      "duplicate": "Duplicate",
+      "misinformation": "False information",
+      "illegal": "Illegal content",
+      "other": "Other"
+    },
+    "report": "إبلاغ",
+    "reportPost": "إبلاغ عن المنشور",
+    "reportThread": "إبلاغ عن الموضوع",
+    "reportUser": "إبلاغ عن المستخدم",
+    "reportMessage": "إبلاغ عن الرسالة",
+    "reasonLabel": "سبب البلاغ *",
+    "additionalDetails": "تفاصيل إضافية (اختياري)",
+    "detailsPlaceholder": "قدم مزيدًا من التفاصيل حول المشكلة...",
+    "spam": "رسائل مزعجة",
+    "harassment": "مضايقة أو تنمر",
+    "inappropriate": "محتوى غير لائق",
+    "offTopic": "خارج الموضوع",
+    "duplicate": "مكرر",
+    "misinformation": "معلومات مضللة",
+    "illegal": "محتوى غير قانوني",
+    "fake": "حساب مزيف أو انتحال",
+    "scam": "احتيال",
+    "other": "أخرى",
+    "sendReport": "إرسال البلاغ",
+    "sending": "جاري الإرسال...",
+    "reportSent": "تم إرسال البلاغ بنجاح",
+    "errorSending": "خطأ في إرسال البلاغ",
+    "loginToReport": "سجل الدخول للإبلاغ",
+    "selectReasonError": "اختر سببًا",
+    "helpCommunity": "ساعدنا في الحفاظ على أمان المجتمع. اختر سبب البلاغ.",
+    "reportSuccess": "تم إرسال البلاغ",
+    "reportSuccessDesc": "سيراجع فريقنا بلاغك قريبًا",
+    "reason": "Reason for report",
+    "falseInfo": "False information",
+    "details": "Additional details",
+    "successDesc": "Thank you for helping keep the community safe"
+  },
+  "ads": {
+    "title": "الإعلانات",
+    "subtitle": "{count} إعلان",
+    "createAd": "نشر إعلان",
+    "createAdDescription": "املأ النموذج",
+    "selectCountry": "اختر الدولة",
+    "selectRegion": "اختر المنطقة",
+    "allCountries": "جميع الدول",
+    "allRegions": "جميع المناطق",
+    "noAds": "لا توجد إعلانات",
+    "noAdsDescription": "Be the first to post an ad in this area",
+    "featured": "مميز",
+    "verified": "موثق",
+    "years": "سنة",
+    "incall": "استقبال",
+    "outcall": "زيارة",
+    "from": "من",
+    "views": "مشاهدات",
+    "favorites": "المفضلة",
+    "published": "نُشر",
+    "backToAds": "العودة للإعلانات",
+    "description": "الوصف",
+    "services": "الخدمات",
+    "availability": "Availability",
+    "contact": "التواصل",
+    "showContact": "Show contact",
+    "rates": "الأسعار",
+    "details": "Details",
+    "relatedAds": "Related ads",
+    "memberSince": "Member since",
+    "loginRequired": "تسجيل الدخول مطلوب",
+    "addedToFavorites": "Added to favorites",
+    "removedFromFavorites": "Removed from favorites",
+    "error": "An error occurred",
+    "noServicesListed": "No services listed",
+    "contactForAvailability": "Contact for availability",
+    "basicInfo": "معلومات أساسية",
+    "basicInfoDescription": "Title and description of your ad",
+    "adTitle": "عنوان الإعلان",
+    "adTitlePlaceholder": "E.g.: Trans latina available in Madrid",
+    "adDescription": "Description",
+    "adDescriptionPlaceholder": "Describe your services, personality, what you offer...",
+    "location": "الموقع",
+    "country": "الدولة",
+    "region": "Region",
+    "city": "المدينة",
+    "cityPlaceholder": "E.g.: Madrid",
+    "neighborhood": "Neighborhood/Area",
+    "neighborhoodPlaceholder": "E.g.: Downtown",
+    "contactInfo": "Contact information",
+    "phone": "الهاتف",
+    "email": "البريد",
+    "physicalDetails": "Physical details",
+    "age": "العمر",
+    "height": "الطول",
+    "weight": "الوزن",
+    "bodyType": "Body type",
+    "ethnicity": "Ethnicity",
+    "hairColor": "Hair color",
+    "eyeColor": "Eye color",
+    "select": "Select",
+    "servicesOffered": "Services offered",
+    "currency": "Currency",
+    "photos": "الصور",
+    "photosDescription": "Upload up to 10 photos. The first one will be the main one.",
+    "addPhoto": "Add photo",
+    "primaryPhoto": "Main",
+    "maxPhotos": "Maximum 10 photos allowed",
+    "publishAd": "نشر الإعلان",
+    "publishing": "Publishing...",
+    "cancel": "إلغاء",
+    "adCreated": "Ad created successfully",
+    "errorCreating": "Error creating ad",
+    "requiredFields": "Complete required fields",
+    "bodyTypes": {
+      "slim": "نحيفة",
+      "athletic": "رياضية",
+      "average": "متوسطة",
+      "curvy": "ممتلئة",
+      "plus_size": "مقاس كبير"
+    },
+    "ethnicities": {
+      "latina": "Latina",
+      "caucasian": "Caucasian",
+      "asian": "Asian",
+      "african": "African",
+      "middle_eastern": "Middle Eastern",
+      "mixed": "Mixed"
+    },
+    "hairColors": {
+      "black": "Black",
+      "brown": "Brown",
+      "blonde": "Blonde",
+      "red": "Red",
+      "gray": "Gray",
+      "other": "Other"
+    },
+    "eyeColors": {
+      "black": "Black",
+      "brown": "Brown",
+      "blonde": "Hazel",
+      "red": "Green",
+      "gray": "Gray",
+      "other": "Other"
+    },
+    "durations": {
+      "30min": "30 دقيقة",
+      "1hour": "ساعة",
+      "2hours": "ساعتان",
+      "3hours": "3 ساعات",
+      "overnight": "ليلة كاملة",
+      "weekend": "عطلة نهاية الأسبوع"
+    },
+    "servicesList": {
+      "service_girlfriend_experience": "Girlfriend Experience",
+      "service_massage": "Massage",
+      "service_oral": "Oral",
+      "service_anal": "Anal",
+      "service_fetish": "Fetish",
+      "service_bdsm": "BDSM",
+      "service_duo": "Duo",
+      "service_overnight": "Overnight",
+      "service_travel": "Travel",
+      "service_video_call": "Video call"
+    },
+    "days": {
+      "monday": "الإثنين",
+      "tuesday": "الثلاثاء",
+      "wednesday": "الأربعاء",
+      "thursday": "الخميس",
+      "friday": "الجمعة",
+      "saturday": "السبت",
+      "sunday": "الأحد"
+    }
+  },
+  "poll": {
+    "votes": "votes",
+    "vote": "Vote",
+    "voting": "Voting...",
+    "voteRecorded": "Your vote has been recorded",
+    "voteError": "Error voting",
+    "selectOption": "Select an option",
+    "loginRequired": "Login to vote",
+    "loginToVote": "Login to participate in this poll",
+    "pollClosed": "This poll has ended",
+    "endsIn": "Ends in",
+    "multipleAllowed": "You can select multiple options",
+    "createPoll": "Create poll",
+    "question": "Question",
+    "questionPlaceholder": "What is your question?",
+    "questionRequired": "Question is required",
+    "options": "Options",
+    "option": "Option",
+    "addOption": "Add option",
+    "minOptions": "You need at least 2 options",
+    "allowMultiple": "Allow multiple answers",
+    "showResultsBeforeVote": "Show results before voting",
+    "setEndDate": "Set end date",
+    "pollCreated": "Poll created",
+    "createError": "Error creating poll",
+    "create": "Create poll",
+    "creating": "Creating...",
+    "cancel": "Cancel"
+  },
+  "alerts": {
+    "title": "تنبيهات المنطقة",
+    "description": "تلقي إشعارات عند نشر إعلانات جديدة في مناطقك المفضلة",
+    "addAlert": "إضافة تنبيه جديد",
+    "selectCountry": "اختر البلد",
+    "allRegions": "جميع المناطق",
+    "add": "إضافة",
+    "yourAlerts": "تنبيهاتك",
+    "noAlerts": "لا توجد تنبيهات مكونة",
+    "noAlertsDescription": "أضف تنبيهاً لتلقي إشعارات الإعلانات الجديدة",
+    "active": "نشط",
+    "paused": "متوقف",
+    "alertAdded": "تم إضافة التنبيه",
+    "alertDeleted": "تم حذف التنبيه",
+    "alertEnabled": "تم تفعيل التنبيه",
+    "alertDisabled": "تم تعطيل التنبيه",
+    "alertExists": "لديك بالفعل تنبيه لهذه المنطقة",
+    "errorLoading": "خطأ في تحميل التنبيهات",
+    "errorAdding": "خطأ في إضافة التنبيه",
+    "errorUpdating": "خطأ في تحديث التنبيه",
+    "errorDeleting": "خطأ في حذف التنبيه",
+    "loginRequired": "سجل الدخول لتكوين التنبيهات"
+  },
+  "subscription": {
+    "subscribe": "اشتراك",
+    "subscribed": "مشترك",
+    "unsubscribe": "إلغاء الاشتراك",
+    "subscribeToThread": "اشترك في الموضوع",
+    "subscribedToThread": "تم الاشتراك",
+    "unsubscribedFromThread": "تم إلغاء الاشتراك",
+    "loginRequired": "سجل الدخول للاشتراك"
+  },
+  "follow": {
+    "follow": "متابعة",
+    "following": "يتابع",
+    "unfollow": "إلغاء المتابعة",
+    "followers": "المتابعون",
+    "followingCount": "يتابع",
+    "nowFollowing": "أنت الآن تتابع",
+    "unfollowed": "ألغيت المتابعة",
+    "loginRequired": "سجل الدخول للمتابعة",
+    "cannotFollowSelf": "لا يمكنك متابعة نفسك"
+  },
+  "block": {
+    "block": "حظر",
+    "unblock": "إلغاء الحظر",
+    "blocked": "محظور",
+    "blockUser": "حظر المستخدم",
+    "confirmBlock": "حظر هذا المستخدم؟",
+    "blockDescription": "لن ترى منشوراته",
+    "userBlocked": "تم حظر المستخدم",
+    "userUnblocked": "تم إلغاء الحظر",
+    "blockedUsers": "المحظورون",
+    "noBlockedUsers": "لا يوجد محظورون"
+  },
+  "reputation": {
+    "title": "السمعة",
+    "points": "نقاط",
+    "level": "المستوى",
+    "history": "السجل",
+    "leaderboard": "التصنيف",
+    "levels": {
+      "newbie": "مبتدئ",
+      "member": "عضو",
+      "active": "نشط",
+      "trusted": "موثوق",
+      "expert": "خبير",
+      "master": "متمكن",
+      "legend": "أسطورة"
+    },
+    "newbie": "مبتدئ",
+    "member": "عضو",
+    "active": "نشط",
+    "trusted": "موثوق",
+    "expert": "خبير",
+    "master": "ماستر",
+    "legend": "أسطورة",
+    "reputationPoints": "{count} نقاط سمعة",
+    "maxLevel": "تم الوصول للمستوى الأقصى!",
+    "pointsProgress": "{current} / {next} نقاط"
+  },
+  "onlineStatus": {
+    "online": "متصل",
+    "offline": "غير متصل",
+    "lastSeen": "آخر ظهور",
+    "usersOnline": "المتصلون"
+  },
+  "roles": {
+    "roleAdmin": "مدير",
+    "roleMod": "مشرف",
+    "roleSuperMod": "مشرف عام",
+    "roleVip": "VIP",
+    "roleVerified": "موثقة",
+    "roleUser": "مستخدم"
+  },
+  "post": {
+    "posts": "المشاركات",
+    "registered": "التسجيل",
+    "edited": "تم التعديل",
+    "report": "إبلاغ",
+    "edit": "تعديل"
+  },
+  "user": {
+    "mustLoginToFollow": "سجل الدخول لمتابعة المستخدمين",
+    "cantFollowSelf": "لا يمكنك متابعة نفسك",
+    "nowFollowing": "أنت الآن تتابع {username}",
+    "unfollowed": "توقفت عن متابعة {username}",
+    "followError": "خطأ في تغيير المتابعة",
+    "following": "متابَع",
+    "follow": "متابعة",
+    "mustLoginToBlock": "سجل الدخول لحظر المستخدمين",
+    "blocked": "لقد حظرت {username}",
+    "unblocked": "لقد ألغيت حظر {username}",
+    "blockError": "خطأ في تغيير الحظر",
+    "unblock": "إلغاء الحظر",
+    "block": "حظر",
+    "blockConfirmTitle": "حظر {username}؟",
+    "blockConfirmDesc": "عند حظر هذا المستخدم:",
+    "blockEffect1": "لن ترى منشوراته أو مواضيعه",
+    "blockEffect2": "لن يتمكن من إرسال رسائل خاصة لك",
+    "blockEffect3": "سيتم إلغاء أي متابعة متبادلة",
+    "blockEffect4": "لن تتلقى إشعارات من هذا المستخدم"
+  },
+  "cookies": {
+    "title": "هذا الموقع يستخدم ملفات تعريف الارتباط",
+    "description": "نستخدم ملفات تعريف الارتباط الأساسية لعمل الموقع وملفات اختيارية لتحسين تجربتك. بالنقر على \"قبول الكل\"، فإنك توافق على استخدام جميع ملفات تعريف الارتباط.",
+    "acceptAll": "قبول الكل",
+    "essentialOnly": "الأساسية فقط",
+    "moreInfo": "مزيد من المعلومات",
+    "privacyPolicy": "سياسة الخصوصية",
+    "close": "إغلاق"
+  },
+  "passwordRecovery": {
+    "title": "استعادة كلمة المرور",
+    "description": "سنرسل لك رابطاً لإعادة تعيين كلمة المرور",
+    "email": "البريد الإلكتروني",
+    "emailPlaceholder": "your@email.com",
+    "sendLink": "إرسال الرابط",
+    "sending": "جاري الإرسال...",
+    "backToLogin": "العودة لتسجيل الدخول",
+    "errorSending": "خطأ في إرسال الرابط",
+    "linkSent": "تم إرسال الرابط",
+    "checkEmail": "تحقق من بريدك الإلكتروني",
+    "unexpectedError": "خطأ غير متوقع",
+    "sentTo": "لقد أرسلنا رابط الاسترداد إلى:",
+    "checkInbox": "تحقق من صندوق الوارد واتبع التعليمات لإعادة تعيين كلمة المرور."
+  },
+  "favoritesPage": {
+    "breadcrumb": "مفضلاتي",
+    "title": "مفضلاتي",
+    "itemsSaved": "{count} عنصر محفوظ",
+    "searchPlaceholder": "البحث في المفضلة...",
+    "allFolders": "الكل",
+    "threads": "المواضيع",
+    "posts": "المشاركات",
+    "noThreads": "لا توجد مواضيع محفوظة",
+    "noThreadsDesc": "احفظ المواضيع المهمة بالنقر على زر المفضلة",
+    "noPosts": "لا توجد مشاركات محفوظة",
+    "noPostsDesc": "احفظ مشاركات محددة بالنقر على زر المفضلة",
+    "saved": "محفوظ",
+    "removeBookmark": "إزالة من المفضلة؟",
+    "removeThreadDesc": "سيتم إزالة هذا الموضوع من مفضلاتك.",
+    "removePostDesc": "سيتم إزالة هذه المشاركة من مفضلاتك.",
+    "cancel": "إلغاء",
+    "remove": "إزالة",
+    "bookmarkRemoved": "تمت الإزالة من المفضلة",
+    "loadError": "خطأ في تحميل المفضلة",
+    "removeError": "خطأ في إزالة المفضلة"
+  },
+  "createThread": {
+    "title": "إنشاء موضوع جديد",
+    "inForum": "في",
+    "threadTitle": "عنوان الموضوع",
+    "titlePlaceholder": "اكتب عنواناً وصفياً...",
+    "titleHint": "الحد الأدنى 5 أحرف، الحد الأقصى 200",
+    "content": "المحتوى",
+    "contentPlaceholder": "اكتب محتوى موضوعك...",
+    "contentHint": "الحد الأدنى 10 أحرف، الحد الأقصى 50000",
+    "nsfwLabel": "تحديد كمحتوى NSFW",
+    "rulesTitle": "قواعد النشر:",
+    "rule1": "احترم جميع أعضاء المجتمع",
+    "rule2": "لا تنشر محتوى غير قانوني أو بريد مزعج",
+    "rule3": "حدد محتوى NSFW بشكل صحيح",
+    "rule4": "الحد الأقصى 5 روابط لكل منشور",
+    "rule5": "اقرأ",
+    "rulesLink": "القواعد الكاملة",
+    "cancel": "إلغاء",
+    "creating": "جاري الإنشاء...",
+    "create": "إنشاء موضوع",
+    "success": "تم إنشاء الموضوع بنجاح",
+    "error": "خطأ في إنشاء الموضوع"
+  },
+  "rating": {
+    "cantRateSelf": "لا يمكنك تقييم نفسك",
+    "ratingRemoved": "تم إزالة التقييم",
+    "ratingUpdated": "تم تحديث التقييم",
+    "likedUser": "أعجبك هذا المستخدم!",
+    "dislikedUser": "لم يعجبك هذا المستخدم",
+    "ratingError": "خطأ في التقييم"
+  },
+  "profileStats": {
+    "posts": "المشاركات",
+    "threads": "المواضيع",
+    "thanksReceived": "الشكر المستلم",
+    "followers": "المتابعون",
+    "following": "المتابَعون",
+    "profileViews": "مشاهدات الملف"
+  },
+  "reputationPage": {
+    "breadcrumb": "السمعة والشارات",
+    "title": "السمعة والشارات",
+    "description": "اكتشف جميع الشارات التي يمكنك كسبها.",
+    "badgesTab": "الشارات",
+    "pointsTab": "النقاط",
+    "faqTab": "FAQ",
+    "auto": "تلقائي",
+    "howToGet": "كيف تحصل عليها:",
+    "catSystem": "النظام",
+    "catSystemDesc": "شارات النظام التلقائية",
+    "catRoles": "الأدوار",
+    "catRolesDesc": "شارات أدوار المنتدى",
+    "catVerification": "التحقق",
+    "catVerificationDesc": "شارات التحقق من الهوية",
+    "catEscort": "مرافقة",
+    "catEscortDesc": "شارات خاصة للمرافقة",
+    "catReputation": "السمعة",
+    "catReputationDesc": "شارات بناءً على سمعتك",
+    "catActivity": "النشاط",
+    "catActivityDesc": "شارات لمشاركتك",
+    "emailVerified": "بريد إلكتروني موثق",
+    "emailVerifiedDesc": "لقد تحققت من بريدك",
+    "emailVerifiedReq": "تأكيد البريد عند التسجيل",
+    "admin": "مدير",
+    "adminDesc": "مدير المنتدى بصلاحيات كاملة",
+    "adminReq": "يعينه فريق المنتدى",
+    "superMod": "مشرف أعلى",
+    "superModDesc": "مشرف بصلاحيات متقدمة",
+    "superModReq": "ترقية من المدير",
+    "moderator": "مشرف",
+    "moderatorDesc": "مشرف المجتمع",
+    "moderatorReq": "يختاره فريق الإشراف",
+    "verifiedAccount": "حساب موثق",
+    "verifiedAccountDesc": "تم التحقق من الهوية",
+    "verifiedAccountReq": "طلب التحقق وإكمال العملية",
+    "vip": "VIP",
+    "vipDesc": "عضو VIP بمزايا حصرية",
+    "vipReq": "الحصول على عضوية VIP",
+    "escort": "مرافقة",
+    "escortDesc": "ملف مرافقة",
+    "escortReq": "التسجيل كمرافقة",
+    "escortVerified": "مرافقة موثقة",
+    "escortVerifiedDesc": "مرافقة بهوية موثقة رسمياً",
+    "escortVerifiedReq": "إكمال عملية توثيق المرافقة",
+    "escortTopRated": "مرافقة متميزة",
+    "escortTopRatedDesc": "مرافقة بسمعة ممتازة",
+    "escortTopRatedReq": "90%+ تقييمات إيجابية (10 على الأقل)",
+    "trusted": "موثوق",
+    "trustedDesc": "مستخدم بسمعة جيدة",
+    "trustedReq": "الحصول على 50+ إعجاب",
+    "highlyRated": "عالي التقييم",
+    "highlyRatedDesc": "سمعة ممتازة",
+    "highlyRatedReq": "الحصول على 100+ إعجاب",
+    "legendary": "أسطوري",
+    "legendaryDesc": "سمعة أسطورية",
+    "legendaryReq": "الحصول على 500+ إعجاب",
+    "activePoster": "نشط",
+    "activePosterDesc": "مستخدم نشط",
+    "activePosterReq": "نشر 50+ مشاركة",
+    "prolificWriter": "كاتب غزير",
+    "prolificWriterDesc": "مساهم نشط جداً",
+    "prolificWriterReq": "نشر 200+ مشاركة",
+    "threadCreator": "منشئ مواضيع",
+    "threadCreatorDesc": "ينشئ محتوى أصلي",
+    "threadCreatorReq": "إنشاء 20+ موضوع",
+    "veteran": "محنك",
+    "veteranDesc": "عضو قديم",
+    "veteranReq": "عضوية لأكثر من سنة",
+    "foundingMember": "عضو مؤسس",
+    "foundingMemberDesc": "من أوائل الأعضاء",
+    "foundingMemberReq": "الانضمام في أول 3 أشهر",
+    "helpful": "مفيد",
+    "helpfulDesc": "يساعد الآخرين دائماً",
+    "helpfulReq": "الحصول على 100+ شكر",
+    "communityPillar": "ركيزة المجتمع",
+    "communityPillarDesc": "مساهم استثنائي",
+    "communityPillarReq": "تجميع 1000+ نقطة",
+    "pointsSystem": "نظام النقاط",
+    "pointsSystemDesc": "تُكتسب النقاط من خلال نشاطك.",
+    "actionCreateThread": "إنشاء موضوع",
+    "actionPostReply": "نشر رد",
+    "actionReceiveLike": "تلقي إعجاب",
+    "actionReceiveThank": "تلقي شكر",
+    "actionHelpfulPost": "مشاركة مفيدة",
+    "actionFeaturedThread": "موضوع مميز",
+    "proTip": "نصيحة",
+    "proTipText": "أنشئ محتوى عالي الجودة!",
+    "likesAndThanks": "الإعجابات والشكر",
+    "likesTitle": "إعجابات",
+    "likesDesc": "يمكن للآخرين الإعجاب بمشاركاتك.",
+    "thanksTitle": "شكر",
+    "thanksDesc": "الشكر يمنح نقاطاً أكثر.",
+    "faqTitle": "الأسئلة الشائعة",
+    "faq1Q": "كيف أحصل على شارات؟",
+    "faq1A": "معظمها تُكتسب تلقائياً.",
+    "faq2Q": "هل يمكنني فقدان شارات؟",
+    "faq2A": "شارات النشاط يمكن فقدانها.",
+    "faq3Q": "ما فائدة النقاط؟",
+    "faq3A": "تقيس مساهمتك في المجتمع.",
+    "faq4Q": "كيف أتحقق من حسابي؟",
+    "faq4A": "اذهب إلى إعدادات الحساب.",
+    "faq5Q": "ما الفرق بين الإعجابات والشكر؟",
+    "faq5A": "الإعجابات سريعة. الشكر يمنح نقاطاً أكثر.",
+    "faq6Q": "كيف أصبح مشرفاً؟",
+    "faq6A": "يتم اختيار المشرفين من قبل الفريق."
+  },
+  "notFound": {
+    "title": "الصفحة غير موجودة",
+    "description": "الصفحة التي تبحث عنها غير موجودة أو تم نقلها.",
+    "goHome": "العودة للرئيسية",
+    "searchForum": "البحث في المنتدى",
+    "needHelp": "تحتاج مساعدة؟",
+    "helpDescription": "إذا كنت تعتقد أن هذا خطأ أو تحتاج مساعدة:",
+    "contactSupport": "اتصل بالدعم",
+    "viewFaq": "عرض الأسئلة",
+    "readRules": "قراءة القواعد"
+  },
+  "faq": {
+    "title": "الأسئلة الشائعة",
+    "subtitle": "اعثر على إجابات للأسئلة الأكثر شيوعاً",
+    "q1": "كيف أسجل؟",
+    "a1": "انقر على \"تسجيل\" واملأ النموذج وأكد عبر البريد الإلكتروني.",
+    "q2": "كيف أتحقق من حسابي؟",
+    "a2": "اذهب إلى قسم التحقق في ملفك الشخصي واتبع الخطوات. المراجعة خلال 24-48 ساعة.",
+    "q3": "ما فوائد التحقق؟",
+    "a3": "الوصول للأقسام الخاصة، شارة مرئية، ثقة أكبر ودعم ذو أولوية.",
+    "q4": "كيف أبلغ عن محتوى غير مناسب؟",
+    "a4": "كل منشور به زر \"إبلاغ\". انقر عليه واختر السبب.",
+    "q5": "هل يمكنني تغيير اسم المستخدم؟",
+    "a5": "لأسباب أمنية، لا يمكن تغيير اسم المستخدم بعد إنشاء الحساب.",
+    "q6": "كيف تعمل الرسائل الخاصة؟",
+    "a6": "يمكنك إرسال رسائل لأي مستخدم مسجل عبر ملفه الشخصي.",
+    "q7": "ما هي النقاط والتفاعلات؟",
+    "a7": "النقاط تتراكم بنشاطك. التفاعلات هي طرق للتفاعل مع المنشورات.",
+    "q8": "كيف أحذف حسابي؟",
+    "a8": "اطلب الحذف من الإعدادات.",
+    "q9": "نسيت كلمة المرور؟",
+    "a9": "في صفحة الدخول، انقر \"نسيت كلمة المرور؟\" وأدخل بريدك.",
+    "q10": "كيف أصبح VIP؟",
+    "a10": "يُمنح حالة VIP للأعضاء المميزين. تواصل مع الإدارة.",
+    "notFound": "لم تجد ما تبحث عنه؟",
+    "notFoundDesc": "تواصل معنا وسنساعدك",
+    "contactBtn": "تواصل"
+  },
+  "cookiesPage": {
+    "breadcrumb": "سياسة ملفات تعريف الارتباط",
+    "title": "سياسة ملفات تعريف الارتباط",
+    "lastUpdate": "آخر تحديث",
+    "s1t": "1. ما هي ملفات تعريف الارتباط؟",
+    "s1p": "ملفات تعريف الارتباط هي ملفات نصية صغيرة تُخزن على جهازك عند زيارة موقع ويب. تسمح للموقع بتذكر إجراءاتك وتفضيلاتك.",
+    "s2t": "2. كيف نستخدم ملفات تعريف الارتباط",
+    "s2p": "يستخدم TransForo ملفات تعريف الارتباط لتحسين تجربة التصفح وفهم كيفية تفاعلك مع موقعنا وتخصيص تجربتك.",
+    "s3t": "3. أنواع ملفات تعريف الارتباط التي نستخدمها",
+    "s31t": "3.1 ملفات تعريف الارتباط الضرورية",
+    "s31purpose": "الغرض: ضرورية لتشغيل الموقع",
+    "s31duration": "المدة: جلسة أو دائمة",
+    "s31desc": "هذه الملفات ضرورية للتصفح واستخدام الميزات الأساسية للموقع.",
+    "s31i1": "ملف جلسة المصادقة",
+    "s31i2": "ملف تفضيلات اللغة",
+    "s31i3": "ملف السمة (داكن/فاتح)",
+    "s31i4": "ملف الموافقة على ملفات تعريف الارتباط",
+    "s31note": "✓ لا تتطلب هذه الملفات موافقة بموجب القانون المعمول به",
+    "s32t": "3.2 ملفات تعريف الارتباط الوظيفية",
+    "s32purpose": "الغرض: تذكر تفضيلاتك وتخصيص تجربتك",
+    "s32duration": "المدة: حتى سنة واحدة",
+    "s32desc": "تسمح هذه الملفات للموقع بتذكر اختياراتك وتقديم ميزات محسنة.",
+    "s32i1": "تفضيلات عرض المنتدى",
+    "s32i2": "إعدادات الإشعارات",
+    "s32i3": "حالات اللوحات المنسدلة/المطوية",
+    "s33t": "3.3 ملفات التحليل/الأداء",
+    "s33purpose": "الغرض: فهم كيفية استخدام الزوار للموقع",
+    "s33duration": "المدة: حتى سنتين",
+    "s33desc": "تجمع هذه الملفات معلومات مجمعة ومجهولة حول كيفية استخدام الزوار للموقع.",
+    "s33i1": "Google Analytics (إذا تم تنفيذه)",
+    "s33i2": "إحصائيات استخدام المنتدى",
+    "s33i3": "مقاييس الأداء",
+    "s4t": "4. ملفات تعريف الارتباط الخاصة بأطراف ثالثة",
+    "s4p": "في بعض الحالات، نستخدم ملفات مقدمة من أطراف ثالثة موثوقة:",
+    "s4i1": "Supabase: للمصادقة وإدارة قاعدة البيانات",
+    "s4i2": "CDN: لتحسين سرعة التحميل",
+    "s4i3": "خدمات التحليل: لفهم سلوك المستخدم",
+    "s4note": "لهذه الأطراف الثالثة سياسات خصوصية خاصة بها.",
+    "s5t": "5. مدة ملفات تعريف الارتباط",
+    "s5p": "يستخدم TransForo نوعين من الملفات حسب المدة:",
+    "s5i1": "ملفات الجلسة: مؤقتة، تُحذف عند إغلاق المتصفح.",
+    "s5i2": "ملفات دائمة: تبقى على جهازك لمدة تصل إلى 1-2 سنة أو حتى تحذفها.",
+    "s6t": "6. إدارة تفضيلات ملفات تعريف الارتباط",
+    "s6p": "يمكنك إدارة أو حذف ملفات تعريف الارتباط حسب تفضيلاتك.",
+    "s61t": "6.1 عبر المتصفح",
+    "s61p": "تسمح جميع المتصفحات الحديثة بالتحكم في ملفات تعريف الارتباط من خلال إعداداتها.",
+    "s61i1": "حظر جميع ملفات تعريف الارتباط",
+    "s61i2": "قبول ملفات تعريف الارتباط من مواقع محددة فقط",
+    "s61i3": "حذف ملفات تعريف الارتباط الموجودة",
+    "s61i4": "تفعيل وضع التصفح الخاص",
+    "s61links": "روابط لتعليمات إدارة ملفات تعريف الارتباط حسب المتصفح:",
+    "s62t": "6.2 عبر شريط ملفات تعريف الارتباط",
+    "s62p": "عند زيارتك الأولى لـ TransForo، سترى شريطاً يمكنك من خلاله قبول أو رفض ملفات تعريف الارتباط غير الضرورية.",
+    "s7t": "7. عواقب تعطيل ملفات تعريف الارتباط",
+    "s7p": "إذا قررت حظر أو حذف ملفات تعريف الارتباط، قد لا تعمل بعض أجزاء الموقع بشكل صحيح:",
+    "s7i1": "لن تتمكن من البقاء مسجلاً",
+    "s7i2": "ستفقد تفضيلات اللغة والسمة",
+    "s7i3": "بعض الميزات المخصصة لن تكون متاحة",
+    "s7i4": "قد تتأثر تجربة المستخدم سلباً",
+    "s7note": "ملاحظة: لا يمكن تعطيل ملفات تعريف الارتباط الضرورية.",
+    "s8t": "8. عدم التتبع (DNT)",
+    "s8p": "تتضمن بعض المتصفحات ميزة عدم التتبع. نحترم خصوصيتك ونعمل على تحسين ممارسات التتبع لدينا.",
+    "s9t": "9. تحديثات هذه السياسة",
+    "s9p": "قد نقوم بتحديث سياسة ملفات تعريف الارتباط هذه من حين لآخر. نوصي بمراجعة هذه الصفحة دورياً.",
+    "s10t": "10. مزيد من المعلومات",
+    "s10p": "لمزيد من المعلومات حول ملفات تعريف الارتباط وكيفية إدارتها، قم بزيارة:",
+    "s11t": "11. الاتصال",
+    "s11p": "إذا كانت لديك أسئلة حول سياسة ملفات تعريف الارتباط، يمكنك الاتصال بنا عبر",
+    "s11link": "صفحة الاتصال",
+    "summaryTitle": "ملخص سريع",
+    "summaryI1": "✓ نستخدم ملفات تعريف الارتباط لتحسين تجربتك",
+    "summaryI2": "✓ بعض الملفات ضرورية لتشغيل الموقع",
+    "summaryI3": "✓ يمكنك إدارة ملفات تعريف الارتباط عبر متصفحك أو شريطنا",
+    "summaryI4": "✓ نحترم خصوصيتك ونلتزم بـ GDPR"
+  },
+  "privacyPage": {
+    "breadcrumb": "سياسة الخصوصية",
+    "title": "سياسة الخصوصية",
+    "lastUpdate": "آخر تحديث",
+    "s1t": "1. المقدمة",
+    "s1p": "في TransForo، نقدر ونحترم خصوصيتك. توضح سياسة الخصوصية هذه كيف نجمع معلوماتك الشخصية ونستخدمها ونخزنها ونحميها.",
+    "s2t": "2. المعلومات التي نجمعها",
+    "s21t": "2.1 معلومات التسجيل",
+    "s21p": "عند إنشاء حساب، نجمع:",
+    "s21i1": "عنوان البريد الإلكتروني",
+    "s21i2": "اسم المستخدم",
+    "s21i3": "كلمة المرور (مشفرة)",
+    "s21i4": "تاريخ إنشاء الحساب",
+    "s22t": "2.2 معلومات الملف الشخصي",
+    "s22p": "يمكنك اختيارياً تقديم:",
+    "s22i1": "صورة الملف الشخصي/الصورة الرمزية",
+    "s22i2": "السيرة الذاتية",
+    "s22i3": "توقيع المنتدى",
+    "s22i4": "الموقع (البلد والمدينة)",
+    "s22i5": "تفضيلات اللغة",
+    "s23t": "2.3 المحتوى الذي ينشئه المستخدم",
+    "s23p": "نخزن كل المحتوى الذي تنشره:",
+    "s23i1": "المنشورات والردود في المواضيع",
+    "s23i2": "الرسائل الخاصة",
+    "s23i3": "الصور وملفات الوسائط المتعددة",
+    "s23i4": "تقارير الإشراف",
+    "s24t": "2.4 المعلومات التقنية",
+    "s24p": "نجمع تلقائياً:",
+    "s24i1": "عنوان IP",
+    "s24i2": "نوع المتصفح والجهاز",
+    "s24i3": "نظام التشغيل",
+    "s24i4": "الصفحات التي تمت زيارتها ووقت التصفح",
+    "s24i5": "ملفات تعريف الارتباط والتقنيات المماثلة",
+    "s3t": "3. كيف نستخدم معلوماتك",
+    "s3p": "نستخدم معلوماتك من أجل:",
+    "s3items": "تقديم خدمتنا وصيانتها|إنشاء حسابك وإدارته|تخصيص تجربتك|التواصل معك|إشراف المحتوى|منع الاحتيال|تحسين خدمتنا|الامتثال للالتزامات القانونية",
+    "s4t": "4. الأساس القانوني للمعالجة (GDPR)",
+    "s4p": "نعالج معلوماتك الشخصية على الأسس القانونية التالية:",
+    "s4i1": "الموافقة: لقد أعطيت موافقتك عند التسجيل",
+    "s4i2": "العقد: ضروري لتقديم الخدمة",
+    "s4i3": "المصلحة المشروعة: لتحسين المنصة وتأمينها",
+    "s4i4": "الالتزام القانوني: للامتثال للقوانين المعمول بها",
+    "s5t": "5. مشاركة المعلومات",
+    "s5p": "لا نبيع معلوماتك الشخصية. قد نشارك المعلومات مع:",
+    "s5i1": "مستخدمين آخرين: ملفك الشخصي العام ومحتواك مرئيان",
+    "s5i2": "مقدمي الخدمات: Supabase، خدمات البريد الإلكتروني، التحليلات",
+    "s5i3": "السلطات القانونية: عندما يتطلب القانون ذلك",
+    "s5i4": "في حالة نقل الأعمال",
+    "s6t": "6. أمان البيانات",
+    "s6p": "ننفذ تدابير أمنية:",
+    "s6items": "تشفير كلمات المرور|اتصالات HTTPS آمنة|أمان على مستوى الصفوف في قاعدة البيانات|مصادقة ثنائية|عمليات تدقيق منتظمة|نسخ احتياطية مشفرة",
+    "s6note": "لا توجد طريقة آمنة بنسبة 100%.",
+    "s7t": "7. الاحتفاظ بالبيانات",
+    "s7p": "نحتفظ بمعلوماتك طالما أن حسابك نشط أو حسب الحاجة.",
+    "s7note": "يمكنك طلب حذف حسابك في أي وقت.",
+    "s8t": "8. حقوقك",
+    "s8p": "لديك الحقوق التالية:",
+    "s8items": "الوصول|التصحيح|الحذف|نقل البيانات|التقييد|الاعتراض|سحب الموافقة",
+    "s8note": "لممارسة هذه الحقوق، اتصل بنا عبر صفحة الاتصال.",
+    "s9t": "9. ملفات تعريف الارتباط",
+    "s9p": "نستخدم ملفات تعريف الارتباط وتقنيات مماثلة. راجع سياسة ملفات تعريف الارتباط الخاصة بنا للتفاصيل.",
+    "s10t": "10. القاصرون",
+    "s10p": "TransForo مخصص للأشخاص الذين تزيد أعمارهم عن 18 عاماً.",
+    "s11t": "11. عمليات النقل الدولية",
+    "s11p": "قد يتم نقل بياناتك إلى خوادم خارج بلدك، وفقاً للقوانين المعمول بها.",
+    "s12t": "12. التغييرات على هذه السياسة",
+    "s12p": "قد نقوم بتحديث سياسة الخصوصية هذه من حين لآخر.",
+    "s13t": "13. الاتصال",
+    "s13p": "إذا كانت لديك أسئلة، يمكنك الاتصال بنا عبر",
+    "s13link": "صفحة الاتصال",
+    "importantNote": "هذا مجتمع للمحترفات العابرات. نتعامل مع معلوماتك بأقصى درجات الاحترام والسرية."
+  },
+  "termsPage": {
+    "breadcrumb": "الشروط والأحكام",
+    "title": "الشروط والأحكام",
+    "lastUpdate": "آخر تحديث",
+    "s1t": "1. قبول الشروط",
+    "s1p": "بالوصول إلى TransForo واستخدامه، فإنك توافق على الالتزام بهذه الشروط والأحكام.",
+    "s2t": "2. وصف الخدمة",
+    "s2p": "TransForo هو منصة منتدى عبر الإنترنت. نوفر مساحة من أجل:",
+    "s2items": "مشاركة الخبرات المهنية|التواصل مع الزميلات|تبادل المعلومات والنصائح|بناء مجتمع داعم",
+    "s3t": "3. متطلبات التسجيل",
+    "s3p": "لاستخدام ميزات معينة، يجب عليك:",
+    "s3items": "أن يكون عمرك أكثر من 18 عاماً|تقديم معلومات دقيقة|الحفاظ على أمان كلمة المرور|الإبلاغ عن الاستخدام غير المصرح به|قبول المسؤولية عن حسابك",
+    "s4t": "4. قواعد السلوك",
+    "s4p": "باستخدام TransForo، توافق على عدم:",
+    "s4items": "نشر محتوى غير قانوني أو مسيء|انتحال شخصية شخص آخر|انتهاك حقوق الملكية الفكرية|نشر رسائل غير مرغوب فيها|التدخل في تشغيل الموقع|جمع المعلومات دون موافقة|مشاركة المعلومات الشخصية للآخرين|الترويج لأنشطة غير قانونية",
+    "s5t": "5. محتوى المستخدم",
+    "s5p": "بنشر المحتوى:",
+    "s5items": "تحتفظ بجميع الحقوق على محتواك|تمنحنا ترخيصاً لاستخدام محتواك على المنصة|أنت مسؤول عن محتواك|تضمن أن لديك الحق في نشره|يمكننا إزالة المحتوى الذي ينتهك هذه الشروط",
+    "s6t": "6. محتوى NSFW",
+    "s6p": "يسمح TransForo بمحتوى NSFW المميز بوضوح. يجب أن يتوافق مع القوانين المعمول بها.",
+    "s7t": "7. الإشراف",
+    "s7p": "نحتفظ بالحق في:",
+    "s7items": "تعديل أو حذف أو رفض أي محتوى|تعليق أو إنهاء الحسابات|تعديل أو إيقاف الخدمة|الكشف عن المعلومات عندما يتطلب القانون ذلك",
+    "s8t": "8. الملكية الفكرية",
+    "s8p": "تصميم TransForo وكوده ورسوماته محمية بحقوق النشر.",
+    "s9t": "9. إخلاء المسؤولية",
+    "s9p": "يتم تقديم TransForo كما هو دون ضمانات.",
+    "s9items": "ستكون الخدمة دون انقطاع|سيتم تصحيح العيوب|ستكون الخدمة خالية من الفيروسات|ستكون النتائج دقيقة",
+    "s10t": "10. تحديد المسؤولية",
+    "s10p": "لن يكون TransForo مسؤولاً بأي حال عن الأضرار المباشرة أو غير المباشرة أو العرضية أو التبعية.",
+    "s11t": "11. التعويض",
+    "s11p": "توافق على تعويض TransForo وإبراء ذمته.",
+    "s12t": "12. التعديلات",
+    "s12p": "نحتفظ بالحق في تعديل هذه الشروط في أي وقت.",
+    "s13t": "13. الإنهاء",
+    "s13p": "يمكنك إنهاء حسابك في أي وقت. يمكننا إنهاء أو تعليق حسابك لأي انتهاك.",
+    "s14t": "14. القانون الحاكم",
+    "s14p": "تخضع هذه الشروط للقوانين المعمول بها.",
+    "s15t": "15. الاتصال",
+    "s15p": "إذا كانت لديك أسئلة، يمكنك الاتصال بنا عبر",
+    "s15link": "صفحة الاتصال",
+    "acceptanceNote": "باستخدام TransForo، تؤكد أنك قد قرأت وفهمت وقبلت هذه الشروط والأحكام."
+  },
+  "adminUsers": {
+    "title": "User Management",
+    "description": "Manage users, roles and suspensions",
+    "backToPanel": "← Back to panel",
+    "searchPlaceholder": "Search by username...",
+    "search": "Search",
+    "user": "User",
+    "role": "Role",
+    "status": "Status",
+    "lastSeen": "Last seen",
+    "since": "Since",
+    "suspended": "Suspended",
+    "verified": "Verified",
+    "normal": "Normal",
+    "never": "Never",
+    "viewDetails": "View details / IPs",
+    "verify": "Verify",
+    "removeVerification": "Remove verification",
+    "makeMod": "Make moderator",
+    "removeMod": "Remove moderator",
+    "liftSuspension": "Lift suspension",
+    "suspend7": "Suspend 7 days",
+    "suspend30": "Suspend 30 days",
+    "banPermanently": "Ban permanently",
+    "superBan": "⚠️ Super Ban",
+    "noUsersFound": "No users found",
+    "userDetails": "User details",
+    "registered": "Registered",
+    "last10IPs": "Last 10 IPs",
+    "noIPs": "No IPs recorded",
+    "blockIP": "Block this IP",
+    "close": "Close"
+  },
+  "adminReports": {
+    "title": "Report Center",
+    "backToPanel": "← Back to panel",
+    "pending": "Pending",
+    "inReview": "In Review",
+    "resolvedTab": "Resolved",
+    "all": "All",
+    "loading": "Loading...",
+    "noReports": "No reports",
+    "priority": "Priority",
+    "category": "Category",
+    "reported": "Reported",
+    "reason": "Reason",
+    "status": "Status",
+    "assignedTo": "Assigned to",
+    "date": "Date",
+    "low": "Low",
+    "high": "High",
+    "urgent": "Urgent",
+    "assignToMe": "Assign to me",
+    "resolve": "Resolve",
+    "dismiss": "Dismiss",
+    "resolveReport": "Resolve Report",
+    "reportedUser": "Reported user",
+    "resolutionNotes": "Resolution notes",
+    "resolutionPlaceholder": "Describe actions taken...",
+    "cancel": "Cancel",
+    "markResolved": "Mark as Resolved",
+    "catSpam": "Spam",
+    "catHarassment": "Harassment",
+    "catInappropriate": "Inappropriate",
+    "catScam": "Scam",
+    "catOther": "Other",
+    "errorAssigning": "Error assigning report",
+    "assigned": "Report assigned",
+    "errorResolving": "Error resolving report",
+    "resolved": "Report resolved",
+    "errorDismissing": "Error dismissing report",
+    "dismissed": "Report dismissed",
+    "errorPriority": "Error changing priority",
+    "priorityUpdated": "Priority updated"
+  },
+  "adminLogs": {
+    "title": "Moderation History",
+    "description": "Record of all moderation actions",
+    "backToPanel": "← Back to panel",
+    "history": "History",
+    "suspensions": "Suspensions",
+    "ipBans": "IP Bans",
+    "last100Actions": "Last 100 actions",
+    "loading": "Loading...",
+    "noActions": "No actions recorded",
+    "date": "Date",
+    "moderator": "Moderator",
+    "action": "Action",
+    "affectedUser": "Affected user",
+    "reason": "Reason",
+    "userSuspensions": "User Suspensions",
+    "noSuspensions": "No suspensions recorded",
+    "user": "User",
+    "type": "Type",
+    "expires": "Expires",
+    "status": "Status",
+    "suspendedBy": "Suspended by",
+    "permanent": "Permanent",
+    "temporary": "Temporary",
+    "never": "Never",
+    "active": "Active",
+    "lifted": "Lifted",
+    "ipBansTitle": "IP Bans",
+    "noIPBans": "No IP bans recorded",
+    "ipAddress": "IP Address",
+    "bannedBy": "Banned by"
+  },
+  "adminSuspensions": {
+    "title": "Suspension Management",
+    "description": "Manage suspensions and bans",
+    "backToPanel": "← Back to panel",
+    "newSuspension": "New Suspension",
+    "user": "User",
+    "usernamePlaceholder": "Username",
+    "type": "Type",
+    "temporary": "Temporary",
+    "permanentBan": "Permanent (Ban)",
+    "permanent": "Permanent",
+    "durationDays": "Duration (days)",
+    "reason": "Reason",
+    "reasonPlaceholder": "Reason for suspension",
+    "descriptionLabel": "Description (max 200 chars)",
+    "descriptionPlaceholder": "Detailed description...",
+    "cancel": "Cancel",
+    "createSuspension": "Create Suspension",
+    "searchPlaceholder": "Search by username...",
+    "filterActive": "Active",
+    "filterLifted": "Lifted",
+    "filterAll": "All",
+    "search": "Search",
+    "loading": "Loading...",
+    "noSuspensions": "No suspensions",
+    "expires": "Expires",
+    "status": "Status",
+    "suspendedBy": "Suspended by",
+    "never": "Never",
+    "active": "Active",
+    "lifted": "Lifted",
+    "edit": "Edit",
+    "liftSuspension": "Lift suspension",
+    "delete": "Delete",
+    "editSuspension": "Edit Suspension",
+    "save": "Save",
+    "userAndReasonRequired": "User and reason are required",
+    "userNotFound": "User not found",
+    "errorCreating": "Error creating suspension",
+    "notifBanned": "You have been banned",
+    "notifSuspended": "You have been suspended",
+    "durationLabel": "Duration",
+    "days": "days",
+    "permanentAction": "This action is permanent.",
+    "created": "Suspension created",
+    "errorUpdating": "Error updating",
+    "updated": "Suspension updated",
+    "errorLifting": "Error lifting suspension",
+    "liftedManually": "Suspension lifted manually",
+    "liftedSuccess": "Suspension lifted",
+    "confirmDelete": "Delete this suspension from history?",
+    "errorDeleting": "Error deleting",
+    "deleted": "Suspension deleted"
+  },
+  "adminWarnings": {
+    "title": "Warning System",
+    "description": "Manage user warnings",
+    "backToPanel": "← Back to panel",
+    "newWarning": "New Warning",
+    "user": "User",
+    "usernamePlaceholder": "Username",
+    "reason": "Reason",
+    "reasonPlaceholder": "Reason for warning",
+    "descriptionLabel": "Description (max 200 chars)",
+    "descriptionPlaceholder": "Detailed description...",
+    "points": "Points",
+    "cancel": "Cancel",
+    "sendWarning": "Send Warning",
+    "searchPlaceholder": "Search by username...",
+    "search": "Search",
+    "loading": "Loading...",
+    "noWarnings": "No warnings",
+    "status": "Status",
+    "expires": "Expires",
+    "issuedBy": "Issued by",
+    "active": "Active",
+    "expired": "Expired",
+    "editWarning": "Edit Warning",
+    "save": "Save",
+    "userAndReasonRequired": "User and reason are required",
+    "userNotFound": "User not found",
+    "errorCreating": "Error creating warning",
+    "notifWarningReceived": "You received a warning",
+    "sent": "Warning sent",
+    "errorUpdating": "Error updating",
+    "updated": "Warning updated",
+    "confirmDelete": "Delete this warning?",
+    "errorDeleting": "Error deleting",
+    "deleted": "Warning deleted",
+    "errorDeactivating": "Error deactivating",
+    "deactivated": "Warning deactivated"
+  },
+  "adminFilters": {
+    "title": "Content Filters",
+    "description": "Block prohibited words, URLs and phrases",
+    "backToPanel": "← Back to panel",
+    "newFilter": "New Filter",
+    "filterType": "Filter type",
+    "typeWord": "Word",
+    "typePhrase": "Phrase",
+    "patternLabel": "Pattern to block",
+    "patternPlaceholder": "Word or phrase...",
+    "regexPlaceholder": "Regular expression...",
+    "replacement": "Replacement",
+    "useRegex": "Use regular expression",
+    "cancel": "Cancel",
+    "createFilter": "Create Filter",
+    "howFiltersWork": "How filters work",
+    "howFiltersWorkDesc": "Filters automatically replace blocked content with the replacement text (default \"xxx\"). URL filters block links, word filters block specific terms.",
+    "activeFilters": "Active Filters",
+    "loading": "Loading...",
+    "noFilters": "No filters configured",
+    "type": "Type",
+    "pattern": "Pattern",
+    "status": "Status",
+    "createdBy": "Created by",
+    "yes": "Yes",
+    "patternRequired": "Pattern is required",
+    "invalidRegex": "Invalid regular expression",
+    "errorCreating": "Error creating filter",
+    "filterAdded": "Filter added",
+    "created": "Filter created",
+    "errorUpdating": "Error updating filter",
+    "activated": "Filter activated",
+    "deactivated": "Filter deactivated",
+    "confirmDelete": "Delete this filter?",
+    "errorDeleting": "Error deleting filter",
+    "filterRemoved": "Filter removed",
+    "deleted": "Filter deleted"
+  },
+  "adminGeoForums": {
+    "title": "Geographic Forum Management",
+    "description": "Manage countries, cities and subforums",
+    "backToPanel": "Back to panel",
+    "noPermission": "You don't have permission to access this page",
+    "loading": "Loading...",
+    "regionsAndSubforums": "Regions & Subforums",
+    "regionsDesc": "Manage cities and regions for each country",
+    "addRegion": "Add Region",
+    "filterByCountry": "Filter by country",
+    "allCountries": "All countries",
+    "noRegions": "No regions to show",
+    "stats": "Statistics",
+    "countries": "Countries",
+    "regionsCities": "Regions/Cities",
+    "addNewRegion": "Add New Region",
+    "addNewRegionDesc": "Create a new city or region for a country",
+    "country": "Country",
+    "selectCountry": "Select a country",
+    "nameSpanish": "Name (Spanish)",
+    "namePlaceholder": "Mexico City",
+    "slugHint": "Auto-generated, but you can edit it",
+    "cancel": "Cancel",
+    "createRegion": "Create Region",
+    "editRegion": "Edit Region",
+    "editRegionDesc": "Modify region information",
+    "saveChanges": "Save Changes",
+    "fillAllFields": "Please fill all fields",
+    "errorCreatingRegion": "Error creating region",
+    "regionCreated": "Region created successfully",
+    "errorUpdatingRegion": "Error updating region",
+    "regionUpdated": "Region updated successfully",
+    "confirmDeleteRegion": "Are you sure you want to delete the region",
+    "errorDeletingRegion": "Error deleting region",
+    "regionDeleted": "Region deleted successfully"
+  },
+  "adminForums": {
+    "title": "Forum Management",
+    "description": "Manage categories, forums and subforums",
+    "backToPanel": "← Back to panel",
+    "categories": "Categories",
+    "forums": "Forums",
+    "new": "New",
+    "threads": "threads",
+    "noCategories": "No categories",
+    "noForums": "No forums",
+    "geoRegions": "Geographic Regions",
+    "more": "more",
+    "editCategory": "Edit Category",
+    "newCategory": "New Category",
+    "name": "Name",
+    "descriptionLabel": "Description",
+    "order": "Order",
+    "cancel": "Cancel",
+    "save": "Save",
+    "saving": "Saving...",
+    "autoGenerated": "Auto-generated",
+    "editForum": "Edit Forum",
+    "newForum": "New Forum",
+    "category": "Category",
+    "selectCategory": "Select a category",
+    "errorUpdatingCategory": "Error updating category",
+    "categoryUpdated": "Category updated",
+    "errorCreatingCategory": "Error creating category",
+    "categoryCreated": "Category created",
+    "errorUpdatingForum": "Error updating forum",
+    "forumUpdated": "Forum updated",
+    "errorCreatingForum": "Error creating forum",
+    "forumCreated": "Forum created",
+    "confirmDeleteCategory": "Delete this category? All associated forums will be deleted.",
+    "errorDeletingCategory": "Error deleting category",
+    "categoryDeleted": "Category deleted",
+    "confirmDeleteForum": "Delete this forum? All associated threads will be deleted.",
+    "errorDeletingForum": "Error deleting forum",
+    "forumDeleted": "Forum deleted"
+  },
+  "adminBadges": {
+    "title": "Badge Management",
+    "description": "Create and assign custom badges",
+    "backToPanel": "← Back to panel",
+    "newBadge": "New Badge",
+    "createNewBadge": "Create New Badge",
+    "internalName": "Internal name",
+    "displayName": "Display name",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "Badge description...",
+    "icon": "Icon",
+    "color": "Color",
+    "type": "Type",
+    "colorPurple": "Purple",
+    "colorGreen": "Green",
+    "colorBlue": "Blue",
+    "colorYellow": "Yellow",
+    "colorRed": "Red",
+    "colorOrange": "Orange",
+    "colorPink": "Pink",
+    "colorFuchsia": "Fuchsia",
+    "typePositive": "Positive",
+    "typeNegative": "Negative",
+    "typeNeutral": "Neutral",
+    "typeSpecial": "Special",
+    "whoCanAssign": "Who can assign?",
+    "anyMod": "Any moderator",
+    "superModOrAdmin": "Super mod or Admin",
+    "adminOnly": "Admin only",
+    "cancel": "Cancel",
+    "createBadge": "Create Badge",
+    "editBadge": "Edit Badge",
+    "save": "Save",
+    "assignBadge": "Assign Badge",
+    "assignBadgeToUser": "Assign Badge to User",
+    "user": "User",
+    "usernamePlaceholder": "Username",
+    "badge": "Badge",
+    "selectBadge": "Select badge",
+    "reasonOptional": "Reason (optional)",
+    "reasonPlaceholder": "Reason for assigning this badge...",
+    "assign": "Assign",
+    "assignments": "Assignments",
+    "availableBadges": "Available Badges",
+    "searchPlaceholder": "Search by username...",
+    "search": "Search",
+    "loading": "Loading...",
+    "noAssignments": "No badges assigned",
+    "reason": "Reason",
+    "assignedBy": "Assigned by",
+    "removeBadge": "Remove badge",
+    "assignableBy": "Assignable by",
+    "moderators": "Moderators",
+    "superMods": "Super Mods",
+    "admins": "Admins",
+    "deactivate": "Deactivate",
+    "activate": "Activate",
+    "nameAndDisplayRequired": "Name and display name are required",
+    "errorCreating": "Error creating badge",
+    "badgeCreated": "Badge created",
+    "errorUpdating": "Error updating badge",
+    "badgeUpdated": "Badge updated",
+    "confirmDelete": "Delete this badge? It will be removed from all users.",
+    "errorDeleting": "Error deleting badge",
+    "badgeDeleted": "Badge deleted",
+    "userAndBadgeRequired": "User and badge are required",
+    "userNotFound": "User not found",
+    "userAlreadyHasBadge": "User already has this badge",
+    "errorAssigning": "Error assigning badge",
+    "badgeAssigned": "Badge assigned",
+    "badgeRemoved": "Badge removed"
+  },
+  "serverErrors": {
+    "loginRequiredThread": "You must log in to create a thread",
+    "loginRequiredReply": "You must log in to reply",
+    "indefinitely": "indefinitely",
+    "accountSuspendedUntil": "Your account is suspended until",
+    "accountSuspended": "Your account is suspended",
+    "spamDetected": "Content detected as spam",
+    "tooManyLinks5": "Too many links in content (maximum 5)",
+    "tooManyLinks3": "Too many links (maximum 3 in replies)",
+    "forumNotFound": "Forum not found",
+    "forumRequiresVerification": "This forum requires verification. Request verification on your profile.",
+    "errorCreatingThread": "Error creating thread",
+    "errorCreatingThreadContent": "Error creating thread content",
+    "unexpectedErrorThread": "Unexpected error creating thread",
+    "threadNotFound": "Thread not found",
+    "threadLocked": "This thread is locked",
+    "errorCreatingReply": "Error creating reply",
+    "unexpectedErrorReply": "Unexpected error creating reply",
+    "postNotFound": "Post not found",
+    "cantThankOwnPost": "You cannot thank your own post",
+    "errorRemovingThanks": "Error removing thanks",
+    "errorAddingThanks": "Error adding thanks",
+    "contentEmpty": "Content cannot be empty",
+    "contentTooLong": "Content too long (maximum 50000 characters)",
+    "noEditPermission": "You don't have permission to edit this post"
+  }
+}
