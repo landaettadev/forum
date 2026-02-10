@@ -33,11 +33,11 @@ export function HomeContent({ countriesByContinent, userCountrySlug, userCountry
 
   return (
     <>
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold mb-3 bg-gradient-to-r from-[hsl(var(--forum-accent))] to-[hsl(var(--forum-accent-hover))] bg-clip-text text-transparent">
+      <div className="mb-8 forum-hero-gradient rounded-2xl p-6 sm:p-8">
+        <h1 className="text-4xl sm:text-5xl font-extrabold mb-3 forum-gradient-text">
           TransForo
         </h1>
-        <p className="text-lg forum-text-secondary leading-relaxed">
+        <p className="text-base sm:text-lg forum-text-secondary leading-relaxed max-w-2xl">
           {t('description')}
         </p>
       </div>

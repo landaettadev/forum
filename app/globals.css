@@ -11,85 +11,91 @@
     --card-foreground: 222 47% 11%;
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
-    --primary: 271 81% 56%;
+    --primary: 263 70% 50%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 214 32% 91%;
+    --secondary: 220 14% 96%;
     --secondary-foreground: 222 47% 11%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
-    --accent: 271 81% 56%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
+    --accent: 263 70% 50%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 271 81% 56%;
-    --radius: 0.5rem;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 263 70% 50%;
+    --radius: 0.75rem;
 
-    /* Forum Custom Variables - Elegant Light Theme */
-    --forum-bg: 210 40% 98%;
+    /* Forum Custom Variables - Modern Light Theme */
+    --forum-bg: 225 25% 97%;
     --forum-surface: 0 0% 100%;
-    --forum-surface-alt: 210 40% 98%;
-    --forum-surface-hover: 210 40% 96%;
-    --forum-border: 214 32% 91%;
-    --forum-text-primary: 222 47% 11%;
-    --forum-text-secondary: 215 25% 27%;
-    --forum-text-muted: 215 16% 47%;
-    --forum-link: 217 91% 60%;
-    --forum-link-hover: 217 91% 50%;
-    --forum-link-visited: 271 76% 53%;
-    --forum-accent: 271 81% 56%;
-    --forum-accent-hover: 271 81% 46%;
-    --forum-accent-muted: 271 81% 56% / 0.12;
-    --forum-online: 142 71% 45%;
+    --forum-surface-alt: 225 20% 96%;
+    --forum-surface-hover: 225 20% 93%;
+    --forum-border: 220 13% 91%;
+    --forum-text-primary: 224 71% 4%;
+    --forum-text-secondary: 220 9% 36%;
+    --forum-text-muted: 220 9% 56%;
+    --forum-link: 263 70% 50%;
+    --forum-link-hover: 263 70% 40%;
+    --forum-link-visited: 280 60% 45%;
+    --forum-accent: 263 70% 50%;
+    --forum-accent-hover: 263 70% 42%;
+    --forum-accent-muted: 263 70% 50% / 0.08;
+    --forum-accent-glow: 263 70% 50% / 0.15;
+    --forum-gradient-from: 263 70% 50%;
+    --forum-gradient-to: 230 80% 56%;
+    --forum-online: 152 69% 40%;
     --forum-mod: 24 95% 53%;
-    --forum-admin: 0 84% 60%;
-    --forum-vip: 45 93% 47%;
+    --forum-admin: 0 72% 51%;
+    --forum-vip: 43 96% 56%;
     --forum-verified: 199 89% 48%;
   }
 
   .dark {
     /* Shadcn UI variables - Dark Theme */
-    --background: 222 47% 11%;
-    --foreground: 210 40% 98%;
-    --card: 217 33% 17%;
-    --card-foreground: 210 40% 98%;
-    --popover: 217 33% 17%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 271 81% 56%;
+    --background: 228 25% 8%;
+    --foreground: 220 20% 95%;
+    --card: 227 22% 11%;
+    --card-foreground: 220 20% 95%;
+    --popover: 227 22% 11%;
+    --popover-foreground: 220 20% 95%;
+    --primary: 263 70% 58%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 217 19% 27%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217 19% 27%;
-    --muted-foreground: 215 20% 65%;
-    --accent: 271 81% 56%;
+    --secondary: 225 15% 16%;
+    --secondary-foreground: 220 20% 95%;
+    --muted: 225 15% 16%;
+    --muted-foreground: 220 13% 55%;
+    --accent: 263 70% 58%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217 19% 27%;
-    --input: 217 19% 27%;
-    --ring: 271 81% 56%;
+    --destructive-foreground: 220 20% 95%;
+    --border: 225 15% 16%;
+    --input: 225 15% 16%;
+    --ring: 263 70% 58%;
 
-    /* Forum Custom Variables - Elegant Dark Theme */
-    --forum-bg: 222 47% 11%;
-    --forum-surface: 217 33% 17%;
-    --forum-surface-alt: 217 19% 27%;
-    --forum-surface-hover: 217 19% 32%;
-    --forum-border: 217 19% 27%;
-    --forum-text-primary: 210 40% 98%;
-    --forum-text-secondary: 215 20% 65%;
-    --forum-text-muted: 215 16% 47%;
-    --forum-link: 217 91% 60%;
-    --forum-link-hover: 217 91% 70%;
-    --forum-link-visited: 271 76% 70%;
-    --forum-accent: 271 81% 56%;
-    --forum-accent-hover: 271 81% 66%;
-    --forum-accent-muted: 271 81% 56% / 0.15;
-    --forum-online: 142 71% 45%;
+    /* Forum Custom Variables - Modern Dark Theme */
+    --forum-bg: 228 25% 8%;
+    --forum-surface: 227 22% 11%;
+    --forum-surface-alt: 225 18% 14%;
+    --forum-surface-hover: 225 18% 18%;
+    --forum-border: 225 15% 16%;
+    --forum-text-primary: 220 20% 95%;
+    --forum-text-secondary: 220 13% 65%;
+    --forum-text-muted: 220 10% 45%;
+    --forum-link: 263 70% 65%;
+    --forum-link-hover: 263 70% 75%;
+    --forum-link-visited: 280 60% 68%;
+    --forum-accent: 263 70% 58%;
+    --forum-accent-hover: 263 70% 68%;
+    --forum-accent-muted: 263 70% 58% / 0.12;
+    --forum-accent-glow: 263 70% 58% / 0.2;
+    --forum-gradient-from: 263 70% 58%;
+    --forum-gradient-to: 230 80% 62%;
+    --forum-online: 152 69% 45%;
     --forum-mod: 24 95% 53%;
-    --forum-admin: 0 84% 60%;
-    --forum-vip: 45 93% 47%;
-    --forum-verified: 199 89% 48%;
+    --forum-admin: 0 72% 56%;
+    --forum-vip: 43 96% 56%;
+    --forum-verified: 199 89% 55%;
   }
 }
 
@@ -104,8 +110,9 @@
 
   body {
     @apply bg-[hsl(var(--forum-bg))] text-[hsl(var(--forum-text-primary))] antialiased;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Helvetica Neue', Arial, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Helvetica Neue', Arial, sans-serif;
     font-feature-settings: 'rlig' 1, 'calt' 1;
+    letter-spacing: -0.011em;
   }
 
   a {
@@ -114,18 +121,39 @@
 
   h1, h2, h3, h4, h5, h6 {
     @apply tracking-tight;
+    letter-spacing: -0.025em;
+  }
+
+  ::selection {
+    background: hsl(var(--forum-accent) / 0.25);
   }
 }
 
 @layer components {
+  /* --- Glass surfaces --- */
   .forum-surface {
-    @apply bg-[hsl(var(--forum-surface))] border border-[hsl(var(--forum-border))] rounded;
+    @apply bg-[hsl(var(--forum-surface))] rounded-xl;
+    border: 1px solid hsl(var(--forum-border) / 0.6);
+    box-shadow:
+      0 0 0 1px hsl(var(--forum-border) / 0.05),
+      0 1px 2px hsl(var(--forum-border) / 0.08),
+      0 4px 16px hsl(var(--forum-border) / 0.04);
+  }
+
+  .forum-surface-glass {
+    @apply backdrop-blur-xl rounded-xl;
+    background: hsl(var(--forum-surface) / 0.7);
+    border: 1px solid hsl(var(--forum-border) / 0.4);
+    box-shadow:
+      0 0 0 1px hsl(var(--forum-border) / 0.03),
+      0 4px 24px hsl(var(--forum-bg) / 0.15);
   }
 
   .forum-surface-alt {
     @apply bg-[hsl(var(--forum-surface-alt))];
   }
 
+  /* --- Text helpers --- */
   .forum-text-muted {
     @apply text-[hsl(var(--forum-text-muted))];
   }
@@ -134,23 +162,138 @@
     @apply text-[hsl(var(--forum-text-secondary))];
   }
 
+  /* --- Gradient text --- */
+  .forum-gradient-text {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(
+      135deg,
+      hsl(var(--forum-gradient-from)),
+      hsl(var(--forum-gradient-to))
+    );
+  }
+
+  /* --- Gradient border glow --- */
+  .forum-glow {
+    box-shadow:
+      0 0 20px hsl(var(--forum-accent-glow)),
+      0 0 60px hsl(var(--forum-accent-glow));
+  }
+
+  .forum-glow-sm {
+    box-shadow: 0 0 12px hsl(var(--forum-accent-glow));
+  }
+
+  /* --- Badges --- */
   .badge-admin {
-    @apply bg-[hsl(var(--forum-admin))] text-white text-xs px-2 py-0.5 rounded font-semibold;
+    @apply text-white text-[10px] px-2 py-0.5 rounded-full font-semibold tracking-wide uppercase;
+    background: linear-gradient(135deg, hsl(var(--forum-admin)), hsl(0 72% 42%));
   }
 
   .badge-mod {
-    @apply bg-[hsl(var(--forum-mod))] text-white text-xs px-2 py-0.5 rounded font-semibold;
+    @apply text-white text-[10px] px-2 py-0.5 rounded-full font-semibold tracking-wide uppercase;
+    background: linear-gradient(135deg, hsl(var(--forum-mod)), hsl(30 90% 45%));
   }
 
   .badge-vip {
-    @apply bg-[hsl(var(--forum-vip))] text-white text-xs px-2 py-0.5 rounded font-semibold;
+    @apply text-[10px] px-2 py-0.5 rounded-full font-semibold tracking-wide uppercase;
+    background: linear-gradient(135deg, hsl(43 96% 56%), hsl(35 100% 50%));
+    color: #1a1000;
   }
 
   .badge-verified {
-    @apply bg-[hsl(var(--forum-verified))] text-white text-xs px-2 py-0.5 rounded font-semibold;
+    @apply text-white text-[10px] px-2 py-0.5 rounded-full font-semibold tracking-wide uppercase;
+    background: linear-gradient(135deg, hsl(var(--forum-verified)), hsl(210 80% 45%));
   }
 
   .online-indicator {
     @apply w-2 h-2 rounded-full bg-[hsl(var(--forum-online))];
+    box-shadow: 0 0 6px hsl(var(--forum-online) / 0.6);
   }
+
+  /* --- Hover card lift --- */
+  .forum-card-hover {
+    @apply transition-all duration-300 ease-out;
+  }
+  .forum-card-hover:hover {
+    transform: translateY(-1px);
+    box-shadow:
+      0 4px 12px hsl(var(--forum-border) / 0.12),
+      0 1px 3px hsl(var(--forum-border) / 0.08);
+  }
+
+  /* --- Accent gradient button --- */
+  .forum-btn-gradient {
+    @apply text-white font-semibold rounded-xl px-5 py-2.5 transition-all duration-300;
+    background: linear-gradient(
+      135deg,
+      hsl(var(--forum-gradient-from)),
+      hsl(var(--forum-gradient-to))
+    );
+  }
+  .forum-btn-gradient:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 4px 20px hsl(var(--forum-accent-glow));
+    transform: translateY(-1px);
+  }
+
+  /* --- Subtle animated gradient bg for hero sections --- */
+  .forum-hero-gradient {
+    background: linear-gradient(
+      135deg,
+      hsl(var(--forum-accent) / 0.05) 0%,
+      hsl(var(--forum-gradient-to) / 0.03) 50%,
+      transparent 100%
+    );
+  }
+}
+
+/* --- Smooth fade-in animation --- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 8px hsl(var(--forum-accent-glow)); }
+  50% { box-shadow: 0 0 20px hsl(var(--forum-accent-glow)); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out both;
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    hsl(var(--forum-surface-alt)) 25%,
+    hsl(var(--forum-surface-hover)) 50%,
+    hsl(var(--forum-surface-alt)) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* --- Scrollbar styling --- */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(var(--forum-bg));
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--forum-border));
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--forum-text-muted));
 }

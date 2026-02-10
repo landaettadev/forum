@@ -98,11 +98,13 @@ export function CountryRow({ countries, title, highlighted = false }: CountryRow
   };
 
   return (
-    <div className={`forum-surface mb-6 overflow-hidden rounded-lg border border-[hsl(var(--forum-border))] ${highlighted ? 'ring-2 ring-[hsl(var(--forum-accent))] ring-offset-2' : ''}`}>
+    <div className={`forum-surface mb-6 overflow-hidden ${highlighted ? 'ring-2 ring-[hsl(var(--forum-accent))] ring-offset-2 ring-offset-[hsl(var(--forum-bg))]' : ''}`}>
       {title && (
-        <div className="flex items-center gap-2 px-5 py-3 bg-[hsl(var(--forum-surface-alt))] border-b border-[hsl(var(--forum-border))]">
-          <Globe className="h-5 w-5 text-[hsl(var(--forum-accent))]" />
-          <h2 className="font-bold text-sm tracking-wide uppercase forum-text">{title}</h2>
+        <div className="flex items-center gap-2.5 px-5 py-3 border-b border-[hsl(var(--forum-border))]/60">
+          <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ background: 'linear-gradient(135deg, hsl(var(--forum-gradient-from) / 0.15), hsl(var(--forum-gradient-to) / 0.1))' }}>
+            <Globe className="h-3.5 w-3.5 text-[hsl(var(--forum-accent))]" />
+          </div>
+          <h2 className="font-bold text-xs tracking-wider uppercase forum-text-secondary">{title}</h2>
         </div>
       )}
 
@@ -113,10 +115,10 @@ export function CountryRow({ countries, title, highlighted = false }: CountryRow
             <Link
               key={country.id}
               href={`/foros/${country.slug}`}
-              className="flex items-center px-5 py-4 hover:bg-[hsl(var(--forum-surface-hover))] transition-colors group gap-4"
+              className="flex items-center px-5 py-4 hover:bg-[hsl(var(--forum-surface-hover))] transition-all duration-200 group gap-4"
             >
               {/* Flag image */}
-              <div className="flex-shrink-0 w-10 h-7 relative overflow-hidden rounded shadow-sm group-hover:scale-105 transition-transform">
+              <div className="flex-shrink-0 w-10 h-7 relative overflow-hidden rounded-md shadow-sm group-hover:scale-110 transition-transform duration-300">
                 {flagUrl ? (
                   <img
                     src={flagUrl}
@@ -133,21 +135,21 @@ export function CountryRow({ countries, title, highlighted = false }: CountryRow
 
               {/* Country info */}
               <div className="flex-1 min-w-0">
-                <h3 className="font-bold text-[15px] group-hover:text-[hsl(var(--forum-accent))] transition-colors line-clamp-1">
+                <h3 className="font-semibold text-[15px] group-hover:text-[hsl(var(--forum-accent))] transition-colors line-clamp-1">
                   {getCountryName(country)}
                 </h3>
                 {country.regions && country.regions.length > 0 && (
-                  <div className="flex items-center gap-1.5 mt-1 flex-wrap">
+                  <div className="flex items-center gap-1 mt-1.5 flex-wrap">
                     {country.regions.slice(0, 6).map((r) => (
                       <span
                         key={r.slug}
-                        className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium bg-[hsl(var(--forum-surface-alt))] forum-text-muted border border-[hsl(var(--forum-border))]"
+                        className="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-medium bg-[hsl(var(--forum-accent-muted))] text-[hsl(var(--forum-accent))] border border-[hsl(var(--forum-accent))]/10"
                       >
                         {r.name}
                       </span>
                     ))}
                     {country.regions.length > 6 && (
-                      <span className="text-[10px] forum-text-muted">
+                      <span className="text-[10px] forum-text-muted font-medium">
                         +{country.regions.length - 6}
                       </span>
                     )}

@@ -11,7 +11,7 @@ export function Footer() {
   return (
     <>
     <OnlineUsersBar />
-    <footer className="forum-surface border-t border-[hsl(var(--forum-border))] mt-0">
+    <footer className="bg-[hsl(var(--forum-surface))] border-t border-[hsl(var(--forum-border))]/50 mt-0">
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="flex justify-center mb-6">
           <BannerSlot position="footer" />
@@ -19,7 +19,7 @@ export function Footer() {
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <div className="text-xl font-bold bg-gradient-to-r from-[hsl(var(--forum-accent))] to-[hsl(var(--forum-accent-hover))] bg-clip-text text-transparent mb-4">
+            <div className="text-xl font-extrabold forum-gradient-text mb-4">
               TransForo
             </div>
             <p className="text-sm forum-text-muted">
@@ -95,7 +95,7 @@ export function Footer() {
           <BannerSlot position="footer" />
         </div>
 
-        <div className="border-t border-[hsl(var(--forum-border))] pt-6 mt-6 text-center text-sm forum-text-muted">
+        <div className="border-t border-[hsl(var(--forum-border))]/50 pt-6 mt-6 text-center text-sm forum-text-muted">
           <p>&copy; {new Date().getFullYear()} TransForo. {t('footer.rights')}</p>
         </div>
       </div>

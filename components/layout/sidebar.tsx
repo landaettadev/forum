@@ -60,42 +60,42 @@ export function Sidebar({ countrySlug, countryName }: SidebarProps = {}) {
   return (
     <aside className="w-64 flex-shrink-0 space-y-4">
       <div className="forum-surface p-4">
-        <h3 className="font-semibold mb-3 text-sm">{t('forumStats')}</h3>
-        <div className="space-y-2 text-sm">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 forum-text-secondary">
-              <Users className="h-4 w-4" />
-              <span>{t('totalUsers')}</span>
+        <h3 className="font-semibold mb-3 text-xs tracking-wider uppercase forum-text-muted">{t('forumStats')}</h3>
+        <div className="grid grid-cols-2 gap-2">
+          <div className="p-2.5 rounded-lg bg-[hsl(var(--forum-surface-alt))]">
+            <div className="flex items-center gap-1.5 mb-1">
+              <Users className="h-3 w-3 forum-text-muted" />
+              <span className="text-[10px] forum-text-muted">{t('totalUsers')}</span>
             </div>
-            <span className="font-semibold">{stats.totalUsers.toLocaleString()}</span>
+            <div className="text-lg font-bold">{stats.totalUsers.toLocaleString()}</div>
           </div>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 forum-text-secondary">
-              <FileText className="h-4 w-4" />
-              <span>{t('totalThreads')}</span>
+          <div className="p-2.5 rounded-lg bg-[hsl(var(--forum-surface-alt))]">
+            <div className="flex items-center gap-1.5 mb-1">
+              <FileText className="h-3 w-3 forum-text-muted" />
+              <span className="text-[10px] forum-text-muted">{t('totalThreads')}</span>
             </div>
-            <span className="font-semibold">{stats.totalThreads.toLocaleString()}</span>
+            <div className="text-lg font-bold">{stats.totalThreads.toLocaleString()}</div>
           </div>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 forum-text-secondary">
-              <MessageSquare className="h-4 w-4" />
-              <span>{t('totalPosts')}</span>
+          <div className="p-2.5 rounded-lg bg-[hsl(var(--forum-surface-alt))]">
+            <div className="flex items-center gap-1.5 mb-1">
+              <MessageSquare className="h-3 w-3 forum-text-muted" />
+              <span className="text-[10px] forum-text-muted">{t('totalPosts')}</span>
             </div>
-            <span className="font-semibold">{stats.totalPosts.toLocaleString()}</span>
+            <div className="text-lg font-bold">{stats.totalPosts.toLocaleString()}</div>
           </div>
-          <div className="flex items-center justify-between pt-2 border-t border-[hsl(var(--forum-border))]">
-            <div className="flex items-center gap-2 forum-text-secondary">
+          <div className="p-2.5 rounded-lg bg-[hsl(var(--forum-surface-alt))]">
+            <div className="flex items-center gap-1.5 mb-1">
               <div className="online-indicator"></div>
-              <span>{t('onlineNow')}</span>
+              <span className="text-[10px] forum-text-muted">{t('onlineNow')}</span>
             </div>
-            <span className="font-semibold text-[hsl(var(--forum-online))]">{stats.onlineUsers}</span>
+            <div className="text-lg font-bold text-[hsl(var(--forum-online))]">{stats.onlineUsers}</div>
           </div>
         </div>
       </div>
 
       <div className="forum-surface p-4">
-        <h3 className="font-semibold mb-3 text-sm flex items-center gap-2">
-          <Clock className="h-4 w-4" />
+        <h3 className="font-semibold mb-3 text-xs tracking-wider uppercase forum-text-muted flex items-center gap-2">
+          <Clock className="h-3.5 w-3.5" />
           {t('recentActivity')}
         </h3>
         <div className="space-y-2 text-xs forum-text-secondary">
@@ -106,8 +106,8 @@ export function Sidebar({ countrySlug, countryName }: SidebarProps = {}) {
       <LeaderboardWidget countrySlug={countrySlug} countryName={countryName} />
 
       <div className="forum-surface p-4">
-        <h3 className="font-semibold mb-3 text-sm">{t('usefulLinks')}</h3>
-        <div className="space-y-2 text-sm">
+        <h3 className="font-semibold mb-3 text-xs tracking-wider uppercase forum-text-muted">{t('usefulLinks')}</h3>
+        <div className="space-y-1.5 text-sm">
           <Link href="/reglas" className="block hover:text-[hsl(var(--forum-accent))] transition-colors">
             {t('rules')}
           </Link>

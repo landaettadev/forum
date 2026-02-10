@@ -21,34 +21,37 @@ export function Header() {
   };
 
   return (
-    <header className="forum-surface border-b border-[hsl(var(--forum-border))] sticky top-0 z-50 backdrop-blur-lg bg-[hsl(var(--forum-surface))]/95 shadow-sm">
+    <header className="sticky top-0 z-50 backdrop-blur-xl border-b border-[hsl(var(--forum-border))]/50" style={{ background: 'hsl(var(--forum-surface) / 0.8)' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-8">
-            <Link href="/" className="flex items-center gap-2 group">
-              <div className="text-2xl font-bold bg-gradient-to-r from-[hsl(var(--forum-accent))] to-[hsl(var(--forum-accent-hover))] bg-clip-text text-transparent group-hover:opacity-80 transition-opacity">
+            <Link href="/" className="flex items-center gap-2.5 group">
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center forum-btn-gradient group-hover:scale-105 transition-transform">
+                <span className="text-white font-black text-sm">T</span>
+              </div>
+              <div className="text-xl font-extrabold forum-gradient-text tracking-tight">
                 TransForo
               </div>
             </Link>
 
-            <nav className="hidden md:flex items-center gap-6">
-              <Link href="/" className="text-sm font-medium hover:text-[hsl(var(--forum-accent))] transition-all hover:scale-105">
+            <nav className="hidden md:flex items-center gap-1">
+              <Link href="/" className="text-sm font-medium px-3 py-1.5 rounded-lg hover:bg-[hsl(var(--forum-accent-muted))] hover:text-[hsl(var(--forum-accent))] transition-all">
                 {t('common.home')}
               </Link>
-              <Link href="/anuncios" className="text-sm font-medium hover:text-[hsl(var(--forum-accent))] transition-all hover:scale-105 flex items-center gap-1">
-                <Megaphone className="w-4 h-4" />
+              <Link href="/anuncios" className="text-sm font-medium px-3 py-1.5 rounded-lg hover:bg-[hsl(var(--forum-accent-muted))] hover:text-[hsl(var(--forum-accent))] transition-all flex items-center gap-1.5">
+                <Megaphone className="w-3.5 h-3.5" />
                 {t('nav.ads')}
               </Link>
-              <Link href="/buscar" className="text-sm font-medium hover:text-[hsl(var(--forum-accent))] transition-all hover:scale-105">
+              <Link href="/buscar" className="text-sm font-medium px-3 py-1.5 rounded-lg hover:bg-[hsl(var(--forum-accent-muted))] hover:text-[hsl(var(--forum-accent))] transition-all">
                 {t('common.search')}
               </Link>
-              <Link href="/reglas" className="text-sm font-medium hover:text-[hsl(var(--forum-accent))] transition-all hover:scale-105">
+              <Link href="/reglas" className="text-sm font-medium px-3 py-1.5 rounded-lg hover:bg-[hsl(var(--forum-accent-muted))] hover:text-[hsl(var(--forum-accent))] transition-all">
                 {t('nav.rules')}
               </Link>
             </nav>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <ThemeToggle />
             <LanguageSwitcher />
 
@@ -57,7 +60,7 @@ export function Header() {
               <Input
                 type="search"
                 placeholder={t('search.placeholder')}
-                className="pl-9 w-64 bg-[hsl(var(--forum-surface-alt))] border-[hsl(var(--forum-border))]"
+                className="pl-9 w-56 h-9 rounded-lg bg-[hsl(var(--forum-surface-alt))] border-[hsl(var(--forum-border))]/50 focus:border-[hsl(var(--forum-accent))]/50 focus:ring-[hsl(var(--forum-accent))]/20 text-sm"
               />
             </div>
 
@@ -139,10 +142,10 @@ export function Header() {
               </>
             ) : (
               <div className="flex items-center gap-2">
-                <Button variant="ghost" asChild>
+                <Button variant="ghost" asChild className="rounded-lg text-sm">
                   <Link href="/login">{t('common.login')}</Link>
                 </Button>
-                <Button asChild className="bg-[hsl(var(--forum-accent))] hover:bg-[hsl(var(--forum-accent-hover))] text-white">
+                <Button asChild className="forum-btn-gradient text-sm h-9 rounded-lg">
                   <Link href="/registro">{t('common.register')}</Link>
                 </Button>
               </div>
