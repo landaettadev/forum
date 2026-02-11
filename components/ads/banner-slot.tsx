@@ -7,8 +7,25 @@ import type { BannerPosition, BannerFormat } from '@/lib/supabase';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 
-// Cache to avoid repeated 404s when banner tables don't exist yet
-let bannerSystemAvailable: boolean | null = null;
+// Shared promise so only ONE request ever checks if banner tables exist.
+// All concurrent BannerSlot components will await the same promise.
+let bannerCheckPromise: Promise<boolean> | null = null;
+
+async function isBannerSystemAvailable(): Promise<boolean> {
+  if (bannerCheckPromise) return bannerCheckPromise;
+  bannerCheckPromise = supabase
+    .from('banner_ad_zones')
+    .select('id', { count: 'exact', head: true })
+    .limit(0)
+    .then(({ error }) => {
+      if (error && (error.code === '42P01' || error.message?.includes('404') || error.code === 'PGRST116')) {
+        return false;
+      }
+      return !error;
+    })
+    .catch(() => false);
+  return bannerCheckPromise;
+}
 
 // Maps legacy position names to new BannerPosition values
 const POSITION_MAP: Record<string, { bannerPos: BannerPosition; format: BannerFormat }> = {
@@ -60,8 +77,9 @@ export function BannerSlot({ position, zoneType, countryId, regionId, className 
 
   const fetchBanner = async () => {
     try {
-      // Skip entirely if we already know the table doesn't exist
-      if (bannerSystemAvailable === false) {
+      // Single shared check — only one network request ever made
+      const available = await isBannerSystemAvailable();
+      if (!available) {
         setState({ type: 'placeholder' });
         return;
       }
@@ -82,10 +100,6 @@ export function BannerSlot({ position, zoneType, countryId, regionId, className 
 
       const { data: zone, error: zoneError } = await zoneQuery.single();
       if (zoneError) {
-        // 404 = table doesn't exist yet; cache so we don't retry
-        if (zoneError.code === 'PGRST116' || zoneError.message?.includes('404') || zoneError.code === '42P01') {
-          bannerSystemAvailable = false;
-        }
         setState({ type: 'placeholder' });
         return;
       }
@@ -93,7 +107,6 @@ export function BannerSlot({ position, zoneType, countryId, regionId, className 
         setState({ type: 'placeholder' });
         return;
       }
-      bannerSystemAvailable = true;
 
       // 2. Check for active booking
       const { data: bookingRows } = await supabase.rpc('get_active_banner', {
