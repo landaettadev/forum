@@ -838,8 +838,15 @@
     "noUsersConnected": "कोई उपयोगकर्ता कनेक्ट नहीं",
     "topReputation": "शीर्ष प्रतिष्ठा",
     "noReputationData": "कोई प्रतिष्ठा डेटा नहीं",
+    "moderators": "मॉडरेटर",
+    "noModerators": "कोई मॉडरेटर नियुक्त नहीं",
+    "advertising": "विज्ञापन",
     "adminRole": "व्यवस्थापक",
     "modRole": "मॉडरेटर"
+  },
+  "banners": {
+    "adSpace": "विज्ञापन स्थान",
+    "advertiseHere": "यहाँ विज्ञापन दें"
   },
   "footer": {
     "description": "अनुभव साझा करने और जुड़ने के लिए पेशेवर समुदाय।",

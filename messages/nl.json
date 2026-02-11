@@ -838,8 +838,15 @@
     "noUsersConnected": "Geen gebruikers verbonden",
     "topReputation": "Top Reputatie",
     "noReputationData": "Geen reputatiegegevens",
+    "moderators": "Moderatoren",
+    "noModerators": "Geen moderatoren toegewezen",
+    "advertising": "Adverteren",
     "adminRole": "Admin",
     "modRole": "Mod"
+  },
+  "banners": {
+    "adSpace": "Advertentieruimte",
+    "advertiseHere": "Adverteer hier"
   },
   "footer": {
     "description": "Professionele community om ervaringen te delen en te verbinden.",

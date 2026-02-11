@@ -838,8 +838,15 @@
     "noUsersConnected": "接続中のユーザーなし",
     "topReputation": "トップレピュテーション",
     "noReputationData": "レピュテーションデータなし",
+    "moderators": "モデレーター",
+    "noModerators": "モデレーターが割り当てられていません",
+    "advertising": "広告",
     "adminRole": "管理者",
     "modRole": "モデレーター"
+  },
+  "banners": {
+    "adSpace": "広告スペース",
+    "advertiseHere": "ここに広告を掲載"
   },
   "footer": {
     "description": "経験を共有しつながるプロフェッショナルコミュニティ。",

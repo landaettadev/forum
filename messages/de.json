@@ -838,8 +838,15 @@
     "noUsersConnected": "Keine Benutzer verbunden",
     "topReputation": "Top Reputation",
     "noReputationData": "Keine Reputationsdaten",
+    "moderators": "Moderatoren",
+    "noModerators": "Keine Moderatoren zugewiesen",
+    "advertising": "Werbung",
     "adminRole": "Admin",
     "modRole": "Mod"
+  },
+  "banners": {
+    "adSpace": "Werbefläche",
+    "advertiseHere": "Hier werben"
   },
   "footer": {
     "description": "Professionelle Community zum Austausch von Erfahrungen.",

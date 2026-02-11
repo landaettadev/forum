@@ -838,8 +838,15 @@
     "noUsersConnected": "Нет подключённых пользователей",
     "topReputation": "Топ репутации",
     "noReputationData": "Нет данных о репутации",
+    "moderators": "Модераторы",
+    "noModerators": "Модераторы не назначены",
+    "advertising": "Реклама",
     "adminRole": "Админ",
     "modRole": "Мод"
+  },
+  "banners": {
+    "adSpace": "Рекламное место",
+    "advertiseHere": "Разместите рекламу здесь"
   },
   "footer": {
     "description": "Профессиональное сообщество для обмена опытом.",

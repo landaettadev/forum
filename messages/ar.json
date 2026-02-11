@@ -838,8 +838,15 @@
     "noUsersConnected": "لا يوجد مستخدمون متصلون",
     "topReputation": "أعلى سمعة",
     "noReputationData": "لا توجد بيانات سمعة",
+    "moderators": "المشرفون",
+    "noModerators": "لا يوجد مشرفون معينون",
+    "advertising": "إعلانات",
     "adminRole": "مدير",
     "modRole": "مشرف"
+  },
+  "banners": {
+    "adSpace": "مساحة إعلانية",
+    "advertiseHere": "أعلن هنا"
   },
   "footer": {
     "description": "مجتمع مهني لمشاركة التجارب والتواصل.",

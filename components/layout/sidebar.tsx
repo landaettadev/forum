@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { supabase } from '@/lib/supabase';
-import { Users, MessageSquare, FileText, Clock, Trophy, Megaphone } from 'lucide-react';
-import { LeaderboardWidget } from './leaderboard-widget';
+import { Users, MessageSquare, FileText, Clock, Megaphone } from 'lucide-react';
+import { ModeratorsWidget } from './moderators-widget';
 
 type ForumStats = {
   totalUsers: number;
@@ -103,7 +103,7 @@ export function Sidebar({ countrySlug, countryName }: SidebarProps = {}) {
         </div>
       </div>
 
-      <LeaderboardWidget countrySlug={countrySlug} countryName={countryName} />
+      <ModeratorsWidget />
 
       <div className="forum-surface p-4">
         <h3 className="font-semibold mb-3 text-xs tracking-wider uppercase forum-text-muted">{t('usefulLinks')}</h3>
@@ -128,7 +128,7 @@ export function Sidebar({ countrySlug, countryName }: SidebarProps = {}) {
           </Link>
           <Link href="/publicidad" className="flex items-center gap-2 hover:text-[hsl(var(--forum-accent))] transition-colors font-medium text-[hsl(var(--forum-accent))]">
             <Megaphone className="h-3.5 w-3.5" />
-            Publicidad
+            {t('advertising')}
           </Link>
         </div>
       </div>

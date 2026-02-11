@@ -838,8 +838,15 @@
     "noUsersConnected": "Brak połączonych użytkowników",
     "topReputation": "Top Reputacja",
     "noReputationData": "Brak danych reputacji",
+    "moderators": "Moderatorzy",
+    "noModerators": "Brak przypisanych moderatorów",
+    "advertising": "Reklama",
     "adminRole": "Admin",
     "modRole": "Mod"
+  },
+  "banners": {
+    "adSpace": "Przestrzeń reklamowa",
+    "advertiseHere": "Reklamuj się tutaj"
   },
   "footer": {
     "description": "Profesjonalna społeczność do dzielenia się doświadczeniami.",

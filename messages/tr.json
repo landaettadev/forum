@@ -838,8 +838,15 @@
     "noUsersConnected": "Bağlı kullanıcı yok",
     "topReputation": "En Yüksek İtibar",
     "noReputationData": "İtibar verisi yok",
+    "moderators": "Moderatörler",
+    "noModerators": "Atanmış moderatör yok",
+    "advertising": "Reklamcılık",
     "adminRole": "Yönetici",
     "modRole": "Moderatör"
+  },
+  "banners": {
+    "adSpace": "Reklam alanı",
+    "advertiseHere": "Burada reklam verin"
   },
   "footer": {
     "description": "Deneyim paylaşımı için profesyonel topluluk.",

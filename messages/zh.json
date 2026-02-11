@@ -838,8 +838,15 @@
     "noUsersConnected": "没有用户连接",
     "topReputation": "声望排行",
     "noReputationData": "暂无声望数据",
+    "moderators": "版主",
+    "noModerators": "暂无指定版主",
+    "advertising": "广告",
     "adminRole": "管理员",
     "modRole": "版主"
+  },
+  "banners": {
+    "adSpace": "广告位",
+    "advertiseHere": "在此投放广告"
   },
   "footer": {
     "description": "专业社区，分享经验并建立联系。",

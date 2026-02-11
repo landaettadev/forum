@@ -838,8 +838,15 @@
     "noUsersConnected": "ไม่มีผู้ใช้เชื่อมต่อ",
     "topReputation": "ชื่อเสียงสูงสุด",
     "noReputationData": "ไม่มีข้อมูลชื่อเสียง",
+    "moderators": "ผู้ดูแล",
+    "noModerators": "ไม่มีผู้ดูแลที่ได้รับมอบหมาย",
+    "advertising": "โฆษณา",
     "adminRole": "ผู้ดูแล",
     "modRole": "ผู้ตรวจสอบ"
+  },
+  "banners": {
+    "adSpace": "พื้นที่โฆษณา",
+    "advertiseHere": "ลงโฆษณาที่นี่"
   },
   "footer": {
     "description": "ชุมชนมืออาชีพสำหรับแบ่งปันประสบการณ์และเชื่อมต่อ",

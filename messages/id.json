@@ -838,8 +838,15 @@
     "noUsersConnected": "Tidak ada pengguna terhubung",
     "topReputation": "Reputasi Teratas",
     "noReputationData": "Tidak ada data reputasi",
+    "moderators": "Moderator",
+    "noModerators": "Tidak ada moderator ditugaskan",
+    "advertising": "Iklan",
     "adminRole": "Admin",
     "modRole": "Mod"
+  },
+  "banners": {
+    "adSpace": "Ruang iklan",
+    "advertiseHere": "Beriklan di sini"
   },
   "footer": {
     "description": "Komunitas profesional untuk berbagi pengalaman dan terhubung.",

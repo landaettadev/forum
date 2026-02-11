@@ -54,7 +54,7 @@ export default async function RootLayout({
         )}
       </head>
       <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+        <ThemeProvider attribute="class" defaultTheme="light" disableTransitionOnChange>
           <NextIntlClientProvider messages={messages}>
             <AuthProvider>
               <AnalyticsProvider>

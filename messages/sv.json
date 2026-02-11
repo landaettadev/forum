@@ -838,8 +838,15 @@
     "noUsersConnected": "Inga användare anslutna",
     "topReputation": "Topp Rykte",
     "noReputationData": "Inga ryktedata",
+    "moderators": "Moderatorer",
+    "noModerators": "Inga moderatorer tilldelade",
+    "advertising": "Annonsering",
     "adminRole": "Admin",
     "modRole": "Mod"
+  },
+  "banners": {
+    "adSpace": "Annonsplats",
+    "advertiseHere": "Annonsera här"
   },
   "footer": {
     "description": "Professionell community för att dela erfarenheter och ansluta.",

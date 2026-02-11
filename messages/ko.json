@@ -838,8 +838,15 @@
     "noUsersConnected": "연결된 사용자 없음",
     "topReputation": "상위 평판",
     "noReputationData": "평판 데이터 없음",
+    "moderators": "운영진",
+    "noModerators": "배정된 운영자가 없습니다",
+    "advertising": "광고",
     "adminRole": "관리자",
     "modRole": "운영자"
+  },
+  "banners": {
+    "adSpace": "광고 공간",
+    "advertiseHere": "여기에 광고하세요"
   },
   "footer": {
     "description": "경험을 공유하고 연결하는 전문 커뮤니티.",

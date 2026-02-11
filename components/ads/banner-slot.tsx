@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import { supabase } from '@/lib/supabase';
 import type { BannerPosition, BannerFormat } from '@/lib/supabase';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 // Cache to avoid repeated 404s when banner tables don't exist yet
 let bannerSystemAvailable: boolean | null = null;
@@ -34,6 +35,7 @@ type BannerState =
   | { type: 'placeholder' };
 
 export function BannerSlot({ position, zoneType, countryId, regionId, className }: BannerSlotProps) {
+  const t = useTranslations('banners');
   const [state, setState] = useState<BannerState>({ type: 'placeholder' });
   const tracked = useRef(false);
   const mapping = POSITION_MAP[position] || POSITION_MAP.header;
@@ -163,7 +165,7 @@ export function BannerSlot({ position, zoneType, countryId, regionId, className 
     const img = (
       <img
         src={state.imageUrl}
-        alt="Publicidad"
+        alt={t('adSpace')}
         className="w-full h-full object-contain"
         loading="lazy"
       />
@@ -206,13 +208,13 @@ export function BannerSlot({ position, zoneType, countryId, regionId, className 
       )}
     >
       <Link href="/publicidad" className="text-center text-xs forum-text-muted hover:text-[hsl(var(--forum-accent))] transition-colors">
-        <div className="font-medium">Espacio publicitario</div>
+        <div className="font-medium">{t('adSpace')}</div>
         <div className="text-[10px] opacity-70">
           {mapping.format === '728x90' && '728x90 - Leaderboard'}
           {mapping.format === '300x250' && '300x250 - Medium Rectangle'}
         </div>
         <div className="text-[10px] mt-0.5 text-[hsl(var(--forum-accent))] font-medium">
-          Anúnciate aquí
+          {t('advertiseHere')}
         </div>
       </Link>
     </div>
