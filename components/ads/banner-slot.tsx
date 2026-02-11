@@ -13,17 +13,20 @@ let bannerCheckPromise: Promise<boolean> | null = null;
 
 async function isBannerSystemAvailable(): Promise<boolean> {
   if (bannerCheckPromise) return bannerCheckPromise;
-  bannerCheckPromise = supabase
-    .from('banner_ad_zones')
-    .select('id', { count: 'exact', head: true })
-    .limit(0)
-    .then(({ error }) => {
+  bannerCheckPromise = (async () => {
+    try {
+      const { error } = await supabase
+        .from('banner_ad_zones')
+        .select('id', { count: 'exact', head: true })
+        .limit(0);
       if (error && (error.code === '42P01' || error.message?.includes('404') || error.code === 'PGRST116')) {
         return false;
       }
       return !error;
-    })
-    .catch(() => false);
+    } catch {
+      return false;
+    }
+  })();
   return bannerCheckPromise;
 }
 

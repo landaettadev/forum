@@ -38,7 +38,7 @@ export function Header() {
               <Link href="/" className="text-sm font-medium px-3 py-1.5 rounded-lg hover:bg-[hsl(var(--forum-accent-muted))] hover:text-[hsl(var(--forum-accent))] transition-all">
                 {t('common.home')}
               </Link>
-              <Link href="/anuncios" className="text-sm font-medium px-3 py-1.5 rounded-lg hover:bg-[hsl(var(--forum-accent-muted))] hover:text-[hsl(var(--forum-accent))] transition-all flex items-center gap-1.5">
+              <Link href="/publicidad" className="text-sm font-medium px-3 py-1.5 rounded-lg hover:bg-[hsl(var(--forum-accent-muted))] hover:text-[hsl(var(--forum-accent))] transition-all flex items-center gap-1.5">
                 <Megaphone className="w-3.5 h-3.5" />
                 {t('nav.ads')}
               </Link>

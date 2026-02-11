@@ -17,7 +17,7 @@ import {
   getFormatForPosition,
 } from '@/lib/banner-pricing';
 import { validateBanner } from '@/lib/banner-validation';
-import type { BannerPosition, BannerFormat, BannerAdZone } from '@/lib/supabase';
+import type { BannerPosition, BannerFormat } from '@/lib/supabase';
 import type { DurationOption } from '@/lib/banner-pricing';
 
 import { Button } from '@/components/ui/button';
@@ -43,26 +43,30 @@ import {
 import { cn } from '@/lib/utils';
 
 type CountryOption = { id: string; name: string; slug: string; flag_emoji: string };
+type RegionOption = { id: string; name: string; slug: string; country_id: string };
 
 interface BannerPurchaseFlowProps {
   countries: CountryOption[];
+  regions: RegionOption[];
 }
 
+type ZoneType = 'home_country' | 'city';
 type Step = 1 | 2 | 3 | 4 | 5;
 
-export function BannerPurchaseFlow({ countries }: BannerPurchaseFlowProps) {
+export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowProps) {
   const { user } = useAuth();
   const router = useRouter();
 
   // Step state
   const [step, setStep] = useState<Step>(1);
 
-  // Step 1: Zone selection
+  // Step 1: Zone selection (no DB dependency)
   const [selectedCountryId, setSelectedCountryId] = useState('');
-  const [zones, setZones] = useState<BannerAdZone[]>([]);
-  const [selectedZoneId, setSelectedZoneId] = useState('');
-  const [selectedZone, setSelectedZone] = useState<BannerAdZone | null>(null);
-  const [loadingZones, setLoadingZones] = useState(false);
+  const [selectedZoneType, setSelectedZoneType] = useState<ZoneType | ''>('');
+  const [selectedRegionId, setSelectedRegionId] = useState('');
+
+  // Derived: regions for the selected country
+  const countryRegions = regions.filter(r => r.country_id === selectedCountryId);
 
   // Step 2: Format & Position
   const [selectedFormat, setSelectedFormat] = useState<BannerFormat | ''>('');
@@ -92,58 +96,60 @@ export function BannerPurchaseFlow({ countries }: BannerPurchaseFlowProps) {
     }
   }, [user, router]);
 
-  // Load zones when country changes
+  // Reset dependent selections when country changes
   useEffect(() => {
-    if (!selectedCountryId) {
-      setZones([]);
-      setSelectedZoneId('');
-      setSelectedZone(null);
-      return;
-    }
-    loadZones(selectedCountryId);
+    setSelectedZoneType('');
+    setSelectedRegionId('');
   }, [selectedCountryId]);
 
-  const loadZones = async (countryId: string) => {
-    setLoadingZones(true);
-    const { data } = await supabase
-      .from('banner_ad_zones')
-      .select('*, country:countries(id, name, slug, flag_emoji), region:regions(id, name, slug)')
-      .eq('country_id', countryId)
-      .eq('is_active', true)
-      .order('zone_type')
-      .order('name');
-    setZones((data as any) || []);
-    setLoadingZones(false);
-  };
-
-  // Load occupied dates when zone+position change
   useEffect(() => {
-    if (selectedZoneId && selectedPosition) {
+    setSelectedRegionId('');
+  }, [selectedZoneType]);
+
+  // Load occupied dates when position changes (try gracefully, tables may not exist)
+  useEffect(() => {
+    if (selectedCountryId && selectedPosition) {
       loadOccupiedDates();
     }
-  }, [selectedZoneId, selectedPosition]);
+  }, [selectedCountryId, selectedRegionId, selectedPosition]);
 
   const loadOccupiedDates = async () => {
     setLoadingCalendar(true);
-    const { data } = await supabase.rpc('get_occupied_dates', {
-      p_zone_id: selectedZoneId,
-      p_position: selectedPosition,
-    });
-    if (data) {
-      setOccupiedRanges(data.map((r: any) => ({
-        start: r.start_date,
-        end: r.end_date,
-        username: r.username,
-        status: r.status,
-      })));
+    try {
+      // Find zone first
+      let q = supabase
+        .from('banner_ad_zones')
+        .select('id')
+        .eq('country_id', selectedCountryId)
+        .eq('zone_type', selectedZoneType)
+        .eq('is_active', true);
+      if (selectedZoneType === 'city' && selectedRegionId) {
+        q = q.eq('region_id', selectedRegionId);
+      } else {
+        q = q.is('region_id', null);
+      }
+      const { data: zone } = await q.maybeSingle();
+      if (!zone) {
+        setOccupiedRanges([]);
+        setLoadingCalendar(false);
+        return;
+      }
+      const { data } = await supabase.rpc('get_occupied_dates', {
+        p_zone_id: zone.id,
+        p_position: selectedPosition,
+      });
+      if (data) {
+        setOccupiedRanges(data.map((r: any) => ({
+          start: r.start_date,
+          end: r.end_date,
+          username: r.username,
+          status: r.status,
+        })));
+      }
+    } catch {
+      setOccupiedRanges([]);
     }
     setLoadingCalendar(false);
-  };
-
-  const handleZoneSelect = (zoneId: string) => {
-    setSelectedZoneId(zoneId);
-    const z = zones.find(z => z.id === zoneId) || null;
-    setSelectedZone(z);
   };
 
   const handleFormatSelect = (format: BannerFormat) => {
@@ -204,7 +210,7 @@ export function BannerPurchaseFlow({ countries }: BannerPurchaseFlowProps) {
   };
 
   const handleSubmit = async () => {
-    if (!selectedZoneId || !selectedPosition || !selectedFormat || !selectedDuration || !startDate || !bannerFile) {
+    if (!selectedCountryId || !selectedZoneType || !selectedPosition || !selectedFormat || !selectedDuration || !startDate || !bannerFile) {
       toast.error('Completa todos los campos.');
       return;
     }
@@ -219,7 +225,9 @@ export function BannerPurchaseFlow({ countries }: BannerPurchaseFlowProps) {
       }
 
       const result = await createBannerBooking({
-        zoneId: selectedZoneId,
+        countryId: selectedCountryId,
+        zoneType: selectedZoneType,
+        regionId: selectedZoneType === 'city' ? selectedRegionId : undefined,
         position: selectedPosition,
         format: selectedFormat,
         startDate,
@@ -243,9 +251,9 @@ export function BannerPurchaseFlow({ countries }: BannerPurchaseFlowProps) {
 
   // Computed
   const minStartDateStr = getMinStartDate().toISOString().split('T')[0];
-  const priceTable = selectedZone ? getPriceTable(selectedZone.zone_type as 'home_country' | 'city') : [];
-  const currentPrice = selectedZone && selectedDuration
-    ? getPrice(selectedZone.zone_type as 'home_country' | 'city', selectedDuration)
+  const priceTable = selectedZoneType ? getPriceTable(selectedZoneType) : [];
+  const currentPrice = selectedZoneType && selectedDuration
+    ? getPrice(selectedZoneType, selectedDuration)
     : 0;
   const endDateStr = startDate && selectedDuration
     ? calculateEndDate(new Date(startDate), selectedDuration).toISOString().split('T')[0]
@@ -260,9 +268,20 @@ export function BannerPurchaseFlow({ countries }: BannerPurchaseFlowProps) {
     });
   }, [occupiedRanges]);
 
+  // Next availability: latest end_date from occupied ranges
+  const nextAvailable = occupiedRanges.length > 0
+    ? occupiedRanges.reduce((latest, r) => {
+        const end = new Date(r.end);
+        return end > latest ? end : latest;
+      }, new Date(0))
+    : null;
+  const nextAvailableStr = nextAvailable && nextAvailable.getTime() > 0
+    ? new Date(nextAvailable.getTime() + 86400000).toISOString().split('T')[0]
+    : null;
+
   const canGoNext = (): boolean => {
     switch (step) {
-      case 1: return !!selectedZoneId;
+      case 1: return !!selectedCountryId && !!selectedZoneType && (selectedZoneType === 'home_country' || !!selectedRegionId);
       case 2: return !!selectedFormat && !!selectedPosition;
       case 3: return !!selectedDuration && !!startDate;
       case 4: return !!bannerFile;
@@ -318,39 +337,63 @@ export function BannerPurchaseFlow({ countries }: BannerPurchaseFlowProps) {
               </Select>
             </div>
 
-            {loadingZones && <div className="flex items-center gap-2 forum-text-muted"><Loader2 className="h-4 w-4 animate-spin" /> Cargando zonas...</div>}
-
-            {zones.length > 0 && (
+            {selectedCountryId && (
               <div>
-                <Label>Zona publicitaria</Label>
-                <div className="grid gap-2 mt-2">
-                  {zones.map(z => (
-                    <button
-                      key={z.id}
-                      onClick={() => handleZoneSelect(z.id)}
-                      className={cn(
-                        'p-4 rounded-lg border text-left transition-all',
-                        selectedZoneId === z.id
-                          ? 'border-[hsl(var(--forum-accent))] bg-[hsl(var(--forum-accent))]/5'
-                          : 'border-[hsl(var(--forum-border))] hover:border-[hsl(var(--forum-accent))]/50'
-                      )}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <div className="font-semibold">{z.name}</div>
-                          <div className="text-xs forum-text-muted mt-0.5">
-                            {z.zone_type === 'home_country'
-                              ? '📢 Aparece en Home + página del país'
-                              : '🏙️ Aparece solo en esta ciudad/región'}
-                          </div>
-                        </div>
-                        <Badge variant={z.zone_type === 'home_country' ? 'default' : 'secondary'}>
-                          {z.zone_type === 'home_country' ? 'Home + País' : 'Ciudad'}
-                        </Badge>
-                      </div>
-                    </button>
-                  ))}
+                <Label>Tipo de zona</Label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
+                  <button
+                    onClick={() => setSelectedZoneType('home_country')}
+                    className={cn(
+                      'p-4 rounded-lg border text-left transition-all',
+                      selectedZoneType === 'home_country'
+                        ? 'border-[hsl(var(--forum-accent))] bg-[hsl(var(--forum-accent))]/5'
+                        : 'border-[hsl(var(--forum-border))] hover:border-[hsl(var(--forum-accent))]/50'
+                    )}
+                  >
+                    <div className="font-semibold flex items-center gap-2">📢 Home + País</div>
+                    <div className="text-xs forum-text-muted mt-1">
+                      Aparece en la página principal y en la página del país seleccionado.
+                    </div>
+                    <Badge className="mt-2" variant="default">Mayor visibilidad</Badge>
+                  </button>
+                  <button
+                    onClick={() => setSelectedZoneType('city')}
+                    className={cn(
+                      'p-4 rounded-lg border text-left transition-all',
+                      selectedZoneType === 'city'
+                        ? 'border-[hsl(var(--forum-accent))] bg-[hsl(var(--forum-accent))]/5'
+                        : 'border-[hsl(var(--forum-border))] hover:border-[hsl(var(--forum-accent))]/50'
+                    )}
+                  >
+                    <div className="font-semibold flex items-center gap-2">🏙️ Ciudad / Región</div>
+                    <div className="text-xs forum-text-muted mt-1">
+                      Aparece solo en el foro de la ciudad/región seleccionada.
+                    </div>
+                    <Badge className="mt-2" variant="secondary">Más económico</Badge>
+                  </button>
                 </div>
+              </div>
+            )}
+
+            {selectedZoneType === 'city' && countryRegions.length > 0 && (
+              <div>
+                <Label>Ciudad / Región</Label>
+                <Select value={selectedRegionId} onValueChange={setSelectedRegionId}>
+                  <SelectTrigger><SelectValue placeholder="Selecciona una ciudad" /></SelectTrigger>
+                  <SelectContent>
+                    {countryRegions.map(r => (
+                      <SelectItem key={r.id} value={r.id}>
+                        {r.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
+
+            {selectedZoneType === 'city' && countryRegions.length === 0 && selectedCountryId && (
+              <div className="p-3 bg-yellow-500/10 border border-yellow-500/30 rounded-lg text-sm">
+                <Info className="h-4 w-4 inline mr-1" /> Este país aún no tiene ciudades/regiones disponibles.
               </div>
             )}
           </CardContent>
@@ -451,22 +494,47 @@ export function BannerPurchaseFlow({ countries }: BannerPurchaseFlowProps) {
             <CardDescription>Selecciona cuándo quieres iniciar y la duración del anuncio.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
-            {/* Occupied dates warning */}
+            {/* Occupied dates warning + next availability */}
             {loadingCalendar ? (
               <div className="flex items-center gap-2 forum-text-muted"><Loader2 className="h-4 w-4 animate-spin" /> Cargando disponibilidad...</div>
-            ) : occupiedRanges.length > 0 && (
-              <div className="p-3 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
-                <div className="flex items-center gap-2 text-sm font-medium text-yellow-600 mb-2">
-                  <Info className="h-4 w-4" /> Fechas ya reservadas:
+            ) : occupiedRanges.length > 0 ? (
+              <div className="space-y-3">
+                <div className="p-3 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
+                  <div className="flex items-center gap-2 text-sm font-medium text-yellow-600 mb-2">
+                    <Info className="h-4 w-4" /> Fechas ya reservadas:
+                  </div>
+                  <div className="space-y-1">
+                    {occupiedRanges.map((r, i) => (
+                      <div key={i} className="text-xs forum-text-muted">
+                        <span className="font-medium">@{r.username}</span> — {r.start} al {r.end}
+                        <Badge variant="outline" className="ml-2 text-[10px]">{r.status}</Badge>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <div className="space-y-1">
-                  {occupiedRanges.map((r, i) => (
-                    <div key={i} className="text-xs forum-text-muted">
-                      <span className="font-medium">@{r.username}</span> — {r.start} al {r.end}
-                      <Badge variant="outline" className="ml-2 text-[10px]">{r.status}</Badge>
+                {nextAvailableStr && (
+                  <div className="p-3 bg-green-500/10 border border-green-500/30 rounded-lg">
+                    <div className="flex items-center gap-2 text-sm font-medium text-green-600">
+                      <CalendarIcon className="h-4 w-4" /> Próxima disponibilidad: <strong>{nextAvailableStr}</strong>
                     </div>
-                  ))}
-                </div>
+                    <p className="text-xs forum-text-muted mt-1">
+                      Puedes reservar a partir de esta fecha. Tu banner se activará automáticamente al inicio del periodo contratado.
+                    </p>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="mt-2 text-xs border-green-500/50 text-green-600 hover:bg-green-500/10"
+                      onClick={() => setStartDate(nextAvailableStr)}
+                    >
+                      Usar esta fecha como inicio
+                    </Button>
+                  </div>
+                )}
+              </div>
+            ) : selectedPosition && (
+              <div className="p-3 bg-green-500/10 border border-green-500/30 rounded-lg text-sm">
+                <CalendarIcon className="h-4 w-4 inline mr-1 text-green-600" />
+                <span className="text-green-600 font-medium">Disponible</span> — Esta posición está libre, ¡puedes elegir cualquier fecha!
               </div>
             )}
 
@@ -588,12 +656,12 @@ export function BannerPurchaseFlow({ countries }: BannerPurchaseFlowProps) {
           <CardContent className="space-y-4">
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
-                <span className="forum-text-muted">Zona:</span>
-                <div className="font-medium">{selectedZone?.name}</div>
+                <span className="forum-text-muted">País:</span>
+                <div className="font-medium">{countries.find(c => c.id === selectedCountryId)?.flag_emoji} {countries.find(c => c.id === selectedCountryId)?.name}</div>
               </div>
               <div>
                 <span className="forum-text-muted">Tipo:</span>
-                <div className="font-medium">{selectedZone?.zone_type === 'home_country' ? 'Home + País' : 'Ciudad'}</div>
+                <div className="font-medium">{selectedZoneType === 'home_country' ? 'Home + País' : `Ciudad: ${regions.find(r => r.id === selectedRegionId)?.name || ''}`}</div>
               </div>
               <div>
                 <span className="forum-text-muted">Formato:</span>
