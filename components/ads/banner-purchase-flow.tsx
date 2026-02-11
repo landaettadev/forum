@@ -41,6 +41,7 @@ import {
   Info,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useTranslations } from 'next-intl';
 
 type CountryOption = { id: string; name: string; slug: string; flag_emoji: string };
 type RegionOption = { id: string; name: string; slug: string; country_id: string };
@@ -56,6 +57,7 @@ type Step = 1 | 2 | 3 | 4 | 5;
 export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowProps) {
   const { user } = useAuth();
   const router = useRouter();
+  const t = useTranslations('publicidad');
 
   // Step state
   const [step, setStep] = useState<Step>(1);
@@ -194,7 +196,7 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
         .upload(path, bannerFile, { cacheControl: '3600', upsert: false });
 
       if (error) {
-        toast.error('Error al subir la imagen.');
+        toast.error(t('uploadError'));
         return null;
       }
 
@@ -202,7 +204,7 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
       setUploadedUrl(urlData.publicUrl);
       return urlData.publicUrl;
     } catch {
-      toast.error('Error inesperado al subir la imagen.');
+      toast.error(t('unexpectedError'));
       return null;
     } finally {
       setUploading(false);
@@ -211,7 +213,7 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
 
   const handleSubmit = async () => {
     if (!selectedCountryId || !selectedZoneType || !selectedPosition || !selectedFormat || !selectedDuration || !startDate || !bannerFile) {
-      toast.error('Completa todos los campos.');
+      toast.error(t('completeAllFields'));
       return;
     }
 
@@ -237,13 +239,13 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
       });
 
       if (result.success) {
-        toast.success('¡Solicitud enviada! Un moderador revisará tu banner pronto.');
+        toast.success(t('requestSent'));
         router.push('/');
       } else {
         toast.error(result.error);
       }
     } catch {
-      toast.error('Error inesperado.');
+      toast.error(t('unexpectedError'));
     } finally {
       setSubmitting(false);
     }
@@ -293,9 +295,9 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
 
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-2">Comprar Publicidad</h1>
+      <h1 className="text-3xl font-bold mb-2">{t('title')}</h1>
       <p className="forum-text-secondary mb-6">
-        Elige dónde quieres que aparezca tu banner en TransForo.
+        {t('subtitle')}
       </p>
 
       {/* Progress steps */}
@@ -319,14 +321,14 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
       {step === 1 && (
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2"><MapPin className="h-5 w-5" /> Selecciona la Zona</CardTitle>
-            <CardDescription>Elige en qué país o ciudad quieres que aparezca tu banner.</CardDescription>
+            <CardTitle className="flex items-center gap-2"><MapPin className="h-5 w-5" /> {t('step1Title')}</CardTitle>
+            <CardDescription>{t('step1Desc')}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
-              <Label>País</Label>
+              <Label>{t('country')}</Label>
               <Select value={selectedCountryId} onValueChange={setSelectedCountryId}>
-                <SelectTrigger><SelectValue placeholder="Selecciona un país" /></SelectTrigger>
+                <SelectTrigger><SelectValue placeholder={t('selectCountry')} /></SelectTrigger>
                 <SelectContent>
                   {countries.map(c => (
                     <SelectItem key={c.id} value={c.id}>
@@ -339,7 +341,7 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
 
             {selectedCountryId && (
               <div>
-                <Label>Tipo de zona</Label>
+                <Label>{t('zoneType')}</Label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
                   <button
                     onClick={() => setSelectedZoneType('home_country')}
@@ -350,11 +352,11 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
                         : 'border-[hsl(var(--forum-border))] hover:border-[hsl(var(--forum-accent))]/50'
                     )}
                   >
-                    <div className="font-semibold flex items-center gap-2">📢 Home + País</div>
+                    <div className="font-semibold flex items-center gap-2">📢 {t('homeCountry')}</div>
                     <div className="text-xs forum-text-muted mt-1">
-                      Aparece en la página principal y en la página del país seleccionado.
+                      {t('homeCountryDesc')}
                     </div>
-                    <Badge className="mt-2" variant="default">Mayor visibilidad</Badge>
+                    <Badge className="mt-2" variant="default">{t('highVisibility')}</Badge>
                   </button>
                   <button
                     onClick={() => setSelectedZoneType('city')}
@@ -365,11 +367,11 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
                         : 'border-[hsl(var(--forum-border))] hover:border-[hsl(var(--forum-accent))]/50'
                     )}
                   >
-                    <div className="font-semibold flex items-center gap-2">🏙️ Ciudad / Región</div>
+                    <div className="font-semibold flex items-center gap-2">🏙️ {t('cityRegion')}</div>
                     <div className="text-xs forum-text-muted mt-1">
-                      Aparece solo en el foro de la ciudad/región seleccionada.
+                      {t('cityRegionDesc')}
                     </div>
-                    <Badge className="mt-2" variant="secondary">Más económico</Badge>
+                    <Badge className="mt-2" variant="secondary">{t('moreAffordable')}</Badge>
                   </button>
                 </div>
               </div>
@@ -377,9 +379,9 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
 
             {selectedZoneType === 'city' && countryRegions.length > 0 && (
               <div>
-                <Label>Ciudad / Región</Label>
+                <Label>{t('cityRegion')}</Label>
                 <Select value={selectedRegionId} onValueChange={setSelectedRegionId}>
-                  <SelectTrigger><SelectValue placeholder="Selecciona una ciudad" /></SelectTrigger>
+                  <SelectTrigger><SelectValue placeholder={t('selectCity')} /></SelectTrigger>
                   <SelectContent>
                     {countryRegions.map(r => (
                       <SelectItem key={r.id} value={r.id}>
@@ -393,7 +395,7 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
 
             {selectedZoneType === 'city' && countryRegions.length === 0 && selectedCountryId && (
               <div className="p-3 bg-yellow-500/10 border border-yellow-500/30 rounded-lg text-sm">
-                <Info className="h-4 w-4 inline mr-1" /> Este país aún no tiene ciudades/regiones disponibles.
+                <Info className="h-4 w-4 inline mr-1" /> {t('noRegions')}
               </div>
             )}
           </CardContent>
@@ -404,12 +406,12 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
       {step === 2 && (
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2"><Monitor className="h-5 w-5" /> Formato y Posición</CardTitle>
-            <CardDescription>Elige el tamaño del banner y dónde quieres que se muestre.</CardDescription>
+            <CardTitle className="flex items-center gap-2"><Monitor className="h-5 w-5" /> {t('step2Title')}</CardTitle>
+            <CardDescription>{t('step2Desc')}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             <div>
-              <Label className="mb-3 block">Formato del banner</Label>
+              <Label className="mb-3 block">{t('bannerFormat')}</Label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {BANNER_FORMATS.map(f => (
                   <button
@@ -435,7 +437,7 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
 
             {selectedFormat && (
               <div>
-                <Label className="mb-3 block">Posición en la página</Label>
+                <Label className="mb-3 block">{t('pagePosition')}</Label>
                 <div className="grid gap-2">
                   {BANNER_FORMATS.find(f => f.format === selectedFormat)?.positions.map(pos => (
                     <button
@@ -458,14 +460,14 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
             {/* Visual site mockup */}
             {selectedPosition && (
               <div className="mt-4 p-4 bg-[hsl(var(--forum-surface-alt))] rounded-lg">
-                <Label className="mb-2 block text-xs">Ubicación en el sitio:</Label>
+                <Label className="mb-2 block text-xs">{t('siteLocation')}</Label>
                 <div className="border border-[hsl(var(--forum-border))] rounded-lg overflow-hidden bg-background text-[10px]">
                   <div className={cn('p-2 text-center border-b border-[hsl(var(--forum-border))]', selectedPosition === 'header' ? 'bg-[hsl(var(--forum-accent))]/20 font-bold text-[hsl(var(--forum-accent))]' : 'forum-text-muted')}>
-                    HEADER (728×90) {selectedPosition === 'header' && '← TU BANNER'}
+                    HEADER (728×90) {selectedPosition === 'header' && `← ${t('yourBanner')}`}
                   </div>
                   <div className="flex">
                     <div className={cn('flex-1 p-4 min-h-[80px] border-r border-[hsl(var(--forum-border))]', selectedPosition === 'content' ? 'bg-[hsl(var(--forum-accent))]/20 font-bold text-[hsl(var(--forum-accent))]' : 'forum-text-muted')}>
-                      CONTENIDO {selectedPosition === 'content' && '← TU BANNER'}
+                      {t('contentArea')} {selectedPosition === 'content' && `← ${t('yourBanner')}`}
                     </div>
                     <div className="w-24 p-2 space-y-2">
                       <div className={cn('p-1 text-center rounded', selectedPosition === 'sidebar_top' ? 'bg-[hsl(var(--forum-accent))]/20 font-bold text-[hsl(var(--forum-accent))]' : 'bg-[hsl(var(--forum-surface-alt))] forum-text-muted')}>
@@ -477,7 +479,7 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
                     </div>
                   </div>
                   <div className={cn('p-2 text-center border-t border-[hsl(var(--forum-border))]', selectedPosition === 'footer' ? 'bg-[hsl(var(--forum-accent))]/20 font-bold text-[hsl(var(--forum-accent))]' : 'forum-text-muted')}>
-                    FOOTER (728×90) {selectedPosition === 'footer' && '← TU BANNER'}
+                    FOOTER (728×90) {selectedPosition === 'footer' && `← ${t('yourBanner')}`}
                   </div>
                 </div>
               </div>
@@ -490,23 +492,23 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
       {step === 3 && (
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2"><CalendarIcon className="h-5 w-5" /> Fechas y Duración</CardTitle>
-            <CardDescription>Selecciona cuándo quieres iniciar y la duración del anuncio.</CardDescription>
+            <CardTitle className="flex items-center gap-2"><CalendarIcon className="h-5 w-5" /> {t('step3Title')}</CardTitle>
+            <CardDescription>{t('step3Desc')}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             {/* Occupied dates warning + next availability */}
             {loadingCalendar ? (
-              <div className="flex items-center gap-2 forum-text-muted"><Loader2 className="h-4 w-4 animate-spin" /> Cargando disponibilidad...</div>
+              <div className="flex items-center gap-2 forum-text-muted"><Loader2 className="h-4 w-4 animate-spin" /> {t('loadingAvailability')}</div>
             ) : occupiedRanges.length > 0 ? (
               <div className="space-y-3">
                 <div className="p-3 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
                   <div className="flex items-center gap-2 text-sm font-medium text-yellow-600 mb-2">
-                    <Info className="h-4 w-4" /> Fechas ya reservadas:
+                    <Info className="h-4 w-4" /> {t('datesReserved')}
                   </div>
                   <div className="space-y-1">
                     {occupiedRanges.map((r, i) => (
                       <div key={i} className="text-xs forum-text-muted">
-                        <span className="font-medium">@{r.username}</span> — {r.start} al {r.end}
+                        <span className="font-medium">@{r.username}</span> — {r.start} {t('toDate')} {r.end}
                         <Badge variant="outline" className="ml-2 text-[10px]">{r.status}</Badge>
                       </div>
                     ))}
@@ -515,10 +517,10 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
                 {nextAvailableStr && (
                   <div className="p-3 bg-green-500/10 border border-green-500/30 rounded-lg">
                     <div className="flex items-center gap-2 text-sm font-medium text-green-600">
-                      <CalendarIcon className="h-4 w-4" /> Próxima disponibilidad: <strong>{nextAvailableStr}</strong>
+                      <CalendarIcon className="h-4 w-4" /> {t('nextAvailability')} <strong>{nextAvailableStr}</strong>
                     </div>
                     <p className="text-xs forum-text-muted mt-1">
-                      Puedes reservar a partir de esta fecha. Tu banner se activará automáticamente al inicio del periodo contratado.
+                      {t('nextAvailabilityDesc')}
                     </p>
                     <Button
                       variant="outline"
@@ -526,7 +528,7 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
                       className="mt-2 text-xs border-green-500/50 text-green-600 hover:bg-green-500/10"
                       onClick={() => setStartDate(nextAvailableStr)}
                     >
-                      Usar esta fecha como inicio
+                      {t('useThisDate')}
                     </Button>
                   </div>
                 )}
@@ -534,12 +536,12 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
             ) : selectedPosition && (
               <div className="p-3 bg-green-500/10 border border-green-500/30 rounded-lg text-sm">
                 <CalendarIcon className="h-4 w-4 inline mr-1 text-green-600" />
-                <span className="text-green-600 font-medium">Disponible</span> — Esta posición está libre, ¡puedes elegir cualquier fecha!
+                <span className="text-green-600 font-medium">{t('available')}</span> — {t('availableDesc')}
               </div>
             )}
 
             <div>
-              <Label htmlFor="startDate">Fecha de inicio (mínimo 3 días desde hoy)</Label>
+              <Label htmlFor="startDate">{t('startDate', { date: minStartDateStr })}</Label>
               <Input
                 id="startDate"
                 type="date"
@@ -549,12 +551,12 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
                 className="mt-1 max-w-xs"
               />
               {startDate && isDateOccupied(startDate) && (
-                <p className="text-red-500 text-xs mt-1">⚠️ Esta fecha ya está reservada.</p>
+                <p className="text-red-500 text-xs mt-1">⚠️ {t('dateOccupied')}</p>
               )}
             </div>
 
             <div>
-              <Label className="mb-3 block">Duración y Precio</Label>
+              <Label className="mb-3 block">{t('durationPrice')}</Label>
               <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-2">
                 {priceTable.map(({ duration, price }) => (
                   <button
@@ -568,7 +570,7 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
                     )}
                   >
                     <div className="font-bold text-lg">{duration}</div>
-                    <div className="text-xs forum-text-muted">días</div>
+                    <div className="text-xs forum-text-muted">{t('days')}</div>
                     <div className="mt-1 text-[hsl(var(--forum-accent))] font-bold">${price}</div>
                   </button>
                 ))}
@@ -577,7 +579,7 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
 
             {startDate && selectedDuration && (
               <div className="p-3 bg-[hsl(var(--forum-surface-alt))] rounded-lg text-sm">
-                <strong>Resumen:</strong> {startDate} → {endDateStr} ({selectedDuration} días) — <span className="text-[hsl(var(--forum-accent))] font-bold">${currentPrice} USD</span>
+                <strong>{t('summary')}</strong> {startDate} → {endDateStr} ({selectedDuration} {t('days')}) — <span className="text-[hsl(var(--forum-accent))] font-bold">${currentPrice} USD</span>
               </div>
             )}
           </CardContent>
@@ -588,9 +590,9 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
       {step === 4 && (
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2"><ImageIcon className="h-5 w-5" /> Sube tu Banner</CardTitle>
+            <CardTitle className="flex items-center gap-2"><ImageIcon className="h-5 w-5" /> {t('step4Title')}</CardTitle>
             <CardDescription>
-              La imagen debe ser exactamente <strong>{selectedFormat}</strong> píxeles. Formatos: JPG, PNG, GIF, WebP (máx. 2MB).
+              {t('step4Desc', { format: selectedFormat })}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -600,8 +602,8 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
                 className="flex flex-col items-center justify-center border-2 border-dashed border-[hsl(var(--forum-border))] rounded-lg p-8 cursor-pointer hover:border-[hsl(var(--forum-accent))]/50 transition-colors"
               >
                 <Upload className="h-10 w-10 forum-text-muted mb-3" />
-                <span className="text-sm font-medium">Haz clic para subir tu banner</span>
-                <span className="text-xs forum-text-muted mt-1">Dimensiones requeridas: {selectedFormat}</span>
+                <span className="text-sm font-medium">{t('clickToUpload')}</span>
+                <span className="text-xs forum-text-muted mt-1">{t('requiredDimensions', { format: selectedFormat })}</span>
                 <input
                   id="bannerUpload"
                   type="file"
@@ -631,16 +633,16 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
             )}
 
             <div>
-              <Label htmlFor="clickUrl">URL de destino (opcional)</Label>
+              <Label htmlFor="clickUrl">{t('clickUrl')}</Label>
               <Input
                 id="clickUrl"
                 type="url"
-                placeholder="https://ejemplo.com"
+                placeholder={t('clickUrlPlaceholder')}
                 value={clickUrl}
                 onChange={(e) => setClickUrl(e.target.value)}
                 className="mt-1"
               />
-              <p className="text-xs forum-text-muted mt-1">A dónde irán los usuarios al hacer clic en tu banner.</p>
+              <p className="text-xs forum-text-muted mt-1">{t('clickUrlDesc')}</p>
             </div>
           </CardContent>
         </Card>
@@ -650,54 +652,54 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
       {step === 5 && (
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2"><CheckCircle className="h-5 w-5" /> Confirmar Solicitud</CardTitle>
-            <CardDescription>Revisa los detalles antes de enviar.</CardDescription>
+            <CardTitle className="flex items-center gap-2"><CheckCircle className="h-5 w-5" /> {t('step5Title')}</CardTitle>
+            <CardDescription>{t('step5Desc')}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
-                <span className="forum-text-muted">País:</span>
+                <span className="forum-text-muted">{t('country')}:</span>
                 <div className="font-medium">{countries.find(c => c.id === selectedCountryId)?.flag_emoji} {countries.find(c => c.id === selectedCountryId)?.name}</div>
               </div>
               <div>
-                <span className="forum-text-muted">Tipo:</span>
-                <div className="font-medium">{selectedZoneType === 'home_country' ? 'Home + País' : `Ciudad: ${regions.find(r => r.id === selectedRegionId)?.name || ''}`}</div>
+                <span className="forum-text-muted">{t('type')}:</span>
+                <div className="font-medium">{selectedZoneType === 'home_country' ? t('homeCountry') : t('cityLabel', { name: regions.find(r => r.id === selectedRegionId)?.name || '' })}</div>
               </div>
               <div>
-                <span className="forum-text-muted">Formato:</span>
+                <span className="forum-text-muted">{t('format')}:</span>
                 <div className="font-medium">{selectedFormat}</div>
               </div>
               <div>
-                <span className="forum-text-muted">Posición:</span>
+                <span className="forum-text-muted">{t('position')}:</span>
                 <div className="font-medium">{selectedPosition && POSITION_LABELS[selectedPosition]}</div>
               </div>
               <div>
-                <span className="forum-text-muted">Fechas:</span>
+                <span className="forum-text-muted">{t('dates')}:</span>
                 <div className="font-medium">{startDate} → {endDateStr}</div>
               </div>
               <div>
-                <span className="forum-text-muted">Duración:</span>
-                <div className="font-medium">{selectedDuration} días</div>
+                <span className="forum-text-muted">{t('duration')}:</span>
+                <div className="font-medium">{selectedDuration} {t('days')}</div>
               </div>
               <div>
-                <span className="forum-text-muted">URL de destino:</span>
-                <div className="font-medium truncate">{clickUrl || '(ninguna)'}</div>
+                <span className="forum-text-muted">{t('destinationUrl')}:</span>
+                <div className="font-medium truncate">{clickUrl || t('none')}</div>
               </div>
               <div>
-                <span className="forum-text-muted">Precio:</span>
+                <span className="forum-text-muted">{t('price')}:</span>
                 <div className="font-bold text-lg text-[hsl(var(--forum-accent))]">${currentPrice} USD</div>
               </div>
             </div>
 
             {bannerPreview && (
               <div>
-                <Label className="mb-2 block">Vista previa del banner:</Label>
+                <Label className="mb-2 block">{t('bannerPreview')}</Label>
                 <img src={bannerPreview} alt="Banner" className="rounded-lg border border-[hsl(var(--forum-border))]" style={{ maxWidth: '100%' }} />
               </div>
             )}
 
             <div className="p-3 bg-yellow-500/10 border border-yellow-500/30 rounded-lg text-sm">
-              <strong>Nota:</strong> Tu solicitud será revisada por un moderador. Recibirás una notificación cuando sea aprobada o rechazada. El banner se activará automáticamente en la fecha de inicio.
+              <strong>{t('note')}</strong> {t('reviewNote')}
             </div>
           </CardContent>
         </Card>
@@ -710,7 +712,7 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
           onClick={() => setStep((step - 1) as Step)}
           disabled={step === 1}
         >
-          <ArrowLeft className="h-4 w-4 mr-2" /> Anterior
+          <ArrowLeft className="h-4 w-4 mr-2" /> {t('previous')}
         </Button>
 
         {step < 5 ? (
@@ -719,7 +721,7 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
             disabled={!canGoNext()}
             className="bg-[hsl(var(--forum-accent))] hover:bg-[hsl(var(--forum-accent-hover))]"
           >
-            Siguiente <ArrowRight className="h-4 w-4 ml-2" />
+            {t('next')} <ArrowRight className="h-4 w-4 ml-2" />
           </Button>
         ) : (
           <Button
@@ -727,7 +729,7 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
             disabled={submitting || uploading}
             className="bg-[hsl(var(--forum-accent))] hover:bg-[hsl(var(--forum-accent-hover))]"
           >
-            {submitting ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Enviando...</> : <><DollarSign className="h-4 w-4 mr-2" /> Enviar Solicitud — ${currentPrice}</>}
+            {submitting ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> {t('submitting')}</> : <><DollarSign className="h-4 w-4 mr-2" /> {t('submitRequest')} — ${currentPrice}</>}
           </Button>
         )}
       </div>
