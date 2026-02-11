@@ -227,7 +227,8 @@ CREATE POLICY "Users can delete own post bookmarks" ON post_bookmarks
 -- =============================================
 -- Vista para obtener bookmarks con info del hilo
 -- =============================================
-CREATE OR REPLACE VIEW user_thread_bookmarks_view AS
+DROP VIEW IF EXISTS user_thread_bookmarks_view;
+CREATE VIEW user_thread_bookmarks_view WITH (security_invoker = true) AS
 SELECT 
   tb.id,
   tb.user_id,

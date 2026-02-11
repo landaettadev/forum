@@ -147,6 +147,11 @@ ALTER TABLE escort_ad_photos ENABLE ROW LEVEL SECURITY;
 ALTER TABLE escort_ad_favorites ENABLE ROW LEVEL SECURITY;
 ALTER TABLE zone_alerts ENABLE ROW LEVEL SECURITY;
 ALTER TABLE escort_ad_views ENABLE ROW LEVEL SECURITY;
+ALTER TABLE escort_services ENABLE ROW LEVEL SECURITY;
+
+-- escort_services es una tabla de catálogo de solo lectura
+CREATE POLICY "Servicios visibles para todos" ON escort_services
+  FOR SELECT USING (true);
 
 -- Políticas para escort_ads
 CREATE POLICY "Anuncios activos visibles para todos" ON escort_ads
