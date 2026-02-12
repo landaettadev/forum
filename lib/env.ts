@@ -28,8 +28,8 @@ if (!parsed.success) {
     '\n\nRevisa tu archivo .env o .env.local\n'
   );
 
-  // Only throw in build/production — allow dev to continue with warnings
-  if (process.env.NODE_ENV === 'production') {
+  // Only throw in production runtime — skip during build, CI tests, and dev
+  if (process.env.NODE_ENV === 'production' && !process.env.CI) {
     throw new Error('Missing required environment variables');
   }
 }
