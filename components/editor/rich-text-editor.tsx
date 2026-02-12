@@ -58,7 +58,7 @@ import {
   X,
 } from 'lucide-react';
 import { toast } from 'sonner';
-import { uploadMediaImage } from '@/lib/storage';
+import { uploadMediaImage, compressImage } from '@/lib/storage';
 import { GifPicker } from './gif-picker';
 
 interface RichTextEditorProps {
@@ -171,7 +171,17 @@ export function RichTextEditor({
     toast.loading(t('uploading'), { id: 'upload' });
 
     try {
-      const result = await uploadMediaImage(file, userId);
+      // Compress image before upload to save bandwidth and storage
+      let processedFile = file;
+      if (file.type.startsWith('image/') && file.type !== 'image/gif') {
+        try {
+          processedFile = await compressImage(file, 1920, 1080, 0.8);
+        } catch {
+          // If compression fails, upload original
+        }
+      }
+
+      const result = await uploadMediaImage(processedFile, userId);
       
       if (result.success && result.url) {
         editor?.chain().focus().setImage({ src: result.url }).run();
