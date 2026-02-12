@@ -240,7 +240,7 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
 
       if (result.success) {
         toast.success(t('requestSent'));
-        router.push('/');
+        router.push(`/publicidad/pago/${result.data.bookingId}`);
       } else {
         toast.error(result.error);
       }
