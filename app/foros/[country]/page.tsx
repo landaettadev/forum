@@ -7,6 +7,7 @@ import { CountryPageContent } from '@/components/forum/country-page-content';
 import { BannerSlot } from '@/components/ads/banner-slot';
 import { notFound } from 'next/navigation';
 import { generateMetadata as genMeta, SITE_NAME } from '@/lib/metadata';
+import { breadcrumbJsonLd } from '@/lib/jsonld';
 
 export const revalidate = 60;
 
@@ -22,8 +23,8 @@ export async function generateMetadata({ params }: { params: { country: string }
 
   const name = `${country.flag_emoji || ''} ${country.name_es || country.name}`.trim();
   return genMeta({
-    title: name,
-    description: `${name} — Trans community forum, reviews, ratings and discussions on ${SITE_NAME}.`,
+    title: `Escorts Trans ${country.name_es || country.name} — Reseñas y Opiniones`,
+    description: `Foro de escorts trans y travestis en ${name}. Reseñas, opiniones, fotos verificadas y experiencias reales de catadores en ${SITE_NAME}.`,
     url: `/foros/${params.country}`,
   });
 }
@@ -103,8 +104,20 @@ export default async function CountryForumPage({ params }: PageProps) {
     .eq('country_code', country.iso_code)
     .order('display_order');
 
+  const countryDisplayName = `${country.flag_emoji || ''} ${country.name_es || country.name}`.trim();
+
+  const bcJsonLd = breadcrumbJsonLd([
+    { name: 'Home', url: '/' },
+    { name: 'Forums', url: '/foros' },
+    { name: countryDisplayName, url: `/foros/${params.country}` },
+  ]);
+
   return (
     <div className="min-h-screen flex flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(bcJsonLd) }}
+      />
       <Header />
 
       <div className="flex justify-center py-3 bg-[hsl(var(--forum-surface-alt))]">
@@ -112,6 +125,10 @@ export default async function CountryForumPage({ params }: PageProps) {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 py-6 w-full flex-1">
+        {/* SEO descriptive text to avoid thin content */}
+        <p className="text-sm text-muted-foreground mb-4">
+          {`Foro de escorts trans y travestis en ${countryDisplayName}. Reseñas verificadas, opiniones de catadores y experiencias reales actualizadas ${new Date().getFullYear()}. Comunidad ${SITE_NAME}.`}
+        </p>
         <div className="flex gap-6">
           <CountryPageContent 
             country={country} 

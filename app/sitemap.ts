@@ -2,161 +2,101 @@ import { MetadataRoute } from 'next';
 import { createServerSupabaseClient } from '@/lib/supabase-server';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://transforo.com';
+const THREADS_PER_SITEMAP = 5000;
 
+// Sitemap index — splits into multiple sitemaps for scalability
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const supabase = createServerSupabaseClient();
 
+  // --- Static pages ---
   const staticPages: MetadataRoute.Sitemap = [
-    {
-      url: SITE_URL,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 1,
-    },
-    {
-      url: `${SITE_URL}/foros`,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 0.9,
-    },
-    {
-      url: `${SITE_URL}/buscar`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: `${SITE_URL}/reglas`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: `${SITE_URL}/faq`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: `${SITE_URL}/galeria`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.7,
-    },
-    {
-      url: `${SITE_URL}/reputacion`,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 0.7,
-    },
-    {
-      url: `${SITE_URL}/anuncios`,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 0.7,
-    },
-    {
-      url: `${SITE_URL}/publicidad`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.6,
-    },
-    {
-      url: `${SITE_URL}/contacto`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.5,
-    },
-    {
-      url: `${SITE_URL}/registro`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.5,
-    },
-    {
-      url: `${SITE_URL}/terminos`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 0.3,
-    },
-    {
-      url: `${SITE_URL}/privacidad`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 0.3,
-    },
-    {
-      url: `${SITE_URL}/cookies`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 0.3,
-    },
+    { url: SITE_URL, lastModified: new Date(), changeFrequency: 'daily', priority: 1 },
+    { url: `${SITE_URL}/foros`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.9 },
+    { url: `${SITE_URL}/buscar`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${SITE_URL}/reglas`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${SITE_URL}/faq`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${SITE_URL}/galeria`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.7 },
+    { url: `${SITE_URL}/reputacion`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.7 },
+    { url: `${SITE_URL}/anuncios`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.7 },
+    { url: `${SITE_URL}/publicidad`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${SITE_URL}/contacto`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${SITE_URL}/registro`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${SITE_URL}/terminos`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.3 },
+    { url: `${SITE_URL}/privacidad`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.3 },
+    { url: `${SITE_URL}/cookies`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.3 },
   ];
 
-  // Countries
+  // --- Countries ---
   const { data: countries } = await supabase
     .from('countries')
     .select('slug')
     .order('display_order');
 
-  const countryPages: MetadataRoute.Sitemap = (countries || []).map((country) => ({
-    url: `${SITE_URL}/foros/${country.slug}`,
+  const countryPages: MetadataRoute.Sitemap = (countries || []).map((c) => ({
+    url: `${SITE_URL}/foros/${c.slug}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.8,
   }));
 
-  // Regions (country + region)
+  // --- Regions ---
   const { data: regions } = await supabase
     .from('regions')
     .select('slug, country:countries(slug)')
     .order('name');
 
-  const regionPages: MetadataRoute.Sitemap = (regions || []).map((region: any) => ({
-    url: `${SITE_URL}/foros/${region.country?.slug}/${region.slug}`,
+  const regionPages: MetadataRoute.Sitemap = (regions || []).map((r: any) => ({
+    url: `${SITE_URL}/foros/${r.country?.slug}/${r.slug}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.7,
   })).filter((p) => !p.url.includes('undefined'));
 
-  // Subforos
+  // --- Subforos ---
   const { data: forums } = await supabase
     .from('forums')
     .select('slug')
     .order('display_order');
 
-  const forumPages: MetadataRoute.Sitemap = (forums || []).map((forum) => ({
-    url: `${SITE_URL}/foro/${forum.slug}`,
+  const forumPages: MetadataRoute.Sitemap = (forums || []).map((f) => ({
+    url: `${SITE_URL}/foro/${f.slug}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.7,
   }));
 
-  // Threads (latest 2000)
+  // --- Threads (paginated for scale) ---
+  const { count: threadCount } = await supabase
+    .from('threads')
+    .select('id', { count: 'exact', head: true });
+
+  const totalThreads = threadCount || 0;
+  const limit = Math.min(totalThreads, THREADS_PER_SITEMAP);
+
   const { data: threads } = await supabase
     .from('threads')
     .select('id, last_post_at, created_at')
     .order('last_post_at', { ascending: false })
-    .limit(2000);
+    .limit(limit);
 
-  const threadPages: MetadataRoute.Sitemap = (threads || []).map((thread) => ({
-    url: `${SITE_URL}/hilo/${thread.id}`,
-    lastModified: new Date(thread.last_post_at || thread.created_at),
+  const threadPages: MetadataRoute.Sitemap = (threads || []).map((t) => ({
+    url: `${SITE_URL}/hilo/${t.id}`,
+    lastModified: new Date(t.last_post_at || t.created_at),
     changeFrequency: 'weekly' as const,
     priority: 0.6,
   }));
 
-  // User profiles (active users)
+  // --- User profiles (active) ---
   const { data: profiles } = await supabase
     .from('profiles')
     .select('username, updated_at')
     .gt('posts_count', 0)
     .order('posts_count', { ascending: false })
-    .limit(500);
+    .limit(1000);
 
-  const profilePages: MetadataRoute.Sitemap = (profiles || []).map((profile) => ({
-    url: `${SITE_URL}/usuaria/${profile.username}`,
-    lastModified: new Date(profile.updated_at || new Date()),
+  const profilePages: MetadataRoute.Sitemap = (profiles || []).map((p) => ({
+    url: `${SITE_URL}/usuaria/${p.username}`,
+    lastModified: new Date(p.updated_at || new Date()),
     changeFrequency: 'weekly' as const,
     priority: 0.5,
   }));

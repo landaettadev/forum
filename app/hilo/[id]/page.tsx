@@ -8,6 +8,7 @@ import { Pagination } from '@/components/forum/pagination';
 import { ThreadHeader } from '@/components/forum/thread-header';
 import { ThreadContent } from '@/components/forum/thread-content';
 import { PollDisplay } from '@/components/forum/poll-display';
+import { RelatedThreads } from '@/components/forum/related-threads';
 import { Footer } from '@/components/layout/footer';
 import { getTranslations } from 'next-intl/server';
 import { generateThreadMetadata } from '@/lib/metadata';
@@ -20,12 +21,13 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
   const supabase = createServerSupabaseClient();
   const { data: thread } = await supabase
     .from('threads')
-    .select('title, views_count, replies_count, created_at, author:profiles!threads_author_id_fkey(username)')
+    .select('title, views_count, replies_count, created_at, author:profiles!threads_author_id_fkey(username), region:regions(name, country:countries(name, name_es))')
     .eq('id', params.id)
     .maybeSingle();
 
   if (!thread) return { title: 'Thread not found' };
 
+  const region = thread.region as any;
   return generateThreadMetadata({
     id: params.id,
     title: thread.title,
@@ -33,6 +35,8 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
     created_at: thread.created_at,
     views_count: thread.views_count,
     replies_count: thread.replies_count,
+    region_name: region?.name,
+    country_name: region?.country?.name_es || region?.country?.name,
   });
 }
 
@@ -165,6 +169,14 @@ export default async function ThreadPage({ params, searchParams }: PageProps) {
                 <p>{t('noPostsInThread')}</p>
               </div>
             )}
+
+            {/* Interlinking: related threads from same region/forum */}
+            <RelatedThreads
+              threadId={thread.id}
+              regionId={region?.id}
+              forumId={thread.forum?.id}
+              regionName={region?.name}
+            />
           </main>
 
           <div className="hidden lg:block">

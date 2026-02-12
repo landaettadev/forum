@@ -26,7 +26,7 @@ export default async function Image() {
           TransForo
         </div>
         <div style={{ fontSize: 28, opacity: 0.85, maxWidth: 800, textAlign: 'center' }}>
-          The leading trans community forum — reviews, ratings, discussions and connections.
+          Foro de escorts trans — reseñas, opiniones y experiencias reales.
         </div>
       </div>
     ),

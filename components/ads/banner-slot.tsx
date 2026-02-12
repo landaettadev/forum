@@ -60,13 +60,14 @@ export function BannerSlot({ position, zoneType, countryId, regionId, className 
   const tracked = useRef(false);
   const mapping = POSITION_MAP[position] || POSITION_MAP.header;
 
+  // Fixed dimensions prevent CLS (Cumulative Layout Shift) — Google Core Web Vitals
   const dimensions: Record<string, string> = {
-    header: 'h-[90px] w-full max-w-[728px]',
-    footer: 'h-[90px] w-full max-w-[728px]',
-    sidebar: 'h-[250px] w-full max-w-[300px]',
-    sidebar_top: 'h-[250px] w-full max-w-[300px]',
-    sidebar_bottom: 'h-[250px] w-full max-w-[300px]',
-    content: 'h-[90px] w-full max-w-[728px]',
+    header: 'min-h-[90px] h-[90px] w-full max-w-[728px]',
+    footer: 'min-h-[90px] h-[90px] w-full max-w-[728px]',
+    sidebar: 'min-h-[250px] h-[250px] w-full max-w-[300px]',
+    sidebar_top: 'min-h-[250px] h-[250px] w-full max-w-[300px]',
+    sidebar_bottom: 'min-h-[250px] h-[250px] w-full max-w-[300px]',
+    content: 'min-h-[90px] h-[90px] w-full max-w-[728px]',
   };
 
   useEffect(() => {

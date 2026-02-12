@@ -7,6 +7,7 @@ import { RegionPageContent } from '@/components/forum/region-page-content';
 import { BannerSlot } from '@/components/ads/banner-slot';
 import { notFound } from 'next/navigation';
 import { generateMetadata as genMeta, SITE_NAME } from '@/lib/metadata';
+import { breadcrumbJsonLd } from '@/lib/jsonld';
 
 export const revalidate = 60;
 
@@ -28,8 +29,8 @@ export async function generateMetadata({ params }: { params: { country: string; 
 
   const countryName = `${country.flag_emoji || ''} ${country.name_es || country.name}`.trim();
   return genMeta({
-    title: `${region.name}, ${countryName}`,
-    description: `${region.name}, ${countryName} — Trans community forum, reviews, ratings and discussions on ${SITE_NAME}.`,
+    title: `Escorts Trans ${region.name} — Reseñas y Opiniones`,
+    description: `Foro de escorts trans y travestis en ${region.name}, ${countryName}. Reseñas, opiniones, fotos verificadas y experiencias reales de catadores en ${SITE_NAME}.`,
     url: `/foros/${params.country}/${params.region}`,
   });
 }
@@ -88,8 +89,21 @@ export default async function RegionForumPage({ params }: PageProps) {
   const threadsCount = threads?.length || 0;
   const postsCount = threads?.reduce((sum, t) => sum + 1 + (t.replies_count || 0), 0) || 0;
 
+  const countryDisplayName = `${country.flag_emoji || ''} ${country.name_es || country.name}`.trim();
+
+  const bcJsonLd = breadcrumbJsonLd([
+    { name: 'Home', url: '/' },
+    { name: 'Forums', url: '/foros' },
+    { name: countryDisplayName, url: `/foros/${params.country}` },
+    { name: region.name, url: `/foros/${params.country}/${params.region}` },
+  ]);
+
   return (
     <div className="min-h-screen flex flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(bcJsonLd) }}
+      />
       <Header />
 
       <div className="flex justify-center py-3 bg-[hsl(var(--forum-surface-alt))]">
@@ -97,6 +111,10 @@ export default async function RegionForumPage({ params }: PageProps) {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 py-6 w-full flex-1">
+        {/* SEO descriptive text */}
+        <p className="text-sm text-muted-foreground mb-4">
+          {`Foro de escorts trans y travestis en ${region.name}, ${countryDisplayName}. Reseñas verificadas, opiniones de catadores y experiencias reales actualizadas ${new Date().getFullYear()}. Comunidad ${SITE_NAME}.`}
+        </p>
         <div className="flex gap-6">
           <RegionPageContent 
             country={country} 

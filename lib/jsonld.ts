@@ -6,7 +6,7 @@ export function websiteJsonLd() {
     '@type': 'WebSite',
     name: SITE_NAME,
     url: SITE_URL,
-    description: 'The leading trans community forum — reviews, ratings, discussions and connections.',
+    description: 'Foro de escorts trans, travestis y shemales — reseñas, opiniones, fotos verificadas y experiencias reales.',
     potentialAction: {
       '@type': 'SearchAction',
       target: {

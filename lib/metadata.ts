@@ -12,13 +12,25 @@ type GenerateMetadataProps = {
 export const SITE_NAME = 'TransForo';
 export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://transforo.com';
 export const DEFAULT_IMAGE = `${SITE_URL}/og-image.png`;
-export const DEFAULT_DESCRIPTION = 'The leading trans community forum — reviews, ratings, discussions and connections. Join thousands of members worldwide.';
+export const DEFAULT_DESCRIPTION = 'Foro de escorts trans, travestis y shemales — reseñas, opiniones, fotos verificadas y experiencias reales. Comunidad #1 de catadores y reviews de chicas trans en Latinoamérica y el mundo.';
 export const DEFAULT_KEYWORDS = [
-  'trans forum', 'ts community', 'trans reviews', 'ts ratings',
-  'trans discussion', 'trans escort forum', 'ts escort reviews',
-  'transgender community', 'trans meetup', 'ts forum',
-  'trans services', 'ts directory', 'trans profiles',
-  'foro trans', 'comunidad trans', 'reseñas trans',
+  // English — high volume search terms
+  'trans escort reviews', 'ts escort forum', 'shemale reviews', 'shemale forum',
+  'tranny reviews', 'tranny forum', 'trans escort ratings', 'ts reviews',
+  'transgender escort forum', 'ladyboy forum', 'ladyboy reviews',
+  'ts escort directory', 'trans community forum', 'shemale escort reviews',
+  // Spanish — high volume search terms
+  'foro escorts trans', 'reseñas escorts trans', 'foro travestis',
+  'opiniones escorts trans', 'catador escort trans', 'catadores trans',
+  'foro shemale', 'reviews trans escort', 'foro travesti',
+  'escorts trans opiniones', 'chicas trans reviews', 'escorts trans reseñas',
+  'foro de escorts travestis', 'experiencias escorts trans',
+  'fotos escorts trans verificadas', 'directorio escorts trans',
+  // Regional variations
+  'escorts trans colombia', 'escorts trans mexico', 'escorts trans argentina',
+  'escorts trans españa', 'escorts trans peru', 'escorts trans chile',
+  'escorts trans brasil', 'travestis argentina', 'travestis mexico',
+  'travestis colombia', 'shemale escort latina',
 ];
 
 export function generateMetadata({
@@ -101,11 +113,19 @@ export function generateThreadMetadata(thread: {
   created_at: string;
   views_count?: number;
   replies_count?: number;
+  region_name?: string;
+  country_name?: string;
 }) {
-  const description = `Thread by @${thread.author?.username || 'User'} — ${thread.replies_count || 0} replies, ${thread.views_count || 0} views. ${thread.title}`.slice(0, 160);
+  const location = thread.region_name
+    ? thread.country_name
+      ? `${thread.region_name}, ${thread.country_name}`
+      : thread.region_name
+    : undefined;
+  const seoTitle = location ? `${thread.title} - ${location}` : thread.title;
+  const description = `${thread.title}${location ? ` in ${location}` : ''} — ${thread.replies_count || 0} replies, ${thread.views_count || 0} views. By @${thread.author?.username || 'User'} on ${SITE_NAME}.`.slice(0, 160);
   
   return generateMetadata({
-    title: thread.title,
+    title: seoTitle,
     description,
     type: 'article',
     url: thread.id ? `/hilo/${thread.id}` : undefined,
