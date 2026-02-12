@@ -10,7 +10,7 @@ declare global {
   }
 }
 
-export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-WYP0TL8804';
 
 // Verificar si está habilitado
 export const isAnalyticsEnabled = () => {

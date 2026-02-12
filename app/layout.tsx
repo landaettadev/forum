@@ -14,7 +14,7 @@ import { websiteJsonLd, organizationJsonLd } from '@/lib/jsonld';
 
 const inter = Inter({ subsets: ['latin'] });
 
-const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-WYP0TL8804';
 
 export const metadata = genMeta({
   title: undefined,
