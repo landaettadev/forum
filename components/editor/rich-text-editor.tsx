@@ -59,6 +59,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { uploadMediaImage } from '@/lib/storage';
+import { GifPicker } from './gif-picker';
 
 interface RichTextEditorProps {
   content: string;
@@ -424,6 +425,22 @@ export function RichTextEditor({
                 </button>
               ))}
             </div>
+          </PopoverContent>
+        </Popover>
+
+        {/* GIF Picker */}
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button variant="ghost" size="sm" className="h-8 px-2 text-xs font-bold" title="GIF">
+              GIF
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-3" align="start">
+            <GifPicker
+              onSelect={(gifUrl) => {
+                editor?.chain().focus().setImage({ src: gifUrl }).run();
+              }}
+            />
           </PopoverContent>
         </Popover>
 

@@ -18,6 +18,8 @@ import { QuotedPosts } from './quote-block';
 import { useAuth } from '@/lib/auth-context';
 import { MentionText } from './mention-text';
 import { PostReactions } from './post-reactions';
+import { PostEmbeds } from './post-embeds';
+import { CodeHighlight } from './code-highlight';
 
 type PostItemProps = {
   post: Post & {
@@ -136,10 +138,14 @@ export function PostItem({ post, threadId, isFirstPost = false, canModerate = fa
         <div className="flex-1 min-w-0">
           <div className="prose prose-invert max-w-none">
             {post.content.includes('<') && post.content.includes('>') ? (
-              <div
-                className="text-[15px] leading-relaxed break-words"
-                dangerouslySetInnerHTML={{ __html: post.content }}
-              />
+              <>
+                <div
+                  className="text-[15px] leading-relaxed break-words"
+                  dangerouslySetInnerHTML={{ __html: post.content }}
+                />
+                {/* Syntax highlighting for code blocks */}
+                <CodeHighlight content={post.content} />
+              </>
             ) : (
               <div className="text-[15px] leading-relaxed whitespace-pre-wrap break-words">
                 {post.content.split('\n').map((line, i) => (
@@ -151,6 +157,9 @@ export function PostItem({ post, threadId, isFirstPost = false, canModerate = fa
               </div>
             )}
           </div>
+
+          {/* Auto-embeds for YouTube, Twitter/X, TikTok */}
+          <PostEmbeds content={post.content} />
 
           {post.author.signature && (
             <div className="mt-4 pt-4 border-t border-[hsl(var(--forum-border))]">

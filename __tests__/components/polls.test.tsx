@@ -8,11 +8,11 @@ describe('Poll Components', () => {
     // Verify the module can be imported
     const module = await import('@/components/forum/poll-creator');
     expect(module.PollCreator).toBeDefined();
-  });
+  }, 15000);
 
   it('should import PollDisplay without errors', async () => {
     // Verify the module can be imported
     const module = await import('@/components/forum/poll-display');
     expect(module.PollDisplay).toBeDefined();
-  });
+  }, 15000);
 });

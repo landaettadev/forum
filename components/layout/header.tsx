@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Search, User, LogOut, Settings, MessageSquare, Shield, Bookmark, Megaphone, Bell } from 'lucide-react';
+import { Search, User, LogOut, Settings, MessageSquare, Shield, Bookmark, Megaphone, Bell, Flame, Coins, ShoppingBag } from 'lucide-react';
 import { LanguageSwitcher } from '@/components/language-switcher';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { NotificationsDropdown } from '@/components/notifications/notifications-dropdown';
@@ -41,6 +41,14 @@ export function Header() {
               <Link href="/publicidad" className="text-sm font-medium px-3 py-1.5 rounded-lg hover:bg-[hsl(var(--forum-accent-muted))] hover:text-[hsl(var(--forum-accent))] transition-all flex items-center gap-1.5">
                 <Megaphone className="w-3.5 h-3.5" />
                 {t('nav.ads')}
+              </Link>
+              <Link href="/feed" className="text-sm font-medium px-3 py-1.5 rounded-lg hover:bg-[hsl(var(--forum-accent-muted))] hover:text-[hsl(var(--forum-accent))] transition-all flex items-center gap-1.5">
+                <Flame className="w-3.5 h-3.5" />
+                Feed
+              </Link>
+              <Link href="/tienda" className="text-sm font-medium px-3 py-1.5 rounded-lg hover:bg-[hsl(var(--forum-accent-muted))] hover:text-[hsl(var(--forum-accent))] transition-all flex items-center gap-1.5">
+                <ShoppingBag className="w-3.5 h-3.5" />
+                Tienda
               </Link>
               <Link href="/buscar" className="text-sm font-medium px-3 py-1.5 rounded-lg hover:bg-[hsl(var(--forum-accent-muted))] hover:text-[hsl(var(--forum-accent))] transition-all">
                 {t('common.search')}
