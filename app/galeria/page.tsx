@@ -3,6 +3,13 @@ import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { Sidebar } from '@/components/layout/sidebar';
 import { GalleryContent } from '@/components/gallery/gallery-content';
+import { generateMetadata as genMeta, SITE_NAME } from '@/lib/metadata';
+
+export const metadata = genMeta({
+  title: 'Gallery',
+  description: `Photo gallery on ${SITE_NAME}. Browse images shared by the community.`,
+  url: '/galeria',
+});
 
 export const revalidate = 60;
 

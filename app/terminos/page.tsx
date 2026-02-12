@@ -1,10 +1,14 @@
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { TermsContent } from '@/components/pages/terms-content';
+import { generateMetadata as genMeta } from '@/lib/metadata';
 
-export const metadata = {
-  title: 'Terms - TransForo',
-};
+export const metadata = genMeta({
+  title: 'Terms of Service',
+  description: 'Terms of service and conditions of use for TransForo.',
+  url: '/terminos',
+  noIndex: true,
+});
 
 export default function TermsPage() {
   return (

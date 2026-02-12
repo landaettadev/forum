@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import { createServerSupabaseClient } from '@/lib/supabase-server';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
@@ -5,8 +6,27 @@ import { Sidebar } from '@/components/layout/sidebar';
 import { CountryPageContent } from '@/components/forum/country-page-content';
 import { BannerSlot } from '@/components/ads/banner-slot';
 import { notFound } from 'next/navigation';
+import { generateMetadata as genMeta, SITE_NAME } from '@/lib/metadata';
 
 export const revalidate = 60;
+
+export async function generateMetadata({ params }: { params: { country: string } }): Promise<Metadata> {
+  const supabase = createServerSupabaseClient();
+  const { data: country } = await supabase
+    .from('countries')
+    .select('name, name_es, flag_emoji')
+    .eq('slug', params.country)
+    .maybeSingle();
+
+  if (!country) return { title: 'Country not found' };
+
+  const name = `${country.flag_emoji || ''} ${country.name_es || country.name}`.trim();
+  return genMeta({
+    title: name,
+    description: `${name} — Trans community forum, reviews, ratings and discussions on ${SITE_NAME}.`,
+    url: `/foros/${params.country}`,
+  });
+}
 
 interface PageProps {
   params: { country: string };

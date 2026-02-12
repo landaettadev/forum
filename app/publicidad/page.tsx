@@ -3,10 +3,13 @@ import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { BannerPurchaseFlow } from '@/components/ads/banner-purchase-flow';
 
-export const metadata = {
-  title: 'Publicidad — TransForo',
-  description: 'Compra espacios publicitarios en TransForo',
-};
+import { generateMetadata as genMeta } from '@/lib/metadata';
+
+export const metadata = genMeta({
+  title: 'Advertising',
+  description: 'Buy banner ad spaces on TransForo. Reach the trans community with targeted advertising by country and region.',
+  url: '/publicidad',
+});
 
 export default async function PublicidadPage() {
   const supabase = createServerSupabaseClient();

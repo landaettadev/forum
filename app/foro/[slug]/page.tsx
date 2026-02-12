@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { createServerSupabaseClient } from '@/lib/supabase-server';
@@ -10,8 +11,26 @@ import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import { Footer } from '@/components/layout/footer';
+import { generateForumMetadata } from '@/lib/metadata';
 
 export const revalidate = 30;
+
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const supabase = createServerSupabaseClient();
+  const { data: forum } = await supabase
+    .from('forums')
+    .select('name, description')
+    .eq('slug', params.slug)
+    .maybeSingle();
+
+  if (!forum) return { title: 'Forum not found' };
+
+  return generateForumMetadata({
+    name: forum.name,
+    slug: params.slug,
+    description: forum.description,
+  });
+}
 
 const THREADS_PER_PAGE = 25;
 

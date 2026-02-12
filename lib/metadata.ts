@@ -9,10 +9,17 @@ type GenerateMetadataProps = {
   noIndex?: boolean;
 };
 
-const SITE_NAME = 'TransForo';
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://transforo.com';
-const DEFAULT_IMAGE = `${SITE_URL}/og-image.png`;
-const DEFAULT_DESCRIPTION = 'Foro profesional para chicas trans de servicios. Comparte experiencias, tips y conecta con colegas de tu zona.';
+export const SITE_NAME = 'TransForo';
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://transforo.com';
+export const DEFAULT_IMAGE = `${SITE_URL}/og-image.png`;
+export const DEFAULT_DESCRIPTION = 'The leading trans community forum — reviews, ratings, discussions and connections. Join thousands of members worldwide.';
+export const DEFAULT_KEYWORDS = [
+  'trans forum', 'ts community', 'trans reviews', 'ts ratings',
+  'trans discussion', 'trans escort forum', 'ts escort reviews',
+  'transgender community', 'trans meetup', 'ts forum',
+  'trans services', 'ts directory', 'trans profiles',
+  'foro trans', 'comunidad trans', 'reseñas trans',
+];
 
 export function generateMetadata({
   title,
@@ -30,18 +37,12 @@ export function generateMetadata({
     description,
     applicationName: SITE_NAME,
     authors: [{ name: SITE_NAME }],
-    keywords: ['foro trans', 'comunidad trans', 'profesionales trans', 'servicios', 'escorts trans', 'trans forum'],
+    keywords: DEFAULT_KEYWORDS,
     creator: SITE_NAME,
     publisher: SITE_NAME,
     metadataBase: new URL(SITE_URL),
     alternates: {
       canonical: fullUrl,
-      languages: {
-        'es': `${SITE_URL}/es${url || ''}`,
-        'en': `${SITE_URL}/en${url || ''}`,
-        'pt': `${SITE_URL}/pt${url || ''}`,
-        'fr': `${SITE_URL}/fr${url || ''}`,
-      },
     },
     openGraph: {
       title: fullTitle,
@@ -94,32 +95,36 @@ export function generateMetadata({
 }
 
 export function generateThreadMetadata(thread: {
+  id?: string;
   title: string;
   author?: { username: string };
   created_at: string;
   views_count?: number;
   replies_count?: number;
 }) {
-  const description = `Hilo por @${thread.author?.username || 'Usuario'} - ${thread.replies_count || 0} respuestas, ${thread.views_count || 0} vistas`;
+  const description = `Thread by @${thread.author?.username || 'User'} — ${thread.replies_count || 0} replies, ${thread.views_count || 0} views. ${thread.title}`.slice(0, 160);
   
   return generateMetadata({
     title: thread.title,
     description,
     type: 'article',
+    url: thread.id ? `/hilo/${thread.id}` : undefined,
   });
 }
 
 export function generateForumMetadata(forum: {
   name: string;
+  slug?: string;
   description?: string;
   threads_count?: number;
   posts_count?: number;
 }) {
-  const description = forum.description || `${forum.name} - ${forum.threads_count || 0} hilos, ${forum.posts_count || 0} posts`;
+  const description = forum.description || `${forum.name} — ${forum.threads_count || 0} threads, ${forum.posts_count || 0} posts on ${SITE_NAME}`;
   
   return generateMetadata({
     title: forum.name,
     description,
+    url: forum.slug ? `/foro/${forum.slug}` : undefined,
   });
 }
 
@@ -129,12 +134,13 @@ export function generateProfileMetadata(profile: {
   avatar_url?: string;
   posts_count?: number;
 }) {
-  const description = profile.bio || `Perfil de @${profile.username} - ${profile.posts_count || 0} posts en TransForo`;
+  const description = profile.bio || `@${profile.username} profile — ${profile.posts_count || 0} posts on ${SITE_NAME}`;
   
   return generateMetadata({
     title: `@${profile.username}`,
     description,
     image: profile.avatar_url || DEFAULT_IMAGE,
     type: 'profile',
+    url: `/usuaria/${profile.username}`,
   });
 }

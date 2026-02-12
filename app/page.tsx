@@ -7,6 +7,13 @@ import { BannerSlot } from '@/components/ads/banner-slot';
 import { getGeoFromIP, getCountrySlugFromCode } from '@/lib/geolocation';
 import { getLocale } from 'next-intl/server';
 import { getLocalizedName } from '@/lib/locale-name';
+import { generateMetadata as genMeta, SITE_NAME, DEFAULT_DESCRIPTION } from '@/lib/metadata';
+
+export const metadata = genMeta({
+  title: undefined,
+  description: DEFAULT_DESCRIPTION,
+  url: '/',
+});
 
 export const revalidate = 60;
 

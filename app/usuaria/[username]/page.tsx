@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { createServerSupabaseClient } from '@/lib/supabase-server';
 import { Header } from '@/components/layout/header';
@@ -5,8 +6,28 @@ import { Footer } from '@/components/layout/footer';
 import { Sidebar } from '@/components/layout/sidebar';
 import { Breadcrumbs } from '@/components/layout/breadcrumbs';
 import { UserProfilePageContent } from '@/components/profile/user-profile-page-content';
+import { generateProfileMetadata } from '@/lib/metadata';
+import { profileJsonLd } from '@/lib/jsonld';
 
 export const revalidate = 60;
+
+export async function generateMetadata({ params }: { params: { username: string } }): Promise<Metadata> {
+  const supabase = createServerSupabaseClient();
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('username, bio, avatar_url, posts_count')
+    .eq('username', params.username)
+    .maybeSingle();
+
+  if (!profile) return { title: 'Profile not found' };
+
+  return generateProfileMetadata({
+    username: profile.username,
+    bio: profile.bio,
+    avatar_url: profile.avatar_url,
+    posts_count: profile.posts_count,
+  });
+}
 
 type PageProps = {
   params: { username: string };

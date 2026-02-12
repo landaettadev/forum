@@ -1,3 +1,4 @@
+import { Metadata } from 'next';
 import { createServerSupabaseClient } from '@/lib/supabase-server';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
@@ -5,8 +6,33 @@ import { Sidebar } from '@/components/layout/sidebar';
 import { RegionPageContent } from '@/components/forum/region-page-content';
 import { BannerSlot } from '@/components/ads/banner-slot';
 import { notFound } from 'next/navigation';
+import { generateMetadata as genMeta, SITE_NAME } from '@/lib/metadata';
 
 export const revalidate = 60;
+
+export async function generateMetadata({ params }: { params: { country: string; region: string } }): Promise<Metadata> {
+  const supabase = createServerSupabaseClient();
+  const { data: country } = await supabase
+    .from('countries')
+    .select('name, name_es, flag_emoji')
+    .eq('slug', params.country)
+    .maybeSingle();
+
+  const { data: region } = await supabase
+    .from('regions')
+    .select('name')
+    .eq('slug', params.region)
+    .maybeSingle();
+
+  if (!country || !region) return { title: 'Region not found' };
+
+  const countryName = `${country.flag_emoji || ''} ${country.name_es || country.name}`.trim();
+  return genMeta({
+    title: `${region.name}, ${countryName}`,
+    description: `${region.name}, ${countryName} — Trans community forum, reviews, ratings and discussions on ${SITE_NAME}.`,
+    url: `/foros/${params.country}/${params.region}`,
+  });
+}
 
 interface PageProps {
   params: { country: string; region: string };

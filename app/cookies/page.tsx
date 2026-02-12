@@ -1,10 +1,14 @@
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { CookiesContent } from '@/components/pages/cookies-content';
+import { generateMetadata as genMeta } from '@/lib/metadata';
 
-export const metadata = {
-  title: 'Cookies - TransForo',
-};
+export const metadata = genMeta({
+  title: 'Cookies Policy',
+  description: 'Cookie policy and tracking information for TransForo.',
+  url: '/cookies',
+  noIndex: true,
+});
 
 export default function CookiesPage() {
   return (

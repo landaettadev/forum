@@ -3,6 +3,13 @@ import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { Sidebar } from '@/components/layout/sidebar';
 import { ForumsPageContent } from '@/components/forum/forums-page-content';
+import { generateMetadata as genMeta, SITE_NAME } from '@/lib/metadata';
+
+export const metadata = genMeta({
+  title: 'Forums',
+  description: `Browse all forums and countries on ${SITE_NAME}. Find trans community discussions, reviews and ratings by region.`,
+  url: '/foros',
+});
 
 export const revalidate = 60;
 

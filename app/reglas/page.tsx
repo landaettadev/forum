@@ -2,6 +2,13 @@ import { Header } from '@/components/layout/header';
 import { Sidebar } from '@/components/layout/sidebar';
 import { RulesContent } from '@/components/pages/rules-content';
 import { RulesBreadcrumb } from '@/components/pages/rules-breadcrumb';
+import { generateMetadata as genMeta, SITE_NAME } from '@/lib/metadata';
+
+export const metadata = genMeta({
+  title: 'Rules',
+  description: `Community rules and guidelines for ${SITE_NAME}. Read before posting.`,
+  url: '/reglas',
+});
 
 export default function ReglasPage() {
   return (
