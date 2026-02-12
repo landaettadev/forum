@@ -24,6 +24,31 @@ vi.mock('next/navigation', () => ({
   useSearchParams: () => new URLSearchParams(),
 }));
 
+// Mock de next-intl (evita errores por falta de NextIntlClientProvider en tests)
+// y retorna traducciones reales (es) para que los tests puedan afirmar textos.
+vi.mock('next-intl', async () => {
+  const esMessages = (await import('./messages/es.json')).default as Record<string, any>;
+
+  const interpolate = (message: unknown, values?: Record<string, any>) => {
+    if (typeof message !== 'string') return undefined;
+    if (!values) return message;
+    return message.replace(/\{(\w+)\}/g, (_match, key) => {
+      const value = values[key];
+      return value === undefined || value === null ? `{${key}}` : String(value);
+    });
+  };
+
+  return {
+    useLocale: () => 'es',
+    useTranslations: (namespace?: string) => (key: string, values?: Record<string, any>) => {
+      if (!namespace) return key;
+      const msg = esMessages?.[namespace]?.[key];
+      return interpolate(msg, values) ?? msg ?? key;
+    },
+    NextIntlClientProvider: ({ children }: { children: any }) => children,
+  };
+});
+
 // Mock de Supabase
 vi.mock('@/lib/supabase', () => ({
   supabase: {
