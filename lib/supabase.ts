@@ -1,11 +1,19 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-export const supabase = supabaseUrl && supabaseAnonKey
+// Prevent build from failing if env vars are missing
+// This allows the build to proceed until it actually needs to fetch data
+export const supabase = (supabaseUrl && supabaseAnonKey)
   ? createClient(supabaseUrl, supabaseAnonKey)
-  : (null as unknown as ReturnType<typeof createClient>);
+  : new Proxy({} as ReturnType<typeof createClient>, {
+      get: () => {
+        throw new Error(
+          'Supabase client could not be initialized. Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY environment variables.'
+        );
+      },
+    });
 
 export type Profile = {
   id: string;

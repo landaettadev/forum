@@ -76,6 +76,21 @@ export const createPostSchema = z.object({
   quotedPostId: z.string().uuid().optional(),
 });
 
+// Editar post
+export const editPostSchema = z.object({
+  postId: z.string().uuid('ID de post inválido'),
+
+  content: z.string()
+    .min(1, 'Contenido no puede estar vacío')
+    .max(50000, 'Contenido no puede exceder 50000 caracteres')
+    .transform((val) => sanitizeHtml(val)),
+});
+
+// Thank a post
+export const thankPostSchema = z.object({
+  postId: z.string().uuid('ID de post inválido'),
+});
+
 // Actualizar perfil
 export const updateProfileSchema = z.object({
   username: z.string()

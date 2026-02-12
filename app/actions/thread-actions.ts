@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { createServerSupabaseClient } from '@/lib/supabase-server';
-import { validateData, createThreadSchema, createPostSchema } from '@/lib/validation';
+import { validateData, createThreadSchema, createPostSchema, editPostSchema, thankPostSchema } from '@/lib/validation';
 import { detectSpam, validateLinkCount } from '@/lib/sanitize';
 import { extractMentions } from '@/lib/mentions';
 import { getTranslations } from 'next-intl/server';
@@ -324,6 +324,12 @@ export async function createPost(formData: FormData): Promise<ActionResult<{ pos
  */
 export async function thankPost(postId: string): Promise<ActionResult> {
   try {
+    // Validate input with Zod
+    const validation = validateData(thankPostSchema, { postId });
+    if (!validation.success) {
+      return { success: false, error: 'ID de post inválido' };
+    }
+
     const supabase = createServerSupabaseClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
     
@@ -337,7 +343,7 @@ export async function thankPost(postId: string): Promise<ActionResult> {
     const { data: post, error: postError } = await supabase
       .from('posts')
       .select('id, author_id')
-      .eq('id', postId)
+      .eq('id', validation.data.postId)
       .single();
 
     if (postError || !post) {
@@ -428,6 +434,19 @@ export async function thankPost(postId: string): Promise<ActionResult> {
  */
 export async function editPost(postId: string, content: string): Promise<ActionResult> {
   try {
+    // Validate and sanitize input with Zod
+    const validation = validateData(editPostSchema, { postId, content });
+    if (!validation.success) {
+      return {
+        success: false,
+        error: 'Datos inválidos',
+        fieldErrors: Object.fromEntries(
+          Object.entries(validation.errors).map(([key, messages]) => [key, messages[0]])
+        ),
+      };
+    }
+
+    const { postId: validPostId, content: sanitizedContent } = validation.data;
     const supabase = createServerSupabaseClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
     
@@ -435,22 +454,11 @@ export async function editPost(postId: string, content: string): Promise<ActionR
       return { success: false, error: 'Login required' };
     }
 
-    // Validar contenido
-    if (!content || content.length < 1) {
-      const t = await getTranslations('serverErrors');
-      return { success: false, error: t('contentEmpty') };
-    }
-
-    if (content.length > 50000) {
-      const t = await getTranslations('serverErrors');
-      return { success: false, error: t('contentTooLong') };
-    }
-
     // Verificar que el post existe y pertenece al usuario
     const { data: post, error: postError } = await supabase
       .from('posts')
       .select('id, author_id, thread_id')
-      .eq('id', postId)
+      .eq('id', validPostId)
       .single();
 
     if (postError || !post) {
@@ -473,14 +481,14 @@ export async function editPost(postId: string, content: string): Promise<ActionR
       return { success: false, error: t('noEditPermission') };
     }
 
-    // Actualizar el post
+    // Actualizar el post with sanitized content from Zod
     const { error: updateError } = await supabase
       .from('posts')
       .update({
-        content: content,
+        content: sanitizedContent,
         updated_at: new Date().toISOString(),
       })
-      .eq('id', postId);
+      .eq('id', validPostId);
 
     if (updateError) {
       console.error('Error updating post:', updateError);
