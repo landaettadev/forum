@@ -5,7 +5,7 @@ import { Footer } from '@/components/layout/footer';
 import { Sidebar } from '@/components/layout/sidebar';
 import { HomeContent } from '@/components/home/home-content';
 import { BannerSlot } from '@/components/ads/banner-slot';
-import { getGeoFromIP, getCountrySlugFromCode } from '@/lib/geolocation';
+import { getGeoFromIP } from '@/lib/geolocation';
 import { getLocale } from 'next-intl/server';
 import { getLocalizedName } from '@/lib/locale-name';
 import { generateMetadata as genMeta, DEFAULT_DESCRIPTION } from '@/lib/metadata';
@@ -23,7 +23,6 @@ export default async function HomePage() {
   const locale = await getLocale();
   // Get user's country from IP
   const geoData = await getGeoFromIP();
-  const userCountrySlug = geoData.countryCode ? getCountrySlugFromCode(geoData.countryCode) : undefined;
 
   // Single RPC call replaces 3 separate queries (countries + threads + lastPosts)
   const { data: rpcData, error: rpcError } = await supabase.rpc('get_homepage_data');
@@ -38,7 +37,7 @@ export default async function HomePage() {
       .select(`*, continent:continents (slug, name_es, name_en, display_order), regions (id, name, slug)`)
       .order('display_order');
 
-    // Compute thread/post stats per country via regions
+    // Compute thread/post stats per country via regions using count queries (no 1000-row limit)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const countryList = (data || []) as any[];
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -51,17 +50,29 @@ export default async function HomePage() {
 
     const countryStats: Record<string, { thread_count: number; post_count: number }> = {};
     if (allRegionIds.length > 0) {
-      const { data: threads } = await supabase
+      // Fetch threads with their post counts using supabaseAdmin to bypass RLS and row limits
+      const { data: threads } = await supabaseAdmin
         .from('threads')
-        .select('region_id, replies_count')
+        .select('id, region_id')
         .in('region_id', allRegionIds);
       if (threads) {
+        const threadIdsByCountry: Record<string, string[]> = {};
         for (const t of threads) {
           const cId = regionToCountry[t.region_id];
           if (!cId) continue;
           if (!countryStats[cId]) countryStats[cId] = { thread_count: 0, post_count: 0 };
           countryStats[cId].thread_count += 1;
-          countryStats[cId].post_count += 1 + (t.replies_count || 0);
+          if (!threadIdsByCountry[cId]) threadIdsByCountry[cId] = [];
+          threadIdsByCountry[cId].push(t.id);
+        }
+
+        // Count posts per country using exact count queries (no row limit)
+        for (const [cId, tIds] of Object.entries(threadIdsByCountry)) {
+          const { count } = await supabaseAdmin
+            .from('posts')
+            .select('id', { count: 'exact', head: true })
+            .in('thread_id', tIds);
+          countryStats[cId].post_count = count ?? 0;
         }
       }
     }
@@ -101,10 +112,41 @@ export default async function HomePage() {
   if (adminCategory) {
     const { data: af } = await supabase
       .from('forums')
-      .select('id, name, slug, description, forum_type, threads_count, posts_count')
+      .select('id, name, slug, description, forum_type')
       .eq('category_id', adminCategory.id)
       .order('display_order');
-    adminForums = af || [];
+
+    if (af && af.length > 0) {
+      const forumIds = af.map(f => f.id);
+      const { data: forumThreads } = await supabaseAdmin
+        .from('threads')
+        .select('id, forum_id')
+        .in('forum_id', forumIds);
+
+      const threadsByForum: Record<string, string[]> = {};
+      for (const t of forumThreads || []) {
+        if (!threadsByForum[t.forum_id]) threadsByForum[t.forum_id] = [];
+        threadsByForum[t.forum_id].push(t.id);
+      }
+
+      const allThreadIds = (forumThreads || []).map(t => t.id);
+      const postsByThread: Record<string, number> = {};
+      if (allThreadIds.length > 0) {
+        const { data: forumPosts } = await supabaseAdmin
+          .from('posts')
+          .select('thread_id')
+          .in('thread_id', allThreadIds);
+        for (const p of forumPosts || []) {
+          postsByThread[p.thread_id] = (postsByThread[p.thread_id] || 0) + 1;
+        }
+      }
+
+      adminForums = af.map(f => ({
+        ...f,
+        threads_count: threadsByForum[f.id]?.length || 0,
+        posts_count: (threadsByForum[f.id] || []).reduce((sum, tid) => sum + (postsByThread[tid] || 0), 0),
+      }));
+    }
   }
 
   // Fetch forum stats server-side using admin client (bypasses RLS)
@@ -126,12 +168,14 @@ export default async function HomePage() {
     onlineGuests: onlineRegistered > 0 ? Math.max(1, Math.floor(onlineRegistered * 2.5)) : 0,
   };
 
-  // Resolve user's country ID for banner ads
-  const userCountry = userCountrySlug
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ? countries.find((c: any) => c.slug === userCountrySlug)
-    : countries[0];
-  const bannerCountryId = userCountry?.id || undefined;
+  // Find user's country by iso_code from geo detection; fallback to first country
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const userCountryMatch = geoData.countryCode ? countries.find((c: any) => c.iso_code?.toUpperCase() === geoData.countryCode?.toUpperCase()) : null;
+  const fallbackCountry = countries[0] || null;
+  const resolvedCountry = userCountryMatch || fallbackCountry;
+  const userCountrySlug = resolvedCountry?.slug || undefined;
+  const geoDetected = !!userCountryMatch;
+  const bannerCountryId = resolvedCountry?.id || undefined;
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -148,6 +192,8 @@ export default async function HomePage() {
               countriesByContinent={countriesByContinent} 
               userCountrySlug={userCountrySlug}
               userCountryCode={geoData.countryCode}
+              userGeoCountryName={geoData.country}
+              geoDetected={geoDetected}
               adminForums={adminForums}
             />
           </main>

@@ -352,7 +352,7 @@ export default function AdminWarningsPage() {
                     <TableRow key={warning.id}>
                       <TableCell>
                         <Link 
-                          href={`/usuaria/${warning.user?.username}`}
+                          href={`/user/${warning.user?.username}`}
                           className="text-[hsl(var(--forum-accent))] hover:underline"
                         >
                           @{warning.user?.username}

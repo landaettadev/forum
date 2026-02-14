@@ -20,7 +20,8 @@ import { updateProfile } from './actions';
 import { formatDistanceToNow } from 'date-fns';
 import { getDateFnsLocale } from '@/lib/date-locale';
 import { useLocale, useTranslations } from 'next-intl';
-import { MessageSquare, Eye, Clock } from 'lucide-react';
+import { MessageSquare, Eye, Clock, Upload, X, User } from 'lucide-react';
+import { uploadAvatar } from '@/lib/storage';
 
 function MisHilos({ userId }: { userId: string }) {
   const locale = useLocale();
@@ -102,10 +103,13 @@ function MisHilos({ userId }: { userId: string }) {
 
 
 export default function MiCuentaPage() {
-  const { user, profile, refreshProfile } = useAuth();
+  const { user, profile, loading: authLoading, refreshProfile } = useAuth();
   const router = useRouter();
   const t = useTranslations('account');
   const [loading, setLoading] = useState(false);
+  const [avatarUploading, setAvatarUploading] = useState(false);
+  const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+  const [showUrlInput, setShowUrlInput] = useState(false);
   const [formData, setFormData] = useState({
     username: '',
     bio: '',
@@ -116,6 +120,7 @@ export default function MiCuentaPage() {
   });
 
   useEffect(() => {
+    if (authLoading) return;
     if (!user) {
       router.push('/login');
       return;
@@ -131,7 +136,7 @@ export default function MiCuentaPage() {
         avatar_url: profile.avatar_url || '',
       });
     }
-  }, [user, profile, router]);
+  }, [user, profile, router, authLoading]);
 
   const handleSaveProfile = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -212,16 +217,122 @@ export default function MiCuentaPage() {
                         </p>
                       </div>
 
-                      <div className="space-y-2">
-                        <Label htmlFor="avatar_url">{t('avatarUrl')}</Label>
-                        <Input
-                          id="avatar_url"
-                          type="url"
-                          placeholder="https://..."
-                          value={formData.avatar_url}
-                          onChange={(e) => setFormData({ ...formData, avatar_url: e.target.value })}
-                          disabled={loading}
-                        />
+                      <div className="space-y-3">
+                        <Label>{t('avatarUpload')}</Label>
+                        <div className="flex items-start gap-4">
+                          {/* Avatar preview */}
+                          <div className="relative flex-shrink-0">
+                            <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-[hsl(var(--forum-border))] bg-[hsl(var(--forum-muted))] flex items-center justify-center">
+                              {(avatarPreview || formData.avatar_url) ? (
+                                // eslint-disable-next-line @next/next/no-img-element
+                                <img
+                                  src={avatarPreview || formData.avatar_url}
+                                  alt="Avatar"
+                                  className="w-full h-full object-cover"
+                                  onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                                />
+                              ) : (
+                                <User className="w-8 h-8 text-[hsl(var(--forum-muted-foreground))]" />
+                              )}
+                            </div>
+                            {(avatarPreview || formData.avatar_url) && (
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setAvatarPreview(null);
+                                  setFormData({ ...formData, avatar_url: '' });
+                                }}
+                                className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 text-white flex items-center justify-center hover:bg-red-600 transition-colors"
+                              >
+                                <X className="w-3 h-3" />
+                              </button>
+                            )}
+                          </div>
+
+                          {/* Upload area */}
+                          <div className="flex-1 space-y-2">
+                            <label
+                              htmlFor="avatar_file"
+                              className={`
+                                flex flex-col items-center justify-center w-full py-4 px-4
+                                border-2 border-dashed border-[hsl(var(--forum-border))] rounded-lg
+                                cursor-pointer transition-colors
+                                hover:border-[hsl(var(--forum-accent))] hover:bg-[hsl(var(--forum-accent)/0.05)]
+                                ${avatarUploading ? 'opacity-50 pointer-events-none' : ''}
+                              `}
+                            >
+                              {avatarUploading ? (
+                                <div className="flex items-center gap-2 text-sm forum-text-secondary">
+                                  <div className="w-4 h-4 border-2 border-[hsl(var(--forum-accent))] border-t-transparent rounded-full animate-spin" />
+                                  {t('avatarUploading')}
+                                </div>
+                              ) : (
+                                <>
+                                  <Upload className="w-6 h-6 mb-1 text-[hsl(var(--forum-muted-foreground))]" />
+                                  <span className="text-sm forum-text-secondary">{t('avatarDragDrop')}</span>
+                                  <span className="text-xs forum-text-muted mt-1">{t('avatarMaxSize')}</span>
+                                </>
+                              )}
+                              <input
+                                id="avatar_file"
+                                type="file"
+                                accept="image/jpeg,image/png,image/gif,image/webp"
+                                className="hidden"
+                                disabled={avatarUploading || loading}
+                                onChange={async (e) => {
+                                  const file = e.target.files?.[0];
+                                  if (!file || !user) return;
+
+                                  // Preview immediately
+                                  const reader = new FileReader();
+                                  reader.onload = (ev) => setAvatarPreview(ev.target?.result as string);
+                                  reader.readAsDataURL(file);
+
+                                  // Upload
+                                  setAvatarUploading(true);
+                                  try {
+                                    const result = await uploadAvatar(file, user.id);
+                                    if (result.success && result.url) {
+                                      setFormData(prev => ({ ...prev, avatar_url: result.url! }));
+                                      setAvatarPreview(null);
+                                      toast.success(t('avatarUploadSuccess'));
+                                    } else {
+                                      toast.error(t('avatarUploadError'), { description: result.error });
+                                      setAvatarPreview(null);
+                                    }
+                                  } catch {
+                                    toast.error(t('avatarUploadError'));
+                                    setAvatarPreview(null);
+                                  } finally {
+                                    setAvatarUploading(false);
+                                    e.target.value = '';
+                                  }
+                                }}
+                              />
+                            </label>
+
+                            {/* URL input toggle */}
+                            <div>
+                              <button
+                                type="button"
+                                onClick={() => setShowUrlInput(!showUrlInput)}
+                                className="text-xs text-[hsl(var(--forum-accent))] hover:underline"
+                              >
+                                {t('avatarOrUrl')}
+                              </button>
+                              {showUrlInput && (
+                                <Input
+                                  type="url"
+                                  placeholder="https://..."
+                                  value={formData.avatar_url}
+                                  onChange={(e) => setFormData({ ...formData, avatar_url: e.target.value })}
+                                  disabled={loading}
+                                  className="mt-2"
+                                />
+                              )}
+                            </div>
+                          </div>
+                        </div>
                       </div>
 
                       <div className="space-y-2">

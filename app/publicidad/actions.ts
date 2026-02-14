@@ -30,7 +30,7 @@ export async function createBannerBooking(formData: {
     // 1. Verify auth
     const { data: { user }, error: authError } = await supabase.auth.getUser();
     if (authError || !user) {
-      return { success: false, error: 'Debes iniciar sesión para comprar publicidad.' };
+      return { success: false, error: 'AUTH_REQUIRED' };
     }
 
     // 2. Check suspension

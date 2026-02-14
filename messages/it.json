@@ -304,7 +304,8 @@
     "previous": "Precedente",
     "next": "Successivo",
     "backToPreviousPage": "Torna alla pagina precedente",
-    "store": "Negozio"
+    "store": "Negozio",
+    "myAds": "I miei annunci"
   },
   "home": {
     "description": "La community #1 per valutazioni e recensioni di escort trans. Condividi la tua esperienza, scopri le più votate e connettiti con altri intenditori nella tua città.",
@@ -312,14 +313,16 @@
     "migrationRequired": "Migrazione database richiesta",
     "runCommand": "Esegui il seguente comando:",
     "orCopy": "Oppure copia il contenuto di",
-    "yourCountry": "Il tuo paese"
+    "yourCountry": "Il tuo paese",
+    "countryNotAvailable": "Abbiamo rilevato che ci visiti da {country}. Questo paese non è ancora disponibile, ma esplora i forum qui sotto.",
+    "recommendedCountry": "Forum in evidenza"
   },
   "account": {
     "title": "Il mio account",
     "profileTab": "Profilo",
     "threadsTab": "I miei topic",
     "settingsTab": "Impostazioni",
-    "editProfile": "Modifica profilo",
+    "editProfile": "Profilo",
     "updateInfo": "Aggiorna le tue informazioni",
     "username": "Nome utente",
     "usernameNoChange": "Il nome utente non può essere modificato",
@@ -351,7 +354,15 @@
     "privacyDesc": "Controlla chi può vedere il tuo profilo",
     "verification": "Verifica",
     "verificationDesc": "Verifica il tuo account",
-    "requestVerification": "Richiedi verifica"
+    "requestVerification": "Richiedi verifica",
+    "avatarUpload": "Carica avatar",
+    "avatarOrUrl": "o incolla un URL",
+    "avatarDragDrop": "Trascina un'immagine o clicca per selezionare",
+    "avatarMaxSize": "JPG, PNG, GIF o WebP. Max 2MB.",
+    "avatarUploading": "Caricamento...",
+    "avatarUploadSuccess": "Avatar caricato con successo",
+    "avatarUploadError": "Errore nel caricamento dell'avatar",
+    "avatarRemove": "Rimuovi avatar"
   },
   "nav": {
     "forums": "Forum",
@@ -595,7 +606,7 @@
     "thanksGiven": "Ringraziamenti dati",
     "threadsCreated": "Discussioni create",
     "sendMessage": "Invia messaggio",
-    "editProfile": "Modifica profilo",
+    "editProfile": "Profilo",
     "bio": "Biografia",
     "bioPlaceholder": "Parlaci di te...",
     "signature": "Firma",
@@ -1856,7 +1867,7 @@
     "since": "Since",
     "suspended": "Suspended",
     "verified": "Verified",
-    "normal": "Normal",
+    "normal": "Normale",
     "never": "Never",
     "viewDetails": "View details / IPs",
     "verify": "Verify",
@@ -2327,7 +2338,8 @@
     "uploadError": "Errore nel caricamento dell'immagine.",
     "unexpectedError": "Errore imprevisto nel caricamento.",
     "cityLabel": "Città: {name}",
-    "note": "Nota:"
+    "note": "Nota:",
+    "loginRequired": "Devi accedere per acquistare pubblicità"
   },
   "payments": {
     "title": "Pagamento",
@@ -2445,5 +2457,29 @@
         "description": "Linee guida della comunità, modelli di recensione e guide all'uso."
       }
     }
+  },
+  "myAds": {
+    "title": "I miei annunci",
+    "subtitle": "Gestisci i banner che hai acquistato su TS Rating.",
+    "noAds": "Non hai annunci acquistati.",
+    "buyNow": "Acquista pubblicità",
+    "zone": "Zona",
+    "position": "Posizione",
+    "format": "Formato",
+    "period": "Periodo",
+    "price": "Prezzo",
+    "status": "Stato",
+    "pending": "In attesa",
+    "approved": "Approvato",
+    "active": "Attivo",
+    "rejected": "Rifiutato",
+    "expired": "Scaduto",
+    "cancelled": "Annullato",
+    "banner": "Banner",
+    "startDate": "Inizio",
+    "endDate": "Fine",
+    "daysLeft": "{days} giorni rimanenti",
+    "noPreview": "Nessuna immagine",
+    "createdAt": "Acquistato il"
   }
 }

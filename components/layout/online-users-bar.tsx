@@ -57,7 +57,7 @@ export function OnlineUsersBar() {
             {onlineUsers.map((user) => (
               <Link
                 key={user.id}
-                href={`/usuaria/${user.username}`}
+                href={`/user/${user.username}`}
                 className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-[hsl(var(--forum-surface-alt))] hover:bg-[hsl(var(--forum-border))] transition-colors group"
                 title={user.username}
               >

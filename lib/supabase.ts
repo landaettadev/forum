@@ -1,13 +1,13 @@
-import { createClient } from '@supabase/supabase-js';
+import { createBrowserClient } from '@supabase/ssr';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-// Prevent build from failing if env vars are missing
-// This allows the build to proceed until it actually needs to fetch data
+// Use createBrowserClient from @supabase/ssr so auth tokens are stored in cookies
+// (not localStorage). This lets server components read the same session via cookies.
 export const supabase = (supabaseUrl && supabaseAnonKey)
-  ? createClient(supabaseUrl, supabaseAnonKey)
-  : new Proxy({} as ReturnType<typeof createClient>, {
+  ? createBrowserClient(supabaseUrl, supabaseAnonKey)
+  : new Proxy({} as ReturnType<typeof createBrowserClient>, {
       get: () => {
         throw new Error(
           'Supabase client could not be initialized. Missing NEXT_PUBLIC_SUPABASE_URL or NEXT_PUBLIC_SUPABASE_ANON_KEY environment variables.'

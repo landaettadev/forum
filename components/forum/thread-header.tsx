@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { BookmarkButton } from './bookmark-button';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/auth-context';
-import { Pin, Lock, Eye, MessageCircle, Flame } from 'lucide-react';
+import { Pin, Lock, Eye, MessageCircle, Flame, Tag, User, Calendar, MapPin } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 interface ThreadHeaderProps {
@@ -15,6 +15,12 @@ interface ThreadHeaderProps {
   isPinned: boolean;
   isLocked: boolean;
   isHot: boolean;
+  tag?: string;
+  authorUsername?: string;
+  createdAt?: string;
+  forumName?: string;
+  regionName?: string;
+  countryName?: string;
 }
 
 export function ThreadHeader({
@@ -24,7 +30,13 @@ export function ThreadHeader({
   repliesCount,
   isPinned,
   isLocked,
-  isHot
+  isHot,
+  tag,
+  authorUsername,
+  createdAt,
+  forumName,
+  regionName,
+  countryName,
 }: ThreadHeaderProps) {
   const { user } = useAuth();
   const t = useTranslations('forum');
@@ -47,11 +59,33 @@ export function ThreadHeader({
     checkBookmark();
   }, [threadId, user]);
 
+  const tagColors: Record<string, string> = {
+    review: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
+    ask: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
+    general: 'bg-slate-500/20 text-slate-400 border-slate-500/30',
+  };
+
+  const tagLabels: Record<string, string> = {
+    review: '⭐ Review',
+    ask: '❓ Question',
+    general: '💬 Discussion',
+  };
+
+  const location = regionName
+    ? countryName ? `${regionName}, ${countryName}` : regionName
+    : countryName || forumName;
+
   return (
     <div className="mb-4">
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1">
           <div className="flex items-center gap-2 flex-wrap mb-2">
+            {tag && tagLabels[tag] && (
+              <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium border ${tagColors[tag] || tagColors.general}`}>
+                <Tag className="h-3 w-3" />
+                {tagLabels[tag]}
+              </span>
+            )}
             {isPinned && (
               <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs bg-blue-500/20 text-blue-400">
                 <Pin className="h-3 w-3" />
@@ -72,7 +106,7 @@ export function ThreadHeader({
             )}
           </div>
           <h1 className="text-2xl font-bold">{title}</h1>
-          <div className="flex items-center gap-4 mt-2 text-sm forum-text-secondary">
+          <div className="flex items-center gap-4 mt-2 text-sm forum-text-secondary flex-wrap">
             <span className="flex items-center gap-1">
               <Eye className="h-4 w-4" />
               {viewsCount.toLocaleString()} {t('visitsCount')}
@@ -81,7 +115,27 @@ export function ThreadHeader({
               <MessageCircle className="h-4 w-4" />
               {repliesCount} {t('responsesCount')}
             </span>
+            {authorUsername && (
+              <span className="flex items-center gap-1">
+                <User className="h-3.5 w-3.5" />
+                {authorUsername}
+              </span>
+            )}
+            {createdAt && (
+              <span className="flex items-center gap-1">
+                <Calendar className="h-3.5 w-3.5" />
+                <time dateTime={createdAt}>{new Date(createdAt).toLocaleDateString()}</time>
+              </span>
+            )}
+            {location && (
+              <span className="flex items-center gap-1">
+                <MapPin className="h-3.5 w-3.5" />
+                {location}
+              </span>
+            )}
           </div>
+          {/* Site attribution for SEO */}
+          <p className="text-xs forum-text-muted mt-1">TS Rating — Community Forum</p>
         </div>
         <BookmarkButton
           threadId={threadId}

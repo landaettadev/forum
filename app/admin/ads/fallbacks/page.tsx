@@ -35,7 +35,7 @@ type FallbackRow = BannerFallback & {
 };
 
 export default function AdminFallbacksPage() {
-  const { user, profile } = useAuth();
+  const { user, profile, loading: authLoading } = useAuth();
   const router = useRouter();
 
   const [loading, setLoading] = useState(true);
@@ -58,6 +58,7 @@ export default function AdminFallbacksPage() {
   const [previewId, setPreviewId] = useState<string | null>(null);
 
   useEffect(() => {
+    if (authLoading) return;
     if (!user) { router.push('/login'); return; }
     if (profile && profile.role !== 'admin') {
       router.push('/');
@@ -65,7 +66,7 @@ export default function AdminFallbacksPage() {
       return;
     }
     if (profile) fetchAll();
-  }, [user, profile]);
+  }, [user, profile, authLoading]);
 
   const fetchAll = async () => {
     setLoading(true);

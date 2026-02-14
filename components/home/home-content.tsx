@@ -20,6 +20,8 @@ type HomeContentProps = {
   countriesByContinent: Record<string, { label: string; countries: any[] }>;
   userCountrySlug?: string;
   userCountryCode?: string;
+  userGeoCountryName?: string;
+  geoDetected?: boolean;
   adminForums?: AdminForum[];
 };
 
@@ -29,7 +31,7 @@ const FORUM_TYPE_ICONS: Record<string, typeof Headphones> = {
   rules: BookOpen,
 };
 
-export function HomeContent({ countriesByContinent, userCountrySlug, userCountryCode: _userCountryCode, adminForums = [] }: HomeContentProps) {
+export function HomeContent({ countriesByContinent, userCountrySlug, userCountryCode: _userCountryCode, userGeoCountryName, geoDetected = false, adminForums = [] }: HomeContentProps) {
   const t = useTranslations('home');
   const tForum = useTranslations('forum');
   const tAdmin = useTranslations('adminForumSection');
@@ -51,7 +53,8 @@ export function HomeContent({ countriesByContinent, userCountrySlug, userCountry
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const continentEntries = Object.entries(countriesByContinent) as [string, { label: string; countries: any[] }][];
+  const continentEntries = (Object.entries(countriesByContinent) as [string, { label: string; countries: any[]; displayOrder?: number }][])
+    .sort((a, b) => (a[1].displayOrder ?? 99) - (b[1].displayOrder ?? 99));
 
   return (
     <>
@@ -64,20 +67,29 @@ export function HomeContent({ countriesByContinent, userCountrySlug, userCountry
         </p>
       </div>
 
-      {/* Show user's country first if detected */}
-      {userCountry && (
+      {/* Show recommended country — right below the hero */}
+      {userCountry ? (
         <div className="mb-6">
           <div className="flex items-center gap-2 mb-3">
             <MapPin className="w-5 h-5 text-[hsl(var(--forum-accent))]" />
-            <h2 className="text-lg font-semibold forum-text">{t('yourCountry')}</h2>
+            <h2 className="text-lg font-semibold forum-text">
+              {geoDetected ? t('yourCountry') : t('recommendedCountry')}
+            </h2>
           </div>
           <CountryRow 
             title="" 
             countries={[userCountry]} 
-            highlighted={true}
+            highlighted={geoDetected}
           />
         </div>
-      )}
+      ) : userGeoCountryName ? (
+        <div className="mb-6 forum-surface p-4 rounded-lg border border-[hsl(var(--forum-border))] flex items-center gap-3">
+          <MapPin className="w-5 h-5 text-[hsl(var(--forum-accent))] flex-shrink-0" />
+          <p className="text-sm forum-text-secondary">
+            {t('countryNotAvailable', { country: userGeoCountryName })}
+          </p>
+        </div>
+      ) : null}
 
       {continentEntries.map(([continentSlug, info]) => (
         <CountryRow key={continentSlug} title={`${tForum('region')}: ${info.label}`} countries={info.countries} />

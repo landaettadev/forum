@@ -242,7 +242,7 @@
       "description": "Primeiros membros do fórum"
     },
     "helpful": {
-      "name": "Útil",
+      "name": "Prestativo",
       "description": "Recebeu mais de 100 agradecimentos"
     },
     "community_pillar": {
@@ -304,7 +304,8 @@
     "previous": "Anterior",
     "next": "Próximo",
     "backToPreviousPage": "Voltar à página anterior",
-    "store": "Loja"
+    "store": "Loja",
+    "myAds": "Meus Anúncios"
   },
   "home": {
     "description": "A comunidade #1 de ratings e avaliações de escorts trans. Compartilhe sua experiência, descubra as mais bem avaliadas e conecte-se com outros conhecedores na sua cidade.",
@@ -312,14 +313,16 @@
     "migrationRequired": "É necessário executar a migração do banco de dados",
     "runCommand": "Execute o seguinte comando no terminal:",
     "orCopy": "Ou copie o conteúdo de",
-    "yourCountry": "Seu país"
+    "yourCountry": "Seu país",
+    "countryNotAvailable": "Detectamos que você nos visita de {country}. Este país ainda não está disponível, mas explore os fóruns abaixo.",
+    "recommendedCountry": "Fórum em destaque"
   },
   "account": {
     "title": "Minha conta",
     "profileTab": "Perfil",
     "threadsTab": "Meus tópicos",
     "settingsTab": "Configurações",
-    "editProfile": "Editar perfil",
+    "editProfile": "Perfil",
     "updateInfo": "Atualize suas informações pessoais",
     "username": "Nome de utilizador",
     "usernameNoChange": "O nome de utilizador não pode ser alterado",
@@ -351,7 +354,15 @@
     "privacyDesc": "Controle quem pode ver seu perfil",
     "verification": "Verificação",
     "verificationDesc": "Verifique sua conta para acessar áreas privadas",
-    "requestVerification": "Solicitar verificação"
+    "requestVerification": "Solicitar verificação",
+    "avatarUpload": "Enviar avatar",
+    "avatarOrUrl": "ou cole uma URL",
+    "avatarDragDrop": "Arraste uma imagem ou clique para selecionar",
+    "avatarMaxSize": "JPG, PNG, GIF ou WebP. Máximo 2MB.",
+    "avatarUploading": "Enviando...",
+    "avatarUploadSuccess": "Avatar enviado com sucesso",
+    "avatarUploadError": "Erro ao enviar avatar",
+    "avatarRemove": "Remover avatar"
   },
   "nav": {
     "forums": "Fóruns",
@@ -595,7 +606,7 @@
     "thanksGiven": "Agradecimentos dados",
     "threadsCreated": "Tópicos criados",
     "sendMessage": "Enviar mensagem",
-    "editProfile": "Editar perfil",
+    "editProfile": "Perfil",
     "bio": "Biografia",
     "bioPlaceholder": "Conte-nos sobre você...",
     "signature": "Assinatura",
@@ -1580,7 +1591,7 @@
     "foundingMember": "Membro Fundador",
     "foundingMemberDesc": "Um dos primeiros membros",
     "foundingMemberReq": "Juntar-se nos primeiros 3 meses",
-    "helpful": "Útil",
+    "helpful": "Prestativo",
     "helpfulDesc": "Sempre ajuda outros",
     "helpfulReq": "Receber 100+ agradecimentos",
     "communityPillar": "Pilar da Comunidade",
@@ -2327,7 +2338,8 @@
     "uploadError": "Erro ao enviar a imagem.",
     "unexpectedError": "Erro inesperado ao enviar.",
     "cityLabel": "Cidade: {name}",
-    "note": "Nota:"
+    "note": "Nota:",
+    "loginRequired": "Você deve fazer login para comprar publicidade"
   },
   "payments": {
     "title": "Pagamento",
@@ -2445,5 +2457,29 @@
         "description": "Regras da comunidade, modelos de avaliação e guias de uso."
       }
     }
+  },
+  "myAds": {
+    "title": "Meus Anúncios",
+    "subtitle": "Gerencie os banners que você comprou no TS Rating.",
+    "noAds": "Você não tem anúncios comprados.",
+    "buyNow": "Comprar publicidade",
+    "zone": "Zona",
+    "position": "Posição",
+    "format": "Formato",
+    "period": "Período",
+    "price": "Preço",
+    "status": "Status",
+    "pending": "Pendente",
+    "approved": "Aprovado",
+    "active": "Ativo",
+    "rejected": "Rejeitado",
+    "expired": "Expirado",
+    "cancelled": "Cancelado",
+    "banner": "Banner",
+    "startDate": "Início",
+    "endDate": "Fim",
+    "daysLeft": "{days} dias restantes",
+    "noPreview": "Sem imagem",
+    "createdAt": "Comprado em"
   }
 }

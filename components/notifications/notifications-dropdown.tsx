@@ -158,7 +158,7 @@ export function NotificationsDropdown({ userId }: NotificationsDropdownProps) {
       case 'message':
         return '/mensajes';
       case 'follow':
-        return data.followerId ? `/usuaria/${data.followerUsername}` : '#';
+        return data.followerId ? `/user/${data.followerUsername}` : '#';
       default:
         return '#';
     }

@@ -418,7 +418,7 @@ export function AdDetailContent({ ad, relatedAds }: AdDetailContentProps) {
           {ad.author && (
             <Card className="forum-surface border-[hsl(var(--forum-border))]">
               <CardContent className="p-4">
-                <Link href={`/usuaria/${ad.author.username}`} className="flex items-center gap-3">
+                <Link href={`/user/${ad.author.username}`} className="flex items-center gap-3">
                   <Avatar>
                     <AvatarImage src={ad.author.avatar_url || ''} />
                     <AvatarFallback>{ad.author.username[0].toUpperCase()}</AvatarFallback>

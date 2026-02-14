@@ -10,6 +10,7 @@ import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/comp
 import { toast } from 'sonner';
 import { Coins, ShoppingBag, Clock, Star } from 'lucide-react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 interface ShopItem {
   id: string;
@@ -69,9 +70,11 @@ export default function ShopPage() {
     fetchShopData();
   }, [user, fetchShopData]);
 
+  const t = useTranslations('serverErrors');
+
   const handlePurchase = async (itemSlug: string) => {
     if (!user) {
-      toast.error('Debes iniciar sesión para comprar');
+      toast.error(t('loginRequired'));
       return;
     }
 

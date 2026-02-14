@@ -18,7 +18,7 @@ export function MentionText({ content, className = '' }: MentionTextProps) {
           return (
             <Link
               key={index}
-              href={`/usuaria/${segment.username}`}
+              href={`/user/${segment.username}`}
               className="text-[hsl(var(--forum-accent))] hover:underline font-medium"
               onClick={(e) => e.stopPropagation()}
             >

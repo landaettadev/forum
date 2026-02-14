@@ -274,7 +274,7 @@ export default function AdminReportsPage() {
                         </TableCell>
                         <TableCell>
                           <Link 
-                            href={`/usuaria/${report.reported_user?.username}`}
+                            href={`/user/${report.reported_user?.username}`}
                             className="text-[hsl(var(--forum-accent))] hover:underline"
                           >
                             @{report.reported_user?.username}

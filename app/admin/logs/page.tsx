@@ -219,7 +219,7 @@ export default function AdminLogsPage() {
                             </TableCell>
                             <TableCell>
                               <Link 
-                                href={`/usuaria/${log.moderator?.username}`}
+                                href={`/user/${log.moderator?.username}`}
                                 className="text-[hsl(var(--forum-accent))] hover:underline"
                               >
                                 @{log.moderator?.username}
@@ -233,7 +233,7 @@ export default function AdminLogsPage() {
                             </TableCell>
                             <TableCell>
                               <Link 
-                                href={`/usuaria/${log.target_user?.username}`}
+                                href={`/user/${log.target_user?.username}`}
                                 className="text-[hsl(var(--forum-accent))] hover:underline"
                               >
                                 @{log.target_user?.username}
@@ -279,7 +279,7 @@ export default function AdminLogsPage() {
                         <TableRow key={suspension.id}>
                           <TableCell>
                             <Link 
-                              href={`/usuaria/${suspension.user?.username}`}
+                              href={`/user/${suspension.user?.username}`}
                               className="text-[hsl(var(--forum-accent))] hover:underline"
                             >
                               @{suspension.user?.username}
@@ -308,7 +308,7 @@ export default function AdminLogsPage() {
                           </TableCell>
                           <TableCell>
                             <Link 
-                              href={`/usuaria/${suspension.suspended_by_user?.username}`}
+                              href={`/user/${suspension.suspended_by_user?.username}`}
                               className="text-[hsl(var(--forum-accent))] hover:underline text-sm"
                             >
                               @{suspension.suspended_by_user?.username}
@@ -374,7 +374,7 @@ export default function AdminLogsPage() {
                           </TableCell>
                           <TableCell>
                             <Link 
-                              href={`/usuaria/${ban.banned_by_user?.username}`}
+                              href={`/user/${ban.banned_by_user?.username}`}
                               className="text-[hsl(var(--forum-accent))] hover:underline text-sm"
                             >
                               @{ban.banned_by_user?.username}

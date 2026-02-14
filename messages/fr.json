@@ -304,7 +304,8 @@
     "previous": "Précédent",
     "next": "Suivant",
     "backToPreviousPage": "Retour à la page précédente",
-    "store": "Boutique"
+    "store": "Boutique",
+    "myAds": "Mes annonces"
   },
   "home": {
     "description": "La communauté #1 de ratings et avis sur les escorts trans. Partagez votre expérience, découvrez les mieux notées et connectez-vous avec d'autres connaisseurs dans votre ville.",
@@ -312,14 +313,16 @@
     "migrationRequired": "La migration de base de données est requise",
     "runCommand": "Exécutez la commande suivante :",
     "orCopy": "Ou copiez le contenu de",
-    "yourCountry": "Votre pays"
+    "yourCountry": "Votre pays",
+    "countryNotAvailable": "Nous avons détecté que vous nous visitez depuis {country}. Ce pays n'est pas encore disponible, mais explorez les forums ci-dessous.",
+    "recommendedCountry": "Forum en vedette"
   },
   "account": {
     "title": "Mon compte",
     "profileTab": "Profil",
     "threadsTab": "Mes discussions",
     "settingsTab": "Paramètres",
-    "editProfile": "Modifier le profil",
+    "editProfile": "Profil",
     "updateInfo": "Mettez à jour vos informations",
     "username": "Nom d'utilisateur",
     "usernameNoChange": "Le nom d'utilisateur ne peut pas être modifié",
@@ -351,7 +354,15 @@
     "privacyDesc": "Contrôlez qui peut voir votre profil",
     "verification": "Vérification",
     "verificationDesc": "Vérifiez votre compte",
-    "requestVerification": "Demander la vérification"
+    "requestVerification": "Demander la vérification",
+    "avatarUpload": "Télécharger l'avatar",
+    "avatarOrUrl": "ou collez une URL",
+    "avatarDragDrop": "Glissez une image ou cliquez pour sélectionner",
+    "avatarMaxSize": "JPG, PNG, GIF ou WebP. 2 Mo maximum.",
+    "avatarUploading": "Téléchargement...",
+    "avatarUploadSuccess": "Avatar téléchargé avec succès",
+    "avatarUploadError": "Erreur lors du téléchargement de l'avatar",
+    "avatarRemove": "Supprimer l'avatar"
   },
   "nav": {
     "forums": "Forums",
@@ -595,7 +606,7 @@
     "thanksGiven": "Remerciements donnés",
     "threadsCreated": "Sujets créés",
     "sendMessage": "Envoyer un message",
-    "editProfile": "Modifier le profil",
+    "editProfile": "Profil",
     "bio": "Biographie",
     "bioPlaceholder": "Parlez-nous de vous...",
     "signature": "Signature",
@@ -1894,7 +1905,7 @@
     "date": "Date",
     "low": "Basse",
     "high": "Haute",
-    "urgent": "Urgente",
+    "urgent": "Urgent",
     "assignToMe": "M'assigner",
     "resolve": "Résoudre",
     "dismiss": "Rejeter",
@@ -2327,7 +2338,8 @@
     "uploadError": "Erreur lors du téléchargement de l'image.",
     "unexpectedError": "Erreur inattendue lors du téléchargement.",
     "cityLabel": "Ville : {name}",
-    "note": "Note :"
+    "note": "Note :",
+    "loginRequired": "Vous devez vous connecter pour acheter de la publicité"
   },
   "payments": {
     "title": "Paiement",
@@ -2445,5 +2457,29 @@
         "description": "Règles de la communauté, modèles d'avis et guides d'utilisation."
       }
     }
+  },
+  "myAds": {
+    "title": "Mes annonces",
+    "subtitle": "Gérez les bannières que vous avez achetées sur TS Rating.",
+    "noAds": "Vous n'avez pas d'annonces achetées.",
+    "buyNow": "Acheter de la publicité",
+    "zone": "Zone",
+    "position": "Position",
+    "format": "Format",
+    "period": "Période",
+    "price": "Prix",
+    "status": "Statut",
+    "pending": "En attente",
+    "approved": "Approuvé",
+    "active": "Actif",
+    "rejected": "Rejeté",
+    "expired": "Expiré",
+    "cancelled": "Annulé",
+    "banner": "Bannière",
+    "startDate": "Début",
+    "endDate": "Fin",
+    "daysLeft": "{days} jours restants",
+    "noPreview": "Pas d'image",
+    "createdAt": "Acheté le"
   }
 }

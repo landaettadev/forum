@@ -22,7 +22,7 @@ export function hasMentions(text: string): boolean {
 export function renderMentions(text: string): string {
   const globalRegex = /@([a-zA-Z0-9_]+)/g;
   return text.replace(globalRegex, (match, username) => {
-    return `<a href="/usuaria/${username}" class="mention-link text-[hsl(var(--forum-accent))] hover:underline font-medium">@${username}</a>`;
+    return `<a href="/user/${username}" class="mention-link text-[hsl(var(--forum-accent))] hover:underline font-medium">@${username}</a>`;
   });
 }
 

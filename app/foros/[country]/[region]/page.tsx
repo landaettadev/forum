@@ -85,9 +85,17 @@ export default async function RegionForumPage({ params }: PageProps) {
     .order('last_post_at', { ascending: false })
     .limit(20);
 
-  // Compute region stats
+  // Compute region stats from actual posts
   const threadsCount = threads?.length || 0;
-  const postsCount = threads?.reduce((sum, t) => sum + 1 + (t.replies_count || 0), 0) || 0;
+  let postsCount = 0;
+  if (threads && threads.length > 0) {
+    const threadIds = threads.map(t => t.id);
+    const { count } = await supabase
+      .from('posts')
+      .select('id', { count: 'exact', head: true })
+      .in('thread_id', threadIds);
+    postsCount = count || 0;
+  }
 
   const countryDisplayName = `${country.flag_emoji || ''} ${country.name_es || country.name}`.trim();
 

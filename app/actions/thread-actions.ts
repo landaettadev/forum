@@ -7,6 +7,7 @@ import { detectSpam, validateLinkCount } from '@/lib/sanitize';
 import { extractMentions } from '@/lib/mentions';
 import { incrementCounter } from '@/lib/increment-counter';
 import { getTranslations } from 'next-intl/server';
+import { generateSlug } from '@/lib/slug';
 
 type ActionResult<T = unknown> = 
   | { success: true; data: T }
@@ -142,11 +143,17 @@ export async function createThread(
       };
     }
 
+    // Generate SEO slug from title + short random suffix for uniqueness
+    const baseSlug = generateSlug(title);
+    const slugSuffix = Math.random().toString(36).substring(2, 8);
+    const threadSlug = `${baseSlug}-${slugSuffix}`;
+
     // Crear el hilo
     const threadInsert: Record<string, unknown> = {
       forum_id: forumId,
       author_id: user.id,
       title,
+      slug: threadSlug,
       is_hot: false,
       last_post_at: new Date().toISOString(),
     };

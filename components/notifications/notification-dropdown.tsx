@@ -107,7 +107,7 @@ export function NotificationDropdown() {
       case 'quote':
         return data.thread_id ? `/hilo/${data.thread_id}` : '#';
       case 'follow':
-        return data.follower_username ? `/usuaria/${data.follower_username}` : '#';
+        return data.follower_username ? `/user/${data.follower_username}` : '#';
       case 'message':
         return data.sender_id ? `/mensajes/${data.sender_id}` : '/mensajes';
       default:

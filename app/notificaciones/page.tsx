@@ -101,7 +101,7 @@ export default function NotificacionesPage() {
       case 'message':
         return '/mensajes';
       case 'follow':
-        return data.followerUsername ? `/usuaria/${data.followerUsername}` : '#';
+        return data.followerUsername ? `/user/${data.followerUsername}` : '#';
       default:
         return '#';
     }

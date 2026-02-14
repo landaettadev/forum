@@ -16,7 +16,7 @@ import { toast } from 'sonner';
 import { useLocale, useTranslations } from 'next-intl';
 
 export default function VerificacionPage() {
-  const { user, profile } = useAuth();
+  const { user, profile, loading: authLoading } = useAuth();
   const router = useRouter();
   const locale = useLocale();
   const t = useTranslations('verification');
@@ -48,12 +48,13 @@ export default function VerificacionPage() {
   }, [user]);
 
   useEffect(() => {
+    if (authLoading) return;
     if (!user) {
       router.push('/login');
       return;
     }
     fetchVerification();
-  }, [user, router, fetchVerification]);
+  }, [user, router, fetchVerification, authLoading]);
 
   const generateCode = () => {
     const code = `TF-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;

@@ -4,7 +4,7 @@ import { NextResponse, type NextRequest } from 'next/server';
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 
-export function createMiddlewareSupabaseClient(request: NextRequest) {
+export async function createMiddlewareSupabaseClient(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
 
   const supabase = createServerClient(
@@ -27,6 +27,9 @@ export function createMiddlewareSupabaseClient(request: NextRequest) {
       },
     }
   );
+
+  // Refresh session BEFORE returning so supabaseResponse has the updated auth cookies
+  await supabase.auth.getUser();
 
   return { supabase, response: supabaseResponse };
 }

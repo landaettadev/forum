@@ -175,7 +175,7 @@ export function ChatView({ conversationId, otherUser, onBack }: ChatViewProps) {
           </Button>
         )}
         {otherUser && (
-          <Link href={`/usuaria/${otherUser.username}`} className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+          <Link href={`/user/${otherUser.username}`} className="flex items-center gap-3 hover:opacity-80 transition-opacity">
             <Avatar className="h-9 w-9">
               <AvatarImage src={otherUser.avatar_url || undefined} />
               <AvatarFallback>{otherUser.username[0].toUpperCase()}</AvatarFallback>

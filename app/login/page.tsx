@@ -11,6 +11,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { toast } from 'sonner';
 import { useTranslations } from 'next-intl';
 import { Turnstile } from '@/components/turnstile';
+import { logLoginSession } from '@/app/actions/log-login';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -55,6 +56,7 @@ export default function LoginPage() {
         });
       } else {
         toast.success(t('loginSuccess'));
+        logLoginSession().catch(() => {});
         router.push('/');
       }
     } catch {

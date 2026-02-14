@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useAuth } from '@/lib/auth-context';
 import { Button } from '@/components/ui/button';
@@ -17,7 +18,16 @@ import { NotificationsDropdown } from '@/components/notifications/notifications-
 export function Header() {
   const { user, profile, signOut } = useAuth();
   const t = useTranslations();
+  const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && searchQuery.trim().length >= 2) {
+      router.push(`/buscar?q=${encodeURIComponent(searchQuery.trim())}`);
+      setSearchQuery('');
+    }
+  };
 
   const getUserInitials = (username: string) => {
     return username.substring(0, 2).toUpperCase();
@@ -107,7 +117,7 @@ export function Header() {
                       <>
                         <div className="my-2 border-t border-[hsl(var(--forum-border))]" />
                         <SheetClose asChild>
-                          <Link href={`/usuaria/${profile.username}`} className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[hsl(var(--forum-accent-muted))] text-sm font-medium">
+                          <Link href={`/user/${profile.username}`} className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[hsl(var(--forum-accent-muted))] text-sm font-medium">
                             <User className="w-4 h-4" />
                             {t('profile.editProfile')}
                           </Link>
@@ -122,6 +132,12 @@ export function Header() {
                           <Link href="/favoritos" className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[hsl(var(--forum-accent-muted))] text-sm font-medium">
                             <Bookmark className="w-4 h-4" />
                             {t('common.favorites')}
+                          </Link>
+                        </SheetClose>
+                        <SheetClose asChild>
+                          <Link href="/mis-anuncios" className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[hsl(var(--forum-accent-muted))] text-sm font-medium">
+                            <Megaphone className="w-4 h-4" />
+                            {t('common.myAds')}
                           </Link>
                         </SheetClose>
                         <SheetClose asChild>
@@ -169,6 +185,9 @@ export function Header() {
                 type="search"
                 placeholder={t('search.placeholder')}
                 className="pl-9 w-56 h-9 rounded-lg bg-[hsl(var(--forum-surface-alt))] border-[hsl(var(--forum-border))]/50 focus:border-[hsl(var(--forum-accent))]/50 focus:ring-[hsl(var(--forum-accent))]/20 text-sm"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={handleSearchKeyDown}
               />
             </div>
 
@@ -200,7 +219,7 @@ export function Header() {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-56">
                     <DropdownMenuItem asChild>
-                      <Link href={`/usuaria/${profile.username}`} className="cursor-pointer">
+                      <Link href={`/user/${profile.username}`} className="cursor-pointer">
                         <User className="mr-2 h-4 w-4" />
                         {t('profile.editProfile')}
                       </Link>
@@ -227,6 +246,12 @@ export function Header() {
                       <Link href="/tienda" className="cursor-pointer">
                         <ShoppingBag className="mr-2 h-4 w-4" />
                         {t('common.store')}
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link href="/mis-anuncios" className="cursor-pointer">
+                        <Megaphone className="mr-2 h-4 w-4" />
+                        {t('common.myAds')}
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>

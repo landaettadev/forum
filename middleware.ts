@@ -35,8 +35,7 @@ export async function middleware(request: NextRequest) {
   }
 
   // Supabase SSR session refresh — keeps auth cookies in sync
-  const { supabase, response } = createMiddlewareSupabaseClient(request);
-  await supabase.auth.getUser();
+  const { response } = await createMiddlewareSupabaseClient(request);
 
   // Generate CSP nonce for this request
   const nonce = Buffer.from(crypto.randomUUID()).toString('base64');

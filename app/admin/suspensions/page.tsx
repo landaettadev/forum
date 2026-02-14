@@ -434,7 +434,7 @@ export default function AdminSuspensionsPage() {
                     <TableRow key={suspension.id}>
                       <TableCell>
                         <Link 
-                          href={`/usuaria/${suspension.user?.username}`}
+                          href={`/user/${suspension.user?.username}`}
                           className="text-[hsl(var(--forum-accent))] hover:underline"
                         >
                           @{suspension.user?.username}

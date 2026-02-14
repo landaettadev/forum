@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -76,6 +77,7 @@ export function UserProfilePageContent({
   const dateLocale = getDateFnsLocale(locale);
   const t = useTranslations('profile');
   const _tCommon = useTranslations('common');
+  const [activeTab, setActiveTab] = useState('activity');
 
   const getUserInitials = (username: string) => {
     return username.substring(0, 2).toUpperCase();
@@ -187,11 +189,11 @@ export function UserProfilePageContent({
             </div>
 
             <div className="flex gap-8 mt-4 pt-4 border-t border-[hsl(var(--forum-border))]">
-              <div className="text-center">
+              <div className="text-center cursor-pointer hover:text-[hsl(var(--forum-accent))] transition-colors" onClick={() => setActiveTab('posts')}>
                 <div className="text-2xl font-bold">{profile.posts_count}</div>
                 <div className="text-xs forum-text-muted">{t('posts')}</div>
               </div>
-              <div className="text-center">
+              <div className="text-center cursor-pointer hover:text-[hsl(var(--forum-accent))] transition-colors" onClick={() => setActiveTab('threads')}>
                 <div className="text-2xl font-bold">{threadsCount || 0}</div>
                 <div className="text-xs forum-text-muted">{t('threads')}</div>
               </div>
@@ -222,7 +224,7 @@ export function UserProfilePageContent({
       </div>
 
       {/* Tabs Section */}
-      <Tabs defaultValue="activity" className="forum-surface">
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="forum-surface">
         <TabsList className="w-full justify-start border-b border-[hsl(var(--forum-border))] rounded-none bg-transparent p-0">
           <TabsTrigger value="activity" className="rounded-none border-b-2 border-transparent data-[state=active]:border-[hsl(var(--forum-accent))] data-[state=active]:bg-transparent px-6 py-3">
             {t('recentActivity')}
@@ -315,7 +317,7 @@ export function UserProfilePageContent({
                     {post.thread?.title}
                   </Link>
                   <p className="text-sm mt-2 forum-text-secondary line-clamp-2">
-                    {post.content?.substring(0, 200)}...
+                    {post.content?.replace(/<[^>]*>/g, '').substring(0, 200)}...
                   </p>
                   <p className="text-xs forum-text-muted mt-2">
                     {formatDistanceToNow(new Date(post.created_at), { addSuffix: true, locale: dateLocale })}
@@ -352,13 +354,19 @@ export function UserProfilePageContent({
               </div>
             </div>
             <div className="space-y-3">
-              <div>
+              <div
+                className="cursor-pointer hover:text-[hsl(var(--forum-accent))] transition-colors rounded-lg hover:bg-[hsl(var(--forum-surface-alt))] p-2 -m-2"
+                onClick={() => setActiveTab('posts')}
+              >
                 <span className="text-sm forum-text-muted">{t('totalPosts')}</span>
-                <p className="font-medium">{profile.posts_count}</p>
+                <p className="font-medium text-[hsl(var(--forum-accent))]">{profile.posts_count}</p>
               </div>
-              <div>
+              <div
+                className="cursor-pointer hover:text-[hsl(var(--forum-accent))] transition-colors rounded-lg hover:bg-[hsl(var(--forum-surface-alt))] p-2 -m-2"
+                onClick={() => setActiveTab('threads')}
+              >
                 <span className="text-sm forum-text-muted">{t('threadsCreated')}</span>
-                <p className="font-medium">{threadsCount || 0}</p>
+                <p className="font-medium text-[hsl(var(--forum-accent))]">{threadsCount || 0}</p>
               </div>
               <div>
                 <span className="text-sm forum-text-muted">{t('points')}</span>

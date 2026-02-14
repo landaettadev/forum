@@ -66,7 +66,7 @@ export function ModeratorsWidget() {
           mods.map((mod) => (
             <Link
               key={mod.id}
-              href={`/usuaria/${mod.username}`}
+              href={`/user/${mod.username}`}
               className="flex items-center gap-2.5 hover:bg-[hsl(var(--forum-surface-hover))] p-1.5 rounded-lg transition-colors group"
             >
               <Avatar className="h-7 w-7">

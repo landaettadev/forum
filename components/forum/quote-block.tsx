@@ -61,7 +61,7 @@ export function QuoteBlock({
           <span className="font-medium">
             {authorId ? (
               <Link 
-                href={`/usuaria/${authorUsername}`}
+                href={`/user/${authorUsername}`}
                 className="hover:text-[hsl(var(--forum-accent))] transition-colors"
               >
                 @{authorUsername}

@@ -1,9 +1,11 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { Users, MessageSquare, FileText, Clock, Megaphone } from 'lucide-react';
 import { ModeratorsWidget } from './moderators-widget';
+import { supabase } from '@/lib/supabase';
 
 type ForumStats = {
   totalUsers: number;
@@ -19,9 +21,37 @@ type SidebarProps = {
   stats?: ForumStats;
 };
 
+const defaultStats: ForumStats = { totalUsers: 0, totalThreads: 0, totalPosts: 0, onlineRegistered: 0, onlineGuests: 0 };
+
 export function Sidebar({ countrySlug: _countrySlug, countryName: _countryName, stats }: SidebarProps = {}) {
   const t = useTranslations('sidebar');
-  const s = stats ?? { totalUsers: 0, totalThreads: 0, totalPosts: 0, onlineRegistered: 0, onlineGuests: 0 };
+  const [fetchedStats, setFetchedStats] = useState<ForumStats | null>(null);
+
+  useEffect(() => {
+    if (stats) return; // Skip fetch if stats were passed as prop
+    const fetchStats = async () => {
+      const [usersRes, threadsRes, postsRes, onlineRes] = await Promise.all([
+        supabase.from('profiles').select('id', { count: 'exact', head: true }),
+        supabase.from('threads').select('id', { count: 'exact', head: true }),
+        supabase.from('posts').select('id', { count: 'exact', head: true }),
+        supabase
+          .from('profiles')
+          .select('id', { count: 'exact', head: true })
+          .or('is_online.eq.true,last_seen_at.gte.' + new Date(Date.now() - 5 * 60 * 1000).toISOString()),
+      ]);
+      const onlineRegistered = onlineRes.count ?? 0;
+      setFetchedStats({
+        totalUsers: usersRes.count ?? 0,
+        totalThreads: threadsRes.count ?? 0,
+        totalPosts: postsRes.count ?? 0,
+        onlineRegistered,
+        onlineGuests: onlineRegistered > 0 ? Math.max(1, Math.floor(onlineRegistered * 2.5)) : 0,
+      });
+    };
+    fetchStats();
+  }, [stats]);
+
+  const s = stats ?? fetchedStats ?? defaultStats;
 
   return (
     <aside className="w-64 flex-shrink-0 space-y-4">

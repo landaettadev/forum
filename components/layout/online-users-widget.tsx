@@ -74,7 +74,7 @@ export function OnlineUsersWidget() {
             {onlineUsers.map((user) => (
               <Link
                 key={user.user_id}
-                href={`/usuaria/${user.username}`}
+                href={`/user/${user.username}`}
                 className="group relative"
                 title={user.username}
               >

@@ -76,16 +76,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const { data: threads } = await supabase
     .from('threads')
-    .select('id, last_post_at, created_at')
+    .select('id, slug, last_post_at, created_at, region:regions(slug, country:countries(slug))')
     .order('last_post_at', { ascending: false })
     .limit(limit);
 
-  const threadPages: MetadataRoute.Sitemap = (threads || []).map((t) => ({
-    url: `${SITE_URL}/hilo/${t.id}`,
-    lastModified: new Date(t.last_post_at || t.created_at),
-    changeFrequency: 'weekly' as const,
-    priority: 0.6,
-  }));
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const threadPages: MetadataRoute.Sitemap = (threads || []).map((t: any) => {
+    const countrySlug = t.region?.country?.slug;
+    const regionSlug = t.region?.slug;
+    const url = (t.slug && countrySlug && regionSlug)
+      ? `${SITE_URL}/foros/${countrySlug}/${regionSlug}/${t.slug}`
+      : `${SITE_URL}/hilo/${t.id}`;
+    return {
+      url,
+      lastModified: new Date(t.last_post_at || t.created_at),
+      changeFrequency: 'weekly' as const,
+      priority: 0.6,
+    };
+  });
 
   // --- User profiles (active) ---
   const { data: profiles } = await supabase
@@ -96,7 +104,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     .limit(1000);
 
   const profilePages: MetadataRoute.Sitemap = (profiles || []).map((p) => ({
-    url: `${SITE_URL}/usuaria/${p.username}`,
+    url: `${SITE_URL}/user/${p.username}`,
     lastModified: new Date(p.updated_at || new Date()),
     changeFrequency: 'weekly' as const,
     priority: 0.5,

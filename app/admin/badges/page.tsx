@@ -553,7 +553,7 @@ export default function AdminBadgesPage() {
                         <TableRow key={assignment.id}>
                           <TableCell>
                             <Link 
-                              href={`/usuaria/${assignment.user?.username}`}
+                              href={`/user/${assignment.user?.username}`}
                               className="text-[hsl(var(--forum-accent))] hover:underline"
                             >
                               @{assignment.user?.username}

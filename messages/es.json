@@ -258,6 +258,7 @@
     "logout": "Cerrar sesión",
     "myAccount": "Mi cuenta",
     "store": "Tienda",
+    "myAds": "Mis Anuncios",
     "messages": "Mensajes",
     "favorites": "Mis Favoritos",
     "alerts": "Alertas",
@@ -312,18 +313,28 @@
     "migrationRequired": "Es necesario ejecutar la migración de base de datos",
     "runCommand": "Ejecuta el siguiente comando en tu terminal:",
     "orCopy": "O copia el contenido de",
-    "yourCountry": "Tu país"
+    "yourCountry": "Foro según tu ubicación",
+    "recommendedCountry": "Foro destacado",
+    "countryNotAvailable": "Detectamos que nos visitas desde {country}. Este país aún no está disponible, pero explora los foros disponibles abajo."
   },
   "account": {
     "title": "Mi cuenta",
     "profileTab": "Perfil",
     "threadsTab": "Mis hilos",
     "settingsTab": "Configuración",
-    "editProfile": "Editar perfil",
+    "editProfile": "Perfil",
     "updateInfo": "Actualiza tu información personal",
     "username": "Nombre de usuario",
     "usernameNoChange": "El nombre de usuario no se puede cambiar",
     "avatarUrl": "URL del avatar",
+    "avatarUpload": "Subir avatar",
+    "avatarOrUrl": "o pega una URL",
+    "avatarDragDrop": "Arrastra una imagen o haz clic para seleccionar",
+    "avatarMaxSize": "JPG, PNG, GIF o WebP. Máximo 2MB.",
+    "avatarUploading": "Subiendo...",
+    "avatarUploadSuccess": "Avatar subido correctamente",
+    "avatarUploadError": "Error al subir el avatar",
+    "avatarRemove": "Quitar avatar",
     "bio": "Biografía",
     "bioPlaceholder": "Cuéntanos sobre ti...",
     "signature": "Firma",
@@ -579,7 +590,7 @@
     "threads": "Hilos",
     "thanksReceived": "Gracias recibidos",
     "thanksGiven": "Gracias dados",
-    "editProfile": "Editar perfil",
+    "editProfile": "Perfil",
     "viewProfile": "Ver perfil",
     "memberSince": "Miembro desde",
     "lastSeen": "Última conexión",
@@ -973,97 +984,97 @@
     "respect": {
       "title": "Respeto y Convivencia",
       "description": "Tratamos a todas las personas con dignidad y respeto. Está estrictamente prohibido cualquier forma de discriminación, acoso, insultos o comportamiento hostil hacia otros usuarios.",
-      "details": [
-        "No se toleran comentarios ofensivos basados en identidad de género, orientación sexual, etnia, religión o nacionalidad",
-        "El acoso, stalking o intimidación resultará en baneo inmediato",
-        "Las críticas deben ser constructivas y nunca personales",
-        "Respeta las decisiones y límites de cada persona"
-      ]
+      "details": {
+        "0": "No se toleran comentarios ofensivos basados en identidad de género, orientación sexual, etnia, religión o nacionalidad",
+        "1": "El acoso, stalking o intimidación resultará en baneo inmediato",
+        "2": "Las críticas deben ser constructivas y nunca personales",
+        "3": "Respeta las decisiones y límites de cada persona"
+      }
     },
     "adults": {
       "title": "Contenido Exclusivo para Adultos (+18)",
       "description": "Este sitio es exclusivamente para personas mayores de 18 años (o la mayoría de edad legal en tu jurisdicción). Al registrarte, declaras bajo juramento que cumples con este requisito.",
-      "details": [
-        "Está prohibido compartir contenido que involucre menores de cualquier forma",
-        "No se permite la suplantación de edad",
-        "Los administradores pueden solicitar verificación de edad en cualquier momento"
-      ]
+      "details": {
+        "0": "Está prohibido compartir contenido que involucre menores de cualquier forma",
+        "1": "No se permite la suplantación de edad",
+        "2": "Los administradores pueden solicitar verificación de edad en cualquier momento"
+      }
     },
     "content": {
       "title": "Contenido Permitido",
       "description": "Todo el contenido debe estar relacionado con el propósito del foro: compartir experiencias, reseñas y servicios de acompañantes profesionales de forma respetuosa.",
-      "details": [
-        "No se permite spam, publicidad no autorizada ni promoción de servicios externos",
-        "Están prohibidas las publicaciones de contenido ilegal según las leyes internacionales",
-        "Las reseñas deben ser honestas y basadas en experiencias reales",
-        "No se permiten solicitudes o ofertas de servicios que violen la ley"
-      ]
+      "details": {
+        "0": "No se permite spam, publicidad no autorizada ni promoción de servicios externos",
+        "1": "Están prohibidas las publicaciones de contenido ilegal según las leyes internacionales",
+        "2": "Las reseñas deben ser honestas y basadas en experiencias reales",
+        "3": "No se permiten solicitudes o ofertas de servicios que violen la ley"
+      }
     },
     "privacy": {
       "title": "Privacidad y Datos Personales",
       "description": "Protegemos la privacidad de todos los usuarios. Está estrictamente prohibido compartir información personal de terceros sin su consentimiento.",
-      "details": [
-        "No publiques números de teléfono, direcciones o datos personales de otros",
-        "No compartas conversaciones privadas sin autorización",
-        "No intentes identificar o doxxear a otros usuarios",
-        "Usa las zonas privadas del foro para información sensible"
-      ]
+      "details": {
+        "0": "No publiques números de teléfono, direcciones o datos personales de otros",
+        "1": "No compartas conversaciones privadas sin autorización",
+        "2": "No intentes identificar o doxxear a otros usuarios",
+        "3": "Usa las zonas privadas del foro para información sensible"
+      }
     },
     "safety": {
       "title": "Seguridad Personal",
       "description": "Tu seguridad es prioritaria. Recomendamos practicar encuentros seguros y nunca compartir información que pueda comprometer tu integridad.",
-      "details": [
-        "Verifica siempre la identidad antes de encuentros presenciales",
-        "Informa a alguien de confianza sobre tus actividades",
-        "No compartas información financiera sensible",
-        "Reporta cualquier situación sospechosa o de riesgo"
-      ]
+      "details": {
+        "0": "Verifica siempre la identidad antes de encuentros presenciales",
+        "1": "Informa a alguien de confianza sobre tus actividades",
+        "2": "No compartas información financiera sensible",
+        "3": "Reporta cualquier situación sospechosa o de riesgo"
+      }
     },
     "verification": {
       "title": "Sistema de Verificación",
       "description": "Ofrecemos un sistema de verificación voluntario para aumentar la confianza en la comunidad. Los usuarios verificados tienen acceso a áreas exclusivas.",
-      "details": [
-        "La verificación es confidencial y los datos son protegidos",
-        "Los perfiles verificados reciben una insignia visible",
-        "Puedes solicitar verificación en cualquier momento"
-      ]
+      "details": {
+        "0": "La verificación es confidencial y los datos son protegidos",
+        "1": "Los perfiles verificados reciben una insignia visible",
+        "2": "Puedes solicitar verificación en cualquier momento"
+      }
     },
     "legal": {
       "title": "Cumplimiento Legal",
       "description": "Este foro opera bajo el cumplimiento de las leyes aplicables. No se permite ninguna actividad ilegal.",
-      "details": [
-        "Está prohibido el tráfico de personas o cualquier forma de explotación",
-        "No se permiten servicios que involucren drogas o sustancias ilegales",
-        "Cumplimos con las leyes de protección de datos (GDPR, CCPA)",
-        "Cooperamos con autoridades cuando sea legalmente requerido"
-      ]
+      "details": {
+        "0": "Está prohibido el tráfico de personas o cualquier forma de explotación",
+        "1": "No se permiten servicios que involucren drogas o sustancias ilegales",
+        "2": "Cumplimos con las leyes de protección de datos (GDPR, CCPA)",
+        "3": "Cooperamos con autoridades cuando sea legalmente requerido"
+      }
     },
     "noExploitation": {
       "title": "Tolerancia Cero a la Explotación",
       "description": "Tenemos una política de tolerancia cero hacia cualquier forma de tráfico humano, explotación o coerción. Reportar inmediatamente cualquier sospecha.",
-      "details": [
-        "Reporta cualquier indicio de explotación o tráfico",
-        "No se permiten publicaciones de terceros sin su consentimiento verificable"
-      ]
+      "details": {
+        "0": "Reporta cualquier indicio de explotación o tráfico",
+        "1": "No se permiten publicaciones de terceros sin su consentimiento verificable"
+      }
     },
     "discretion": {
       "title": "Discreción y Confidencialidad",
       "description": "Valoramos la discreción. Lo que se comparte en el foro debe permanecer en el foro.",
-      "details": [
-        "No compartas contenido del foro en redes sociales sin autorización",
-        "Respeta la confidencialidad de otros usuarios",
-        "Las capturas de pantalla no autorizadas pueden resultar en baneo"
-      ]
+      "details": {
+        "0": "No compartas contenido del foro en redes sociales sin autorización",
+        "1": "Respeta la confidencialidad de otros usuarios",
+        "2": "Las capturas de pantalla no autorizadas pueden resultar en baneo"
+      }
     },
     "reports": {
       "title": "Reportes y Moderación",
       "description": "Si encuentras contenido que viola las reglas, repórtalo inmediatamente. Nuestro equipo de moderación revisa cada caso de forma confidencial.",
-      "details": [
-        "Usa el botón de reporte para contenido inapropiado",
-        "Los reportes son anónimos y confidenciales",
-        "Los falsos reportes también son sancionados",
-        "Puedes contactar a moderadores directamente para casos urgentes"
-      ]
+      "details": {
+        "0": "Usa el botón de reporte para contenido inapropiado",
+        "1": "Los reportes son anónimos y confidenciales",
+        "2": "Los falsos reportes también son sancionados",
+        "3": "Puedes contactar a moderadores directamente para casos urgentes"
+      }
     },
     "warning": {
       "title": "Consecuencias del Incumplimiento",
@@ -2240,6 +2251,7 @@
     "unexpectedError": "Error inesperado"
   },
   "publicidad": {
+    "loginRequired": "Debes iniciar sesión para comprar publicidad",
     "title": "Comprar Publicidad",
     "subtitle": "Elige dónde quieres que aparezca tu banner en TS Rating.",
     "step1Title": "Selecciona la Zona",
@@ -2423,5 +2435,29 @@
         "description": "Normas de la comunidad, plantillas para reseñas y guías de uso."
       }
     }
+  },
+  "myAds": {
+    "title": "Mis Anuncios",
+    "subtitle": "Gestiona los banners que has comprado en TS Rating.",
+    "noAds": "No tienes anuncios comprados.",
+    "buyNow": "Comprar publicidad",
+    "zone": "Zona",
+    "position": "Posición",
+    "format": "Formato",
+    "period": "Período",
+    "price": "Precio",
+    "status": "Estado",
+    "pending": "Pendiente",
+    "approved": "Aprobado",
+    "active": "Activo",
+    "rejected": "Rechazado",
+    "expired": "Expirado",
+    "cancelled": "Cancelado",
+    "banner": "Banner",
+    "startDate": "Inicio",
+    "endDate": "Fin",
+    "daysLeft": "{days} días restantes",
+    "noPreview": "Sin imagen",
+    "createdAt": "Comprado el"
   }
 }

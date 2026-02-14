@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { createServerSupabaseClient } from '@/lib/supabase-server';
+import { supabaseAdmin } from '@/lib/supabase-admin';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { Sidebar } from '@/components/layout/sidebar';
@@ -51,25 +52,35 @@ export default async function CountryForumPage({ params }: PageProps) {
     .eq('country_id', country.id)
     .order('display_order');
 
-  // Fetch thread counts per region
+  // Fetch real thread & post counts per region using admin client (bypasses RLS + no row limit)
   const regionIds = (regions || []).map(r => r.id);
   const regionStats: Record<string, { threads_count: number; posts_count: number }> = {};
 
   if (regionIds.length > 0) {
-    const { data: threadCounts } = await supabase
+    const { data: threads } = await supabaseAdmin
       .from('threads')
-      .select('region_id, replies_count')
+      .select('id, region_id')
       .in('region_id', regionIds);
 
-    if (threadCounts) {
-      for (const t of threadCounts) {
+    if (threads) {
+      const threadIdsByRegion: Record<string, string[]> = {};
+      for (const t of threads) {
         if (!t.region_id) continue;
         if (!regionStats[t.region_id]) {
           regionStats[t.region_id] = { threads_count: 0, posts_count: 0 };
         }
         regionStats[t.region_id].threads_count += 1;
-        // posts = 1 (first post) + replies
-        regionStats[t.region_id].posts_count += 1 + (t.replies_count || 0);
+        if (!threadIdsByRegion[t.region_id]) threadIdsByRegion[t.region_id] = [];
+        threadIdsByRegion[t.region_id].push(t.id);
+      }
+
+      // Count actual posts per region using exact count queries (no 1000-row limit)
+      for (const [rid, tIds] of Object.entries(threadIdsByRegion)) {
+        const { count } = await supabaseAdmin
+          .from('posts')
+          .select('id', { count: 'exact', head: true })
+          .in('thread_id', tIds);
+        regionStats[rid].posts_count = count ?? 0;
       }
     }
   }
@@ -99,11 +110,43 @@ export default async function CountryForumPage({ params }: PageProps) {
     }
   }
 
-  const { data: forums } = await supabase
+  const { data: rawForums } = await supabase
     .from('forums')
-    .select('*')
+    .select('id, name, slug, description')
     .eq('country_code', country.iso_code)
     .order('display_order');
+
+  // Compute real thread/post counts for country forums using admin client
+  let forums: { id: string; name: string; slug: string; description: string; threads_count: number; posts_count: number }[] = (rawForums || []).map(f => ({ ...f, threads_count: 0, posts_count: 0 }));
+  if (forums.length > 0) {
+    const fIds = forums.map(f => f.id);
+    const { data: fThreads } = await supabaseAdmin
+      .from('threads')
+      .select('id, forum_id')
+      .in('forum_id', fIds);
+
+    const tByForum: Record<string, string[]> = {};
+    for (const t of fThreads || []) {
+      if (!tByForum[t.forum_id]) tByForum[t.forum_id] = [];
+      tByForum[t.forum_id].push(t.id);
+    }
+
+    // Count posts per forum using exact count queries (no row limit)
+    for (const fId of fIds) {
+      const tIds = tByForum[fId];
+      if (tIds && tIds.length > 0) {
+        const { count } = await supabaseAdmin
+          .from('posts')
+          .select('id', { count: 'exact', head: true })
+          .in('thread_id', tIds);
+        const forumIdx = forums.findIndex(f => f.id === fId);
+        if (forumIdx >= 0) {
+          forums[forumIdx].threads_count = tIds.length;
+          forums[forumIdx].posts_count = count ?? 0;
+        }
+      }
+    }
+  }
 
   const countryDisplayName = `${country.flag_emoji || ''} ${country.name_es || country.name}`.trim();
 

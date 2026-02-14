@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { createServerSupabaseClient } from '@/lib/supabase-server';
 import { Header } from '@/components/layout/header';
 import { Sidebar } from '@/components/layout/sidebar';
@@ -69,6 +69,15 @@ export default async function ThreadPage({ params, searchParams }: PageProps) {
     notFound();
   }
 
+  // Redirect to canonical SEO URL if slug + region info available
+  const _country = thread.region?.country;
+  const _region = thread.region;
+  if (thread.slug && _country?.slug && _region?.slug) {
+    const canonical = `/foros/${_country.slug}/${_region.slug}/${thread.slug}`;
+    const pageParam = page > 1 ? `?page=${page}` : '';
+    redirect(`${canonical}${pageParam}`);
+  }
+
   // Increment views (fire-and-forget, don't block page render)
   supabase.rpc('increment_thread_views', { thread_id: thread.id }).then(({ error }) => {
     if (error) console.error('[ThreadPage] Error incrementing views:', error.message);
@@ -110,6 +119,7 @@ export default async function ThreadPage({ params, searchParams }: PageProps) {
     created_at: thread.created_at,
     replies_count: thread.replies_count || 0,
     views_count: thread.views_count || 0,
+    tag: thread.tag,
   });
 
   const bcItems = country && region
@@ -150,6 +160,12 @@ export default async function ThreadPage({ params, searchParams }: PageProps) {
               isPinned={thread.is_pinned}
               isLocked={thread.is_locked}
               isHot={thread.is_hot}
+              tag={thread.tag}
+              authorUsername={thread.author?.username}
+              createdAt={thread.created_at}
+              forumName={thread.forum?.name}
+              regionName={region?.name}
+              countryName={country?.name_es || country?.name}
             />
 
             {/* Poll display if thread has one */}

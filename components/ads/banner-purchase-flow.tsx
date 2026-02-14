@@ -53,7 +53,7 @@ type ZoneType = 'home_country' | 'city';
 type Step = 1 | 2 | 3 | 4 | 5;
 
 export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowProps) {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
   const router = useRouter();
   const t = useTranslations('publicidad');
 
@@ -88,13 +88,13 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
   // Step 5: Confirm
   const [submitting, setSubmitting] = useState(false);
 
-  // Auth check
+  // Auth check — wait for loading to finish before redirecting
   useEffect(() => {
-    if (!user) {
-      toast.error('Debes iniciar sesión para comprar publicidad.');
+    if (!loading && !user) {
+      toast.error(t('loginRequired'));
       router.push('/login');
     }
-  }, [user, router]);
+  }, [user, loading, router, t]);
 
   // Reset dependent selections when country changes
   useEffect(() => {

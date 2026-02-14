@@ -304,7 +304,8 @@
     "previous": "Zurück",
     "next": "Weiter",
     "backToPreviousPage": "Zurück zur vorherigen Seite",
-    "store": "Shop"
+    "store": "Shop",
+    "myAds": "Meine Anzeigen"
   },
   "home": {
     "description": "Die #1 Community für Trans-Escort-Bewertungen und Reviews. Teile deine Erfahrung, entdecke die bestbewerteten Girls und vernetze dich mit anderen Kennern in deiner Stadt.",
@@ -312,14 +313,16 @@
     "migrationRequired": "Datenbankmigration erforderlich",
     "runCommand": "Führen Sie folgenden Befehl aus:",
     "orCopy": "Oder kopieren Sie den Inhalt von",
-    "yourCountry": "Ihr Land"
+    "yourCountry": "Ihr Land",
+    "countryNotAvailable": "Wir haben festgestellt, dass Sie uns aus {country} besuchen. Dieses Land ist noch nicht verfügbar, aber erkunden Sie die Foren unten.",
+    "recommendedCountry": "Empfohlenes Forum"
   },
   "account": {
     "title": "Mein Konto",
     "profileTab": "Profil",
     "threadsTab": "Meine Themen",
     "settingsTab": "Einstellungen",
-    "editProfile": "Profil bearbeiten",
+    "editProfile": "Profil",
     "updateInfo": "Aktualisieren Sie Ihre Daten",
     "username": "Benutzername",
     "usernameNoChange": "Der Benutzername kann nicht geändert werden",
@@ -351,7 +354,15 @@
     "privacyDesc": "Kontrollieren Sie die Sichtbarkeit",
     "verification": "Verifizierung",
     "verificationDesc": "Verifizieren Sie Ihr Konto",
-    "requestVerification": "Verifizierung anfordern"
+    "requestVerification": "Verifizierung anfordern",
+    "avatarUpload": "Avatar hochladen",
+    "avatarOrUrl": "oder URL einfügen",
+    "avatarDragDrop": "Bild ziehen oder klicken zum Auswählen",
+    "avatarMaxSize": "JPG, PNG, GIF oder WebP. Max. 2MB.",
+    "avatarUploading": "Hochladen...",
+    "avatarUploadSuccess": "Avatar erfolgreich hochgeladen",
+    "avatarUploadError": "Fehler beim Hochladen des Avatars",
+    "avatarRemove": "Avatar entfernen"
   },
   "nav": {
     "forums": "Foren",
@@ -595,7 +606,7 @@
     "thanksGiven": "Gegebene Danke",
     "threadsCreated": "Erstellte Themen",
     "sendMessage": "Nachricht senden",
-    "editProfile": "Profil bearbeiten",
+    "editProfile": "Profil",
     "bio": "Biografie",
     "bioPlaceholder": "Erzählen Sie uns von sich...",
     "signature": "Signatur",
@@ -2327,7 +2338,8 @@
     "uploadError": "Fehler beim Hochladen des Bildes.",
     "unexpectedError": "Unerwarteter Fehler beim Hochladen.",
     "cityLabel": "Stadt: {name}",
-    "note": "Hinweis:"
+    "note": "Hinweis:",
+    "loginRequired": "Sie müssen sich anmelden, um Werbung zu kaufen"
   },
   "payments": {
     "title": "Zahlung",
@@ -2445,5 +2457,29 @@
         "description": "Community-Richtlinien, Bewertungsvorlagen und Nutzungsanleitungen."
       }
     }
+  },
+  "myAds": {
+    "title": "Meine Anzeigen",
+    "subtitle": "Verwalte die Banner, die du bei TS Rating gekauft hast.",
+    "noAds": "Du hast keine gekauften Anzeigen.",
+    "buyNow": "Werbung kaufen",
+    "zone": "Zone",
+    "position": "Position",
+    "format": "Format",
+    "period": "Zeitraum",
+    "price": "Preis",
+    "status": "Status",
+    "pending": "Ausstehend",
+    "approved": "Genehmigt",
+    "active": "Aktiv",
+    "rejected": "Abgelehnt",
+    "expired": "Abgelaufen",
+    "cancelled": "Storniert",
+    "banner": "Banner",
+    "startDate": "Start",
+    "endDate": "Ende",
+    "daysLeft": "{days} Tage übrig",
+    "noPreview": "Kein Bild",
+    "createdAt": "Gekauft am"
   }
 }

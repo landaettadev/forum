@@ -50,7 +50,7 @@ export default function NuevoHiloPage() {
 function NuevoHiloContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { user, profile } = useAuth();
+  const { user, profile, loading: authLoading } = useAuth();
   const t = useTranslations('thread');
   const _tCommon = useTranslations('common');
   const _tEditor = useTranslations('editor');
@@ -74,6 +74,7 @@ function NuevoHiloContent() {
   const tPoll = useTranslations('poll');
 
   useEffect(() => {
+    if (authLoading) return;
     if (!user) {
       router.push('/login');
       return;

@@ -122,6 +122,9 @@ export function generateThreadMetadata(thread: {
   replies_count?: number;
   region_name?: string;
   country_name?: string;
+  tag?: string;
+  slug?: string | null;
+  canonicalUrl?: string;
 }) {
   const location = thread.region_name
     ? thread.country_name
@@ -129,13 +132,17 @@ export function generateThreadMetadata(thread: {
       : thread.region_name
     : undefined;
   const seoTitle = location ? `${thread.title} - ${location}` : thread.title;
-  const description = `${thread.title}${location ? ` in ${location}` : ''} — ${thread.replies_count || 0} replies, ${thread.views_count || 0} views. By @${thread.author?.username || 'User'} on ${SITE_NAME}.`.slice(0, 160);
-  
+
+  const tagLabel = thread.tag === 'review' ? 'Review' : thread.tag === 'ask' ? 'Question' : '';
+  const description = `${tagLabel ? `[${tagLabel}] ` : ''}${thread.title}${location ? ` in ${location}` : ''} — ${thread.replies_count || 0} replies, ${thread.views_count || 0} views. By @${thread.author?.username || 'User'} on ${SITE_NAME}.`.slice(0, 160);
+
+  const url = thread.canonicalUrl || (thread.id ? `/hilo/${thread.id}` : undefined);
+
   return generateMetadata({
     title: seoTitle,
     description,
     type: 'article',
-    url: thread.id ? `/hilo/${thread.id}` : undefined,
+    url,
   });
 }
 
@@ -168,6 +175,6 @@ export function generateProfileMetadata(profile: {
     description,
     image: profile.avatar_url || DEFAULT_IMAGE,
     type: 'profile',
-    url: `/usuaria/${profile.username}`,
+    url: `/user/${profile.username}`,
   });
 }

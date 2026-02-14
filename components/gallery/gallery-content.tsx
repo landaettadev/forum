@@ -66,7 +66,7 @@ export function GalleryContent({ media }: GalleryContentProps) {
                   )}
                   <div className="flex items-center gap-3 text-white/80 text-xs mt-1">
                     <Link
-                      href={`/usuaria/${item.user.username}`}
+                      href={`/user/${item.user.username}`}
                       className="hover:text-white"
                     >
                       @{item.user.username}

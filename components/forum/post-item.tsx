@@ -102,7 +102,7 @@ export function PostItem({ post, threadId, isFirstPost = false, canModerate = fa
       <div className="flex flex-col md:flex-row gap-4 p-4">
         {/* Mobile: compact horizontal author bar */}
         <div className="flex md:hidden items-center gap-3">
-          <Link href={`/usuaria/${post.author.username}`} className="flex-shrink-0">
+          <Link href={`/user/${post.author.username}`} className="flex-shrink-0">
             <Avatar className="h-10 w-10 border-2 border-[hsl(var(--forum-border))]">
               <AvatarImage src={post.author.avatar_url || undefined} />
               <AvatarFallback className="bg-[hsl(var(--forum-accent))] text-white text-sm">
@@ -112,7 +112,7 @@ export function PostItem({ post, threadId, isFirstPost = false, canModerate = fa
           </Link>
           <div className="min-w-0">
             <Link
-              href={`/usuaria/${post.author.username}`}
+              href={`/user/${post.author.username}`}
               className="font-semibold text-sm hover:text-[hsl(var(--forum-accent))] transition-colors block truncate"
             >
               {post.author.username}
@@ -128,7 +128,7 @@ export function PostItem({ post, threadId, isFirstPost = false, canModerate = fa
 
         {/* Desktop: vertical author sidebar */}
         <div className="hidden md:block w-40 flex-shrink-0 space-y-3">
-          <Link href={`/usuaria/${post.author.username}`}>
+          <Link href={`/user/${post.author.username}`}>
             <Avatar className="h-20 w-20 border-2 border-[hsl(var(--forum-border))]">
               <AvatarImage src={post.author.avatar_url || undefined} />
               <AvatarFallback className="bg-[hsl(var(--forum-accent))] text-white text-xl">
@@ -139,7 +139,7 @@ export function PostItem({ post, threadId, isFirstPost = false, canModerate = fa
 
           <div className="space-y-1">
             <Link
-              href={`/usuaria/${post.author.username}`}
+              href={`/user/${post.author.username}`}
               className="font-semibold hover:text-[hsl(var(--forum-accent))] transition-colors block"
             >
               {post.author.username}
@@ -154,6 +154,14 @@ export function PostItem({ post, threadId, isFirstPost = false, canModerate = fa
 
             <div className="text-xs forum-text-muted space-y-1">
               <div>{t('posts')}: {post.author.posts_count}</div>
+              {post.author.thanks_received > 0 && (
+                <div>👍 {post.author.thanks_received}</div>
+              )}
+              {post.author.activity_badge && (
+                <div className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-[hsl(var(--forum-accent)/0.15)] text-[hsl(var(--forum-accent))] text-[10px] font-medium">
+                  {post.author.activity_badge}
+                </div>
+              )}
               <div>{t('registered')}: {new Date(post.author.created_at).toLocaleDateString(locale)}</div>
               {post.author.location_city && post.author.location_country && (
                 <div>

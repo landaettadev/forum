@@ -51,7 +51,7 @@ export function RulesContent() {
               </p>
               {t.has(`${rule.id}.details`) && (
                 <ul className="mt-3 ml-11 space-y-2">
-                  {(t.raw(`${rule.id}.details`) as string[]).map((detail: string, i: number) => (
+                  {Object.values(t.raw(`${rule.id}.details`) as Record<string, string>).map((detail: string, i: number) => (
                     <li key={i} className="flex items-start gap-2 text-sm forum-text-muted">
                       <span className="text-[hsl(var(--forum-accent))]">•</span>
                       {detail}

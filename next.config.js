@@ -6,6 +6,7 @@ const withNextIntl = createNextIntlPlugin('./i18n.ts');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Keep default .next dir (relative path required by Next.js)
   eslint: {
     ignoreDuringBuilds: false,
   },

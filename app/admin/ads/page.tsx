@@ -45,7 +45,7 @@ type BookingRow = BannerBooking & {
 };
 
 export default function AdminAdsPage() {
-  const { user, profile } = useAuth();
+  const { user, profile, loading: authLoading } = useAuth();
   const router = useRouter();
 
   const [loading, setLoading] = useState(true);
@@ -73,6 +73,7 @@ export default function AdminAdsPage() {
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
+    if (authLoading) return;
     if (!user) { router.push('/login'); return; }
     if (profile && profile.role !== 'admin' && profile.role !== 'mod') {
       router.push('/');
@@ -80,7 +81,7 @@ export default function AdminAdsPage() {
       return;
     }
     if (profile) fetchAll();
-  }, [user, profile]);
+  }, [user, profile, authLoading]);
 
   const fetchAll = async () => {
     setLoading(true);

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { Header } from '@/components/layout/header';
 import { Sidebar } from '@/components/layout/sidebar';
@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
+import { useSearchParams } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import { escapeLikePattern } from '@/lib/sanitize';
 import { Search, MessageSquare, User, FileText, Loader2 } from 'lucide-react';
@@ -48,7 +49,9 @@ export default function BuscarPage() {
   const locale = useLocale();
   const t = useTranslations('search');
   const dateLocale = getDateFnsLocale(locale);
-  const [query, setQuery] = useState('');
+  const searchParams = useSearchParams();
+  const initialQuery = searchParams?.get('q') || '';
+  const [query, setQuery] = useState(initialQuery);
   const [searchType, setSearchType] = useState<SearchType>('all');
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
@@ -57,18 +60,13 @@ export default function BuscarPage() {
   const [postResults, setPostResults] = useState<PostResult[]>([]);
   const [userResults, setUserResults] = useState<UserResult[]>([]);
 
-  const handleSearch = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (query.trim().length < 2) {
-      return;
-    }
-
+  const executeSearch = useCallback(async (searchQuery: string) => {
+    if (searchQuery.trim().length < 2) return;
     setLoading(true);
     setSearched(true);
 
     try {
-      const searchPattern = `%${escapeLikePattern(query.trim())}%`;
+      const searchPattern = `%${escapeLikePattern(searchQuery.trim())}%`;
 
       if (searchType === 'all' || searchType === 'threads') {
         const { data: threads } = await supabase
@@ -109,7 +107,21 @@ export default function BuscarPage() {
     } finally {
       setLoading(false);
     }
+  }, [searchType]);
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    executeSearch(query);
   };
+
+  // Auto-search when navigated with ?q= parameter
+  useEffect(() => {
+    const q = searchParams?.get('q');
+    if (q && q.trim().length >= 2) {
+      setQuery(q);
+      executeSearch(q);
+    }
+  }, [searchParams, executeSearch]);
 
   const highlightText = (text: string, query: string) => {
     if (!query) return text;
@@ -222,7 +234,7 @@ export default function BuscarPage() {
                           </Link>
                           <div className="flex items-center gap-3 mt-2 text-sm forum-text-secondary">
                             <span>
-                              {t('by')} <Link href={`/usuaria/${thread.author.username}`} className="hover:text-[hsl(var(--forum-accent))]">
+                              {t('by')} <Link href={`/user/${thread.author.username}`} className="hover:text-[hsl(var(--forum-accent))]">
                                 {thread.author.username}
                               </Link>
                               {thread.author.is_verified && (
@@ -271,7 +283,7 @@ export default function BuscarPage() {
                           </div>
                           <div className="flex items-center gap-3 text-xs forum-text-muted">
                             <span>
-                              {t('by')} <Link href={`/usuaria/${post.author.username}`} className="hover:text-[hsl(var(--forum-accent))]">
+                              {t('by')} <Link href={`/user/${post.author.username}`} className="hover:text-[hsl(var(--forum-accent))]">
                                 {post.author.username}
                               </Link>
                               {post.author.is_verified && (
@@ -298,7 +310,7 @@ export default function BuscarPage() {
                         <div key={user.id} className="flex items-center justify-between border-b border-[hsl(var(--forum-border))] last:border-0 pb-3 last:pb-0">
                           <div>
                             <Link
-                              href={`/usuaria/${user.username}`}
+                              href={`/user/${user.username}`}
                               className="text-lg font-semibold hover:text-[hsl(var(--forum-accent))] transition-colors"
                             >
                               {highlightText(user.username, query)}

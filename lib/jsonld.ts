@@ -37,19 +37,32 @@ export function discussionForumPostingJsonLd(thread: {
   created_at: string;
   replies_count: number;
   views_count: number;
+  tag?: string;
+  url?: string;
 }) {
+  const threadUrl = thread.url || `${SITE_URL}/hilo/${thread.id}`;
+  const tagLabel = thread.tag === 'review' ? 'Review' : thread.tag === 'ask' ? 'Question' : thread.tag === 'general' ? 'Discussion' : undefined;
+
   return {
     '@context': 'https://schema.org',
     '@type': 'DiscussionForumPosting',
-    '@id': `${SITE_URL}/hilo/${thread.id}`,
+    '@id': threadUrl,
     headline: thread.title,
     text: thread.content?.slice(0, 300) || thread.title,
-    url: `${SITE_URL}/hilo/${thread.id}`,
+    url: threadUrl,
     datePublished: thread.created_at,
+    ...(tagLabel && { keywords: tagLabel }),
+    ...(tagLabel && { articleSection: tagLabel }),
     author: {
       '@type': 'Person',
       name: thread.author_username,
-      url: `${SITE_URL}/usuaria/${thread.author_username}`,
+      url: `${SITE_URL}/user/${thread.author_username}`,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: SITE_NAME,
+      url: SITE_URL,
+      logo: { '@type': 'ImageObject', url: `${SITE_URL}/logo.svg` },
     },
     interactionStatistic: [
       {
@@ -94,7 +107,7 @@ export function profileJsonLd(profile: {
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: profile.username,
-    url: `${SITE_URL}/usuaria/${profile.username}`,
+    url: `${SITE_URL}/user/${profile.username}`,
     description: profile.bio || undefined,
     image: profile.avatar_url || undefined,
     memberOf: {

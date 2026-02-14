@@ -7,6 +7,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import type { Thread, Profile } from '@/lib/supabase';
 import { getDateFnsLocale } from '@/lib/date-locale';
 import { ThreadTag } from './thread-tag';
+import { threadUrl } from '@/lib/slug';
 import { CompactBadges } from '@/components/user/profile-badges';
 import { FavoriteButton } from '@/components/favorites/favorite-button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -63,7 +64,7 @@ export function ThreadRow({ thread }: ThreadRowProps) {
     <div className="flex items-center hover:bg-[hsl(var(--forum-surface-hover))] transition-colors border-b border-[hsl(var(--forum-border))] last:border-b-0 px-4 py-3 gap-4">
       {/* Author avatar */}
       <Link
-        href={`/usuaria/${thread.author?.username}`}
+        href={`/user/${thread.author?.username}`}
         className="flex-shrink-0"
         onClick={(e) => e.stopPropagation()}
       >
@@ -158,7 +159,7 @@ export function ThreadRow({ thread }: ThreadRowProps) {
           </div>
           {thread.last_post_author ? (
             <Link
-              href={`/usuaria/${thread.last_post_author.username}`}
+              href={`/user/${thread.last_post_author.username}`}
               className="text-xs text-[hsl(var(--forum-accent))] hover:underline truncate block"
               onClick={(e) => e.stopPropagation()}
             >
@@ -166,7 +167,7 @@ export function ThreadRow({ thread }: ThreadRowProps) {
             </Link>
           ) : thread.author && (
             <Link
-              href={`/usuaria/${thread.author.username}`}
+              href={`/user/${thread.author.username}`}
               className="text-xs text-[hsl(var(--forum-accent))] hover:underline truncate block"
               onClick={(e) => e.stopPropagation()}
             >

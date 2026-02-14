@@ -110,7 +110,7 @@ export function LeaderboardWidget({ countrySlug, countryName }: LeaderboardWidge
           users.map((user, index) => (
             <Link
               key={user.user_id}
-              href={`/usuaria/${user.username}`}
+              href={`/user/${user.username}`}
               className="flex items-center gap-3 hover:bg-[hsl(var(--forum-surface-hover))] p-1 rounded transition-colors"
             >
               <span className="w-6 text-center text-sm">
