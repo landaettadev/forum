@@ -9,12 +9,12 @@ import { Toaster } from '@/components/ui/sonner';
 import { FloatingChat } from '@/components/chat/floating-chat';
 import { CookieBanner } from '@/components/cookie-banner';
 import { AnalyticsProvider } from './providers';
-import { generateMetadata as genMeta, SITE_NAME, SITE_URL, DEFAULT_DESCRIPTION } from '@/lib/metadata';
+import { generateMetadata as genMeta, DEFAULT_DESCRIPTION } from '@/lib/metadata';
 import { websiteJsonLd, organizationJsonLd } from '@/lib/jsonld';
 
 const inter = Inter({ subsets: ['latin'] });
 
-const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-WYP0TL8804';
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || '';
 
 export const metadata = genMeta({
   title: undefined,

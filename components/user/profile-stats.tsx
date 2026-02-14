@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/lib/supabase';
 import { 
   MessageSquare, FileText, ThumbsUp, Users, Eye, TrendingUp 
@@ -30,11 +30,7 @@ export function ProfileStats({ userId, compact = false }: ProfileStatsProps) {
   const [stats, setStats] = useState<ProfileStats | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchStats();
-  }, [userId]);
-
-  const fetchStats = async () => {
+  const fetchStats = useCallback(async () => {
     try {
       const { data, error } = await supabase
         .rpc('get_profile_stats', { p_user_id: userId });
@@ -46,7 +42,11 @@ export function ProfileStats({ userId, compact = false }: ProfileStatsProps) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [userId]);
+
+  useEffect(() => {
+    fetchStats();
+  }, [fetchStats]);
 
   if (loading) {
     return (

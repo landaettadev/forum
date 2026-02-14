@@ -232,7 +232,7 @@ export function ImageUpload({
  */
 export function AvatarUpload({
   currentAvatar,
-  onUploadComplete,
+  onUploadComplete: _onUploadComplete,
 }: {
   currentAvatar?: string;
   onUploadComplete: (url: string) => void;

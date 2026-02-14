@@ -36,7 +36,7 @@ export default function RecuperarContrasenaPage() {
           description: t('checkEmail'),
         });
       }
-    } catch (error) {
+    } catch {
       toast.error(t('unexpectedError'));
     } finally {
       setLoading(false);
@@ -49,7 +49,7 @@ export default function RecuperarContrasenaPage() {
         <CardHeader className="text-center">
           <div className="mb-4">
             <Link href="/" className="text-3xl font-bold bg-gradient-to-r from-[hsl(var(--forum-accent))] to-[hsl(var(--forum-accent-hover))] bg-clip-text text-transparent">
-              TransForo
+              TS Rating
             </Link>
           </div>
           <CardTitle>{t('title')}</CardTitle>

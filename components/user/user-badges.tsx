@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/lib/supabase';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
@@ -26,11 +26,7 @@ export function UserBadges({ userId, size = 'md', maxDisplay = 5, showAll = fals
   const [badges, setBadges] = useState<Badge[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchBadges();
-  }, [userId]);
-
-  const fetchBadges = async () => {
+  const fetchBadges = useCallback(async () => {
     try {
       const { data, error } = await supabase
         .rpc('get_user_badges', { p_user_id: userId });
@@ -42,7 +38,11 @@ export function UserBadges({ userId, size = 'md', maxDisplay = 5, showAll = fals
     } finally {
       setLoading(false);
     }
-  };
+  }, [userId]);
+
+  useEffect(() => {
+    fetchBadges();
+  }, [fetchBadges]);
 
   if (loading || badges.length === 0) return null;
 

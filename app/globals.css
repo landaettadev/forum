@@ -170,6 +170,9 @@
       hsl(var(--forum-gradient-from)),
       hsl(var(--forum-gradient-to))
     );
+    padding-bottom: 0.1em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
   }
 
   /* --- Gradient border glow --- */

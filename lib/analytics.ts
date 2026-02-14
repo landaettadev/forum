@@ -1,16 +1,16 @@
 /**
- * Sistema de Analytics para TransForo
+ * Sistema de Analytics para TS Rating
  * Soporta Google Analytics 4 y eventos personalizados
  */
 
 declare global {
   interface Window {
-    gtag?: (...args: any[]) => void;
-    dataLayer?: any[];
+    gtag?: (...args: [string, ...unknown[]]) => void;
+    dataLayer?: unknown[];
   }
 }
 
-export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-WYP0TL8804';
+export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || '';
 
 // Verificar si está habilitado
 export const isAnalyticsEnabled = () => {
@@ -31,13 +31,13 @@ export const pageview = (url: string) => {
 /**
  * Track eventos personalizados
  */
-export const event = (action: string, params?: Record<string, any>) => {
+export const event = (action: string, params?: Record<string, unknown>) => {
   if (!isAnalyticsEnabled()) return;
   
   window.gtag?.('event', action, params);
 };
 
-// Eventos predefinidos para TransForo
+// Eventos predefinidos para TS Rating
 export const Analytics = {
   // User events
   userRegister: (method: string = 'email') => {
@@ -144,7 +144,7 @@ export const initGA = () => {
   }
   
   // Script ya debe estar cargado en el HTML
-  console.log('Google Analytics initialized:', GA_MEASUREMENT_ID);
+  console.info('Google Analytics initialized:', GA_MEASUREMENT_ID);
 };
 
 /**
@@ -169,7 +169,7 @@ export const timing = (
 /**
  * Set user properties
  */
-export const setUserProperties = (properties: Record<string, any>) => {
+export const setUserProperties = (properties: Record<string, unknown>) => {
   if (!isAnalyticsEnabled()) return;
   
   window.gtag?.('set', 'user_properties', properties);

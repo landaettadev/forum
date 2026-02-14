@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Bell, BellOff } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/auth-context';
@@ -22,13 +22,7 @@ export function SubscribeButton({ threadId, size = 'sm', showLabel = false }: Su
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    if (user) {
-      checkSubscription();
-    }
-  }, [user, threadId]);
-
-  const checkSubscription = async () => {
+  const checkSubscription = useCallback(async () => {
     if (!user) return;
 
     const { data } = await supabase
@@ -38,7 +32,13 @@ export function SubscribeButton({ threadId, size = 'sm', showLabel = false }: Su
       });
 
     setIsSubscribed(!!data);
-  };
+  }, [user, threadId]);
+
+  useEffect(() => {
+    if (user) {
+      checkSubscription();
+    }
+  }, [user, threadId, checkSubscription]);
 
   const toggleSubscription = async () => {
     if (!user) {

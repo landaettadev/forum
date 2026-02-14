@@ -169,16 +169,19 @@ export function getPublicUrl(bucket: StorageBucket, path: string): string {
 }
 
 /**
- * Crear thumbnail de imagen (requiere Edge Function o procesamiento externo)
+ * Create a thumbnail URL using Next.js image optimization.
+ * Works automatically with the built-in /_next/image loader —
+ * no external service needed.
  */
-export async function createThumbnail(
+export function createThumbnail(
   originalUrl: string,
   width: number = 200,
-  height: number = 200
-): Promise<string> {
-  // Por ahora devuelve la URL original
-  // En producción, implementar con Edge Function o servicio de imágenes
-  return originalUrl;
+  _height: number = 200
+): string {
+  if (!originalUrl) return originalUrl;
+  // Use Next.js image optimization endpoint for automatic resizing
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || '';
+  return `${siteUrl}/_next/image?url=${encodeURIComponent(originalUrl)}&w=${width}&q=75`;
 }
 
 /**

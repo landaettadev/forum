@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/lib/supabase';
+import { escapeLikePattern } from '@/lib/sanitize';
 import { Search, MessageSquare, User, FileText, Loader2 } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { getDateFnsLocale } from '@/lib/date-locale';
@@ -67,7 +68,7 @@ export default function BuscarPage() {
     setSearched(true);
 
     try {
-      const searchPattern = `%${query.trim()}%`;
+      const searchPattern = `%${escapeLikePattern(query.trim())}%`;
 
       if (searchType === 'all' || searchType === 'threads') {
         const { data: threads } = await supabase
@@ -77,6 +78,7 @@ export default function BuscarPage() {
           .order('created_at', { ascending: false })
           .limit(20);
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         setThreadResults((threads || []) as any);
       }
 
@@ -88,6 +90,7 @@ export default function BuscarPage() {
           .order('created_at', { ascending: false })
           .limit(20);
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         setPostResults((posts || []) as any);
       }
 

@@ -1,9 +1,43 @@
 /**
- * Sistema de búsqueda avanzada para TransForo
+ * Sistema de búsqueda avanzada para TS Rating
  * Soporta búsqueda en hilos, posts y usuarios con filtros
  */
 
 import { supabase } from './supabase';
+import { escapeLikePattern } from './sanitize';
+
+// Row shapes returned by Supabase select queries
+interface ThreadRow {
+  id: string;
+  title: string;
+  created_at: string;
+  views_count: number;
+  replies_count: number;
+  is_pinned: boolean;
+  is_hot: boolean;
+  author: { id: string; username: string; avatar_url: string | null } | null;
+  forum: { id: string; name: string; slug: string } | null;
+}
+
+interface PostRow {
+  id: string;
+  content: string;
+  created_at: string;
+  thread_id: string;
+  author: { id: string; username: string; avatar_url: string | null } | null;
+  thread: { id: string; title: string; forum: { name: string } | null } | null;
+}
+
+interface UserRow {
+  id: string;
+  username: string;
+  avatar_url: string | null;
+  bio: string | null;
+  posts_count: number;
+  created_at: string;
+  role: string;
+  is_verified: boolean;
+}
 
 export type SearchType = 'all' | 'threads' | 'posts' | 'users';
 
@@ -72,7 +106,7 @@ export async function searchThreads(
         slug
       )
     `, { count: 'exact' })
-    .ilike('title', `%${query}%`)
+    .ilike('title', `%${escapeLikePattern(query)}%`)
     .order('created_at', { ascending: false });
 
   // Aplicar filtros
@@ -102,7 +136,7 @@ export async function searchThreads(
     return { results: [], total: 0 };
   }
 
-  const results: SearchResult[] = (data || []).map((thread: any) => ({
+  const results: SearchResult[] = ((data as unknown as ThreadRow[]) || []).map((thread) => ({
     type: 'thread' as const,
     id: thread.id,
     title: thread.title,
@@ -110,9 +144,9 @@ export async function searchThreads(
     thread_id: thread.id,
     forum_name: thread.forum?.name,
     author: {
-      id: thread.author?.id,
-      username: thread.author?.username,
-      avatar_url: thread.author?.avatar_url,
+      id: thread.author?.id ?? '',
+      username: thread.author?.username ?? '',
+      avatar_url: thread.author?.avatar_url ?? undefined,
     },
     highlight: highlightMatch(thread.title, query),
   }));
@@ -151,7 +185,7 @@ export async function searchPosts(
         )
       )
     `, { count: 'exact' })
-    .ilike('content', `%${query}%`)
+    .ilike('content', `%${escapeLikePattern(query)}%`)
     .order('created_at', { ascending: false });
 
   // Aplicar filtros
@@ -177,7 +211,7 @@ export async function searchPosts(
     return { results: [], total: 0 };
   }
 
-  const results: SearchResult[] = (data || []).map((post: any) => ({
+  const results: SearchResult[] = ((data as unknown as PostRow[]) || []).map((post) => ({
     type: 'post' as const,
     id: post.id,
     content: truncateContent(post.content, 200),
@@ -186,9 +220,9 @@ export async function searchPosts(
     title: post.thread?.title,
     forum_name: post.thread?.forum?.name,
     author: {
-      id: post.author?.id,
-      username: post.author?.username,
-      avatar_url: post.author?.avatar_url,
+      id: post.author?.id ?? '',
+      username: post.author?.username ?? '',
+      avatar_url: post.author?.avatar_url ?? undefined,
     },
     highlight: highlightMatch(truncateContent(post.content, 200), query),
   }));
@@ -219,7 +253,7 @@ export async function searchUsers(
       role,
       is_verified
     `, { count: 'exact' })
-    .ilike('username', `%${query}%`)
+    .ilike('username', `%${escapeLikePattern(query)}%`)
     .eq('is_deleted', false)
     .order('posts_count', { ascending: false });
 
@@ -233,11 +267,11 @@ export async function searchUsers(
     return { results: [], total: 0 };
   }
 
-  const results: SearchResult[] = (data || []).map((user: any) => ({
+  const results: SearchResult[] = ((data as unknown as UserRow[]) || []).map((user) => ({
     type: 'user' as const,
     id: user.id,
     username: user.username,
-    avatar_url: user.avatar_url,
+    avatar_url: user.avatar_url ?? undefined,
     content: user.bio || '',
     created_at: user.created_at,
     highlight: highlightMatch(user.username, query),
@@ -321,14 +355,22 @@ export async function advancedSearch(
 }
 
 /**
- * Resaltar coincidencias en el texto
+ * Resaltar coincidencias en el texto.
+ * Escapes HTML first to prevent XSS, then wraps matches in <mark>.
  */
 function highlightMatch(text: string, query: string): string {
   if (!text || !query) return text;
 
+  // Escape HTML entities first to prevent injection
+  const safe = text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+
   const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const regex = new RegExp(`(${escaped})`, 'gi');
-  return text.replace(regex, '<mark>$1</mark>');
+  return safe.replace(regex, '<mark>$1</mark>');
 }
 
 /**
@@ -357,7 +399,7 @@ export async function getSearchSuggestions(
   const { data, error } = await supabase
     .from('threads')
     .select('title')
-    .ilike('title', `%${query}%`)
+    .ilike('title', `%${escapeLikePattern(query)}%`)
     .limit(limit);
 
   if (error) {
@@ -365,7 +407,7 @@ export async function getSearchSuggestions(
     return [];
   }
 
-  return (data || []).map((thread: any) => thread.title);
+  return (data || []).map((thread: { title: string }) => thread.title);
 }
 
 /**
@@ -391,24 +433,15 @@ export async function saveSearchHistory(
  */
 export async function getPopularSearches(limit: number = 10): Promise<string[]> {
   try {
-    const { data, error } = await supabase
-      .from('search_history')
-      .select('query')
-      .gte('created_at', new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString())
-      .limit(limit);
+    // Use SQL-side aggregation via RPC to avoid downloading all rows
+    const { data, error } = await supabase.rpc('get_popular_searches', {
+      p_days: 7,
+      p_limit: limit,
+    });
 
     if (error) throw error;
 
-    // Contar frecuencia y devolver las más populares
-    const frequency: Record<string, number> = {};
-    (data || []).forEach((item: any) => {
-      frequency[item.query] = (frequency[item.query] || 0) + 1;
-    });
-
-    return Object.entries(frequency)
-      .sort(([, a], [, b]) => b - a)
-      .slice(0, limit)
-      .map(([query]) => query);
+    return (data || []).map((row: { query: string; search_count: number }) => row.query);
   } catch (error) {
     console.error('Error getting popular searches:', error);
     return [];

@@ -3,6 +3,7 @@
  */
 
 import { supabase } from './supabase';
+import { supabaseAdmin } from './supabase-admin';
 import type { RealtimeChannel, SupabaseClient } from '@supabase/supabase-js';
 
 export type NotificationType = 
@@ -24,7 +25,7 @@ export interface Notification {
   type: NotificationType;
   title: string;
   message: string;
-  data?: any;
+  data?: Record<string, unknown>;
   is_read: boolean;
   read_at?: string;
   created_at: string;
@@ -38,11 +39,13 @@ export async function createNotification(
   type: NotificationType,
   title: string,
   message: string,
-  data?: any,
+  data?: Record<string, unknown>,
   client?: SupabaseClient
 ): Promise<{ success: boolean; error?: string }> {
   try {
-    const db = client || supabase;
+    // Use provided client, or supabaseAdmin (service_role) to bypass RLS
+    // since notifications are typically created for OTHER users.
+    const db = client || supabaseAdmin;
     const { error } = await db
       .from('notifications')
       .insert({
@@ -395,7 +398,7 @@ export async function notifySystem(
   userId: string,
   title: string,
   message: string,
-  data?: any
+  data?: Record<string, unknown>
 ): Promise<void> {
   await createNotification(userId, 'system', title, message, data);
 }
@@ -408,19 +411,42 @@ export async function sendBulkNotification(
   type: NotificationType,
   title: string,
   message: string,
-  data?: any
+  data?: Record<string, unknown>
 ): Promise<{ success: number; failed: number }> {
-  let success = 0;
-  let failed = 0;
+  if (userIds.length === 0) return { success: 0, failed: 0 };
 
-  for (const userId of userIds) {
-    const result = await createNotification(userId, type, title, message, data);
-    if (result.success) {
-      success++;
-    } else {
-      failed++;
+  try {
+    // Batch insert using supabaseAdmin to bypass RLS
+    const rows = userIds.map((userId) => ({
+      user_id: userId,
+      type,
+      title,
+      message,
+      data: data || null,
+      is_read: false,
+    }));
+
+    const BATCH_SIZE = 500;
+    let success = 0;
+    let failed = 0;
+
+    for (let i = 0; i < rows.length; i += BATCH_SIZE) {
+      const batch = rows.slice(i, i + BATCH_SIZE);
+      const { error } = await supabaseAdmin
+        .from('notifications')
+        .insert(batch);
+
+      if (error) {
+        console.error('Bulk notification batch error:', error);
+        failed += batch.length;
+      } else {
+        success += batch.length;
+      }
     }
-  }
 
-  return { success, failed };
+    return { success, failed };
+  } catch (error) {
+    console.error('Unexpected error in sendBulkNotification:', error);
+    return { success: 0, failed: userIds.length };
+  }
 }

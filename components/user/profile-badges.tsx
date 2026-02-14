@@ -6,7 +6,7 @@ import {
 } from '@/components/ui/tooltip';
 import { 
   Mail, Shield, ShieldCheck, Crown, BadgeCheck, Gem, Star, 
-  Award, ThumbsUp, MessageSquare, Calendar, Flame, Heart,
+  Award, ThumbsUp, MessageSquare, Flame, Heart,
   Users, TrendingUp, Sparkles, Trophy, Medal, Zap
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';

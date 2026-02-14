@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { Globe, ChevronRight, MessageSquare, FileText } from 'lucide-react';
+import { Globe, ChevronRight } from 'lucide-react';
 import { useTranslations, useLocale } from 'next-intl';
 import { formatDistanceToNow, format, isToday, isYesterday } from 'date-fns';
 import { getDateFnsLocale } from '@/lib/date-locale';
@@ -67,6 +67,7 @@ export function CountryRow({ countries, title, highlighted = false }: CountryRow
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const getCountryName = (country: any) => {
     const localeMap: Record<string, string> = {
       'es': country.name_es,
@@ -91,6 +92,7 @@ export function CountryRow({ countries, title, highlighted = false }: CountryRow
     return localeMap[locale] || country.name_en || country.name;
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const getFlagUrl = (country: any) => {
     const code = (country.iso_code || '').toLowerCase();
     if (!code) return null;
@@ -120,11 +122,12 @@ export function CountryRow({ countries, title, highlighted = false }: CountryRow
               {/* Flag image */}
               <div className="flex-shrink-0 w-10 h-7 relative overflow-hidden rounded-md shadow-sm group-hover:scale-110 transition-transform duration-300">
                 {flagUrl ? (
-                  <img
+                  <Image
                     src={flagUrl}
                     alt={getCountryName(country)}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
+                    fill
+                    className="object-cover"
+                    sizes="40px"
                   />
                 ) : (
                   <div className="w-full h-full bg-[hsl(var(--forum-surface-alt))] flex items-center justify-center text-lg">

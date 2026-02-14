@@ -3,7 +3,7 @@
  */
 
 import { supabase } from './supabase';
-import type { BannerAdZone, BannerBooking, BannerFallback, BannerPosition, BannerFormat } from './supabase';
+import type { BannerAdZone, BannerPosition, BannerFormat } from './supabase';
 
 /**
  * Resolve the ad zone for a given page context.
@@ -127,7 +127,7 @@ export async function getOccupiedDates(
 
   if (!data) return [];
 
-  return data.map((row: any) => ({
+  return data.map((row: { booking_id: string; start_date: string; end_date: string; username: string; avatar_url: string | null; status: string }) => ({
     bookingId: row.booking_id,
     startDate: row.start_date,
     endDate: row.end_date,

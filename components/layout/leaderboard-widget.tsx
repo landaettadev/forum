@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/lib/supabase';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -27,11 +27,7 @@ export function LeaderboardWidget({ countrySlug, countryName }: LeaderboardWidge
   const [users, setUsers] = useState<LeaderboardUser[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchLeaderboard();
-  }, [countrySlug]);
-
-  const fetchLeaderboard = async () => {
+  const fetchLeaderboard = useCallback(async () => {
     try {
       if (countrySlug) {
         // Fetch top users for the specific country
@@ -70,7 +66,11 @@ export function LeaderboardWidget({ countrySlug, countryName }: LeaderboardWidge
     } finally {
       setLoading(false);
     }
-  };
+  }, [countrySlug]);
+
+  useEffect(() => {
+    fetchLeaderboard();
+  }, [fetchLeaderboard]);
 
   const getRankIcon = (index: number) => {
     switch (index) {

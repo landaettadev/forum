@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { ThumbsUp, ThumbsDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/lib/supabase';
@@ -30,13 +30,7 @@ export function UserRating({
   const [userRating, setUserRating] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    if (user && user.id !== userId) {
-      fetchUserRating();
-    }
-  }, [user, userId]);
-
-  const fetchUserRating = async () => {
+  const fetchUserRating = useCallback(async () => {
     if (!user) return;
     
     const { data } = await supabase
@@ -49,7 +43,13 @@ export function UserRating({
     if (data) {
       setUserRating(data.rating);
     }
-  };
+  }, [user, userId]);
+
+  useEffect(() => {
+    if (user && user.id !== userId) {
+      fetchUserRating();
+    }
+  }, [user, userId, fetchUserRating]);
 
   const handleRating = async (rating: number) => {
     if (!user || user.id === userId) {
@@ -110,7 +110,7 @@ export function UserRating({
         setUserRating(rating);
         toast.success(rating === 1 ? t('likedUser') : t('dislikedUser'));
       }
-    } catch (error) {
+    } catch {
       toast.error(t('ratingError'));
     } finally {
       setIsLoading(false);

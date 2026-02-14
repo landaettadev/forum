@@ -17,6 +17,7 @@ export function CodeHighlight({ content }: { content: string }) {
 
     // Dynamically load highlight.js from CDN only when needed
     const loadAndHighlight = async () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       if (!(window as any).hljs) {
         // Load CSS
         if (!document.querySelector('link[href*="highlight.js"]')) {
@@ -28,6 +29,7 @@ export function CodeHighlight({ content }: { content: string }) {
 
         // Load JS
         await new Promise<void>((resolve, reject) => {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           if ((window as any).hljs) { resolve(); return; }
           const script = document.createElement('script');
           script.src = 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js';
@@ -38,6 +40,7 @@ export function CodeHighlight({ content }: { content: string }) {
       }
 
       // Highlight all code blocks in this container
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const hljs = (window as any).hljs;
       if (hljs) {
         codeBlocks.forEach((block) => {

@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
@@ -11,8 +10,6 @@ import {
   Eye, 
   Clock, 
   Star, 
-  Phone, 
-  MessageCircle,
   Filter,
   Plus,
   ChevronLeft,
@@ -24,7 +21,7 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
-import { EscortAd, CountryOption, Region } from '@/lib/supabase';
+import type { EscortAd, CountryOption, Region } from '@/lib/supabase';
 import { formatDistanceToNow } from 'date-fns';
 import { getDateFnsLocale } from '@/lib/date-locale';
 
@@ -51,7 +48,7 @@ export function AdsListContent({
 }: AdsListContentProps) {
   const t = useTranslations('ads');
   const locale = useLocale();
-  const dateLocale = getDateFnsLocale(locale);
+  const _dateLocale = getDateFnsLocale(locale);
   const router = useRouter();
   const searchParams = useSearchParams();
 

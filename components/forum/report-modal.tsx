@@ -45,7 +45,7 @@ export function ReportModal({ isOpen, onClose, type, targetId }: ReportModalProp
     setLoading(true);
 
     try {
-      const reportData: any = {
+      const reportData: Record<string, string | null> = {
         reporter_id: user.id,
         reason,
         details: details.trim() || null,
@@ -74,7 +74,7 @@ export function ReportModal({ isOpen, onClose, type, targetId }: ReportModalProp
         setReason('spam');
         setDetails('');
       }
-    } catch (error) {
+    } catch {
       toast.error(tc('error'));
     } finally {
       setLoading(false);

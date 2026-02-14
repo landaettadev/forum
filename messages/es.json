@@ -257,6 +257,7 @@
     "register": "Registrarse",
     "logout": "Cerrar sesión",
     "myAccount": "Mi cuenta",
+    "store": "Tienda",
     "messages": "Mensajes",
     "favorites": "Mis Favoritos",
     "alerts": "Alertas",
@@ -306,7 +307,7 @@
     "backToPreviousPage": "Volver a la página anterior"
   },
   "home": {
-    "description": "Comunidad de reviews y experiencias con servicios escort de chicas trans. Comparte opiniones honestas y encuentra las mejores opciones en tu ciudad.",
+    "description": "La comunidad #1 de ratings y reseñas de escorts trans. Comparte tu experiencia, descubre las mejor valoradas y conecta con otros catadores y probadores en tu ciudad.",
     "noCountriesAvailable": "No hay países disponibles",
     "migrationRequired": "Es necesario ejecutar la migración de base de datos",
     "runCommand": "Ejecuta el siguiente comando en tu terminal:",
@@ -358,7 +359,7 @@
     "vip": "VIP",
     "verification": "Verificación",
     "newThread": "Nuevo hilo",
-    "ads": "Anuncios"
+    "ads": "Publicidad"
   },
   "auth": {
     "email": "Correo electrónico",
@@ -373,20 +374,22 @@
     "loginTitle": "Iniciar sesión",
     "loginDescription": "Ingresa a tu cuenta para participar en el foro",
     "registerTitle": "Crear cuenta",
-    "registerDescription": "Únete a la comunidad de TransForo",
+    "registerDescription": "Únete a la comunidad de TS Rating",
     "loginButton": "Iniciar sesión",
     "loginButtonLoading": "Iniciando sesión...",
     "registerButton": "Crear cuenta",
     "registerButtonLoading": "Creando cuenta...",
     "loginSuccess": "Bienvenida de vuelta",
     "registerSuccess": "Cuenta creada exitosamente",
-    "registerSuccessDesc": "Bienvenida a TransForo",
+    "registerSuccessDesc": "Bienvenida a TS Rating",
     "loginError": "Error al iniciar sesión",
     "registerError": "Error al registrarse",
     "unexpectedError": "Error inesperado",
     "passwordsMismatch": "Las contraseñas no coinciden",
     "passwordTooShort": "La contraseña debe tener al menos 6 caracteres",
     "mustAcceptRules": "Debes aceptar las reglas del foro",
+    "completeCaptcha": "Por favor, completa la verificación de seguridad",
+    "captchaFailed": "Verificación de seguridad fallida. Intenta de nuevo",
     "ageConfirmation": "Soy mayor de 18 años y acepto las",
     "forumRules": "reglas del foro",
     "registerHere": "Regístrate aquí",
@@ -445,6 +448,7 @@
     "generalForumsOf": "Foros generales de {country}",
     "recentThreads": "Hilos recientes",
     "noThreadsYet": "No hay hilos todavía",
+    "supportForumNotice": "Tus temas de soporte son privados. Solo tú, los moderadores y administradores pueden verlos.",
     "beFirstToCreate": "Sé el primero en crear un hilo en {name}",
     "justNow": "Ahora mismo",
     "minutesAgo": "Hace {count} min",
@@ -830,7 +834,8 @@
     "noModerators": "Sin moderadores asignados",
     "advertising": "Publicidad",
     "adminRole": "Admin",
-    "modRole": "Mod"
+    "modRole": "Mod",
+    "guests": "invitados"
   },
   "banners": {
     "adSpace": "Espacio publicitario",
@@ -1115,7 +1120,7 @@
     "reportSuccessDesc": "Nuestro equipo revisará tu reporte pronto"
   },
   "ads": {
-    "title": "Anuncios",
+    "title": "Publicidad",
     "subtitle": "{count} anuncios disponibles",
     "createAd": "Publicar Anuncio",
     "createAdDescription": "Completa el formulario para publicar tu anuncio",
@@ -1601,7 +1606,7 @@
   },
   "faq": {
     "title": "Preguntas Frecuentes",
-    "subtitle": "Encuentra respuestas a las preguntas más comunes sobre TransForo",
+    "subtitle": "Encuentra respuestas a las preguntas más comunes sobre TS Rating",
     "q1": "¿Cómo me registro en el foro?",
     "a1": "Para registrarte, haz clic en el botón \"Registrarse\" en la esquina superior derecha. Completa el formulario con tu email, nombre de usuario y contraseña. Recibirás un email de confirmación para activar tu cuenta.",
     "q2": "¿Cómo puedo verificar mi cuenta?",
@@ -1633,7 +1638,7 @@
     "s1t": "1. ¿Qué son las Cookies?",
     "s1p": "Las cookies son pequeños archivos de texto que se almacenan en tu dispositivo cuando visitas un sitio web. Permiten que el sitio \"recuerde\" tus acciones y preferencias.",
     "s2t": "2. ¿Cómo Usamos las Cookies?",
-    "s2p": "TransForo utiliza cookies para mejorar tu experiencia de navegación, entender cómo interactúas con nuestro sitio y personalizar tu experiencia.",
+    "s2p": "TS Rating utiliza cookies para mejorar tu experiencia de navegación, entender cómo interactúas con nuestro sitio y personalizar tu experiencia.",
     "s3t": "3. Tipos de Cookies que Utilizamos",
     "s31t": "3.1 Cookies Estrictamente Necesarias",
     "s31purpose": "Propósito: Esenciales para el funcionamiento del sitio",
@@ -1665,7 +1670,7 @@
     "s4i3": "Servicios de análisis: Para entender el comportamiento de usuarios",
     "s4note": "Estos terceros tienen sus propias políticas de privacidad.",
     "s5t": "5. Duración de las Cookies",
-    "s5p": "TransForo utiliza dos tipos de cookies según su duración:",
+    "s5p": "TS Rating utiliza dos tipos de cookies según su duración:",
     "s5i1": "Cookies de sesión: Son temporales y se eliminan cuando cierras tu navegador.",
     "s5i2": "Cookies persistentes: Permanecen en tu dispositivo hasta 1-2 años o hasta que las elimines.",
     "s6t": "6. Gestionar tus Preferencias de Cookies",
@@ -1678,7 +1683,7 @@
     "s61i4": "Activar modo de navegación privada",
     "s61links": "Enlaces a instrucciones de gestión de cookies por navegador:",
     "s62t": "6.2 A través de Nuestro Banner de Cookies",
-    "s62p": "Cuando visitas TransForo por primera vez, verás un banner de cookies donde puedes aceptar o rechazar cookies no esenciales.",
+    "s62p": "Cuando visitas TS Rating por primera vez, verás un banner de cookies donde puedes aceptar o rechazar cookies no esenciales.",
     "s7t": "7. Consecuencias de Desactivar Cookies",
     "s7p": "Si decides bloquear o eliminar cookies, algunas partes del sitio pueden no funcionar correctamente:",
     "s7i1": "No podrás mantener tu sesión activa",
@@ -1706,7 +1711,7 @@
     "title": "Política de Privacidad",
     "lastUpdate": "Última actualización",
     "s1t": "1. Introducción",
-    "s1p": "En TransForo, valoramos y respetamos tu privacidad. Esta Política de Privacidad explica cómo recopilamos, usamos, almacenamos y protegemos tu información personal.",
+    "s1p": "En TS Rating, valoramos y respetamos tu privacidad. Esta Política de Privacidad explica cómo recopilamos, usamos, almacenamos y protegemos tu información personal.",
     "s2t": "2. Información que Recopilamos",
     "s21t": "2.1 Información de Registro",
     "s21p": "Cuando creas una cuenta, recopilamos:",
@@ -1763,7 +1768,7 @@
     "s9t": "9. Cookies",
     "s9p": "Usamos cookies y tecnologías similares. Consulta nuestra Política de Cookies para más detalles.",
     "s10t": "10. Menores de Edad",
-    "s10p": "TransForo está dirigido a personas mayores de 18 años.",
+    "s10p": "TS Rating está dirigido a personas mayores de 18 años.",
     "s11t": "11. Transferencias Internacionales",
     "s11p": "Tus datos pueden ser transferidos a servidores fuera de tu país, cumpliendo con las leyes aplicables.",
     "s12t": "12. Cambios a esta Política",
@@ -1778,33 +1783,33 @@
     "title": "Términos y Condiciones",
     "lastUpdate": "Última actualización",
     "s1t": "1. Aceptación de los Términos",
-    "s1p": "Al acceder y usar TransForo, aceptas estar vinculado por estos Términos y Condiciones.",
+    "s1p": "Al acceder y usar TS Rating, aceptas estar vinculado por estos Términos y Condiciones.",
     "s2t": "2. Descripción del Servicio",
-    "s2p": "TransForo es una plataforma de foro en línea. Proporcionamos un espacio para:",
+    "s2p": "TS Rating es una plataforma de foro en línea. Proporcionamos un espacio para:",
     "s2items": "Compartir experiencias profesionales|Conectar con colegas|Intercambiar información y consejos|Construir una comunidad de apoyo",
     "s3t": "3. Requisitos de Registro",
     "s3p": "Para usar ciertas funciones, debes:",
     "s3items": "Ser mayor de 18 años|Proporcionar información precisa|Mantener la seguridad de tu contraseña|Notificar uso no autorizado|Aceptar responsabilidad de tu cuenta",
     "s4t": "4. Reglas de Conducta",
-    "s4p": "Al usar TransForo, te comprometes a NO:",
+    "s4p": "Al usar TS Rating, te comprometes a NO:",
     "s4items": "Publicar contenido ilegal o abusivo|Hacerse pasar por otra persona|Violar derechos de propiedad intelectual|Publicar spam|Interferir con el funcionamiento del sitio|Recopilar información sin consentimiento|Compartir información personal de terceros|Promover actividades ilegales",
     "s5t": "5. Contenido del Usuario",
     "s5p": "Al publicar contenido:",
     "s5items": "Mantienes todos los derechos sobre tu contenido|Nos otorgas una licencia para usar tu contenido en la plataforma|Eres responsable del contenido que publicas|Garantizas que tienes derecho a publicarlo|Aceptamos que podemos eliminar contenido que viole estos términos",
     "s6t": "6. Contenido NSFW",
-    "s6p": "TransForo permite contenido NSFW claramente marcado. Debe cumplir con las leyes aplicables.",
+    "s6p": "TS Rating permite contenido NSFW claramente marcado. Debe cumplir con las leyes aplicables.",
     "s7t": "7. Moderación",
     "s7p": "Nos reservamos el derecho de:",
     "s7items": "Editar, eliminar o rechazar cualquier contenido|Suspender o terminar cuentas|Modificar o discontinuar el servicio|Revelar información cuando sea requerido por ley",
     "s8t": "8. Propiedad Intelectual",
-    "s8p": "El diseño, código y gráficos de TransForo están protegidos por derechos de autor.",
+    "s8p": "El diseño, código y gráficos de TS Rating están protegidos por derechos de autor.",
     "s9t": "9. Descargo de Responsabilidad",
-    "s9p": "TransForo se proporciona \"tal cual\" sin garantías.",
+    "s9p": "TS Rating se proporciona \"tal cual\" sin garantías.",
     "s9items": "El servicio sea ininterrumpido|Los defectos serán corregidos|El servicio esté libre de virus|Los resultados sean precisos",
     "s10t": "10. Limitación de Responsabilidad",
-    "s10p": "En ningún caso TransForo será responsable por daños directos, indirectos, incidentales o consecuentes.",
+    "s10p": "En ningún caso TS Rating será responsable por daños directos, indirectos, incidentales o consecuentes.",
     "s11t": "11. Indemnización",
-    "s11p": "Aceptas indemnizar y eximir de responsabilidad a TransForo.",
+    "s11p": "Aceptas indemnizar y eximir de responsabilidad a TS Rating.",
     "s12t": "12. Modificaciones",
     "s12p": "Nos reservamos el derecho de modificar estos términos en cualquier momento.",
     "s13t": "13. Terminación",
@@ -1814,7 +1819,7 @@
     "s15t": "15. Contacto",
     "s15p": "Si tienes preguntas, puedes contactarnos a través de la",
     "s15link": "página de contacto",
-    "acceptanceNote": "Al usar TransForo, confirmas que has leído, entendido y aceptado estos Términos y Condiciones."
+    "acceptanceNote": "Al usar TS Rating, confirmas que has leído, entendido y aceptado estos Términos y Condiciones."
   },
   "adminUsers": {
     "title": "Gestión de Usuarios",
@@ -2225,11 +2230,18 @@
     "errorAddingThanks": "Error al agregar el agradecimiento",
     "contentEmpty": "El contenido no puede estar vacío",
     "contentTooLong": "Contenido muy largo (máximo 50000 caracteres)",
-    "noEditPermission": "No tienes permiso para editar este post"
+    "noEditPermission": "No tienes permiso para editar este post",
+    "invalidData": "Datos inválidos",
+    "invalidPostId": "ID de post inválido",
+    "loginRequired": "Debes iniciar sesión",
+    "titleTooShort": "El título debe tener al menos 5 caracteres",
+    "contentTooShort": "El contenido debe tener al menos 10 caracteres",
+    "errorUpdatingPost": "Error al actualizar el post",
+    "unexpectedError": "Error inesperado"
   },
   "publicidad": {
     "title": "Comprar Publicidad",
-    "subtitle": "Elige dónde quieres que aparezca tu banner en TransForo.",
+    "subtitle": "Elige dónde quieres que aparezca tu banner en TS Rating.",
     "step1Title": "Selecciona la Zona",
     "step1Desc": "Elige en qué país o ciudad quieres que aparezca tu banner.",
     "country": "País",
@@ -2394,5 +2406,22 @@
     "rejectBtn": "Rechazar pago",
     "paymentRejected": "Pago rechazado",
     "provideReason": "Debes indicar un motivo de rechazo."
+  },
+  "adminForumSection": {
+    "categoryTitle": "TS Rating — Foro Oficial",
+    "forums": {
+      "support": {
+        "name": "Soporte",
+        "description": "Abre un ticket de soporte. Solo tú y el equipo pueden ver tu tema."
+      },
+      "news": {
+        "name": "Noticias del Foro",
+        "description": "Anuncios oficiales, actualizaciones y novedades."
+      },
+      "rules": {
+        "name": "Reglas y Plantillas",
+        "description": "Normas de la comunidad, plantillas para reseñas y guías de uso."
+      }
+    }
   }
 }

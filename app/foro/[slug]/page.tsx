@@ -1,4 +1,4 @@
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { createServerSupabaseClient } from '@/lib/supabase-server';
@@ -8,7 +8,7 @@ import { Breadcrumbs } from '@/components/layout/breadcrumbs';
 import { ThreadRow } from '@/components/forum/thread-row';
 import { Pagination } from '@/components/forum/pagination';
 import { Button } from '@/components/ui/button';
-import { Plus } from 'lucide-react';
+import { Plus, ShieldAlert } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import { Footer } from '@/components/layout/footer';
 import { generateForumMetadata } from '@/lib/metadata';
@@ -54,6 +54,20 @@ export default async function ForumPage({ params, searchParams }: PageProps) {
     notFound();
   }
 
+  // Check user role for admin-only forums (news, rules)
+  const { data: { user } } = await supabase.auth.getUser();
+  let userRole: string | null = null;
+  if (user) {
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('role')
+      .eq('id', user.id)
+      .maybeSingle();
+    userRole = profile?.role || null;
+  }
+  const isStaff = userRole === 'admin' || userRole === 'mod';
+  const canCreateThread = !forum.forum_type || forum.forum_type === 'support' || isStaff;
+
   const from = (page - 1) * THREADS_PER_PAGE;
   const to = from + THREADS_PER_PAGE - 1;
 
@@ -81,21 +95,30 @@ export default async function ForumPage({ params, searchParams }: PageProps) {
 
         <div className="flex gap-6">
           <main className="flex-1">
-            <div className="flex items-center justify-between mb-4">
-              <div>
-                <h1 className="text-2xl font-bold mb-1">{forum.name}</h1>
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+              <div className="min-w-0">
+                <h1 className="text-xl sm:text-2xl font-bold mb-1 truncate">{forum.name}</h1>
                 {forum.description && (
                   <p className="forum-text-secondary text-sm">{forum.description}</p>
                 )}
               </div>
 
-              <Button asChild className="bg-[hsl(var(--forum-accent))] hover:bg-[hsl(var(--forum-accent-hover))]">
-                <Link href={`/nuevo-hilo?foro=${forum.id}`}>
-                  <Plus className="h-4 w-4 mr-2" />
-                  {t('newThread')}
-                </Link>
-              </Button>
+              {canCreateThread && (
+                <Button asChild className="bg-[hsl(var(--forum-accent))] hover:bg-[hsl(var(--forum-accent-hover))] flex-shrink-0 w-full sm:w-auto">
+                  <Link href={`/nuevo-hilo?foro=${forum.id}`}>
+                    <Plus className="h-4 w-4 mr-2" />
+                    {t('newThread')}
+                  </Link>
+                </Button>
+              )}
             </div>
+
+            {forum.forum_type === 'support' && (
+              <div className="flex items-center gap-2 mb-4 p-3 rounded-lg bg-[hsl(var(--forum-accent-muted))] text-sm">
+                <ShieldAlert className="h-4 w-4 text-[hsl(var(--forum-accent))] shrink-0" />
+                <span>{t('supportForumNotice')}</span>
+              </div>
+            )}
 
             <div className="forum-surface">
               {threads && threads.length > 0 ? (

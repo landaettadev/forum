@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import { supabase } from '@/lib/supabase';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
 import {
@@ -16,9 +16,9 @@ import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter,
 } from '@/components/ui/dialog';
 import {
-  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
+  Select, SelectContent, SelectItem, SelectTrigger,
 } from '@/components/ui/select';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Flag, CheckCircle, XCircle, Clock, AlertTriangle } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { getDateFnsLocale } from '@/lib/date-locale';
@@ -72,14 +72,7 @@ export default function AdminReportsPage() {
   const [resolutionNotes, setResolutionNotes] = useState('');
   const [statusFilter, setStatusFilter] = useState('pending');
 
-  useEffect(() => {
-    if (profile && profile.role !== 'admin' && profile.role !== 'mod') {
-      redirect('/');
-    }
-    fetchReports();
-  }, [profile, statusFilter]);
-
-  const fetchReports = async () => {
+  const fetchReports = useCallback(async () => {
     setIsLoading(true);
     let query = supabase
       .from('reports')
@@ -98,7 +91,14 @@ export default function AdminReportsPage() {
     const { data } = await query.limit(100);
     if (data) setReports(data);
     setIsLoading(false);
-  };
+  }, [statusFilter]);
+
+  useEffect(() => {
+    if (profile && profile.role !== 'admin' && profile.role !== 'mod') {
+      redirect('/');
+    }
+    fetchReports();
+  }, [profile, statusFilter, fetchReports]);
 
   const handleAssignToMe = async (reportId: string) => {
     const { error } = await supabase

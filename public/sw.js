@@ -1,4 +1,4 @@
-// TransForo Service Worker — Web Push Notifications
+// TS Rating Service Worker — Web Push Notifications
 // ==================================================
 
 self.addEventListener('install', (event) => {
@@ -14,7 +14,7 @@ self.addEventListener('push', (event) => {
 
   try {
     const data = event.data.json();
-    const title = data.title || 'TransForo';
+    const title = data.title || 'TS Rating';
     const options = {
       body: data.body || '',
       icon: '/icon-192.png',
@@ -31,7 +31,7 @@ self.addEventListener('push', (event) => {
   } catch {
     // Fallback for plain text
     event.waitUntil(
-      self.registration.showNotification('TransForo', {
+      self.registration.showNotification('TS Rating', {
         body: event.data.text(),
         icon: '/icon-192.png',
       })

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import { supabase } from '@/lib/supabase';
 import { Button } from '@/components/ui/button';
@@ -46,23 +46,7 @@ export function FloatingChat() {
   const [isSending, setIsSending] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (user && isOpen) {
-      fetchConversations();
-    }
-  }, [user, isOpen]);
-
-  useEffect(() => {
-    if (activeConversation) {
-      fetchMessages(activeConversation);
-    }
-  }, [activeConversation]);
-
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
-
-  const fetchConversations = async () => {
+  const fetchConversations = useCallback(async () => {
     if (!user) return;
 
     const { data } = await supabase
@@ -108,9 +92,9 @@ export function FloatingChat() {
 
       setConversations(Array.from(conversationMap.values()));
     }
-  };
+  }, [user]);
 
-  const fetchMessages = async (recipientId: string) => {
+  const fetchMessages = useCallback(async (recipientId: string) => {
     if (!user) return;
 
     const { data } = await supabase
@@ -132,7 +116,23 @@ export function FloatingChat() {
         .eq('receiver_id', user.id)
         .eq('is_read', false);
     }
-  };
+  }, [user]);
+
+  useEffect(() => {
+    if (user && isOpen) {
+      fetchConversations();
+    }
+  }, [user, isOpen, fetchConversations]);
+
+  useEffect(() => {
+    if (activeConversation) {
+      fetchMessages(activeConversation);
+    }
+  }, [activeConversation, fetchMessages]);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
   const sendMessage = async () => {
     if (!user || !activeConversation || !newMessage.trim()) return;

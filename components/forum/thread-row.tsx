@@ -1,10 +1,10 @@
 'use client';
 
 import Link from 'next/link';
-import { MessageSquare, Pin, Lock, TrendingUp, Eye } from 'lucide-react';
+import { MessageSquare, Pin, Lock, TrendingUp } from 'lucide-react';
 import { formatDistanceToNow, format, isToday, isYesterday } from 'date-fns';
 import { useLocale, useTranslations } from 'next-intl';
-import { Thread, Profile } from '@/lib/supabase';
+import type { Thread, Profile } from '@/lib/supabase';
 import { getDateFnsLocale } from '@/lib/date-locale';
 import { ThreadTag } from './thread-tag';
 import { CompactBadges } from '@/components/user/profile-badges';
@@ -24,7 +24,7 @@ export function ThreadRow({ thread }: ThreadRowProps) {
   const locale = useLocale();
   const dateLocale = getDateFnsLocale(locale);
 
-  const getThreadIcon = () => {
+  const _getThreadIcon = () => {
     if (thread.is_pinned) return <Pin className="h-5 w-5 text-[hsl(var(--forum-accent))]" />;
     if (thread.is_locked) return <Lock className="h-5 w-5 forum-text-muted" />;
     if (thread.is_hot) return <TrendingUp className="h-5 w-5 text-orange-500" />;

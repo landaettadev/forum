@@ -5,6 +5,7 @@ import { createServerSupabaseClient } from '@/lib/supabase-server';
 import { validateData, createThreadSchema, createPostSchema, editPostSchema, thankPostSchema } from '@/lib/validation';
 import { detectSpam, validateLinkCount } from '@/lib/sanitize';
 import { extractMentions } from '@/lib/mentions';
+import { incrementCounter } from '@/lib/increment-counter';
 import { getTranslations } from 'next-intl/server';
 
 type ActionResult<T = unknown> = 
@@ -12,35 +13,65 @@ type ActionResult<T = unknown> =
   | { success: false; error: string; fieldErrors?: Record<string, string> };
 
 /**
- * Crear un nuevo hilo en un foro
+ * Crear un nuevo hilo en un foro.
+ * Accepts both FormData (from CreateThreadForm component) and plain object
+ * (from nuevo-hilo page). This is the single source of truth for thread creation.
  */
-export async function createThread(formData: FormData): Promise<ActionResult<{ threadId: string }>> {
+export async function createThread(
+  input: FormData | { forumId?: string; title: string; content: string; tag?: string; regionId?: string }
+): Promise<ActionResult<{ threadId: string }>> {
   try {
-    // Extraer datos del formulario
-    const data = {
-      forumId: formData.get('forumId') as string,
-      title: formData.get('title') as string,
-      content: formData.get('content') as string,
-      isNsfw: formData.get('isNsfw') === 'true',
-    };
+    // Normalise input — accept FormData or plain object
+    const raw = input instanceof FormData
+      ? {
+          forumId: input.get('forumId') as string,
+          title: input.get('title') as string,
+          content: input.get('content') as string,
+          isNsfw: input.get('isNsfw') === 'true',
+          tag: (input.get('tag') as string) || undefined,
+          regionId: (input.get('regionId') as string) || undefined,
+        }
+      : {
+          forumId: input.forumId || '',
+          title: input.title,
+          content: input.content,
+          isNsfw: false,
+          tag: input.tag || undefined,
+          regionId: input.regionId || undefined,
+        };
 
-    // Validar datos
-    const validation = validateData(createThreadSchema, data);
-    if (!validation.success) {
+    // Validar datos con Zod
+    const validation = validateData(createThreadSchema, {
+      forumId: raw.forumId,
+      title: raw.title,
+      content: raw.content,
+      isNsfw: raw.isNsfw,
+    });
+
+    // If forumId is empty we skip Zod UUID check and resolve it below
+    if (!raw.forumId) {
+      // Only validate title + content
+      const tEarly = await getTranslations('serverErrors');
+      if (raw.title.trim().length < 5) {
+        return { success: false, error: tEarly('titleTooShort') };
+      }
+      if (raw.content.trim().length < 10) {
+        return { success: false, error: tEarly('contentTooShort') };
+      }
+    } else if (!validation.success) {
       return {
         success: false,
-        error: 'Datos inválidos',
+        error: (await getTranslations('serverErrors'))('invalidData'),
         fieldErrors: Object.fromEntries(
           Object.entries(validation.errors).map(([key, messages]) => [key, messages[0]])
         ),
       };
     }
 
-    const { forumId, title, content } = validation.data;
     const supabase = createServerSupabaseClient();
     const t = await getTranslations('serverErrors');
 
-    // Obtener usuario actual
+    // Obtener usuario actual — always use server-side auth, never trust client
     const { data: { user }, error: authError } = await supabase.auth.getUser();
     
     if (authError || !user) {
@@ -64,6 +95,10 @@ export async function createThread(formData: FormData): Promise<ActionResult<{ t
       };
     }
 
+    // Sanitize content (Zod schema already does sanitizeHtml, but handle non-Zod path)
+    const title = validation.success ? validation.data.title : raw.title.trim();
+    const content = validation.success ? validation.data.content : (await import('@/lib/sanitize')).sanitizeHtml(raw.content);
+
     // Validaciones de spam
     if (detectSpam(content)) {
       return { success: false, error: t('spamDetected') };
@@ -71,6 +106,21 @@ export async function createThread(formData: FormData): Promise<ActionResult<{ t
 
     if (!validateLinkCount(content, 5)) {
       return { success: false, error: t('tooManyLinks5') };
+    }
+
+    // Resolve forumId — if empty, pick first available forum
+    let forumId = validation.success ? validation.data.forumId : raw.forumId;
+    if (!forumId) {
+      const { data: forums } = await supabase
+        .from('forums')
+        .select('id')
+        .order('display_order')
+        .limit(1);
+      forumId = forums?.[0]?.id;
+    }
+
+    if (!forumId) {
+      return { success: false, error: t('forumNotFound') };
     }
 
     // Verificar que el foro existe
@@ -93,14 +143,19 @@ export async function createThread(formData: FormData): Promise<ActionResult<{ t
     }
 
     // Crear el hilo
+    const threadInsert: Record<string, unknown> = {
+      forum_id: forumId,
+      author_id: user.id,
+      title,
+      is_hot: false,
+      last_post_at: new Date().toISOString(),
+    };
+    if (raw.tag) threadInsert.tag = raw.tag;
+    if (raw.regionId) threadInsert.region_id = raw.regionId;
+
     const { data: thread, error: threadError } = await supabase
       .from('threads')
-      .insert({
-        forum_id: forumId,
-        author_id: user.id,
-        title: title,
-        is_hot: false,
-      })
+      .insert(threadInsert)
       .select('id')
       .single();
 
@@ -115,7 +170,7 @@ export async function createThread(formData: FormData): Promise<ActionResult<{ t
       .insert({
         thread_id: thread.id,
         author_id: user.id,
-        content: content,
+        content,
         is_first_post: true,
       });
 
@@ -126,8 +181,14 @@ export async function createThread(formData: FormData): Promise<ActionResult<{ t
       return { success: false, error: t('errorCreatingThreadContent') };
     }
 
+    // Atomic counter increments via centralised helper
+    await incrementCounter(supabase, 'forums', 'threads_count', forumId);
+    await incrementCounter(supabase, 'forums', 'posts_count', forumId);
+    await incrementCounter(supabase, 'profiles', 'posts_count', user.id);
+
     // Revalidar la página del foro
     revalidatePath(`/foro/${forumId}`);
+    revalidatePath(`/foro`);
     revalidatePath('/');
 
     return { 
@@ -154,10 +215,11 @@ export async function createPost(formData: FormData): Promise<ActionResult<{ pos
     };
 
     const validation = validateData(createPostSchema, data);
+    const t = await getTranslations('serverErrors');
     if (!validation.success) {
       return {
         success: false,
-        error: 'Datos inválidos',
+        error: t('invalidData'),
         fieldErrors: Object.fromEntries(
           Object.entries(validation.errors).map(([key, messages]) => [key, messages[0]])
         ),
@@ -166,7 +228,6 @@ export async function createPost(formData: FormData): Promise<ActionResult<{ pos
 
     const { threadId, content } = validation.data;
     const supabase = createServerSupabaseClient();
-    const t = await getTranslations('serverErrors');
 
     const { data: { user }, error: authError } = await supabase.auth.getUser();
     
@@ -226,33 +287,18 @@ export async function createPost(formData: FormData): Promise<ActionResult<{ pos
       return { success: false, error: t('errorCreatingReply') };
     }
 
-    // Actualizar contador de respuestas y último post
-    const { data: currentThread } = await supabase
-      .from('threads')
-      .select('replies_count')
-      .eq('id', threadId)
-      .single();
+    // Update last_post metadata (non-counter fields)
     await supabase
       .from('threads')
       .update({
-        replies_count: (currentThread?.replies_count || 0) + 1,
         last_post_id: post.id,
         last_post_at: new Date().toISOString(),
       })
       .eq('id', threadId);
 
-    // Actualizar contador de posts del usuario
-    const { data: userProfile } = await supabase
-      .from('profiles')
-      .select('posts_count')
-      .eq('id', user.id)
-      .single();
-    if (userProfile) {
-      await supabase
-        .from('profiles')
-        .update({ posts_count: (userProfile.posts_count || 0) + 1 })
-        .eq('id', user.id);
-    }
+    // Atomic counter increments via centralised helper
+    await incrementCounter(supabase, 'threads', 'replies_count', threadId);
+    await incrementCounter(supabase, 'profiles', 'posts_count', user.id);
 
     // Notificar al autor del hilo (si no es el mismo usuario)
     if (thread.author_id && thread.author_id !== user.id) {
@@ -326,18 +372,17 @@ export async function thankPost(postId: string): Promise<ActionResult> {
   try {
     // Validate input with Zod
     const validation = validateData(thankPostSchema, { postId });
+    const t = await getTranslations('serverErrors');
     if (!validation.success) {
-      return { success: false, error: 'ID de post inválido' };
+      return { success: false, error: t('invalidPostId') };
     }
 
     const supabase = createServerSupabaseClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
     
     if (authError || !user) {
-      return { success: false, error: 'Login required' };
+      return { success: false, error: t('loginRequired') };
     }
-
-    const t = await getTranslations('serverErrors');
 
     // Verificar que el post existe
     const { data: post, error: postError } = await supabase
@@ -376,18 +421,8 @@ export async function thankPost(postId: string): Promise<ActionResult> {
           return { success: false, error: t('errorRemovingThanks') };
         }
 
-        // Decrementar contador
-        const { data: currentPost } = await supabase
-          .from('posts')
-          .select('thanks_count')
-          .eq('id', postId)
-          .single();
-        if (currentPost) {
-          await supabase
-            .from('posts')
-            .update({ thanks_count: Math.max(0, (currentPost.thanks_count || 0) - 1) })
-            .eq('id', postId);
-        }
+        // Atomic decrement for thanks_count
+        await incrementCounter(supabase, 'posts', 'thanks_count', postId, -1);
 
         return { success: true, data: { action: 'removed' } };
       }
@@ -395,37 +430,16 @@ export async function thankPost(postId: string): Promise<ActionResult> {
       return { success: false, error: t('errorAddingThanks') };
     }
 
-    // Incrementar contador de gracias
-    const { data: currentPost2 } = await supabase
-      .from('posts')
-      .select('thanks_count')
-      .eq('id', postId)
-      .single();
-    if (currentPost2) {
-      await supabase
-        .from('posts')
-        .update({ thanks_count: (currentPost2.thanks_count || 0) + 1 })
-        .eq('id', postId);
-    }
-
-    // Incrementar contador en el perfil del autor
-    const { data: authorProfile } = await supabase
-      .from('profiles')
-      .select('thanks_received')
-      .eq('id', post.author_id)
-      .single();
-    if (authorProfile) {
-      await supabase
-        .from('profiles')
-        .update({ thanks_received: (authorProfile.thanks_received || 0) + 1 })
-        .eq('id', post.author_id);
-    }
+    // Atomic increment for thanks_count + author thanks_received
+    await incrementCounter(supabase, 'posts', 'thanks_count', postId);
+    await incrementCounter(supabase, 'profiles', 'thanks_received', post.author_id);
 
     return { success: true, data: { action: 'added' } };
 
   } catch (error) {
     console.error('Unexpected error in thankPost:', error);
-    return { success: false, error: 'Unexpected error' };
+    const tErr = await getTranslations('serverErrors');
+    return { success: false, error: tErr('unexpectedError') };
   }
 }
 
@@ -436,10 +450,11 @@ export async function editPost(postId: string, content: string): Promise<ActionR
   try {
     // Validate and sanitize input with Zod
     const validation = validateData(editPostSchema, { postId, content });
+    const t = await getTranslations('serverErrors');
     if (!validation.success) {
       return {
         success: false,
-        error: 'Datos inválidos',
+        error: t('invalidData'),
         fieldErrors: Object.fromEntries(
           Object.entries(validation.errors).map(([key, messages]) => [key, messages[0]])
         ),
@@ -451,7 +466,7 @@ export async function editPost(postId: string, content: string): Promise<ActionR
     const { data: { user }, error: authError } = await supabase.auth.getUser();
     
     if (authError || !user) {
-      return { success: false, error: 'Login required' };
+      return { success: false, error: t('loginRequired') };
     }
 
     // Verificar que el post existe y pertenece al usuario
@@ -462,7 +477,6 @@ export async function editPost(postId: string, content: string): Promise<ActionR
       .single();
 
     if (postError || !post) {
-      const t = await getTranslations('serverErrors');
       return { success: false, error: t('postNotFound') };
     }
 
@@ -477,7 +491,6 @@ export async function editPost(postId: string, content: string): Promise<ActionR
     const isAuthor = post.author_id === user.id;
 
     if (!isAuthor && !isModerator) {
-      const t = await getTranslations('serverErrors');
       return { success: false, error: t('noEditPermission') };
     }
 
@@ -492,7 +505,7 @@ export async function editPost(postId: string, content: string): Promise<ActionR
 
     if (updateError) {
       console.error('Error updating post:', updateError);
-      return { success: false, error: 'Error updating post' };
+      return { success: false, error: t('errorUpdatingPost') };
     }
 
     // Revalidar página del hilo
@@ -502,6 +515,7 @@ export async function editPost(postId: string, content: string): Promise<ActionR
 
   } catch (error) {
     console.error('Unexpected error in editPost:', error);
-    return { success: false, error: 'Unexpected error' };
+    const tErr = await getTranslations('serverErrors');
+    return { success: false, error: tErr('unexpectedError') };
   }
 }

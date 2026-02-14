@@ -1,13 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/auth-context';
 import { adminConfirmPayment, adminRejectPayment } from '@/app/publicidad/payment-actions';
 import { toast } from 'sonner';
 import { useTranslations } from 'next-intl';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
@@ -29,11 +29,8 @@ import {
 import {
   CheckCircle,
   XCircle,
-  Clock,
-  DollarSign,
   Eye,
   Loader2,
-  FileText,
   ExternalLink,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -87,11 +84,7 @@ export default function AdminPaymentsPage() {
   const [rejectReason, setRejectReason] = useState('');
   const [processing, setProcessing] = useState(false);
 
-  useEffect(() => {
-    if (user) fetchPayments();
-  }, [user, statusFilter]);
-
-  const fetchPayments = async () => {
+  const fetchPayments = useCallback(async () => {
     setLoading(true);
     try {
       let query = supabase
@@ -138,7 +131,11 @@ export default function AdminPaymentsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user, statusFilter]);
+
+  useEffect(() => {
+    if (user) fetchPayments();
+  }, [user, statusFilter, fetchPayments]);
 
   const handleConfirm = async () => {
     if (!selectedPayment) return;

@@ -47,9 +47,8 @@ export async function getGeoFromIP(): Promise<GeoData> {
       return {};
     }
 
-    // Fallback: Use a free geo IP service (ip-api.com - free for non-commercial)
-    // Note: In production, consider using a paid service or caching results
-    const response = await fetch(`http://ip-api.com/json/${ip}?fields=status,country,countryCode,city,regionName`, {
+    // Fallback: Use ipapi.co (free tier, HTTPS, 1000 req/day)
+    const response = await fetch(`https://ipapi.co/${ip}/json/`, {
       next: { revalidate: 86400 } // Cache for 24 hours
     });
 
@@ -59,12 +58,12 @@ export async function getGeoFromIP(): Promise<GeoData> {
 
     const data = await response.json();
     
-    if (data.status === 'success') {
+    if (!data.error) {
       return {
-        country: data.country,
-        countryCode: data.countryCode,
+        country: data.country_name,
+        countryCode: data.country_code,
         city: data.city,
-        region: data.regionName,
+        region: data.region,
         ip,
       };
     }

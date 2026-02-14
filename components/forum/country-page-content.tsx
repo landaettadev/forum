@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useTranslations, useLocale } from 'next-intl';
 import { getLocalizedName } from '@/lib/locale-name';
 import Link from 'next/link';
@@ -62,21 +63,21 @@ export function CountryPageContent({ country, regions, forums, regionStats = {},
           {t('backToForums')}
         </Link>
 
-        <div className="flex items-center gap-4 mb-2">
+        <div className="flex flex-wrap items-center gap-4 mb-2">
           {flagUrl && (
-            <div className="w-14 h-10 rounded overflow-hidden shadow-md flex-shrink-0">
-              <img src={flagUrl} alt={countryName} className="w-full h-full object-cover" />
+            <div className="relative w-14 h-10 rounded overflow-hidden shadow-md flex-shrink-0">
+              <Image src={flagUrl} alt={countryName} fill className="object-cover" sizes="56px" />
             </div>
           )}
-          <div>
-            <h1 className="text-3xl font-bold">
+          <div className="min-w-0 flex-1">
+            <h1 className="text-2xl sm:text-3xl font-bold truncate">
               {countryName}
             </h1>
             <p className="forum-text-secondary text-sm">
               {t('forumsAndCommunities', { country: countryName })}
             </p>
           </div>
-          <div className="ml-auto flex gap-6">
+          <div className="hidden sm:flex gap-6 flex-shrink-0">
             <div className="text-center">
               <div className="text-lg font-bold text-[hsl(var(--forum-accent))]">{totalThreads}</div>
               <div className="text-xs forum-text-muted">{t('threads')}</div>

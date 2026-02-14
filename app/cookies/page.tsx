@@ -5,7 +5,7 @@ import { generateMetadata as genMeta } from '@/lib/metadata';
 
 export const metadata = genMeta({
   title: 'Cookies Policy',
-  description: 'Cookie policy and tracking information for TransForo.',
+  description: 'Cookie policy and tracking information for TS Rating.',
   url: '/cookies',
   noIndex: true,
 });

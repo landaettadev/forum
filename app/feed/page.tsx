@@ -12,7 +12,7 @@ export const dynamic = 'force-dynamic';
 
 export const metadata = genMeta({
   title: 'Feed — Novedades',
-  description: 'Las últimas discusiones, hilos populares y tendencias en TransForo.',
+  description: 'Las últimas discusiones, hilos populares y tendencias en TS Rating.',
   url: '/feed',
   noIndex: true,
 });
@@ -100,6 +100,7 @@ function FeedSection({
 }: {
   icon: React.ReactNode;
   title: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   threads: any[];
   emptyMessage: string;
 }) {
@@ -121,6 +122,7 @@ function FeedSection({
       </h2>
       <div className="space-y-2">
         {threads.map((thread) => {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const region = thread.region as any;
           const location = region?.name
             ? `${region.country?.flag_emoji || ''} ${region.name}`.trim()

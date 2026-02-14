@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/lib/auth-context';
@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from 'sonner';
 import { useTranslations } from 'next-intl';
+import { Turnstile } from '@/components/turnstile';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -18,12 +19,34 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    // Verify CAPTCHA if configured
+    if (process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && !captchaToken) {
+      toast.error(t('completeCaptcha'));
+      return;
+    }
+
     setLoading(true);
 
     try {
+      // Server-side CAPTCHA verification
+      if (captchaToken) {
+        const captchaRes = await fetch('/auth/verify-captcha', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token: captchaToken }),
+        });
+        const captchaResult = await captchaRes.json();
+        if (!captchaResult.success) {
+          toast.error(t('captchaFailed'));
+          setLoading(false);
+          return;
+        }
+      }
+
       const { error } = await signIn(email, password);
 
       if (error) {
@@ -34,7 +57,7 @@ export default function LoginPage() {
         toast.success(t('loginSuccess'));
         router.push('/');
       }
-    } catch (error) {
+    } catch {
       toast.error(t('unexpectedError'));
     } finally {
       setLoading(false);
@@ -47,7 +70,7 @@ export default function LoginPage() {
         <CardHeader className="text-center">
           <div className="mb-4">
             <Link href="/" className="text-3xl font-bold bg-gradient-to-r from-[hsl(var(--forum-accent))] to-[hsl(var(--forum-accent-hover))] bg-clip-text text-transparent">
-              TransForo
+              TS Rating
             </Link>
           </div>
           <CardTitle>{t('loginTitle')}</CardTitle>
@@ -89,6 +112,12 @@ export default function LoginPage() {
                 {t('forgotPassword')}
               </Link>
             </div>
+
+            <Turnstile
+              onVerify={useCallback((token: string) => setCaptchaToken(token), [])}
+              onExpire={useCallback(() => setCaptchaToken(null), [])}
+              className="flex justify-center"
+            />
           </CardContent>
           <CardFooter className="flex flex-col gap-3">
             <Button

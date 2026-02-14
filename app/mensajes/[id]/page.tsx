@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 import { useAuth } from '@/lib/auth-context';
@@ -49,24 +49,7 @@ export default function ConversationPage() {
   const [newMessage, setNewMessage] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!user) {
-      router.push('/login');
-      return;
-    }
-
-    fetchConversation();
-  }, [user, otherUserId, router]);
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const fetchConversation = async () => {
+  const fetchConversation = useCallback(async () => {
     if (!user) return;
 
     setLoading(true);
@@ -106,7 +89,19 @@ export default function ConversationPage() {
     }
 
     setLoading(false);
-  };
+  }, [user, otherUserId, router]);
+
+  useEffect(() => {
+    if (!user) {
+      router.push('/login');
+      return;
+    }
+    fetchConversation();
+  }, [user, otherUserId, router, fetchConversation]);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -141,7 +136,7 @@ export default function ConversationPage() {
         setNewMessage('');
         toast.success(t('messageSent'));
       }
-    } catch (error) {
+    } catch {
       toast.error(t('unexpectedError'));
     } finally {
       setSending(false);

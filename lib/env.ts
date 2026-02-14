@@ -28,8 +28,10 @@ if (!parsed.success) {
     '\n\nRevisa tu archivo .env o .env.local\n'
   );
 
-  // Only throw in production runtime — skip during build, CI tests, and dev
-  if (process.env.NODE_ENV === 'production' && !process.env.CI) {
+  // Throw in production runtime. In dev/CI, only warn.
+  const isProduction = process.env.NODE_ENV === 'production';
+  const isBuildPhase = process.env.NEXT_PHASE === 'phase-production-build';
+  if (isProduction && !isBuildPhase) {
     throw new Error('Missing required environment variables');
   }
 }
@@ -37,8 +39,8 @@ if (!parsed.success) {
 export const env = {
   SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL!,
   SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-  GA_MEASUREMENT_ID: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-WYP0TL8804',
-  SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || 'https://transforo.com',
+  GA_MEASUREMENT_ID: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || '',
+  SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || 'https://tsrating.com',
   TENOR_API_KEY: process.env.NEXT_PUBLIC_TENOR_API_KEY || '',
   VAPID_PUBLIC_KEY: process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY || '',
   OPENAI_API_KEY: process.env.OPENAI_API_KEY || '',

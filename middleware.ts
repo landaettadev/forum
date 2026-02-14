@@ -2,61 +2,8 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { createMiddlewareSupabaseClient } from '@/lib/supabase-middleware';
 
-// Rate limiting store (en producción usar Redis/Upstash)
-const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
-
-// Configuración de rate limiting por ruta
-const RATE_LIMITS: Record<string, { requests: number; windowMs: number }> = {
-  '/api/': { requests: 60, windowMs: 60000 }, // 60 req/min para APIs
-  '/login': { requests: 5, windowMs: 60000 }, // 5 intentos/min para login
-  '/registro': { requests: 3, windowMs: 300000 }, // 3 registros/5min
-  '/nuevo-hilo': { requests: 10, windowMs: 60000 }, // 10 hilos/min
-  'default': { requests: 100, windowMs: 60000 }, // 100 req/min general
-};
-
-function getRateLimitConfig(pathname: string) {
-  for (const [path, config] of Object.entries(RATE_LIMITS)) {
-    if (pathname.startsWith(path)) {
-      return config;
-    }
-  }
-  return RATE_LIMITS.default;
-}
-
-function checkRateLimit(
-  identifier: string,
-  maxRequests: number,
-  windowMs: number
-): { allowed: boolean; remaining: number; resetAt: number } {
-  const now = Date.now();
-  const record = rateLimitMap.get(identifier);
-
-  if (!record || record.resetAt <= now) {
-    const resetAt = now + windowMs;
-    rateLimitMap.set(identifier, { count: 1, resetAt });
-    return { allowed: true, remaining: maxRequests - 1, resetAt };
-  }
-
-  if (record.count >= maxRequests) {
-    return { allowed: false, remaining: 0, resetAt: record.resetAt };
-  }
-
-  record.count++;
-  return { allowed: true, remaining: maxRequests - record.count, resetAt: record.resetAt };
-}
-
-// Limpiar rate limit store periódicamente
-if (typeof setInterval !== 'undefined') {
-  setInterval(() => {
-    const now = Date.now();
-    const entries = Array.from(rateLimitMap.entries());
-    entries.forEach(([key, record]) => {
-      if (record.resetAt <= now) {
-        rateLimitMap.delete(key);
-      }
-    });
-  }, 60000);
-}
+// Rate limiting via Upstash Redis (optional — gracefully disabled if not configured)
+import { checkRateLimit } from '@/lib/rate-limit';
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -70,43 +17,57 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Obtener identificador (IP o user ID si está autenticado)
+  // Rate limiting (uses Upstash Redis if configured, otherwise no-op)
   const ip = request.ip || request.headers.get('x-forwarded-for') || 'unknown';
-  const identifier = `${ip}-${pathname}`;
+  const { allowed, remaining, resetAt } = await checkRateLimit(ip, pathname);
 
-  // Aplicar rate limiting
-  const config = getRateLimitConfig(pathname);
-  const { allowed, remaining, resetAt } = checkRateLimit(
-    identifier,
-    config.requests,
-    config.windowMs
-  );
-
-  // Crear respuesta con Supabase SSR session refresh
-  let response: NextResponse;
   if (!allowed) {
-    response = NextResponse.json(
+    return NextResponse.json(
       { error: 'Demasiadas solicitudes. Por favor, intenta más tarde.' },
-      { status: 429 }
+      {
+        status: 429,
+        headers: {
+          'Retry-After': Math.ceil((resetAt - Date.now()) / 1000).toString(),
+          'X-RateLimit-Remaining': '0',
+        },
+      }
     );
-  } else {
-    const { supabase, response: supabaseResponse } = createMiddlewareSupabaseClient(request);
-    // Refresh the session so Server Components can read auth state from cookies
-    await supabase.auth.getUser();
-    response = supabaseResponse;
   }
 
-  // Agregar headers de rate limiting
-  response.headers.set('X-RateLimit-Limit', config.requests.toString());
-  response.headers.set('X-RateLimit-Remaining', remaining.toString());
-  response.headers.set('X-RateLimit-Reset', new Date(resetAt).toISOString());
+  // Supabase SSR session refresh — keeps auth cookies in sync
+  const { supabase, response } = createMiddlewareSupabaseClient(request);
+  await supabase.auth.getUser();
 
-  // Security headers adicionales
-  response.headers.set('X-Content-Type-Options', 'nosniff');
-  response.headers.set('X-Frame-Options', 'SAMEORIGIN');
-  response.headers.set('X-XSS-Protection', '1; mode=block');
+  // Generate CSP nonce for this request
+  const nonce = Buffer.from(crypto.randomUUID()).toString('base64');
+  const isDev = process.env.NODE_ENV === 'development';
 
-  // Prevenir clickjacking en páginas sensibles
+  // In dev: allow unsafe-eval (needed for Next.js HMR / React Refresh) and unsafe-inline
+  // In prod: strict nonce-based CSP
+  const scriptSrc = isDev
+    ? `script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://challenges.cloudflare.com`
+    : `script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https://www.googletagmanager.com https://www.google-analytics.com https://challenges.cloudflare.com`;
+
+  const csp = [
+    "default-src 'self'",
+    scriptSrc,
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+    "img-src 'self' data: blob: https://*.supabase.co https://www.google-analytics.com https://flagcdn.com",
+    "font-src 'self' https://fonts.gstatic.com",
+    "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://www.google-analytics.com https://ipapi.co https://challenges.cloudflare.com",
+    "frame-src 'self' https://challenges.cloudflare.com",
+    "object-src 'none'",
+    "base-uri 'self'",
+    "form-action 'self'",
+    "frame-ancestors 'self'",
+  ].join('; ');
+
+  response.headers.set('Content-Security-Policy', csp);
+
+  // Pass nonce to Next.js via request header so it can apply it to inline scripts
+  response.headers.set('x-nonce', nonce);
+
+  // Override X-Frame-Options to DENY on sensitive pages (base SAMEORIGIN is set in next.config.js)
   if (pathname.includes('/admin') || pathname.includes('/mi-cuenta')) {
     response.headers.set('X-Frame-Options', 'DENY');
   }

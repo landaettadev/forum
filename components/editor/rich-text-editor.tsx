@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useEditor, EditorContent, Editor } from '@tiptap/react';
+import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
 import Link from '@tiptap/extension-link';
@@ -54,8 +54,6 @@ import {
   Heading1,
   Heading2,
   Heading3,
-  MoreHorizontal,
-  X,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { uploadMediaImage, compressImage } from '@/lib/storage';
@@ -189,10 +187,10 @@ export function RichTextEditor({
       } else {
         toast.error(result.error || t('uploadError'), { id: 'upload' });
       }
-    } catch (error) {
+    } catch {
       toast.error(t('uploadError'), { id: 'upload' });
     }
-  }, [editor, userId]);
+  }, [editor, userId, t]);
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

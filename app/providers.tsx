@@ -1,13 +1,13 @@
 'use client';
 
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { pageview } from '@/lib/analytics';
 
 /**
- * Provider para tracking de analytics
+ * Inner component that uses useSearchParams (requires Suspense boundary)
  */
-export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
+function AnalyticsTracker() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -18,5 +18,19 @@ export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
     }
   }, [pathname, searchParams]);
 
-  return <>{children}</>;
+  return null;
+}
+
+/**
+ * Provider para tracking de analytics
+ */
+export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
+  return (
+    <>
+      <Suspense fallback={null}>
+        <AnalyticsTracker />
+      </Suspense>
+      {children}
+    </>
+  );
 }

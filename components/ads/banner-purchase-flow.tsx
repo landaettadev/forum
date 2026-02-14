@@ -9,12 +9,10 @@ import { createBannerBooking } from '@/app/publicidad/actions';
 import {
   BANNER_FORMATS,
   POSITION_LABELS,
-  DURATION_OPTIONS,
   getPrice,
   getPriceTable,
   getMinStartDate,
   calculateEndDate,
-  getFormatForPosition,
 } from '@/lib/banner-pricing';
 import { validateBanner } from '@/lib/banner-validation';
 import type { BannerPosition, BannerFormat } from '@/lib/supabase';
@@ -108,14 +106,7 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
     setSelectedRegionId('');
   }, [selectedZoneType]);
 
-  // Load occupied dates when position changes (try gracefully, tables may not exist)
-  useEffect(() => {
-    if (selectedCountryId && selectedPosition) {
-      loadOccupiedDates();
-    }
-  }, [selectedCountryId, selectedRegionId, selectedPosition]);
-
-  const loadOccupiedDates = async () => {
+  const loadOccupiedDates = useCallback(async () => {
     setLoadingCalendar(true);
     try {
       // Find zone first
@@ -141,6 +132,7 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
         p_position: selectedPosition,
       });
       if (data) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         setOccupiedRanges(data.map((r: any) => ({
           start: r.start_date,
           end: r.end_date,
@@ -152,7 +144,14 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
       setOccupiedRanges([]);
     }
     setLoadingCalendar(false);
-  };
+  }, [selectedCountryId, selectedRegionId, selectedZoneType, selectedPosition]);
+
+  // Load occupied dates when position changes
+  useEffect(() => {
+    if (selectedCountryId && selectedPosition) {
+      loadOccupiedDates();
+    }
+  }, [selectedCountryId, selectedRegionId, selectedPosition, loadOccupiedDates]);
 
   const handleFormatSelect = (format: BannerFormat) => {
     setSelectedFormat(format);
@@ -615,6 +614,7 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
             ) : (
               <div className="space-y-3">
                 <div className="relative inline-block">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={bannerPreview}
                     alt="Preview"
@@ -694,6 +694,7 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
             {bannerPreview && (
               <div>
                 <Label className="mb-2 block">{t('bannerPreview')}</Label>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={bannerPreview} alt="Banner" className="rounded-lg border border-[hsl(var(--forum-border))]" style={{ maxWidth: '100%' }} />
               </div>
             )}

@@ -56,7 +56,7 @@ export default function ContactPage() {
               <CardTitle className="text-lg">Email</CardTitle>
             </CardHeader>
             <CardContent className="text-center forum-text-secondary">
-              <p>contacto@transforo.com</p>
+              <p>contacto@tsrating.com</p>
             </CardContent>
           </Card>
 

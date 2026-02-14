@@ -18,6 +18,10 @@ export default defineConfig({
         '**/*.config.*',
         '**/*.d.ts',
       ],
+      statements: 60,
+      branches: 50,
+      functions: 55,
+      lines: 60,
     },
   },
   resolve: {

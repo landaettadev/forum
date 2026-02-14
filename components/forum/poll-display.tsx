@@ -1,14 +1,14 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/auth-context';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Label } from '@/components/ui/label';
-import { Progress } from '@/components/ui/progress';
+import { RadioGroup as _RadioGroup, RadioGroupItem as _RadioGroupItem } from '@/components/ui/radio-group';
+import { Label as _Label } from '@/components/ui/label';
+import { Progress as _Progress } from '@/components/ui/progress';
 import { BarChart3, Users, Clock, Check, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { formatDistanceToNow } from 'date-fns';
@@ -47,11 +47,7 @@ export function PollDisplay({ threadId }: PollDisplayProps) {
   const [voting, setVoting] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
-  useEffect(() => {
-    fetchPoll();
-  }, [threadId, user]);
-
-  const fetchPoll = async () => {
+  const fetchPoll = useCallback(async () => {
     try {
       const { data, error } = await supabase
         .rpc('get_poll_with_results', { 
@@ -76,7 +72,11 @@ export function PollDisplay({ threadId }: PollDisplayProps) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [threadId, user]);
+
+  useEffect(() => {
+    fetchPoll();
+  }, [fetchPoll]);
 
   const handleVote = async () => {
     if (!user) {

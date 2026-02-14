@@ -1,19 +1,17 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/auth-context';
 import { useTranslations } from 'next-intl';
 
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {
   CreditCard,
   FileText,
-  Download,
-  ExternalLink,
   Loader2,
   ArrowLeft,
   Clock,
@@ -66,11 +64,7 @@ export default function UserPaymentsPage() {
   const [payments, setPayments] = useState<PaymentWithInvoice[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (user) fetchPayments();
-  }, [user]);
-
-  const fetchPayments = async () => {
+  const fetchPayments = useCallback(async () => {
     setLoading(true);
     try {
       const { data: paymentsData, error } = await supabase
@@ -102,7 +96,11 @@ export default function UserPaymentsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
+
+  useEffect(() => {
+    if (user) fetchPayments();
+  }, [user, fetchPayments]);
 
   if (!user) {
     return null;

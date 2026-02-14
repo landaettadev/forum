@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { Image as ImageIcon, Eye, Calendar } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
@@ -48,10 +49,12 @@ export function GalleryContent({ media }: GalleryContentProps) {
               key={item.id}
               className="group relative aspect-square rounded-lg overflow-hidden bg-[hsl(var(--forum-surface-alt))] border border-[hsl(var(--forum-border))]"
             >
-              <img
+              <Image
                 src={item.thumbnail_url || item.url}
                 alt={item.title || ''}
-                className="w-full h-full object-cover transition-transform group-hover:scale-105"
+                fill
+                className="object-cover transition-transform group-hover:scale-105"
+                sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
               />
 
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">

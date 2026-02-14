@@ -105,7 +105,8 @@ export async function createReply(formData: {
     revalidatePath(`/hilo/${formData.threadId}`);
 
     return { success: true };
-  } catch (error: any) {
-    return { success: false, error: error.message };
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Error inesperado';
+    return { success: false, error: message };
   }
 }

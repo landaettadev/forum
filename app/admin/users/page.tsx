@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import { supabase } from '@/lib/supabase';
+import { escapeLikePattern } from '@/lib/sanitize';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { Button } from '@/components/ui/button';
@@ -104,7 +105,7 @@ export default function AdminUsersPage() {
     const { data } = await supabase
       .from('profiles')
       .select('*')
-      .ilike('username', `%${searchQuery}%`)
+      .ilike('username', `%${escapeLikePattern(searchQuery)}%`)
       .limit(50);
 
     if (data) setUsers(data);
@@ -223,7 +224,7 @@ export default function AdminUsersPage() {
       toast.success(`@${username} y todo su contenido han sido eliminados permanentemente`);
       setSelectedUser(null);
       fetchUsers();
-    } catch (error) {
+    } catch {
       toast.error('Error al ejecutar super expulsión');
     }
   };

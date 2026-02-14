@@ -3,12 +3,13 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import { supabase } from '@/lib/supabase';
+import { escapeLikePattern } from '@/lib/sanitize';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
@@ -17,7 +18,7 @@ import {
   Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter,
 } from '@/components/ui/dialog';
 import { AlertTriangle, Plus, Edit, Trash2, Search } from 'lucide-react';
-import { formatDistanceToNow, format } from 'date-fns';
+import { format } from 'date-fns';
 import { getDateFnsLocale } from '@/lib/date-locale';
 import { useLocale, useTranslations } from 'next-intl';
 import { toast } from 'sonner';
@@ -41,7 +42,7 @@ interface Warning {
 export default function AdminWarningsPage() {
   const { user, profile } = useAuth();
   const locale = useLocale();
-  const dateLocale = getDateFnsLocale(locale);
+  const _dateLocale = getDateFnsLocale(locale);
   const t = useTranslations('adminWarnings');
   const [warnings, setWarnings] = useState<Warning[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -88,7 +89,7 @@ export default function AdminWarningsPage() {
     const { data: users } = await supabase
       .from('profiles')
       .select('id')
-      .ilike('username', `%${searchQuery}%`);
+      .ilike('username', `%${escapeLikePattern(searchQuery)}%`);
 
     if (users && users.length > 0) {
       const userIds = users.map(u => u.id);
@@ -206,7 +207,7 @@ export default function AdminWarningsPage() {
     fetchWarnings();
   };
 
-  const handleDeactivateWarning = async (warningId: string) => {
+  const _handleDeactivateWarning = async (warningId: string) => {
     const { error } = await supabase
       .from('user_warnings')
       .update({ is_active: false })

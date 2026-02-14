@@ -1,11 +1,32 @@
 const createNextIntlPlugin = require('next-intl/plugin');
+const fs = require('fs');
+const path = require('path');
 
 const withNextIntl = createNextIntlPlugin('./i18n.ts');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   eslint: {
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: false,
+  },
+  webpack(config, { isServer }) {
+    // @react-email (resend dependency) tries to readFileSync a default-stylesheet.css
+    // that doesn't exist during prerendering. Create it after compilation.
+    if (isServer) {
+      config.plugins.push({
+        apply(compiler) {
+          compiler.hooks.afterEmit.tap('CreateDefaultStylesheet', () => {
+            const dir = path.join(compiler.outputPath, '..', 'browser');
+            const file = path.join(dir, 'default-stylesheet.css');
+            if (!fs.existsSync(file)) {
+              fs.mkdirSync(dir, { recursive: true });
+              fs.writeFileSync(file, '');
+            }
+          });
+        },
+      });
+    }
+    return config;
   },
   images: {
     unoptimized: false,
@@ -16,6 +37,10 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: '**.supabase.co',
+      },
+      {
+        protocol: 'https',
+        hostname: 'flagcdn.com',
       },
     ],
   },
@@ -56,6 +81,7 @@ const nextConfig = {
             key: 'Permissions-Policy',
             value: 'camera=(), microphone=(), geolocation=()'
           },
+          // CSP is set dynamically in middleware.ts with per-request nonce
         ],
       },
     ];

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import { supabase } from '@/lib/supabase';
 import { Button } from '@/components/ui/button';
@@ -22,7 +22,7 @@ interface Notification {
   type: string;
   title: string | null;
   message: string | null;
-  data: Record<string, any> | null;
+  data: Record<string, unknown> | null;
   is_read: boolean;
   created_at: string;
 }
@@ -35,18 +35,10 @@ export function NotificationDropdown() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [unreadCount, setUnreadCount] = useState(0);
 
-  useEffect(() => {
-    if (user) {
-      fetchNotifications();
-      const interval = setInterval(fetchNotifications, 30000);
-      return () => clearInterval(interval);
-    }
-  }, [user]);
-
-  const fetchNotifications = async () => {
+  const fetchNotifications = useCallback(async () => {
     if (!user) return;
 
-    const { data, count } = await supabase
+    const { data } = await supabase
       .from('notifications')
       .select('*', { count: 'exact' })
       .eq('user_id', user.id)
@@ -57,7 +49,15 @@ export function NotificationDropdown() {
       setNotifications(data);
       setUnreadCount(data.filter((n: Notification) => !n.is_read).length);
     }
-  };
+  }, [user]);
+
+  useEffect(() => {
+    if (user) {
+      fetchNotifications();
+      const interval = setInterval(fetchNotifications, 30000);
+      return () => clearInterval(interval);
+    }
+  }, [user, fetchNotifications]);
 
   const markAsRead = async (id: string) => {
     await supabase

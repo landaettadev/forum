@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/auth-context';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -43,6 +43,22 @@ export function ConversationList({ selectedId, onSelect, onNewMessage }: Convers
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
 
+  const fetchConversations = useCallback(async () => {
+    if (!user) return;
+    
+    try {
+      const { data, error } = await supabase
+        .rpc('get_user_conversations', { p_user_id: user.id });
+
+      if (error) throw error;
+      setConversations(data || []);
+    } catch (error) {
+      console.error('Error fetching conversations:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [user]);
+
   useEffect(() => {
     if (user) {
       fetchConversations();
@@ -63,23 +79,7 @@ export function ConversationList({ selectedId, onSelect, onNewMessage }: Convers
         supabase.removeChannel(channel);
       };
     }
-  }, [user]);
-
-  const fetchConversations = async () => {
-    if (!user) return;
-    
-    try {
-      const { data, error } = await supabase
-        .rpc('get_user_conversations', { p_user_id: user.id });
-
-      if (error) throw error;
-      setConversations(data || []);
-    } catch (error) {
-      console.error('Error fetching conversations:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, [user, fetchConversations]);
 
   const filteredConversations = conversations.filter(conv => {
     if (!search) return true;

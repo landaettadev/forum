@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
 import { Bell, BellOff, Plus, Trash2, MapPin, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -11,7 +11,7 @@ import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/auth-context';
 import { toast } from 'sonner';
-import { ZoneAlert } from '@/lib/supabase';
+import type { ZoneAlert } from '@/lib/supabase';
 
 type SimpleRegion = {
   id: string;
@@ -43,11 +43,6 @@ export function ZoneAlertsConfig({ countries }: ZoneAlertsConfigProps) {
   const [selectedRegion, setSelectedRegion] = useState<string>('all');
   const [regions, setRegions] = useState<SimpleRegion[]>([]);
 
-  useEffect(() => {
-    if (user) {
-      loadAlerts();
-    }
-  }, [user]);
 
   useEffect(() => {
     if (selectedCountry) {
@@ -58,7 +53,7 @@ export function ZoneAlertsConfig({ countries }: ZoneAlertsConfigProps) {
     }
   }, [selectedCountry]);
 
-  const loadAlerts = async () => {
+  const loadAlerts = useCallback(async () => {
     if (!user) return;
     
     setIsLoading(true);
@@ -90,7 +85,13 @@ export function ZoneAlertsConfig({ countries }: ZoneAlertsConfigProps) {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [user, t]);
+
+  useEffect(() => {
+    if (user) {
+      loadAlerts();
+    }
+  }, [user, loadAlerts]);
 
   const loadRegions = async (countryId: string) => {
     const { data } = await supabase

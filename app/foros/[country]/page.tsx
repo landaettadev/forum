@@ -1,4 +1,4 @@
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { createServerSupabaseClient } from '@/lib/supabase-server';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
@@ -53,7 +53,7 @@ export default async function CountryForumPage({ params }: PageProps) {
 
   // Fetch thread counts per region
   const regionIds = (regions || []).map(r => r.id);
-  let regionStats: Record<string, { threads_count: number; posts_count: number }> = {};
+  const regionStats: Record<string, { threads_count: number; posts_count: number }> = {};
 
   if (regionIds.length > 0) {
     const { data: threadCounts } = await supabase
@@ -75,7 +75,7 @@ export default async function CountryForumPage({ params }: PageProps) {
   }
 
   // Fetch last thread per region
-  let lastThreadsByRegion: Record<string, { id: string; title: string; last_post_at: string; author: { username: string; avatar_url: string | null } }> = {};
+  const lastThreadsByRegion: Record<string, { id: string; title: string; last_post_at: string; author: { username: string; avatar_url: string | null } }> = {};
 
   if (regionIds.length > 0) {
     const { data: lastThreads } = await supabase
@@ -85,6 +85,7 @@ export default async function CountryForumPage({ params }: PageProps) {
       .order('last_post_at', { ascending: false });
 
     if (lastThreads) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       for (const thread of lastThreads as any[]) {
         if (thread.region_id && !lastThreadsByRegion[thread.region_id]) {
           lastThreadsByRegion[thread.region_id] = {

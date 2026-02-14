@@ -135,7 +135,7 @@ export function ReputationProgress({ reputation, level }: ReputationProgressProp
     );
   }
 
-  const [nextKey, nextConfig] = nextLevel;
+  const [_nextKey, nextConfig] = nextLevel;
   const progress = ((reputation - currentConfig.minRep) / (nextConfig.minRep - currentConfig.minRep)) * 100;
 
   return (

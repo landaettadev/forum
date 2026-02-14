@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/lib/supabase';
 import type { BannerPosition, BannerFormat } from '@/lib/supabase';
@@ -70,16 +70,7 @@ export function BannerSlot({ position, zoneType, countryId, regionId, className 
     content: 'min-h-[90px] h-[90px] w-full max-w-[728px]',
   };
 
-  useEffect(() => {
-    tracked.current = false;
-    if (!zoneType || !countryId) {
-      setState({ type: 'placeholder' });
-      return;
-    }
-    fetchBanner();
-  }, [zoneType, countryId, regionId, position]);
-
-  const fetchBanner = async () => {
+  const fetchBanner = useCallback(async () => {
     try {
       // Single shared check — only one network request ever made
       const available = await isBannerSystemAvailable();
@@ -149,7 +140,16 @@ export function BannerSlot({ position, zoneType, countryId, regionId, className 
     } catch {
       setState({ type: 'placeholder' });
     }
-  };
+  }, [zoneType, countryId, regionId, mapping.bannerPos, mapping.format]);
+
+  useEffect(() => {
+    tracked.current = false;
+    if (!zoneType || !countryId) {
+      setState({ type: 'placeholder' });
+      return;
+    }
+    fetchBanner();
+  }, [zoneType, countryId, regionId, position, fetchBanner]);
 
   // Track impression once when banner is shown
   useEffect(() => {
@@ -163,7 +163,7 @@ export function BannerSlot({ position, zoneType, countryId, regionId, className 
         position: mapping.bannerPos,
       }).then(() => {});
     }
-  }, [state]);
+  }, [state, mapping.bannerPos]);
 
   const handleClick = () => {
     if (state.type === 'booking') {
@@ -180,6 +180,7 @@ export function BannerSlot({ position, zoneType, countryId, regionId, className 
   // Active user booking — show their image
   if (state.type === 'booking') {
     const img = (
+      // eslint-disable-next-line @next/next/no-img-element
       <img
         src={state.imageUrl}
         alt={t('adSpace')}

@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { Folder, ChevronRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { Category, Forum } from '@/lib/supabase';
+import type { Category, Forum } from '@/lib/supabase';
 
 type CategoryRowProps = {
   category: Category;
@@ -13,8 +13,8 @@ type CategoryRowProps = {
 export function CategoryRow({ category, forums }: CategoryRowProps) {
   const tForum = useTranslations('forum');
 
-  const totalThreads = forums.reduce((sum, forum) => sum + forum.threads_count, 0);
-  const totalPosts = forums.reduce((sum, forum) => sum + forum.posts_count, 0);
+  const _totalThreads = forums.reduce((sum, forum) => sum + forum.threads_count, 0);
+  const _totalPosts = forums.reduce((sum, forum) => sum + forum.posts_count, 0);
 
   return (
     <div className="forum-surface mb-4">

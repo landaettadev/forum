@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og';
 
 export const runtime = 'edge';
-export const alt = 'TransForo — Trans Community Forum';
+export const alt = 'TS Rating — Trans Escort Reviews & Ratings';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
@@ -23,7 +23,7 @@ export default async function Image() {
         }}
       >
         <div style={{ fontSize: 72, fontWeight: 800, marginBottom: 16 }}>
-          TransForo
+          TS Rating
         </div>
         <div style={{ fontSize: 28, opacity: 0.85, maxWidth: 800, textAlign: 'center' }}>
           Foro de escorts trans — reseñas, opiniones y experiencias reales.

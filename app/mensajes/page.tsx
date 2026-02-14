@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
 import { Header } from '@/components/layout/header';
 import { Breadcrumbs } from '@/components/layout/breadcrumbs';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -47,6 +46,7 @@ export default function MensajesPage() {
       .rpc('get_user_conversations', { p_user_id: user?.id });
     
     if (data && Array.isArray(data)) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const conv = data.find((c: any) => c.conversation_id === conversationId);
       if (conv) {
         setOtherUser({
@@ -65,11 +65,14 @@ export default function MensajesPage() {
       return;
     }
 
+    // Escape special LIKE pattern characters to prevent pattern injection
+    const escapedQuery = query.replace(/[%_\\]/g, '\\$&');
+
     setSearching(true);
     const { data } = await supabase
       .from('profiles')
       .select('id, username, avatar_url')
-      .ilike('username', `%${query}%`)
+      .ilike('username', `%${escapedQuery}%`)
       .neq('id', user?.id)
       .limit(10);
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
 import { Header } from '@/components/layout/header';
@@ -8,8 +8,8 @@ import { Breadcrumbs } from '@/components/layout/breadcrumbs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
-import { supabase } from '@/lib/supabase';
-import { Users, Flag, Shield, BarChart3, CheckCircle, XCircle, Eye, FolderOpen, History, Settings, AlertTriangle, Filter, Award, Megaphone } from 'lucide-react';
+import { approveVerification, rejectVerification, resolveReport, fetchAdminData } from './actions';
+import { Users, Flag, Shield, BarChart3, CheckCircle, XCircle, Eye, FolderOpen, History, AlertTriangle, Filter, Award, Megaphone } from 'lucide-react';
 import Link from 'next/link';
 import { Footer } from '@/components/layout/footer';
 import { formatDistanceToNow } from 'date-fns';
@@ -24,106 +24,64 @@ export default function AdminPage() {
   const dateLocale = getDateFnsLocale(locale);
   const t = useTranslations('admin');
   const [stats, setStats] = useState({ users: 0, reports: 0, verifications: 0 });
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [reports, setReports] = useState<any[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [verifications, setVerifications] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const fetchData = useCallback(async () => {
+    setLoading(true);
+    const data = await fetchAdminData();
+    if (data) {
+      setStats(data.stats);
+      setReports(data.reports);
+      setVerifications(data.verifications);
+    }
+    setLoading(false);
+  }, []);
 
   useEffect(() => {
     if (!user) {
       router.push('/login');
       return;
     }
-
     if (profile && profile.role !== 'admin' && profile.role !== 'mod') {
       router.push('/');
       toast.error(t('noPermission'));
       return;
     }
-
     if (profile) {
       fetchData();
     }
-  }, [user, profile, router]);
-
-  const fetchData = async () => {
-    setLoading(true);
-
-    const [
-      { count: usersCount },
-      { count: reportsCount },
-      { count: verificationsCount },
-      { data: reportsData },
-      { data: verificationsData },
-    ] = await Promise.all([
-      supabase.from('profiles').select('*', { count: 'exact', head: true }),
-      supabase.from('reports').select('*', { count: 'exact', head: true }).eq('status', 'pending'),
-      supabase.from('verifications').select('*', { count: 'exact', head: true }).eq('status', 'pending'),
-      supabase.from('reports').select('*, reporter:profiles!reports_reporter_id_fkey(username)').eq('status', 'pending').order('created_at', { ascending: false }).limit(10),
-      supabase.from('verifications').select('*, user:profiles(username, avatar_url)').eq('status', 'pending').order('created_at', { ascending: false }).limit(10),
-    ]);
-
-    setStats({
-      users: usersCount || 0,
-      reports: reportsCount || 0,
-      verifications: verificationsCount || 0,
-    });
-
-    setReports(reportsData || []);
-    setVerifications(verificationsData || []);
-    setLoading(false);
-  };
+  }, [user, profile, router, t, fetchData]);
 
   const handleApproveVerification = async (id: string, userId: string) => {
-    const { error: verError } = await supabase
-      .from('verifications')
-      .update({ status: 'approved', reviewed_by: user?.id, reviewed_at: new Date().toISOString() })
-      .eq('id', id);
-
-    if (verError) {
+    const result = await approveVerification(id, userId);
+    if (!result.success) {
       toast.error(t('errorApprovingVerification'));
       return;
     }
-
-    const { error: profileError } = await supabase
-      .from('profiles')
-      .update({ is_verified: true })
-      .eq('id', userId);
-
-    if (profileError) {
-      toast.error(t('errorUpdatingProfile'));
-      return;
-    }
-
     toast.success(t('approveSuccess'));
     fetchData();
   };
 
   const handleRejectVerification = async (id: string) => {
-    const { error } = await supabase
-      .from('verifications')
-      .update({ status: 'rejected', reviewed_by: user?.id, reviewed_at: new Date().toISOString() })
-      .eq('id', id);
-
-    if (error) {
+    const result = await rejectVerification(id);
+    if (!result.success) {
       toast.error(t('errorRejectingVerification'));
       return;
     }
-
     toast.success(t('rejectSuccess'));
     fetchData();
   };
 
   const handleResolveReport = async (id: string) => {
-    const { error } = await supabase
-      .from('reports')
-      .update({ status: 'resolved', reviewed_at: new Date().toISOString() })
-      .eq('id', id);
-
-    if (error) {
+    const result = await resolveReport(id);
+    if (!result.success) {
       toast.error(t('errorResolvingReport'));
       return;
     }
-
     toast.success(t('resolveSuccess'));
     fetchData();
   };

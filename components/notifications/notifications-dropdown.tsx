@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { Bell, Check, CheckCheck, Trash2, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -40,7 +40,7 @@ export function NotificationsDropdown({ userId }: NotificationsDropdownProps) {
   const [open, setOpen] = useState(false);
 
   // Cargar notificaciones
-  const loadNotifications = async () => {
+  const loadNotifications = useCallback(async () => {
     setLoading(true);
     try {
       const [notifs, count] = await Promise.all([
@@ -54,18 +54,18 @@ export function NotificationsDropdown({ userId }: NotificationsDropdownProps) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [userId]);
 
   // Cargar al montar y cuando se abre
   useEffect(() => {
     loadNotifications();
-  }, [userId]);
+  }, [loadNotifications]);
 
   useEffect(() => {
     if (open) {
       loadNotifications();
     }
-  }, [open]);
+  }, [open, loadNotifications]);
 
   // Suscripción en tiempo real
   useEffect(() => {

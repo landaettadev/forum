@@ -20,7 +20,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <div className="text-xl font-extrabold forum-gradient-text mb-4">
-              TransForo
+              TS Rating
             </div>
             <p className="text-sm forum-text-muted">
               {t('footer.description')}
@@ -96,7 +96,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-[hsl(var(--forum-border))]/50 pt-6 mt-6 text-center text-sm forum-text-muted">
-          <p>&copy; {new Date().getFullYear()} TransForo. {t('footer.rights')}</p>
+          <p>&copy; {new Date().getFullYear()} TS Rating. {t('footer.rights')}</p>
         </div>
       </div>
     </footer>

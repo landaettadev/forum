@@ -1,4 +1,4 @@
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { createServerSupabaseClient } from '@/lib/supabase-server';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';

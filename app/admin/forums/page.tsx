@@ -12,7 +12,6 @@ import { Textarea } from '@/components/ui/textarea';
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -64,7 +63,7 @@ interface Country {
 }
 
 export default function AdminForumsPage() {
-  const { user, profile } = useAuth();
+  const { user: _user, profile } = useAuth();
   const t = useTranslations('adminForums');
   const [categories, setCategories] = useState<Category[]>([]);
   const [forums, setForums] = useState<Forum[]>([]);

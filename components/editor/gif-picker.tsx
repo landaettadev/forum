@@ -96,6 +96,7 @@ export function GifPicker({ onSelect }: GifPickerProps) {
             onClick={() => onSelect(gif.media_formats.gif?.url || gif.media_formats.tinygif?.url)}
             title={gif.content_description}
           >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={gif.media_formats.tinygif?.url || gif.media_formats.gif?.url}
               alt={gif.content_description}

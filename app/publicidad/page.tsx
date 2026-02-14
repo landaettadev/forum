@@ -7,7 +7,7 @@ import { generateMetadata as genMeta } from '@/lib/metadata';
 
 export const metadata = genMeta({
   title: 'Advertising',
-  description: 'Buy banner ad spaces on TransForo. Reach the trans community with targeted advertising by country and region.',
+  description: 'Buy banner ad spaces on TS Rating. Reach the trans community with targeted advertising by country and region.',
   url: '/publicidad',
 });
 

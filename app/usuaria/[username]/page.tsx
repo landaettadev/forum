@@ -1,4 +1,4 @@
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { createServerSupabaseClient } from '@/lib/supabase-server';
 import { Header } from '@/components/layout/header';
@@ -7,7 +7,7 @@ import { Sidebar } from '@/components/layout/sidebar';
 import { Breadcrumbs } from '@/components/layout/breadcrumbs';
 import { UserProfilePageContent } from '@/components/profile/user-profile-page-content';
 import { generateProfileMetadata } from '@/lib/metadata';
-import { profileJsonLd } from '@/lib/jsonld';
+import { profileJsonLd as _profileJsonLd } from '@/lib/jsonld';
 
 export const revalidate = 60;
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { UserPlus, UserMinus } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/auth-context';
@@ -29,17 +29,17 @@ export function FollowButton({
   const [isFollowing, setIsFollowing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const checkFollowStatus = useCallback(async () => {
+    const { data } = await supabase
+      .rpc('is_following_user', { p_following_id: userId });
+    setIsFollowing(!!data);
+  }, [userId]);
+
   useEffect(() => {
     if (user && user.id !== userId) {
       checkFollowStatus();
     }
-  }, [user, userId]);
-
-  const checkFollowStatus = async () => {
-    const { data } = await supabase
-      .rpc('is_following_user', { p_following_id: userId });
-    setIsFollowing(!!data);
-  };
+  }, [user, userId, checkFollowStatus]);
 
   const toggleFollow = async () => {
     if (!user) {

@@ -1,7 +1,7 @@
 /*
-  # TransForo Database Schema
+  # TS Rating Database Schema
   
-  Complete forum database structure for TransForo.
+  Complete forum database structure for TS Rating.
   
   1. New Tables
     - `profiles` - Extended user profiles

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
@@ -24,19 +24,13 @@ export default function NotificacionesPage() {
   const { user } = useAuth();
   const locale = useLocale();
   const t = useTranslations('notifications');
-  const tc = useTranslations('common');
+  const _tc = useTranslations('common');
   const dateLocale = getDateFnsLocale(locale);
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<'all' | 'unread'>('all');
 
-  useEffect(() => {
-    if (user) {
-      loadNotifications();
-    }
-  }, [user]);
-
-  const loadNotifications = async () => {
+  const loadNotifications = useCallback(async () => {
     if (!user) return;
     setLoading(true);
     try {
@@ -47,7 +41,13 @@ export default function NotificacionesPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user, filter]);
+
+  useEffect(() => {
+    if (user) {
+      loadNotifications();
+    }
+  }, [user, loadNotifications]);
 
   const handleMarkAsRead = async (id: string) => {
     const success = await markAsRead(id);

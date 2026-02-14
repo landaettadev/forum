@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/auth-context';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -53,11 +53,7 @@ export function NotificationList({ onMarkAllRead, onClose }: NotificationListPro
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchNotifications();
-  }, [user]);
-
-  const fetchNotifications = async () => {
+  const fetchNotifications = useCallback(async () => {
     if (!user) return;
 
     try {
@@ -74,7 +70,11 @@ export function NotificationList({ onMarkAllRead, onClose }: NotificationListPro
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
+
+  useEffect(() => {
+    fetchNotifications();
+  }, [fetchNotifications]);
 
   const markAsRead = async (notificationId: string) => {
     await supabase.rpc('mark_notification_read', { p_notification_id: notificationId });

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { supabase } from '@/lib/supabase';
@@ -34,13 +34,7 @@ export function EditHistoryModal({ isOpen, onClose, postId }: EditHistoryModalPr
   const [loading, setLoading] = useState(true);
   const [selectedEntry, setSelectedEntry] = useState<EditHistoryEntry | null>(null);
 
-  useEffect(() => {
-    if (isOpen && postId) {
-      fetchHistory();
-    }
-  }, [isOpen, postId]);
-
-  const fetchHistory = async () => {
+  const fetchHistory = useCallback(async () => {
     setLoading(true);
     try {
       const { data, error } = await supabase
@@ -53,10 +47,16 @@ export function EditHistoryModal({ isOpen, onClose, postId }: EditHistoryModalPr
     } finally {
       setLoading(false);
     }
-  };
+  }, [postId]);
+
+  useEffect(() => {
+    if (isOpen && postId) {
+      fetchHistory();
+    }
+  }, [isOpen, postId, fetchHistory]);
 
   // Simple diff highlighting
-  const highlightDiff = (oldText: string, newText: string) => {
+  const _highlightDiff = (oldText: string, newText: string) => {
     const oldLines = oldText.split('\n');
     const newLines = newText.split('\n');
     

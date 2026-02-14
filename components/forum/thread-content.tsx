@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import { PostItem } from './post-item';
 import { ReplyForm } from './reply-form';
-import { QuoteData } from './quote-button';
-import { Post, Profile } from '@/lib/supabase';
+import type { QuoteData } from './quote-button';
+import type { Post, Profile } from '@/lib/supabase';
 import { useTranslations } from 'next-intl';
 
 interface ThreadContentProps {

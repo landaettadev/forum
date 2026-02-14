@@ -34,12 +34,15 @@ export default function AdminForosPage() {
   const { user, profile } = useAuth();
   const router = useRouter();
   const t = useTranslations('adminGeoForums');
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [countries, setCountries] = useState<any[]>([]);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [regions, setRegions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [isAddRegionOpen, setIsAddRegionOpen] = useState(false);
   const [isEditRegionOpen, setIsEditRegionOpen] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState<string>('');
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [editingRegion, setEditingRegion] = useState<any>(null);
   
   const [newRegion, setNewRegion] = useState({
@@ -64,7 +67,7 @@ export default function AdminForosPage() {
     if (profile) {
       fetchData();
     }
-  }, [user, profile, router]);
+  }, [user, profile, router, t]);
 
   const fetchData = async () => {
     setLoading(true);

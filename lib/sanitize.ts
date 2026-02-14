@@ -70,7 +70,7 @@ export function sanitizeUrl(url: string): string {
     }
     
     return url;
-  } catch (error) {
+  } catch {
     // URL inválida
     return '';
   }
@@ -220,5 +220,16 @@ export function stripHtml(html: string): string {
 export function truncateText(text: string, maxLength: number = 200): string {
   if (!text || text.length <= maxLength) return text;
   return text.substring(0, maxLength).trim() + '...';
+}
+
+/**
+ * Escape special PostgreSQL LIKE/ILIKE pattern characters so user input
+ * is treated as literal text, not as wildcards.
+ *   %  → \%
+ *   _  → \_
+ *   \  → \\
+ */
+export function escapeLikePattern(input: string): string {
+  return input.replace(/\\/g, '\\\\').replace(/%/g, '\\%').replace(/_/g, '\\_');
 }
 

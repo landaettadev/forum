@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/auth-context';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -52,6 +52,48 @@ export function ChatView({ conversationId, otherUser, onBack }: ChatViewProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
+  const fetchMessages = useCallback(async () => {
+    try {
+      const { data, error } = await supabase
+        .from('private_messages')
+        .select('*, sender:profiles!sender_id(id, username, avatar_url)')
+        .eq('conversation_id', conversationId)
+        .order('created_at', { ascending: true });
+
+      if (error) throw error;
+      setMessages(data || []);
+    } catch (error) {
+      console.error('Error fetching messages:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [conversationId]);
+
+  const fetchMessageWithSender = async (messageId: string) => {
+    try {
+      const { data, error } = await supabase
+        .from('private_messages')
+        .select('*, sender:profiles!sender_id(id, username, avatar_url)')
+        .eq('id', messageId)
+        .single();
+
+      if (error) throw error;
+      if (data) {
+        setMessages(prev => [...prev, data]);
+      }
+    } catch (error) {
+      console.error('Error fetching message:', error);
+    }
+  };
+
+  const markAsRead = useCallback(async () => {
+    if (!user) return;
+    await supabase.rpc('mark_conversation_read', {
+      p_conversation_id: conversationId,
+      p_user_id: user.id
+    });
+  }, [conversationId, user]);
+
   useEffect(() => {
     if (conversationId) {
       fetchMessages();
@@ -75,7 +117,7 @@ export function ChatView({ conversationId, otherUser, onBack }: ChatViewProps) {
         supabase.removeChannel(channel);
       };
     }
-  }, [conversationId]);
+  }, [conversationId, fetchMessages, markAsRead]);
 
   useEffect(() => {
     // Scroll to bottom when messages change
@@ -83,48 +125,6 @@ export function ChatView({ conversationId, otherUser, onBack }: ChatViewProps) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
   }, [messages]);
-
-  const fetchMessages = async () => {
-    try {
-      const { data, error } = await supabase
-        .from('private_messages')
-        .select('*, sender:profiles!sender_id(id, username, avatar_url)')
-        .eq('conversation_id', conversationId)
-        .order('created_at', { ascending: true });
-
-      if (error) throw error;
-      setMessages(data || []);
-    } catch (error) {
-      console.error('Error fetching messages:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchMessageWithSender = async (messageId: string) => {
-    try {
-      const { data, error } = await supabase
-        .from('private_messages')
-        .select('*, sender:profiles!sender_id(id, username, avatar_url)')
-        .eq('id', messageId)
-        .single();
-
-      if (error) throw error;
-      if (data) {
-        setMessages(prev => [...prev, data]);
-      }
-    } catch (error) {
-      console.error('Error fetching message:', error);
-    }
-  };
-
-  const markAsRead = async () => {
-    if (!user) return;
-    await supabase.rpc('mark_conversation_read', {
-      p_conversation_id: conversationId,
-      p_user_id: user.id
-    });
-  };
 
   const handleSend = async () => {
     if (!user || !newMessage.trim() || sending) return;

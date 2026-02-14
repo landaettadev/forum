@@ -1,16 +1,17 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState } from 'react';
-import { User, Provider } from '@supabase/supabase-js';
-import { supabase, Profile } from './supabase';
+import type { User, Provider, AuthError } from '@supabase/supabase-js';
+import { supabase } from './supabase';
+import type { Profile } from './supabase';
 
 type AuthContextType = {
   user: User | null;
   profile: Profile | null;
   loading: boolean;
-  signIn: (email: string, password: string) => Promise<{ error: any }>;
-  signUp: (email: string, password: string, username: string) => Promise<{ error: any }>;
-  signInWithOAuth: (provider: Provider) => Promise<{ error: any }>;
+  signIn: (email: string, password: string) => Promise<{ error: AuthError | null }>;
+  signUp: (email: string, password: string, username: string) => Promise<{ error: AuthError | null }>;
+  signInWithOAuth: (provider: Provider) => Promise<{ error: AuthError | null }>;
   signOut: () => Promise<void>;
   refreshProfile: () => Promise<void>;
 };

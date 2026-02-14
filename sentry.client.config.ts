@@ -4,7 +4,7 @@ Sentry.init({
   dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
   
   // Ajustar sample rate según necesidad
-  tracesSampleRate: 1.0,
+  tracesSampleRate: process.env.NODE_ENV === 'production' ? 0.1 : 1.0,
   
   // Capturar errores en producción
   enabled: process.env.NODE_ENV === 'production',
@@ -16,7 +16,7 @@ Sentry.init({
   release: process.env.NEXT_PUBLIC_VERCEL_GIT_COMMIT_SHA,
   
   // Configuración de replay de sesiones (opcional)
-  replaysSessionSampleRate: 0.1,
+  replaysSessionSampleRate: 0.05,
   replaysOnErrorSampleRate: 1.0,
   
   integrations: [

@@ -5,7 +5,7 @@ import { generateMetadata as genMeta } from '@/lib/metadata';
 
 export const metadata = genMeta({
   title: 'Privacy Policy',
-  description: 'Privacy policy and data protection information for TransForo.',
+  description: 'Privacy policy and data protection information for TS Rating.',
   url: '/privacidad',
   noIndex: true,
 });

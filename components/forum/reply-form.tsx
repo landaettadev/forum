@@ -10,7 +10,7 @@ import { createReply } from '@/app/hilo/[id]/actions';
 import { MessageSquare } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { QuotedPosts } from './quote-block';
-import { QuoteData } from './quote-button';
+import type { QuoteData } from './quote-button';
 import { useTranslations } from 'next-intl';
 
 function stripHtml(html: string): string {
@@ -70,7 +70,7 @@ export function ReplyForm({ threadId, quotes = [], onRemoveQuote, onSuccess }: R
           description: result.error,
         });
       }
-    } catch (error) {
+    } catch {
       toast.error(tc('error'));
     } finally {
       setLoading(false);

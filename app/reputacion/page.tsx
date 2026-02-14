@@ -9,7 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useTranslations } from 'next-intl';
 import { 
   Mail, Shield, ShieldCheck, Crown, BadgeCheck, Gem, Star, 
-  Award, ThumbsUp, MessageSquare, Calendar, Flame, Heart,
+  Award, ThumbsUp, MessageSquare, Flame, Heart,
   Users, TrendingUp, Sparkles, Trophy, Medal, Zap, Info,
   CheckCircle, Target, Gift
 } from 'lucide-react';

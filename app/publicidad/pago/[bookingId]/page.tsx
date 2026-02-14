@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
 import { supabase } from '@/lib/supabase';
@@ -88,11 +88,7 @@ export default function PaymentPage({ params }: { params: { bookingId: string } 
   const [proofFile, setProofFile] = useState<File | null>(null);
   const [proofPreview, setProofPreview] = useState('');
 
-  useEffect(() => {
-    if (user) fetchData();
-  }, [user, params.bookingId]);
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
     try {
       // Fetch booking
@@ -145,7 +141,11 @@ export default function PaymentPage({ params }: { params: { bookingId: string } 
     } finally {
       setLoading(false);
     }
-  };
+  }, [user, params.bookingId, router]);
+
+  useEffect(() => {
+    if (user) fetchData();
+  }, [user, params.bookingId, fetchData]);
 
   const handleCreatePayment = async () => {
     if (!selectedMethod) {
@@ -450,6 +450,7 @@ export default function PaymentPage({ params }: { params: { bookingId: string } 
                   onChange={handleProofFileChange}
                   className="mt-1"
                 />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 {proofPreview && proofFile?.type.startsWith('image/') && (
                   <img src={proofPreview} alt="Proof" className="mt-2 max-h-40 rounded-lg border" />
                 )}

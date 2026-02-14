@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Bell } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/auth-context';
@@ -17,6 +17,15 @@ export function NotificationBell() {
   const { user } = useAuth();
   const [unreadCount, setUnreadCount] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
+
+  const fetchUnreadCount = useCallback(async () => {
+    if (!user) return;
+
+    const { data } = await supabase
+      .rpc('get_unread_notifications_count', { p_user_id: user.id });
+
+    if (data !== null) setUnreadCount(Number(data));
+  }, [user]);
 
   useEffect(() => {
     if (!user) return;
@@ -43,16 +52,7 @@ export function NotificationBell() {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [user]);
-
-  const fetchUnreadCount = async () => {
-    if (!user) return;
-
-    const { data } = await supabase
-      .rpc('get_unread_notifications_count', { p_user_id: user.id });
-
-    if (data !== null) setUnreadCount(Number(data));
-  };
+  }, [user, fetchUnreadCount]);
 
   const handleMarkAllRead = async () => {
     if (!user) return;

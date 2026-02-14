@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Ban, UserX } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/auth-context';
@@ -32,17 +32,17 @@ export function BlockButton({ userId, username, onBlockChange }: BlockButtonProp
   const [isBlocked, setIsBlocked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const checkBlockStatus = useCallback(async () => {
+    const { data } = await supabase
+      .rpc('is_user_blocked', { p_user_id: userId });
+    setIsBlocked(!!data);
+  }, [userId]);
+
   useEffect(() => {
     if (user && user.id !== userId) {
       checkBlockStatus();
     }
-  }, [user, userId]);
-
-  const checkBlockStatus = async () => {
-    const { data } = await supabase
-      .rpc('is_user_blocked', { p_user_id: userId });
-    setIsBlocked(!!data);
-  };
+  }, [user, userId, checkBlockStatus]);
 
   const toggleBlock = async () => {
     if (!user) {

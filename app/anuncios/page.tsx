@@ -86,6 +86,7 @@ export default async function AnunciosPage({
     .order('name');
 
   // Get regions if country selected
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let regions: any[] = [];
   if (searchParams.country) {
     const { data: countryData } = await supabase

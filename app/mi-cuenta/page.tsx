@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useAuth } from '@/lib/auth-context';
 import { useRouter } from 'next/navigation';
 import { Header } from '@/components/layout/header';
+import { Footer } from '@/components/layout/footer';
 import { Sidebar } from '@/components/layout/sidebar';
 import { Breadcrumbs } from '@/components/layout/breadcrumbs';
 import { Button } from '@/components/ui/button';
@@ -15,6 +16,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
 import { supabase } from '@/lib/supabase';
+import { updateProfile } from './actions';
 import { formatDistanceToNow } from 'date-fns';
 import { getDateFnsLocale } from '@/lib/date-locale';
 import { useLocale, useTranslations } from 'next-intl';
@@ -24,6 +26,7 @@ function MisHilos({ userId }: { userId: string }) {
   const locale = useLocale();
   const dateLocale = getDateFnsLocale(locale);
   const t = useTranslations('account');
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [threads, setThreads] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -137,24 +140,27 @@ export default function MiCuentaPage() {
     setLoading(true);
 
     try {
-      const { error } = await supabase
-        .from('profiles')
-        .update({
-          bio: formData.bio,
-          signature: formData.signature,
-          location_country: formData.location_country,
-          location_city: formData.location_city,
-          avatar_url: formData.avatar_url,
-        })
-        .eq('id', user.id);
+      const result = await updateProfile({
+        bio: formData.bio,
+        signature: formData.signature,
+        location_country: formData.location_country,
+        location_city: formData.location_city,
+        avatar_url: formData.avatar_url || undefined,
+      });
 
-      if (error) throw error;
+      if (!result.success) {
+        toast.error(t('updateError'), {
+          description: result.error,
+        });
+        return;
+      }
 
       await refreshProfile();
       toast.success(t('updateSuccess'));
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const msg = error instanceof Error ? error.message : undefined;
       toast.error(t('updateError'), {
-        description: error.message,
+        description: msg,
       });
     } finally {
       setLoading(false);
@@ -326,6 +332,8 @@ export default function MiCuentaPage() {
           </div>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 }

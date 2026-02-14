@@ -3,12 +3,13 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import { supabase } from '@/lib/supabase';
+import { escapeLikePattern } from '@/lib/sanitize';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
@@ -21,8 +22,8 @@ import {
 } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
-  Award, Plus, Edit, Trash2, Search, Crown, Shield, AlertTriangle,
-  Star, UserPlus, Eye, Sparkles, BadgeCheck, Gem
+  Award, Plus, Edit, Trash2, Search,
+  UserPlus
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { redirect } from 'next/navigation';
@@ -64,7 +65,7 @@ const badgeTypeColors = {
   special: 'bg-purple-500'
 };
 
-const badgeTypeLabelsEs: Record<string, string> = {
+const _badgeTypeLabelsEs: Record<string, string> = {
   positive: 'Positiva',
   negative: 'Negativa',
   neutral: 'Neutral',
@@ -302,7 +303,7 @@ export default function AdminBadgesPage() {
     const { data: users } = await supabase
       .from('profiles')
       .select('id')
-      .ilike('username', `%${searchQuery}%`);
+      .ilike('username', `%${escapeLikePattern(searchQuery)}%`);
 
     if (users && users.length > 0) {
       const userIds = users.map(u => u.id);

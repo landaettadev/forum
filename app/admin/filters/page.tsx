@@ -21,7 +21,6 @@ import {
 } from '@/components/ui/select';
 import { Filter, Plus, Trash2, Shield } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { format } from 'date-fns';
 import { toast } from 'sonner';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
@@ -208,6 +207,7 @@ export default function AdminFiltersPage() {
                 <div className="space-y-4 py-4">
                   <div>
                     <label className="text-sm font-medium">{t('filterType')}</label>
+                    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                     <Select value={filterType} onValueChange={(v: any) => setFilterType(v)}>
                       <SelectTrigger>
                         <SelectValue />

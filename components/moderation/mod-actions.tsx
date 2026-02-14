@@ -22,7 +22,7 @@ import {
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Shield, Trash2, Lock, Unlock, Ban, Clock, AlertTriangle, Edit } from 'lucide-react';
+import { Shield, Trash2, Lock, Unlock, Ban, Clock, AlertTriangle } from 'lucide-react';
 import { toast } from 'sonner';
 import { useTranslations } from 'next-intl';
 

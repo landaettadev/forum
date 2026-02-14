@@ -1,4 +1,5 @@
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
+import { locales } from '@/i18n';
 
 type GenerateMetadataProps = {
   title?: string;
@@ -9,9 +10,9 @@ type GenerateMetadataProps = {
   noIndex?: boolean;
 };
 
-export const SITE_NAME = 'TransForo';
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://transforo.com';
-export const DEFAULT_IMAGE = `${SITE_URL}/og-image.png`;
+export const SITE_NAME = 'TS Rating';
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://tsrating.com';
+export const DEFAULT_IMAGE = `${SITE_URL}/opengraph-image`;
 export const DEFAULT_DESCRIPTION = 'Foro de escorts trans, travestis y shemales — reseñas, opiniones, fotos verificadas y experiencias reales. Comunidad #1 de catadores y reviews de chicas trans en Latinoamérica y el mundo.';
 export const DEFAULT_KEYWORDS = [
   // English — high volume search terms
@@ -55,6 +56,10 @@ export function generateMetadata({
     metadataBase: new URL(SITE_URL),
     alternates: {
       canonical: fullUrl,
+      languages: Object.fromEntries([
+        ...locales.map((l) => [l, fullUrl]),
+        ['x-default', fullUrl],
+      ]),
     },
     openGraph: {
       title: fullTitle,
@@ -77,8 +82,8 @@ export function generateMetadata({
       title: fullTitle,
       description,
       images: [image],
-      creator: '@transforo',
-      site: '@transforo',
+      creator: '@tsrating',
+      site: '@tsrating',
     },
     robots: noIndex
       ? {
@@ -98,8 +103,10 @@ export function generateMetadata({
           },
         },
     icons: {
-      icon: '/favicon.ico',
-      shortcut: '/favicon-16x16.png',
+      icon: [
+        { url: '/favicon.ico', sizes: '32x32' },
+        { url: '/favicon.svg', type: 'image/svg+xml' },
+      ],
       apple: '/apple-touch-icon.png',
     },
     manifest: '/manifest.json',

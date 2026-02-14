@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { supabase } from '@/lib/supabase';
 import { Badge } from '@/components/ui/badge';
 import { 
@@ -81,11 +81,7 @@ export function CustomBadges({
 }: CustomBadgesProps) {
   const [badges, setBadges] = useState<UserCustomBadge[]>([]);
 
-  useEffect(() => {
-    fetchUserBadges();
-  }, [userId]);
-
-  const fetchUserBadges = async () => {
+  const fetchUserBadges = useCallback(async () => {
     const { data } = await supabase
       .from('user_custom_badges')
       .select(`
@@ -97,7 +93,11 @@ export function CustomBadges({
       .limit(maxBadges);
 
     if (data) setBadges(data as unknown as UserCustomBadge[]);
-  };
+  }, [userId, maxBadges]);
+
+  useEffect(() => {
+    fetchUserBadges();
+  }, [fetchUserBadges]);
 
   if (badges.length === 0) return null;
 

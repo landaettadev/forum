@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
 import { Header } from '@/components/layout/header';
@@ -22,22 +22,12 @@ export default function VerificacionPage() {
   const t = useTranslations('verification');
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [verification, setVerification] = useState<any>(null);
   const [verificationCode, setVerificationCode] = useState('');
   const [photoUrl, setPhotoUrl] = useState('');
 
-  useEffect(() => {
-    if (!user) {
-      router.push('/login');
-      return;
-    }
-
-    if (user) {
-      fetchVerification();
-    }
-  }, [user, router]);
-
-  const fetchVerification = async () => {
+  const fetchVerification = useCallback(async () => {
     if (!user) return;
 
     setLoading(true);
@@ -55,7 +45,15 @@ export default function VerificacionPage() {
     }
 
     setLoading(false);
-  };
+  }, [user]);
+
+  useEffect(() => {
+    if (!user) {
+      router.push('/login');
+      return;
+    }
+    fetchVerification();
+  }, [user, router, fetchVerification]);
 
   const generateCode = () => {
     const code = `TF-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
@@ -101,7 +99,7 @@ export default function VerificacionPage() {
         fetchVerification();
         setPhotoUrl('');
       }
-    } catch (error) {
+    } catch {
       toast.error(t('unexpectedError'));
     } finally {
       setSubmitting(false);

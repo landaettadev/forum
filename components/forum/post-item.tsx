@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { Post, Profile, supabase } from '@/lib/supabase';
+import type { Post, Profile } from '@/lib/supabase';
+import { supabase } from '@/lib/supabase';
 import { formatDistanceToNow } from 'date-fns';
 import { getDateFnsLocale } from '@/lib/date-locale';
 import { useLocale, useTranslations } from 'next-intl';
@@ -12,9 +13,10 @@ import { Flag, Edit, History } from 'lucide-react';
 import { ReportModal } from './report-modal';
 import { EditHistoryModal } from './edit-history-modal';
 import { ThanksButton } from './thanks-button';
-import { QuoteButton, QuoteData } from './quote-button';
+import { QuoteButton } from './quote-button';
+import type { QuoteData } from './quote-button';
 import { BookmarkButton } from './bookmark-button';
-import { QuotedPosts } from './quote-block';
+import { QuotedPosts as _QuotedPosts } from './quote-block';
 import { useAuth } from '@/lib/auth-context';
 import { MentionText } from './mention-text';
 import { PostReactions } from './post-reactions';
@@ -89,7 +91,7 @@ export function PostItem({ post, threadId, isFirstPost = false, canModerate = fa
     return username.substring(0, 2).toUpperCase();
   };
 
-  const getBadgeColor = (role: string) => {
+  const _getBadgeColor = (role: string) => {
     if (role === 'admin') return 'badge-admin';
     if (role === 'mod') return 'badge-mod';
     return '';
@@ -97,8 +99,35 @@ export function PostItem({ post, threadId, isFirstPost = false, canModerate = fa
 
   return (
     <div className={`forum-surface ${isFirstPost ? 'border-l-4 border-[hsl(var(--forum-accent))]' : ''}`}>
-      <div className="flex gap-4 p-4">
-        <div className="w-40 flex-shrink-0 space-y-3">
+      <div className="flex flex-col md:flex-row gap-4 p-4">
+        {/* Mobile: compact horizontal author bar */}
+        <div className="flex md:hidden items-center gap-3">
+          <Link href={`/usuaria/${post.author.username}`} className="flex-shrink-0">
+            <Avatar className="h-10 w-10 border-2 border-[hsl(var(--forum-border))]">
+              <AvatarImage src={post.author.avatar_url || undefined} />
+              <AvatarFallback className="bg-[hsl(var(--forum-accent))] text-white text-sm">
+                {getUserInitials(post.author.username)}
+              </AvatarFallback>
+            </Avatar>
+          </Link>
+          <div className="min-w-0">
+            <Link
+              href={`/usuaria/${post.author.username}`}
+              className="font-semibold text-sm hover:text-[hsl(var(--forum-accent))] transition-colors block truncate"
+            >
+              {post.author.username}
+            </Link>
+            <div className="flex flex-wrap gap-1">
+              {post.author.role === 'admin' && <span className="badge-admin">{tRoles('roleAdmin')}</span>}
+              {post.author.role === 'mod' && <span className="badge-mod">{tRoles('roleMod')}</span>}
+              {post.author.is_vip && <span className="badge-vip">{tRoles('roleVip')}</span>}
+              {post.author.is_verified && <span className="badge-verified">{tRoles('roleVerified')}</span>}
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop: vertical author sidebar */}
+        <div className="hidden md:block w-40 flex-shrink-0 space-y-3">
           <Link href={`/usuaria/${post.author.username}`}>
             <Avatar className="h-20 w-20 border-2 border-[hsl(var(--forum-border))]">
               <AvatarImage src={post.author.avatar_url || undefined} />

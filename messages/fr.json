@@ -303,10 +303,11 @@
     "startNew": "En commencer une",
     "previous": "Précédent",
     "next": "Suivant",
-    "backToPreviousPage": "Retour à la page précédente"
+    "backToPreviousPage": "Retour à la page précédente",
+    "store": "Boutique"
   },
   "home": {
-    "description": "Communauté d'avis et d'expériences avec des services d'escort trans. Partagez des opinions honnêtes et trouvez les meilleures options dans votre ville.",
+    "description": "La communauté #1 de ratings et avis sur les escorts trans. Partagez votre expérience, découvrez les mieux notées et connectez-vous avec d'autres connaisseurs dans votre ville.",
     "noCountriesAvailable": "Aucun pays disponible",
     "migrationRequired": "La migration de base de données est requise",
     "runCommand": "Exécutez la commande suivante :",
@@ -373,14 +374,14 @@
     "loginTitle": "Se connecter",
     "loginDescription": "Connectez-vous à votre compte pour participer au forum",
     "registerTitle": "Créer un compte",
-    "registerDescription": "Rejoignez la communauté TransForo",
+    "registerDescription": "Rejoignez la communauté TS Rating",
     "loginButton": "Se connecter",
     "loginButtonLoading": "Connexion...",
     "registerButton": "Créer un compte",
     "registerButtonLoading": "Création du compte...",
     "loginSuccess": "Bon retour",
     "registerSuccess": "Compte créé avec succès",
-    "registerSuccessDesc": "Bienvenue sur TransForo",
+    "registerSuccessDesc": "Bienvenue sur TS Rating",
     "loginError": "Erreur de connexion",
     "registerError": "Erreur d'inscription",
     "unexpectedError": "Erreur inattendue",
@@ -390,7 +391,9 @@
     "ageConfirmation": "J'ai plus de 18 ans et j'accepte les",
     "forumRules": "règles du forum",
     "registerHere": "Inscrivez-vous ici",
-    "loginHere": "Connectez-vous ici"
+    "loginHere": "Connectez-vous ici",
+    "completeCaptcha": "Veuillez compléter la vérification de sécurité",
+    "captchaFailed": "Vérification de sécurité échouée. Réessayez"
   },
   "forum": {
     "title": "Forums",
@@ -399,7 +402,7 @@
     "country": "Pays",
     "subforums": "Sous-forums",
     "threads": "Sujets",
-    "posts": "Posts",
+    "posts": "Messages",
     "lastPost": "Dernier post",
     "newThread": "Nouveau Sujet",
     "reply": "Répondre",
@@ -445,6 +448,7 @@
     "generalForumsOf": "Forums généraux de {country}",
     "recentThreads": "Sujets récents",
     "noThreadsYet": "Pas encore de sujets",
+    "supportForumNotice": "Vos sujets de support sont privés. Seuls vous, les modérateurs et les administrateurs peuvent les voir.",
     "beFirstToCreate": "Soyez le premier à créer un sujet dans {name}",
     "justNow": "À l'instant",
     "minutesAgo": "Il y a {count} min",
@@ -518,7 +522,7 @@
     "noPostsInThread": "Aucun message dans ce sujet.",
     "threadClosedNoReplies": "Ce sujet est fermé et aucune réponse ne peut être ajoutée.",
     "subforum": "Sous-forum",
-    "hotTag": "Hot",
+    "hotTag": "Populaire",
     "visitsCount": "visites",
     "responsesCount": "réponses",
     "unknownUser": "Utilisateur",
@@ -842,7 +846,8 @@
     "noModerators": "Aucun modérateur assigné",
     "advertising": "Publicité",
     "adminRole": "Admin",
-    "modRole": "Mod"
+    "modRole": "Mod",
+    "guests": "invités"
   },
   "banners": {
     "adSpace": "Espace publicitaire",
@@ -986,97 +991,97 @@
     "respect": {
       "title": "Respect et Coexistence",
       "description": "Nous traitons toutes les personnes avec dignité et respect. Toute forme de discrimination, harcèlement, insultes ou comportement hostile envers les autres utilisateurs est strictement interdite.",
-      "details": [
-        "Les commentaires offensants basés sur l'identité de genre, l'orientation sexuelle, l'origine ethnique, la religion ou la nationalité ne seront pas tolérés",
-        "Le harcèlement, le stalking ou l'intimidation entraînera un bannissement immédiat",
-        "Les critiques doivent être constructives et jamais personnelles",
-        "Respectez les décisions et les limites de chaque personne"
-      ]
+      "details": {
+        "0": "Les commentaires offensants basés sur l'identité de genre, l'orientation sexuelle, l'origine ethnique, la religion ou la nationalité ne seront pas tolérés",
+        "1": "Le harcèlement, le stalking ou l'intimidation entraînera un bannissement immédiat",
+        "2": "Les critiques doivent être constructives et jamais personnelles",
+        "3": "Respectez les décisions et les limites de chaque personne"
+      }
     },
     "adults": {
       "title": "Contenu Réservé aux Adultes (+18)",
       "description": "Ce site est exclusivement réservé aux personnes de plus de 18 ans (ou l'âge légal de la majorité dans votre juridiction). En vous inscrivant, vous déclarez sous serment respecter cette condition.",
-      "details": [
-        "Le partage de contenu impliquant des mineurs sous quelque forme que ce soit est interdit",
-        "L'usurpation d'âge n'est pas autorisée",
-        "Les administrateurs peuvent demander une vérification d'âge à tout moment"
-      ]
+      "details": {
+        "0": "Le partage de contenu impliquant des mineurs sous quelque forme que ce soit est interdit",
+        "1": "L'usurpation d'âge n'est pas autorisée",
+        "2": "Les administrateurs peuvent demander une vérification d'âge à tout moment"
+      }
     },
     "content": {
       "title": "Contenu Autorisé",
       "description": "Tout le contenu doit être lié à l'objectif du forum : partager des expériences, des avis et des services d'escortes professionnelles de manière respectueuse.",
-      "details": [
-        "Le spam, la publicité non autorisée ou la promotion de services externes n'est pas autorisé",
-        "Les publications contenant du contenu illégal selon le droit international sont interdites",
-        "Les avis doivent être honnêtes et basés sur des expériences réelles",
-        "Les demandes ou offres de services violant la loi ne sont pas autorisées"
-      ]
+      "details": {
+        "0": "Le spam, la publicité non autorisée ou la promotion de services externes n'est pas autorisé",
+        "1": "Les publications contenant du contenu illégal selon le droit international sont interdites",
+        "2": "Les avis doivent être honnêtes et basés sur des expériences réelles",
+        "3": "Les demandes ou offres de services violant la loi ne sont pas autorisées"
+      }
     },
     "privacy": {
       "title": "Vie Privée et Données Personnelles",
       "description": "Nous protégeons la vie privée de tous les utilisateurs. Le partage d'informations personnelles de tiers sans leur consentement est strictement interdit.",
-      "details": [
-        "Ne publiez pas de numéros de téléphone, adresses ou données personnelles d'autrui",
-        "Ne partagez pas de conversations privées sans autorisation",
-        "N'essayez pas d'identifier ou de doxxer d'autres utilisateurs",
-        "Utilisez les zones privées du forum pour les informations sensibles"
-      ]
+      "details": {
+        "0": "Ne publiez pas de numéros de téléphone, adresses ou données personnelles d'autrui",
+        "1": "Ne partagez pas de conversations privées sans autorisation",
+        "2": "N'essayez pas d'identifier ou de doxxer d'autres utilisateurs",
+        "3": "Utilisez les zones privées du forum pour les informations sensibles"
+      }
     },
     "safety": {
       "title": "Sécurité Personnelle",
       "description": "Votre sécurité est une priorité. Nous recommandons de pratiquer des rencontres sûres et de ne jamais partager d'informations susceptibles de compromettre votre intégrité.",
-      "details": [
-        "Vérifiez toujours l'identité avant les rencontres en personne",
-        "Informez une personne de confiance de vos activités",
-        "Ne partagez pas d'informations financières sensibles",
-        "Signalez toute situation suspecte ou à risque"
-      ]
+      "details": {
+        "0": "Vérifiez toujours l'identité avant les rencontres en personne",
+        "1": "Informez une personne de confiance de vos activités",
+        "2": "Ne partagez pas d'informations financières sensibles",
+        "3": "Signalez toute situation suspecte ou à risque"
+      }
     },
     "verification": {
       "title": "Système de Vérification",
       "description": "Nous offrons un système de vérification volontaire pour renforcer la confiance dans la communauté. Les utilisateurs vérifiés ont accès à des zones exclusives.",
-      "details": [
-        "La vérification est confidentielle et les données sont protégées",
-        "Les profils vérifiés reçoivent un badge visible",
-        "Vous pouvez demander une vérification à tout moment"
-      ]
+      "details": {
+        "0": "La vérification est confidentielle et les données sont protégées",
+        "1": "Les profils vérifiés reçoivent un badge visible",
+        "2": "Vous pouvez demander une vérification à tout moment"
+      }
     },
     "legal": {
       "title": "Conformité Légale",
       "description": "Ce forum fonctionne dans le respect des lois applicables. Aucune activité illégale n'est autorisée.",
-      "details": [
-        "La traite des êtres humains ou toute forme d'exploitation est interdite",
-        "Les services impliquant des drogues ou substances illégales ne sont pas autorisés",
-        "Nous respectons les lois sur la protection des données (RGPD, CCPA)",
-        "Nous coopérons avec les autorités lorsque la loi l'exige"
-      ]
+      "details": {
+        "0": "La traite des êtres humains ou toute forme d'exploitation est interdite",
+        "1": "Les services impliquant des drogues ou substances illégales ne sont pas autorisés",
+        "2": "Nous respectons les lois sur la protection des données (RGPD, CCPA)",
+        "3": "Nous coopérons avec les autorités lorsque la loi l'exige"
+      }
     },
     "noExploitation": {
       "title": "Tolérance Zéro envers l'Exploitation",
       "description": "Nous avons une politique de tolérance zéro envers toute forme de traite d'êtres humains, d'exploitation ou de coercition. Signalez immédiatement tout soupçon.",
-      "details": [
-        "Signalez tout indice d'exploitation ou de traite",
-        "Les publications de tiers sans leur consentement vérifiable ne sont pas autorisées"
-      ]
+      "details": {
+        "0": "Signalez tout indice d'exploitation ou de traite",
+        "1": "Les publications de tiers sans leur consentement vérifiable ne sont pas autorisées"
+      }
     },
     "discretion": {
       "title": "Discrétion et Confidentialité",
       "description": "Nous valorisons la discrétion. Ce qui est partagé sur le forum doit rester sur le forum.",
-      "details": [
-        "Ne partagez pas le contenu du forum sur les réseaux sociaux sans autorisation",
-        "Respectez la confidentialité des autres utilisateurs",
-        "Les captures d'écran non autorisées peuvent entraîner un bannissement"
-      ]
+      "details": {
+        "0": "Ne partagez pas le contenu du forum sur les réseaux sociaux sans autorisation",
+        "1": "Respectez la confidentialité des autres utilisateurs",
+        "2": "Les captures d'écran non autorisées peuvent entraîner un bannissement"
+      }
     },
     "reports": {
       "title": "Signalements et Modération",
       "description": "Si vous trouvez du contenu qui viole les règles, signalez-le immédiatement. Notre équipe de modération examine chaque cas de manière confidentielle.",
-      "details": [
-        "Utilisez le bouton de signalement pour le contenu inapproprié",
-        "Les signalements sont anonymes et confidentiels",
-        "Les faux signalements sont également sanctionnés",
-        "Vous pouvez contacter les modérateurs directement pour les cas urgents"
-      ]
+      "details": {
+        "0": "Utilisez le bouton de signalement pour le contenu inapproprié",
+        "1": "Les signalements sont anonymes et confidentiels",
+        "2": "Les faux signalements sont également sanctionnés",
+        "3": "Vous pouvez contacter les modérateurs directement pour les cas urgents"
+      }
     },
     "warning": {
       "title": "Conséquences du Non-Respect",
@@ -1218,7 +1223,7 @@
       "plus_size": "Ronde"
     },
     "ethnicities": {
-      "latina": "Latina",
+      "latina": "Latine",
       "caucasian": "Caucasienne",
       "asian": "Asiatique",
       "african": "Africaine",
@@ -1454,7 +1459,7 @@
     "searchPlaceholder": "Rechercher dans les favoris...",
     "allFolders": "Tous",
     "threads": "Fils",
-    "posts": "Posts",
+    "posts": "Messages",
     "noThreads": "Aucun fil sauvegardé",
     "noThreadsDesc": "Sauvegardez des fils intéressants en cliquant sur le bouton favori",
     "noPosts": "Aucun post sauvegardé",
@@ -1501,7 +1506,7 @@
     "ratingError": "Erreur de notation"
   },
   "profileStats": {
-    "posts": "Posts",
+    "posts": "Messages",
     "threads": "Fils",
     "thanksReceived": "Remerciements reçus",
     "followers": "Abonnés",
@@ -1623,7 +1628,7 @@
   },
   "faq": {
     "title": "Questions Fréquentes",
-    "subtitle": "Trouvez des réponses aux questions les plus courantes sur TransForo",
+    "subtitle": "Trouvez des réponses aux questions les plus courantes sur TS Rating",
     "q1": "Comment m'inscrire ?",
     "a1": "Cliquez sur \"S'inscrire\" en haut à droite. Remplissez le formulaire et confirmez par email.",
     "q2": "Comment vérifier mon compte ?",
@@ -1655,7 +1660,7 @@
     "s1t": "1. Que sont les cookies ?",
     "s1p": "Les cookies sont de petits fichiers texte stockés sur votre appareil lorsque vous visitez un site web. Ils permettent au site de « mémoriser » vos actions et préférences.",
     "s2t": "2. Comment nous utilisons les cookies",
-    "s2p": "TransForo utilise des cookies pour améliorer votre expérience de navigation, comprendre comment vous interagissez avec notre site et personnaliser votre expérience.",
+    "s2p": "TS Rating utilise des cookies pour améliorer votre expérience de navigation, comprendre comment vous interagissez avec notre site et personnaliser votre expérience.",
     "s3t": "3. Types de cookies que nous utilisons",
     "s31t": "3.1 Cookies strictement nécessaires",
     "s31purpose": "Finalité : Essentiels au fonctionnement du site",
@@ -1687,7 +1692,7 @@
     "s4i3": "Services d'analyse : Pour comprendre le comportement des utilisateurs",
     "s4note": "Ces tiers ont leurs propres politiques de confidentialité.",
     "s5t": "5. Durée des cookies",
-    "s5p": "TransForo utilise deux types de cookies selon leur durée :",
+    "s5p": "TS Rating utilise deux types de cookies selon leur durée :",
     "s5i1": "Cookies de session : Temporaires, supprimés lorsque vous fermez votre navigateur.",
     "s5i2": "Cookies persistants : Restent sur votre appareil pendant 1 à 2 ans ou jusqu'à ce que vous les supprimiez.",
     "s6t": "6. Gestion de vos préférences de cookies",
@@ -1700,7 +1705,7 @@
     "s61i4": "Activer le mode de navigation privée",
     "s61links": "Liens vers les instructions de gestion des cookies par navigateur :",
     "s62t": "6.2 Via notre bannière de cookies",
-    "s62p": "Lors de votre première visite sur TransForo, vous verrez une bannière de cookies où vous pourrez accepter ou refuser les cookies non essentiels.",
+    "s62p": "Lors de votre première visite sur TS Rating, vous verrez une bannière de cookies où vous pourrez accepter ou refuser les cookies non essentiels.",
     "s7t": "7. Conséquences de la désactivation des cookies",
     "s7p": "Si vous décidez de bloquer ou supprimer les cookies, certaines parties du site pourraient ne pas fonctionner correctement :",
     "s7i1": "Vous ne pourrez pas rester connecté",
@@ -1728,7 +1733,7 @@
     "title": "Politique de confidentialité",
     "lastUpdate": "Dernière mise à jour",
     "s1t": "1. Introduction",
-    "s1p": "Chez TransForo, nous valorisons et respectons votre vie privée. Cette politique de confidentialité explique comment nous collectons, utilisons, stockons et protégeons vos informations personnelles.",
+    "s1p": "Chez TS Rating, nous valorisons et respectons votre vie privée. Cette politique de confidentialité explique comment nous collectons, utilisons, stockons et protégeons vos informations personnelles.",
     "s2t": "2. Informations que nous collectons",
     "s21t": "2.1 Informations d'inscription",
     "s21p": "Lorsque vous créez un compte, nous collectons :",
@@ -1785,7 +1790,7 @@
     "s9t": "9. Cookies",
     "s9p": "Nous utilisons des cookies et des technologies similaires. Consultez notre politique de cookies pour plus de détails.",
     "s10t": "10. Mineurs",
-    "s10p": "TransForo est destiné aux personnes de plus de 18 ans.",
+    "s10p": "TS Rating est destiné aux personnes de plus de 18 ans.",
     "s11t": "11. Transferts internationaux",
     "s11p": "Vos données peuvent être transférées vers des serveurs situés hors de votre pays, conformément aux lois applicables.",
     "s12t": "12. Modifications de cette politique",
@@ -1800,33 +1805,33 @@
     "title": "Conditions générales",
     "lastUpdate": "Dernière mise à jour",
     "s1t": "1. Acceptation des conditions",
-    "s1p": "En accédant et en utilisant TransForo, vous acceptez d'être lié par ces conditions générales.",
+    "s1p": "En accédant et en utilisant TS Rating, vous acceptez d'être lié par ces conditions générales.",
     "s2t": "2. Description du service",
-    "s2p": "TransForo est une plateforme de forum en ligne. Nous offrons un espace pour :",
+    "s2p": "TS Rating est une plateforme de forum en ligne. Nous offrons un espace pour :",
     "s2items": "Partager des expériences professionnelles|Se connecter avec des collègues|Échanger des informations et des conseils|Construire une communauté solidaire",
     "s3t": "3. Conditions d'inscription",
     "s3p": "Pour utiliser certaines fonctionnalités, vous devez :",
     "s3items": "Avoir plus de 18 ans|Fournir des informations exactes|Garder votre mot de passe sécurisé|Signaler toute utilisation non autorisée|Accepter la responsabilité de votre compte",
     "s4t": "4. Règles de conduite",
-    "s4p": "En utilisant TransForo, vous acceptez de NE PAS :",
+    "s4p": "En utilisant TS Rating, vous acceptez de NE PAS :",
     "s4items": "Publier du contenu illégal ou abusif|Se faire passer pour une autre personne|Violer les droits de propriété intellectuelle|Publier du spam|Interférer avec le fonctionnement du site|Collecter des informations sans consentement|Partager des informations personnelles d'autrui|Promouvoir des activités illégales",
     "s5t": "5. Contenu utilisateur",
     "s5p": "En publiant du contenu :",
     "s5items": "Vous conservez tous les droits sur votre contenu|Vous nous accordez une licence pour utiliser votre contenu sur la plateforme|Vous êtes responsable de votre contenu|Vous garantissez avoir le droit de le publier|Nous pouvons supprimer le contenu qui viole ces conditions",
     "s6t": "6. Contenu NSFW",
-    "s6p": "TransForo autorise le contenu NSFW clairement identifié. Il doit respecter les lois applicables.",
+    "s6p": "TS Rating autorise le contenu NSFW clairement identifié. Il doit respecter les lois applicables.",
     "s7t": "7. Modération",
     "s7p": "Nous nous réservons le droit de :",
     "s7items": "Modifier, supprimer ou rejeter tout contenu|Suspendre ou résilier des comptes|Modifier ou interrompre le service|Divulguer des informations lorsque la loi l'exige",
     "s8t": "8. Propriété intellectuelle",
-    "s8p": "Le design, le code et les graphismes de TransForo sont protégés par le droit d'auteur.",
+    "s8p": "Le design, le code et les graphismes de TS Rating sont protégés par le droit d'auteur.",
     "s9t": "9. Clause de non-responsabilité",
-    "s9p": "TransForo est fourni « tel quel » sans garanties.",
+    "s9p": "TS Rating est fourni « tel quel » sans garanties.",
     "s9items": "Le service sera ininterrompu|Les défauts seront corrigés|Le service sera exempt de virus|Les résultats seront exacts",
     "s10t": "10. Limitation de responsabilité",
-    "s10p": "En aucun cas TransForo ne sera responsable de dommages directs, indirects, accessoires ou consécutifs.",
+    "s10p": "En aucun cas TS Rating ne sera responsable de dommages directs, indirects, accessoires ou consécutifs.",
     "s11t": "11. Indemnisation",
-    "s11p": "Vous acceptez d'indemniser et de dégager de toute responsabilité TransForo.",
+    "s11p": "Vous acceptez d'indemniser et de dégager de toute responsabilité TS Rating.",
     "s12t": "12. Modifications",
     "s12p": "Nous nous réservons le droit de modifier ces conditions à tout moment.",
     "s13t": "13. Résiliation",
@@ -1836,7 +1841,7 @@
     "s15t": "15. Contact",
     "s15p": "Si vous avez des questions, vous pouvez nous contacter via la",
     "s15link": "page de contact",
-    "acceptanceNote": "En utilisant TransForo, vous confirmez avoir lu, compris et accepté ces conditions générales."
+    "acceptanceNote": "En utilisant TS Rating, vous confirmez avoir lu, compris et accepté ces conditions générales."
   },
   "adminUsers": {
     "title": "Gestion des utilisateurs",
@@ -2162,7 +2167,7 @@
     "descriptionLabel": "Description",
     "descriptionPlaceholder": "Badge description...",
     "icon": "Icon",
-    "color": "Color",
+    "color": "Couleur",
     "type": "Type",
     "colorPurple": "Purple",
     "colorGreen": "Green",
@@ -2174,7 +2179,7 @@
     "colorFuchsia": "Fuchsia",
     "typePositive": "Positive",
     "typeNegative": "Negative",
-    "typeNeutral": "Neutral",
+    "typeNeutral": "Neutre",
     "typeSpecial": "Special",
     "whoCanAssign": "Who can assign?",
     "anyMod": "Any moderator",
@@ -2247,11 +2252,18 @@
     "errorAddingThanks": "Error adding thanks",
     "contentEmpty": "Content cannot be empty",
     "contentTooLong": "Content too long (maximum 50000 characters)",
-    "noEditPermission": "You don't have permission to edit this post"
+    "noEditPermission": "You don't have permission to edit this post",
+    "unexpectedError": "Erreur inattendue",
+    "invalidData": "Données invalides",
+    "invalidPostId": "ID de post invalide",
+    "loginRequired": "Vous devez vous connecter",
+    "titleTooShort": "Le titre doit contenir au moins 5 caractères",
+    "contentTooShort": "Le contenu doit contenir au moins 10 caractères",
+    "errorUpdatingPost": "Erreur de mise à jour du post"
   },
   "publicidad": {
     "title": "Acheter de la publicité",
-    "subtitle": "Choisissez où vous voulez que votre bannière apparaisse sur TransForo.",
+    "subtitle": "Choisissez où vous voulez que votre bannière apparaisse sur TS Rating.",
     "step1Title": "Sélectionnez la zone",
     "step1Desc": "Choisissez le pays ou la ville où vous voulez que votre bannière apparaisse.",
     "country": "Pays",
@@ -2416,5 +2428,22 @@
     "rejectBtn": "Refuser le paiement",
     "paymentRejected": "Paiement refusé",
     "provideReason": "Vous devez indiquer un motif de refus."
+  },
+  "adminForumSection": {
+    "categoryTitle": "TS Rating — Forum Officiel",
+    "forums": {
+      "support": {
+        "name": "Support",
+        "description": "Ouvrez un ticket de support. Seuls vous et l'équipe pouvez voir votre sujet."
+      },
+      "news": {
+        "name": "Actualités du Forum",
+        "description": "Annonces officielles, mises à jour et nouveautés."
+      },
+      "rules": {
+        "name": "Règles et Modèles",
+        "description": "Règles de la communauté, modèles d'avis et guides d'utilisation."
+      }
+    }
   }
 }

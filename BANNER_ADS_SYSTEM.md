@@ -1,4 +1,4 @@
-# Sistema de Gestión de Banners Publicitarios — TransForo
+# Sistema de Gestión de Banners Publicitarios — TS Rating
 
 ## Análisis del Prompt Reformulado
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/auth-context';
 import { Button } from '@/components/ui/button';
@@ -17,7 +17,7 @@ type Reaction = {
   user_reacted: boolean;
 };
 
-type ReactionType = {
+type _ReactionType = {
   id: string;
   emoji: string;
   label: string;
@@ -44,11 +44,7 @@ export function PostReactions({ postId }: PostReactionsProps) {
   const [loading, setLoading] = useState(false);
   const [popoverOpen, setPopoverOpen] = useState(false);
 
-  useEffect(() => {
-    fetchReactions();
-  }, [postId, user]);
-
-  const fetchReactions = async () => {
+  const fetchReactions = useCallback(async () => {
     try {
       const { data, error } = await supabase
         .rpc('get_post_reactions', {
@@ -61,7 +57,11 @@ export function PostReactions({ postId }: PostReactionsProps) {
     } catch (error) {
       console.error('Error fetching reactions:', error);
     }
-  };
+  }, [postId, user]);
+
+  useEffect(() => {
+    fetchReactions();
+  }, [fetchReactions]);
 
   const handleReaction = async (reactionType: string) => {
     if (!user) {

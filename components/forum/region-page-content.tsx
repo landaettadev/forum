@@ -5,7 +5,7 @@ import { getLocalizedName } from '@/lib/locale-name';
 import Link from 'next/link';
 import { MapPin, Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Thread, Profile } from '@/lib/supabase';
+import type { Thread, Profile } from '@/lib/supabase';
 import { ThreadRow } from './thread-row';
 
 type ThreadWithRelations = Thread & {
@@ -54,13 +54,13 @@ export function RegionPageContent({ country, region, threads, forumId, threadsCo
           <span>{region.name}</span>
         </div>
 
-        <div className="flex items-start justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
           <div>
-            <h1 className="text-3xl font-bold mb-2 flex items-center gap-3">
-              <MapPin className="h-8 w-8 text-[hsl(var(--forum-accent))]" />
+            <h1 className="text-2xl sm:text-3xl font-bold mb-2 flex items-center gap-3">
+              <MapPin className="h-7 w-7 sm:h-8 sm:w-8 text-[hsl(var(--forum-accent))] flex-shrink-0" />
               {region.name}
             </h1>
-            <p className="forum-text-secondary">
+            <p className="forum-text-secondary text-sm sm:text-base">
               {t('forumOf', { name: region.name })}, {countryName} {country.flag_emoji}
             </p>
             <div className="flex gap-4 mt-2">
@@ -75,7 +75,7 @@ export function RegionPageContent({ country, region, threads, forumId, threadsCo
             </div>
           </div>
 
-          <Button asChild className="bg-[hsl(var(--forum-accent))] hover:bg-[hsl(var(--forum-accent-hover))] text-white">
+          <Button asChild className="bg-[hsl(var(--forum-accent))] hover:bg-[hsl(var(--forum-accent-hover))] text-white w-full sm:w-auto flex-shrink-0">
             <Link href={`/nuevo-hilo${forumId ? `?foro=${forumId}` : ''}${forumId && region.id ? `&region=${region.id}` : region.id ? `?region=${region.id}` : ''}`} className="flex items-center gap-2">
               <Plus className="h-4 w-4" />
               {t('newThread')}

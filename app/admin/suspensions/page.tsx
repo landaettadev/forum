@@ -1,14 +1,15 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import { supabase } from '@/lib/supabase';
+import { escapeLikePattern } from '@/lib/sanitize';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
@@ -19,8 +20,8 @@ import {
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from '@/components/ui/select';
-import { Clock, Plus, Edit, Trash2, Search, Ban, CheckCircle } from 'lucide-react';
-import { formatDistanceToNow, format } from 'date-fns';
+import { Clock, Plus, Edit, Trash2, Search, Ban as _Ban, CheckCircle } from 'lucide-react';
+import { format } from 'date-fns';
 import { getDateFnsLocale } from '@/lib/date-locale';
 import { useLocale, useTranslations } from 'next-intl';
 import { toast } from 'sonner';
@@ -48,7 +49,7 @@ interface Suspension {
 export default function AdminSuspensionsPage() {
   const { user, profile } = useAuth();
   const locale = useLocale();
-  const dateLocale = getDateFnsLocale(locale);
+  const _dateLocale = getDateFnsLocale(locale);
   const t = useTranslations('adminSuspensions');
   const [suspensions, setSuspensions] = useState<Suspension[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -64,14 +65,7 @@ export default function AdminSuspensionsPage() {
   const [suspensionType, setSuspensionType] = useState<'temporary' | 'permanent'>('temporary');
   const [duration, setDuration] = useState(7);
 
-  useEffect(() => {
-    if (profile && profile.role !== 'admin' && profile.moderator_type !== 'super') {
-      redirect('/');
-    }
-    fetchSuspensions();
-  }, [profile, filterStatus]);
-
-  const fetchSuspensions = async () => {
+  const fetchSuspensions = useCallback(async () => {
     setIsLoading(true);
     let query = supabase
       .from('user_suspensions')
@@ -91,7 +85,14 @@ export default function AdminSuspensionsPage() {
     const { data } = await query.limit(100);
     if (data) setSuspensions(data);
     setIsLoading(false);
-  };
+  }, [filterStatus]);
+
+  useEffect(() => {
+    if (profile && profile.role !== 'admin' && profile.moderator_type !== 'super') {
+      redirect('/');
+    }
+    fetchSuspensions();
+  }, [profile, filterStatus, fetchSuspensions]);
 
   const searchSuspensions = async () => {
     if (!searchQuery.trim()) {
@@ -103,7 +104,7 @@ export default function AdminSuspensionsPage() {
     const { data: users } = await supabase
       .from('profiles')
       .select('id')
-      .ilike('username', `%${searchQuery}%`);
+      .ilike('username', `%${escapeLikePattern(searchQuery)}%`);
 
     if (users && users.length > 0) {
       const userIds = users.map(u => u.id);
@@ -333,6 +334,7 @@ export default function AdminSuspensionsPage() {
                   </div>
                   <div>
                     <label className="text-sm font-medium">{t('type')}</label>
+                    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                     <Select value={suspensionType} onValueChange={(v: any) => setSuspensionType(v)}>
                       <SelectTrigger>
                         <SelectValue />

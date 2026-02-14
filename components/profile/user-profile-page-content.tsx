@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -74,7 +75,7 @@ export function UserProfilePageContent({
   const locale = useLocale();
   const dateLocale = getDateFnsLocale(locale);
   const t = useTranslations('profile');
-  const tCommon = useTranslations('common');
+  const _tCommon = useTranslations('common');
 
   const getUserInitials = (username: string) => {
     return username.substring(0, 2).toUpperCase();
@@ -85,10 +86,13 @@ export function UserProfilePageContent({
       {/* Banner Section */}
       <div className="relative h-48 rounded-t-lg overflow-hidden bg-gradient-to-r from-[hsl(var(--forum-accent))] to-[hsl(var(--forum-accent-hover))]">
         {profile.banner_url && (
-          <img 
+          <Image 
             src={profile.banner_url} 
             alt="Banner" 
-            className="w-full h-full object-cover"
+            fill
+            className="object-cover"
+            sizes="100vw"
+            priority
           />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
@@ -238,7 +242,7 @@ export function UserProfilePageContent({
           <h3 className="font-semibold mb-4">{t('recentActivity')}</h3>
           {recentPosts && recentPosts.length > 0 ? (
             <div className="space-y-4">
-              {recentPosts.map((post: any) => (
+              {recentPosts.map((post: Post) => (
                 <div key={post.id} className="flex gap-3 pb-4 border-b border-[hsl(var(--forum-border))] last:border-b-0">
                   <Avatar className="h-8 w-8">
                     <AvatarImage src={profile.avatar_url || undefined} />
@@ -272,7 +276,7 @@ export function UserProfilePageContent({
           </h3>
           {threads && threads.length > 0 ? (
             <div className="space-y-3">
-              {threads.map((thread: any) => (
+              {threads.map((thread: Thread) => (
                 <div key={thread.id} className="pb-3 border-b border-[hsl(var(--forum-border))] last:border-b-0">
                   <Link
                     href={`/hilo/${thread.id}`}
@@ -305,7 +309,7 @@ export function UserProfilePageContent({
           <h3 className="font-semibold mb-4">{t('publications')} ({profile.posts_count})</h3>
           {recentPosts && recentPosts.length > 0 ? (
             <div className="space-y-4">
-              {recentPosts.map((post: any) => (
+              {recentPosts.map((post: Post) => (
                 <div key={post.id} className="pb-4 border-b border-[hsl(var(--forum-border))] last:border-b-0">
                   <Link href={`/hilo/${post.thread?.id}`} className="font-semibold text-[hsl(var(--forum-accent))] hover:underline">
                     {post.thread?.title}

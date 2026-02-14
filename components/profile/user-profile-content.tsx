@@ -1,10 +1,7 @@
 'use client';
 
-import Link from 'next/link';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { MessageSquare, Calendar, MapPin, Award, Clock, Users, UserPlus, Ban, Flag, Settings, Camera } from 'lucide-react';
+import { Calendar, MapPin, Clock } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { getDateFnsLocale } from '@/lib/date-locale';
 import { useLocale, useTranslations } from 'next-intl';
@@ -51,8 +48,8 @@ interface UserProfileContentProps {
 
 export function UserProfileContent({
   profile,
-  threads,
-  recentPosts,
+  threads: _threads,
+  recentPosts: _recentPosts,
   threadsCount,
   followersCount,
   followingCount,

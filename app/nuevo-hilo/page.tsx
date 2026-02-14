@@ -52,10 +52,11 @@ function NuevoHiloContent() {
   const searchParams = useSearchParams();
   const { user, profile } = useAuth();
   const t = useTranslations('thread');
-  const tCommon = useTranslations('common');
-  const tEditor = useTranslations('editor');
+  const _tCommon = useTranslations('common');
+  const _tEditor = useTranslations('editor');
   const tForum = useTranslations('forum');
   const [loading, setLoading] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [forums, setForums] = useState<any[]>([]);
   const [selectedForum, setSelectedForum] = useState('');
   const [title, setTitle] = useState('');
@@ -171,7 +172,7 @@ function NuevoHiloContent() {
           description: result.error,
         });
       }
-    } catch (error) {
+    } catch {
       toast.error(t('unexpectedError'));
     } finally {
       setLoading(false);

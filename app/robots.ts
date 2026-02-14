@@ -1,6 +1,6 @@
-import { MetadataRoute } from 'next';
+import type { MetadataRoute } from 'next';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://transforo.com';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://tsrating.com';
 
 export default function robots(): MetadataRoute.Robots {
   return {

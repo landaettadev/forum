@@ -1,6 +1,6 @@
-# Guía de Setup Completa - TransForo
+# Guía de Setup Completa - TS Rating
 
-Esta guía te ayudará a configurar y ejecutar TransForo en tu entorno local.
+Esta guía te ayudará a configurar y ejecutar TS Rating en tu entorno local.
 
 ## 📋 Requisitos Previos
 
@@ -320,7 +320,7 @@ Si encuentras algún problema:
 
 ## 🎉 ¡Todo Listo!
 
-Si llegaste hasta aquí sin errores, ¡felicidades! Tu instalación de TransForo está completa.
+Si llegaste hasta aquí sin errores, ¡felicidades! Tu instalación de TS Rating está completa.
 
 Próximos pasos sugeridos:
 1. Personaliza el tema en `globals.css`

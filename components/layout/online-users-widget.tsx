@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { OnlineIndicator } from '@/components/user/online-status';
+import { OnlineIndicator as _OnlineIndicator } from '@/components/user/online-status';
 import { Users } from 'lucide-react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';

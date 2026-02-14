@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { Breadcrumbs } from '@/components/layout/breadcrumbs';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -82,18 +82,7 @@ export default function FavoritosPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedFolder, setSelectedFolder] = useState<string>('all');
 
-  useEffect(() => {
-    if (!authLoading && !user) {
-      router.push('/login');
-      return;
-    }
-
-    if (user) {
-      fetchBookmarks();
-    }
-  }, [user, authLoading, router]);
-
-  const fetchBookmarks = async () => {
+  const fetchBookmarks = useCallback(async () => {
     if (!user) return;
 
     setLoading(true);
@@ -133,7 +122,17 @@ export default function FavoritosPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user, t]);
+
+  useEffect(() => {
+    if (!authLoading && !user) {
+      router.push('/login');
+      return;
+    }
+    if (user) {
+      fetchBookmarks();
+    }
+  }, [user, authLoading, router, fetchBookmarks]);
 
   const removeThreadBookmark = async (bookmarkId: string) => {
     try {

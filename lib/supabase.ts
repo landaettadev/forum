@@ -69,6 +69,7 @@ export type Forum = {
   last_post_id: string | null;
   display_order: number;
   is_private: boolean;
+  forum_type: 'support' | 'news' | 'rules' | null;
   created_at: string;
 };
 

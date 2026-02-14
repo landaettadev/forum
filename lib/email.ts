@@ -28,7 +28,7 @@ export async function sendEmail(template: EmailTemplate): Promise<{ success: boo
     const resend = new Resend(process.env.RESEND_API_KEY);
 
     const { data, error } = await resend.emails.send({
-      from: process.env.EMAIL_FROM || 'TransForo <noreply@transforo.com>',
+      from: process.env.EMAIL_FROM || 'TS Rating <noreply@tsrating.com>',
       to: template.to,
       subject: template.subject,
       html: template.html,
@@ -40,11 +40,38 @@ export async function sendEmail(template: EmailTemplate): Promise<{ success: boo
       return { success: false, error: error.message };
     }
 
-    console.log('Email sent successfully:', data);
+    console.info('Email sent successfully:', data);
     return { success: true };
   } catch (error) {
     console.error('Unexpected error sending email:', error);
     return { success: false, error: 'Unexpected error' };
+  }
+}
+
+/**
+ * Escape HTML entities in user-provided strings before interpolating
+ * into email templates. Prevents stored XSS via email.
+ */
+function esc(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+/**
+ * Sanitize a URL for safe interpolation into href attributes.
+ * Only allows http/https protocols and escapes HTML-special chars.
+ */
+function escUrl(url: string): string {
+  try {
+    const parsed = new URL(url);
+    if (!['http:', 'https:'].includes(parsed.protocol)) return '';
+    return esc(parsed.toString());
+  } catch {
+    return '';
   }
 }
 
@@ -58,7 +85,7 @@ export const EmailTemplates = {
    */
   welcome: (username: string, verificationUrl?: string): EmailTemplate => ({
     to: '', // Se debe llenar al llamar
-    subject: '¡Bienvenida a TransForo! 🎉',
+    subject: '¡Bienvenida a TS Rating! 🎉',
     html: `
       <!DOCTYPE html>
       <html>
@@ -76,11 +103,11 @@ export const EmailTemplates = {
         <body>
           <div class="container">
             <div class="header">
-              <h1>¡Bienvenida a TransForo!</h1>
+              <h1>¡Bienvenida a TS Rating!</h1>
             </div>
             <div class="content">
-              <h2>Hola @${username},</h2>
-              <p>Estamos emocionadas de tenerte en nuestra comunidad. TransForo es un espacio seguro donde puedes:</p>
+              <h2>Hola @${esc(username)},</h2>
+              <p>Estamos emocionadas de tenerte en nuestra comunidad. TS Rating es un espacio seguro donde puedes:</p>
               <ul>
                 <li>Compartir experiencias y consejos</li>
                 <li>Conectar con otras profesionales</li>
@@ -89,20 +116,20 @@ export const EmailTemplates = {
               </ul>
               ${verificationUrl ? `
                 <p><strong>Verifica tu email para acceder a todas las funciones:</strong></p>
-                <a href="${verificationUrl}" class="button">Verificar Email</a>
+                <a href="${escUrl(verificationUrl)}" class="button">Verificar Email</a>
               ` : ''}
               <p>Recuerda leer nuestras <a href="${process.env.NEXT_PUBLIC_SITE_URL}/reglas">reglas del foro</a> para mantener un ambiente respetuoso.</p>
               <p>¡Nos vemos en los foros!</p>
             </div>
             <div class="footer">
-              <p>TransForo - Comunidad Profesional</p>
+              <p>TS Rating - Comunidad Profesional</p>
               <p><a href="${process.env.NEXT_PUBLIC_SITE_URL}">Visitar el sitio</a></p>
             </div>
           </div>
         </body>
       </html>
     `,
-    text: `¡Bienvenida a TransForo, @${username}!\n\nEstamos emocionadas de tenerte en nuestra comunidad.\n\n${verificationUrl ? `Verifica tu email: ${verificationUrl}\n\n` : ''}Recuerda leer nuestras reglas del foro.\n\n¡Nos vemos en los foros!`,
+    text: `¡Bienvenida a TS Rating, @${esc(username)}!\n\nEstamos emocionadas de tenerte en nuestra comunidad.\n\n${verificationUrl ? `Verifica tu email: ${verificationUrl}\n\n` : ''}Recuerda leer nuestras reglas del foro.\n\n¡Nos vemos en los foros!`,
   }),
 
   /**
@@ -110,26 +137,26 @@ export const EmailTemplates = {
    */
   verification: (username: string, verificationUrl: string): EmailTemplate => ({
     to: '',
-    subject: 'Verifica tu email en TransForo',
+    subject: 'Verifica tu email en TS Rating',
     html: `
       <!DOCTYPE html>
       <html>
         <body style="font-family: Arial, sans-serif; padding: 20px;">
           <div style="max-width: 600px; margin: 0 auto;">
             <h2>Verifica tu email</h2>
-            <p>Hola @${username},</p>
+            <p>Hola @${esc(username)},</p>
             <p>Por favor verifica tu dirección de email haciendo clic en el botón:</p>
-            <a href="${verificationUrl}" style="display: inline-block; padding: 12px 30px; background: #8b5cf6; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0;">
+            <a href="${escUrl(verificationUrl)}" style="display: inline-block; padding: 12px 30px; background: #8b5cf6; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0;">
               Verificar Email
             </a>
             <p>O copia este enlace en tu navegador:</p>
-            <p style="word-break: break-all; color: #666;">${verificationUrl}</p>
+            <p style="word-break: break-all; color: #666;">${esc(verificationUrl)}</p>
             <p>Este enlace expirará en 24 horas.</p>
           </div>
         </body>
       </html>
     `,
-    text: `Verifica tu email\n\nHola @${username},\n\nPor favor verifica tu email visitando:\n${verificationUrl}\n\nEste enlace expira en 24 horas.`,
+    text: `Verifica tu email\n\nHola @${esc(username)},\n\nPor favor verifica tu email visitando:\n${verificationUrl}\n\nEste enlace expira en 24 horas.`,
   }),
 
   /**
@@ -137,16 +164,16 @@ export const EmailTemplates = {
    */
   resetPassword: (username: string, resetUrl: string): EmailTemplate => ({
     to: '',
-    subject: 'Restablecer tu contraseña en TransForo',
+    subject: 'Restablecer tu contraseña en TS Rating',
     html: `
       <!DOCTYPE html>
       <html>
         <body style="font-family: Arial, sans-serif; padding: 20px;">
           <div style="max-width: 600px; margin: 0 auto;">
             <h2>Restablecer Contraseña</h2>
-            <p>Hola @${username},</p>
+            <p>Hola @${esc(username)},</p>
             <p>Recibimos una solicitud para restablecer tu contraseña. Haz clic en el botón:</p>
-            <a href="${resetUrl}" style="display: inline-block; padding: 12px 30px; background: #8b5cf6; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0;">
+            <a href="${escUrl(resetUrl)}" style="display: inline-block; padding: 12px 30px; background: #8b5cf6; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0;">
               Restablecer Contraseña
             </a>
             <p><strong>Si no solicitaste esto, ignora este email.</strong></p>
@@ -155,7 +182,7 @@ export const EmailTemplates = {
         </body>
       </html>
     `,
-    text: `Restablecer Contraseña\n\nHola @${username},\n\nPara restablecer tu contraseña, visita:\n${resetUrl}\n\nSi no solicitaste esto, ignora este email.\n\nEste enlace expira en 1 hora.`,
+    text: `Restablecer Contraseña\n\nHola @${esc(username)},\n\nPara restablecer tu contraseña, visita:\n${resetUrl}\n\nSi no solicitaste esto, ignora este email.\n\nEste enlace expira en 1 hora.`,
   }),
 
   /**
@@ -170,10 +197,10 @@ export const EmailTemplates = {
         <body style="font-family: Arial, sans-serif; padding: 20px;">
           <div style="max-width: 600px; margin: 0 auto;">
             <h2>Nueva respuesta en tu hilo</h2>
-            <p>Hola @${username},</p>
-            <p><strong>@${replyAuthor}</strong> respondió a tu hilo:</p>
-            <p style="font-size: 18px; font-weight: bold;">"${threadTitle}"</p>
-            <a href="${threadUrl}" style="display: inline-block; padding: 12px 30px; background: #8b5cf6; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0;">
+            <p>Hola @${esc(username)},</p>
+            <p><strong>@${esc(replyAuthor)}</strong> respondió a tu hilo:</p>
+            <p style="font-size: 18px; font-weight: bold;">"${esc(threadTitle)}"</p>
+            <a href="${escUrl(threadUrl)}" style="display: inline-block; padding: 12px 30px; background: #8b5cf6; color: white; text-decoration: none; border-radius: 5px; margin: 20px 0;">
               Ver Respuesta
             </a>
             <p style="color: #666; font-size: 14px;">Puedes desactivar estas notificaciones en tu configuración.</p>
@@ -181,7 +208,7 @@ export const EmailTemplates = {
         </body>
       </html>
     `,
-    text: `Nueva respuesta en tu hilo\n\nHola @${username},\n\n@${replyAuthor} respondió a "${threadTitle}"\n\nVer respuesta: ${threadUrl}`,
+    text: `Nueva respuesta en tu hilo\n\nHola @${esc(username)},\n\n@${esc(replyAuthor)} respondió a "${esc(threadTitle)}"\n\nVer respuesta: ${threadUrl}`,
   }),
 
   /**
@@ -196,16 +223,16 @@ export const EmailTemplates = {
         <body style="font-family: Arial, sans-serif; padding: 20px;">
           <div style="max-width: 600px; margin: 0 auto;">
             <h2 style="color: #dc2626;">Cuenta Suspendida</h2>
-            <p>Hola @${username},</p>
-            <p>Tu cuenta en TransForo ha sido suspendida ${expiresAt ? `hasta ${expiresAt}` : 'permanentemente'}.</p>
-            <p><strong>Razón:</strong> ${reason}</p>
+            <p>Hola @${esc(username)},</p>
+            <p>Tu cuenta en TS Rating ha sido suspendida ${expiresAt ? `hasta ${esc(expiresAt)}` : 'permanentemente'}.</p>
+            <p><strong>Razón:</strong> ${esc(reason)}</p>
             <p>Si crees que esto es un error, puedes contactar a los moderadores.</p>
             <p>Recuerda revisar nuestras <a href="${process.env.NEXT_PUBLIC_SITE_URL}/reglas">reglas del foro</a>.</p>
           </div>
         </body>
       </html>
     `,
-    text: `Cuenta Suspendida\n\nHola @${username},\n\nTu cuenta ha sido suspendida ${expiresAt ? `hasta ${expiresAt}` : 'permanentemente'}.\n\nRazón: ${reason}`,
+    text: `Cuenta Suspendida\n\nHola @${esc(username)},\n\nTu cuenta ha sido suspendida ${expiresAt ? `hasta ${esc(expiresAt)}` : 'permanentemente'}.\n\nRazón: ${esc(reason)}`,
   }),
 };
 

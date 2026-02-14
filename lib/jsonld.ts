@@ -24,7 +24,7 @@ export function organizationJsonLd() {
     '@type': 'Organization',
     name: SITE_NAME,
     url: SITE_URL,
-    logo: `${SITE_URL}/logo.png`,
+    logo: `${SITE_URL}/logo.svg`,
     sameAs: [],
   };
 }

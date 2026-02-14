@@ -1,4 +1,4 @@
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { createServerSupabaseClient } from '@/lib/supabase-server';
 import { Header } from '@/components/layout/header';
@@ -13,9 +13,9 @@ import { Footer } from '@/components/layout/footer';
 import { getTranslations } from 'next-intl/server';
 import { generateThreadMetadata } from '@/lib/metadata';
 import { discussionForumPostingJsonLd, breadcrumbJsonLd } from '@/lib/jsonld';
-import { SITE_URL } from '@/lib/metadata';
+import { SITE_URL as _SITE_URL } from '@/lib/metadata';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 30; // ISR: regenerate every 30 seconds instead of force-dynamic
 
 export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
   const supabase = createServerSupabaseClient();
@@ -27,10 +27,12 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
 
   if (!thread) return { title: 'Thread not found' };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const region = thread.region as any;
   return generateThreadMetadata({
     id: params.id,
     title: thread.title,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     author: thread.author as any,
     created_at: thread.created_at,
     views_count: thread.views_count,

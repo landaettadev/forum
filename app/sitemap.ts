@@ -1,7 +1,7 @@
-import { MetadataRoute } from 'next';
+import type { MetadataRoute } from 'next';
 import { createServerSupabaseClient } from '@/lib/supabase-server';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://transforo.com';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://tsrating.com';
 const THREADS_PER_SITEMAP = 5000;
 
 // Sitemap index — splits into multiple sitemaps for scalability
@@ -45,6 +45,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     .select('slug, country:countries(slug)')
     .order('name');
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const regionPages: MetadataRoute.Sitemap = (regions || []).map((r: any) => ({
     url: `${SITE_URL}/foros/${r.country?.slug}/${r.slug}`,
     lastModified: new Date(),

@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import { supabase } from '@/lib/supabase';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from 'sonner';
 import { Coins, ShoppingBag, Clock, Star } from 'lucide-react';
 import Link from 'next/link';
@@ -37,11 +37,7 @@ export default function ShopPage() {
   const [loading, setLoading] = useState(true);
   const [purchasing, setPurchasing] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetchShopData();
-  }, [user]);
-
-  const fetchShopData = async () => {
+  const fetchShopData = useCallback(async () => {
     try {
       const { data: shopItems } = await supabase
         .from('shop_items')
@@ -59,6 +55,7 @@ export default function ShopPage() {
           .order('created_at', { ascending: false })
           .limit(20);
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         setPurchases((userPurchases as any) || []);
       }
     } catch {
@@ -66,7 +63,11 @@ export default function ShopPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
+
+  useEffect(() => {
+    fetchShopData();
+  }, [user, fetchShopData]);
 
   const handlePurchase = async (itemSlug: string) => {
     if (!user) {
@@ -83,6 +84,7 @@ export default function ShopPage() {
 
       if (error) throw error;
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const result = data as any;
       if (result?.success) {
         toast.success('¡Compra exitosa!', {
@@ -92,13 +94,14 @@ export default function ShopPage() {
       } else {
         toast.error(result?.error || 'Error al comprar');
       }
-    } catch (err: any) {
+    } catch {
       toast.error('Error al procesar la compra');
     } finally {
       setPurchasing(null);
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const balance = (profile as any)?.reputation_score || profile?.points || 0;
 
   const categoryLabels: Record<string, string> = {
@@ -207,7 +210,9 @@ export default function ShopPage() {
               {purchases.map((p) => (
                 <div key={p.id} className="flex items-center justify-between forum-surface rounded-lg p-3 text-sm">
                   <div className="flex items-center gap-2">
+                    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                     <span>{(p.item as any)?.icon_emoji || '🎁'}</span>
+                    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                     <span>{(p.item as any)?.name || 'Item'}</span>
                   </div>
                   <div className="flex items-center gap-4 text-muted-foreground text-xs">

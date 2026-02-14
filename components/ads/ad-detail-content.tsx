@@ -13,7 +13,6 @@ import {
   Phone, 
   MessageCircle,
   Mail,
-  Globe,
   ChevronLeft,
   ChevronRight,
   Verified,
@@ -32,7 +31,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { EscortAd } from '@/lib/supabase';
+import type { EscortAd } from '@/lib/supabase';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/auth-context';
 import { toast } from 'sonner';
@@ -42,6 +41,7 @@ import { cn } from '@/lib/utils';
 
 type AdDetailContentProps = {
   ad: EscortAd;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   relatedAds: any[];
 };
 
@@ -76,7 +76,7 @@ export function AdDetailContent({ ad, relatedAds }: AdDetailContentProps) {
       if (error) throw error;
       setIsFavorite(data.favorited);
       toast.success(data.favorited ? t('addedToFavorites') : t('removedFromFavorites'));
-    } catch (error) {
+    } catch {
       toast.error(t('error'));
     }
   };
@@ -442,6 +442,7 @@ export function AdDetailContent({ ad, relatedAds }: AdDetailContentProps) {
           <h2 className="text-xl font-bold forum-text mb-4">{t('relatedAds')}</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {relatedAds.map((relAd) => {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               const photo = relAd.photos?.find((p: any) => p.is_primary) || relAd.photos?.[0];
               return (
                 <Link key={relAd.id} href={`/anuncios/${relAd.id}`}>

@@ -52,12 +52,16 @@ export default async function ForumsPage() {
     .select('*')
     .order('display_order');
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const continentsWithData: ContinentWithCountries[] = (continents || []).map((continent: any) => ({
     ...continent,
     countries: (countries || [])
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .filter((c: any) => c.continent_id === continent.id)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .map((country: any) => ({
         ...country,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         regions: (regions || []).filter((r: any) => r.country_id === country.id)
       }))
   }));

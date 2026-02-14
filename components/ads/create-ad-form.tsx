@@ -9,11 +9,7 @@ import {
   Plus,
   MapPin,
   Phone,
-  Mail,
-  Globe,
-  MessageCircle,
   DollarSign,
-  Calendar,
   User,
   Loader2
 } from 'lucide-react';
@@ -28,7 +24,7 @@ import { Badge } from '@/components/ui/badge';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/auth-context';
 import { toast } from 'sonner';
-import { CountryOption } from '@/lib/supabase';
+import type { CountryOption } from '@/lib/supabase';
 
 type CreateAdFormProps = {
   countries: CountryOption[];
@@ -616,6 +612,7 @@ export function CreateAdForm({ countries, services }: CreateAdFormProps) {
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
             {photosPreviews.map((preview, index) => (
               <div key={index} className="relative aspect-square rounded-lg overflow-hidden bg-[hsl(var(--forum-surface-alt))]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={preview} alt="" className="w-full h-full object-cover" />
                 <button
                   type="button"
