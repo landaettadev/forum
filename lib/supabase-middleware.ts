@@ -7,6 +7,11 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 export async function createMiddlewareSupabaseClient(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
 
+  // Skip Supabase session refresh when credentials are not configured (e.g. local dev without .env)
+  if (!supabaseUrl || !supabaseAnonKey) {
+    return { supabase: null, response: supabaseResponse };
+  }
+
   const supabase = createServerClient(
     supabaseUrl,
     supabaseAnonKey,

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/lib/auth-context';
 import { useRouter } from 'next/navigation';
@@ -14,13 +14,14 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Switch } from '@/components/ui/switch';
 import { toast } from 'sonner';
-import { supabase } from '@/lib/supabase';
-import { updateProfile } from './actions';
+import { supabase, type Profile } from '@/lib/supabase';
+import { updateProfile, updateNotificationSettings, updatePrivacySettings, submitVerificationRequest } from './actions';
 import { formatDistanceToNow } from 'date-fns';
 import { getDateFnsLocale } from '@/lib/date-locale';
 import { useLocale, useTranslations } from 'next-intl';
-import { MessageSquare, Eye, Clock, Upload, X, User } from 'lucide-react';
+import { MessageSquare, Eye, Clock, Upload, X, User, Bell, Shield, Lock, Copy, Check, Loader2 } from 'lucide-react';
 import { uploadAvatar } from '@/lib/storage';
 
 function MisHilos({ userId }: { userId: string }) {
@@ -98,6 +99,586 @@ function MisHilos({ userId }: { userId: string }) {
         )}
       </CardContent>
     </Card>
+  );
+}
+
+
+function SettingsTab({ profile, refreshProfile }: { profile: Profile; refreshProfile: () => Promise<void> }) {
+  const t = useTranslations('account');
+
+  // --- Notification settings ---
+  const [notifSaving, setNotifSaving] = useState(false);
+  const [notifSettings, setNotifSettings] = useState({
+    notify_replies: profile.notify_replies ?? true,
+    notify_mentions: profile.notify_mentions ?? true,
+    notify_messages: profile.notify_messages ?? true,
+    notify_follows: profile.notify_follows ?? true,
+    notify_email_replies: profile.notify_email_replies ?? false,
+    notify_email_messages: profile.notify_email_messages ?? false,
+  });
+
+  const handleSaveNotifications = async () => {
+    setNotifSaving(true);
+    try {
+      const result = await updateNotificationSettings(notifSettings);
+      if (result.success) {
+        toast.success(t('settingsSaved'));
+        await refreshProfile();
+      } else {
+        toast.error(t('settingsError'), { description: result.error });
+      }
+    } catch {
+      toast.error(t('settingsError'));
+    } finally {
+      setNotifSaving(false);
+    }
+  };
+
+  // --- Privacy settings ---
+  const [privacySaving, setPrivacySaving] = useState(false);
+  const [privacySettings, setPrivacySettings] = useState({
+    privacy_show_online: profile.privacy_show_online ?? true,
+    privacy_show_activity: profile.privacy_show_activity ?? true,
+    privacy_show_profile: profile.privacy_show_profile ?? true,
+    privacy_allow_messages: profile.privacy_allow_messages ?? 'everyone' as 'everyone' | 'verified' | 'nobody',
+  });
+
+  const handleSavePrivacy = async () => {
+    setPrivacySaving(true);
+    try {
+      const result = await updatePrivacySettings(privacySettings);
+      if (result.success) {
+        toast.success(t('settingsSaved'));
+        await refreshProfile();
+      } else {
+        toast.error(t('settingsError'), { description: result.error });
+      }
+    } catch {
+      toast.error(t('settingsError'));
+    } finally {
+      setPrivacySaving(false);
+    }
+  };
+
+  // --- Verification ---
+  const [verLoading, setVerLoading] = useState(true);
+  const [verSubmitting, setVerSubmitting] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [verification, setVerification] = useState<any>(null);
+  const [verType, setVerType] = useState<'escort' | 'moderator'>('escort');
+  const [verCode, setVerCode] = useState('');
+  const [verPhotoUrl, setVerPhotoUrl] = useState('');
+  const [verFullName, setVerFullName] = useState('');
+  const [verContactInfo, setVerContactInfo] = useState('');
+  const [verExperience, setVerExperience] = useState('');
+  const [verMotivation, setVerMotivation] = useState('');
+  const [verAvailability, setVerAvailability] = useState('');
+  const [verLanguages, setVerLanguages] = useState('');
+  const [codeCopied, setCodeCopied] = useState(false);
+
+  const fetchVerification = useCallback(async () => {
+    if (!profile?.id) return;
+    setVerLoading(true);
+    const { data } = await supabase
+      .from('verifications')
+      .select('*')
+      .eq('user_id', profile.id)
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle();
+    setVerification(data);
+    setVerLoading(false);
+  }, [profile?.id]);
+
+  useEffect(() => {
+    fetchVerification();
+  }, [fetchVerification]);
+
+  const generateCode = () => {
+    const code = `TSR-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+    setVerCode(code);
+  };
+
+  const copyCode = () => {
+    navigator.clipboard.writeText(verCode);
+    setCodeCopied(true);
+    toast.success(t('verCopied'));
+    setTimeout(() => setCodeCopied(false), 2000);
+  };
+
+  const handleVerSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setVerSubmitting(true);
+    try {
+      const langs = verLanguages.split(',').map(l => l.trim()).filter(Boolean);
+      const result = await submitVerificationRequest({
+        verification_type: verType,
+        photo_url: verPhotoUrl || undefined,
+        code: verCode || undefined,
+        full_name: verFullName || undefined,
+        contact_info: verContactInfo || undefined,
+        experience: verExperience || undefined,
+        languages: langs.length ? langs : undefined,
+        motivation: verMotivation || undefined,
+        availability: verAvailability || undefined,
+      });
+      if (result.success) {
+        toast.success(t('verSent'), { description: t('verSentDesc') });
+        fetchVerification();
+        setVerPhotoUrl('');
+        setVerCode('');
+        setVerFullName('');
+        setVerContactInfo('');
+        setVerExperience('');
+        setVerMotivation('');
+        setVerAvailability('');
+        setVerLanguages('');
+      } else {
+        toast.error(t('verError'), { description: result.error });
+      }
+    } catch {
+      toast.error(t('verError'));
+    } finally {
+      setVerSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* --- NOTIFICATIONS --- */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Bell className="h-5 w-5 text-[hsl(var(--forum-accent))]" />
+            {t('notifications')}
+          </CardTitle>
+          <CardDescription>{t('notificationsDesc')}</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-5">
+          <div className="space-y-4">
+            <h4 className="text-sm font-semibold forum-text-secondary">{t('notifInApp')}</h4>
+            {([
+              ['notify_replies', t('notifReplies'), t('notifRepliesDesc')],
+              ['notify_mentions', t('notifMentions'), t('notifMentionsDesc')],
+              ['notify_messages', t('notifMessages'), t('notifMessagesDesc')],
+              ['notify_follows', t('notifFollows'), t('notifFollowsDesc')],
+            ] as const).map(([key, label, desc]) => (
+              <div key={key} className="flex items-center justify-between py-2">
+                <div>
+                  <p className="text-sm font-medium">{label}</p>
+                  <p className="text-xs forum-text-muted">{desc}</p>
+                </div>
+                <Switch
+                  checked={notifSettings[key]}
+                  onCheckedChange={(v) => setNotifSettings({ ...notifSettings, [key]: v })}
+                />
+              </div>
+            ))}
+          </div>
+
+          <div className="border-t border-[hsl(var(--forum-border))] pt-4 space-y-4">
+            <h4 className="text-sm font-semibold forum-text-secondary">{t('notifEmail')}</h4>
+            {([
+              ['notify_email_replies', t('notifEmailReplies'), t('notifEmailRepliesDesc')],
+              ['notify_email_messages', t('notifEmailMessages'), t('notifEmailMessagesDesc')],
+            ] as const).map(([key, label, desc]) => (
+              <div key={key} className="flex items-center justify-between py-2">
+                <div>
+                  <p className="text-sm font-medium">{label}</p>
+                  <p className="text-xs forum-text-muted">{desc}</p>
+                </div>
+                <Switch
+                  checked={notifSettings[key]}
+                  onCheckedChange={(v) => setNotifSettings({ ...notifSettings, [key]: v })}
+                />
+              </div>
+            ))}
+          </div>
+
+          <Button
+            onClick={handleSaveNotifications}
+            disabled={notifSaving}
+            className="bg-[hsl(var(--forum-accent))] hover:bg-[hsl(var(--forum-accent-hover))]"
+          >
+            {notifSaving ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" />{t('saving')}</> : t('saveChanges')}
+          </Button>
+        </CardContent>
+      </Card>
+
+      {/* --- PRIVACY --- */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Lock className="h-5 w-5 text-[hsl(var(--forum-accent))]" />
+            {t('privacy')}
+          </CardTitle>
+          <CardDescription>{t('privacyDesc')}</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-5">
+          {([
+            ['privacy_show_online', t('privShowOnline'), t('privShowOnlineDesc')],
+            ['privacy_show_activity', t('privShowActivity'), t('privShowActivityDesc')],
+            ['privacy_show_profile', t('privShowProfile'), t('privShowProfileDesc')],
+          ] as const).map(([key, label, desc]) => (
+            <div key={key} className="flex items-center justify-between py-2">
+              <div>
+                <p className="text-sm font-medium">{label}</p>
+                <p className="text-xs forum-text-muted">{desc}</p>
+              </div>
+              <Switch
+                checked={privacySettings[key] as boolean}
+                onCheckedChange={(v) => setPrivacySettings({ ...privacySettings, [key]: v })}
+              />
+            </div>
+          ))}
+
+          <div className="border-t border-[hsl(var(--forum-border))] pt-4">
+            <div className="space-y-2">
+              <Label className="text-sm font-medium">{t('privAllowMessages')}</Label>
+              <p className="text-xs forum-text-muted">{t('privAllowMessagesDesc')}</p>
+              <select
+                value={privacySettings.privacy_allow_messages}
+                onChange={(e) => setPrivacySettings({ ...privacySettings, privacy_allow_messages: e.target.value as 'everyone' | 'verified' | 'nobody' })}
+                className="w-full sm:w-64 rounded-md border border-[hsl(var(--forum-border))] bg-[hsl(var(--forum-surface))] px-3 py-2 text-sm"
+              >
+                <option value="everyone">{t('privMsgEveryone')}</option>
+                <option value="verified">{t('privMsgVerified')}</option>
+                <option value="nobody">{t('privMsgNobody')}</option>
+              </select>
+            </div>
+          </div>
+
+          <Button
+            onClick={handleSavePrivacy}
+            disabled={privacySaving}
+            className="bg-[hsl(var(--forum-accent))] hover:bg-[hsl(var(--forum-accent-hover))]"
+          >
+            {privacySaving ? <><Loader2 className="h-4 w-4 mr-2 animate-spin" />{t('saving')}</> : t('saveChanges')}
+          </Button>
+        </CardContent>
+      </Card>
+
+      {/* --- VERIFICATION --- */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Shield className="h-5 w-5 text-[hsl(var(--forum-accent))]" />
+            {t('verification')}
+          </CardTitle>
+          <CardDescription>{t('verificationDesc')}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          {profile.is_verified ? (
+            <div className="flex items-center gap-3 p-4 bg-green-500/10 border border-green-500/30 rounded-lg">
+              <Check className="h-6 w-6 text-green-500 flex-shrink-0" />
+              <div>
+                <p className="font-semibold text-green-700 dark:text-green-400">{t('verAlreadyVerified')}</p>
+                <p className="text-sm forum-text-muted">{t('verAlreadyVerifiedDesc')}</p>
+              </div>
+            </div>
+          ) : verLoading ? (
+            <div className="flex items-center justify-center py-8">
+              <Loader2 className="h-6 w-6 animate-spin forum-text-muted" />
+            </div>
+          ) : verification?.status === 'pending' ? (
+            <div className="space-y-3">
+              <div className="flex items-center gap-3 p-4 bg-yellow-500/10 border border-yellow-500/30 rounded-lg">
+                <Clock className="h-6 w-6 text-yellow-500 flex-shrink-0" />
+                <div>
+                  <p className="font-semibold text-yellow-700 dark:text-yellow-400">{t('verPending')}</p>
+                  <p className="text-sm forum-text-muted">{t('verPendingDesc')}</p>
+                </div>
+              </div>
+              {verification.code && (
+                <div className="p-3 bg-[hsl(var(--forum-surface-alt))] border border-[hsl(var(--forum-border))] rounded text-sm">
+                  <span className="forum-text-muted">{t('verCodeLabel')}:</span>{' '}
+                  <span className="font-mono font-semibold">{verification.code}</span>
+                </div>
+              )}
+              <p className="text-xs forum-text-muted">{t('verEstimatedTime')}</p>
+            </div>
+          ) : verification?.status === 'rejected' ? (
+            <div className="space-y-4">
+              <div className="flex items-center gap-3 p-4 bg-red-500/10 border border-red-500/30 rounded-lg">
+                <X className="h-6 w-6 text-red-500 flex-shrink-0" />
+                <div>
+                  <p className="font-semibold text-red-700 dark:text-red-400">{t('verRejected')}</p>
+                  <p className="text-sm forum-text-muted">
+                    {verification.rejection_reason || t('verRejectedDefault')}
+                  </p>
+                </div>
+              </div>
+              <VerificationForm
+                t={t}
+                profile={profile}
+                verType={verType}
+                setVerType={setVerType}
+                verCode={verCode}
+                generateCode={generateCode}
+                copyCode={copyCode}
+                codeCopied={codeCopied}
+                verPhotoUrl={verPhotoUrl}
+                setVerPhotoUrl={setVerPhotoUrl}
+                verFullName={verFullName}
+                setVerFullName={setVerFullName}
+                verContactInfo={verContactInfo}
+                setVerContactInfo={setVerContactInfo}
+                verExperience={verExperience}
+                setVerExperience={setVerExperience}
+                verMotivation={verMotivation}
+                setVerMotivation={setVerMotivation}
+                verAvailability={verAvailability}
+                setVerAvailability={setVerAvailability}
+                verLanguages={verLanguages}
+                setVerLanguages={setVerLanguages}
+                verSubmitting={verSubmitting}
+                handleVerSubmit={handleVerSubmit}
+              />
+            </div>
+          ) : (
+            <VerificationForm
+              t={t}
+              profile={profile}
+              verType={verType}
+              setVerType={setVerType}
+              verCode={verCode}
+              generateCode={generateCode}
+              copyCode={copyCode}
+              codeCopied={codeCopied}
+              verPhotoUrl={verPhotoUrl}
+              setVerPhotoUrl={setVerPhotoUrl}
+              verFullName={verFullName}
+              setVerFullName={setVerFullName}
+              verContactInfo={verContactInfo}
+              setVerContactInfo={setVerContactInfo}
+              verExperience={verExperience}
+              setVerExperience={setVerExperience}
+              verMotivation={verMotivation}
+              setVerMotivation={setVerMotivation}
+              verAvailability={verAvailability}
+              setVerAvailability={setVerAvailability}
+              verLanguages={verLanguages}
+              setVerLanguages={setVerLanguages}
+              verSubmitting={verSubmitting}
+              handleVerSubmit={handleVerSubmit}
+            />
+          )}
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function VerificationForm({ t, profile, verType, setVerType, verCode, generateCode, copyCode, codeCopied, verPhotoUrl, setVerPhotoUrl, verFullName, setVerFullName, verContactInfo, setVerContactInfo, verExperience, setVerExperience, verMotivation, setVerMotivation, verAvailability, setVerAvailability, verLanguages, setVerLanguages, verSubmitting, handleVerSubmit }: any) {
+  return (
+    <form onSubmit={handleVerSubmit} className="space-y-5">
+      {/* Type selector */}
+      <div className="space-y-2">
+        <Label className="text-sm font-semibold">{t('verSelectType')}</Label>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <button
+            type="button"
+            onClick={() => setVerType('escort')}
+            className={`p-4 rounded-lg border-2 text-left transition-all ${
+              verType === 'escort'
+                ? 'border-[hsl(var(--forum-accent))] bg-[hsl(var(--forum-accent)/0.08)]'
+                : 'border-[hsl(var(--forum-border))] hover:border-[hsl(var(--forum-accent)/0.5)]'
+            }`}
+          >
+            <div className="flex items-center gap-2 mb-1">
+              <Shield className="h-5 w-5 text-pink-500" />
+              <span className="font-semibold text-sm">{t('verTypeEscort')}</span>
+            </div>
+            <p className="text-xs forum-text-muted">{t('verTypeEscortDesc')}</p>
+          </button>
+          <button
+            type="button"
+            onClick={() => setVerType('moderator')}
+            className={`p-4 rounded-lg border-2 text-left transition-all ${
+              verType === 'moderator'
+                ? 'border-[hsl(var(--forum-accent))] bg-[hsl(var(--forum-accent)/0.08)]'
+                : 'border-[hsl(var(--forum-border))] hover:border-[hsl(var(--forum-accent)/0.5)]'
+            }`}
+          >
+            <div className="flex items-center gap-2 mb-1">
+              <Shield className="h-5 w-5 text-blue-500" />
+              <span className="font-semibold text-sm">{t('verTypeMod')}</span>
+            </div>
+            <p className="text-xs forum-text-muted">{t('verTypeModDesc')}</p>
+          </button>
+        </div>
+      </div>
+
+      {/* --- ESCORT FORM --- */}
+      {verType === 'escort' && (
+        <div className="space-y-4 border-t border-[hsl(var(--forum-border))] pt-4">
+          <div className="p-3 bg-[hsl(var(--forum-surface-alt))] border border-[hsl(var(--forum-border))] rounded-lg">
+            <h4 className="text-sm font-semibold mb-1">{t('verEscortTitle')}</h4>
+            <p className="text-xs forum-text-muted">{t('verEscortInstructions')}</p>
+          </div>
+
+          {/* Step 1: Generate code */}
+          <div className="space-y-2">
+            <Label className="font-semibold text-sm">{t('verStep1')}</Label>
+            <p className="text-xs forum-text-muted">
+              {t('verStep1Desc', { username: profile.username })}
+            </p>
+            {!verCode ? (
+              <Button type="button" onClick={generateCode} variant="outline" size="sm">
+                {t('verGenerateCode')}
+              </Button>
+            ) : (
+              <div className="flex items-center gap-2 p-3 bg-[hsl(var(--forum-surface-alt))] border-2 border-[hsl(var(--forum-accent))] rounded-lg">
+                <span className="text-lg font-mono font-bold flex-1">{verCode}</span>
+                <Button type="button" variant="outline" size="sm" onClick={copyCode}>
+                  {codeCopied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                </Button>
+              </div>
+            )}
+          </div>
+
+          {verCode && (
+            <>
+              {/* Step 2: Photo instructions */}
+              <div className="space-y-2">
+                <Label className="font-semibold text-sm">{t('verStep2')}</Label>
+                <p className="text-xs forum-text-muted">{t('verStep2Desc')}</p>
+                <ul className="text-xs forum-text-muted list-disc list-inside space-y-1 ml-2">
+                  <li>{t('verStep2Item1', { code: verCode })}</li>
+                  <li>{t('verStep2Item2', { username: profile.username })}</li>
+                  <li>{t('verStep2Item3', { date: new Date().toLocaleDateString() })}</li>
+                </ul>
+              </div>
+
+              {/* Step 3: Photo URL */}
+              <div className="space-y-2">
+                <Label htmlFor="verPhotoUrl" className="font-semibold text-sm">{t('verStep3')}</Label>
+                <p className="text-xs forum-text-muted">{t('verStep3Desc')}</p>
+                <Input
+                  id="verPhotoUrl"
+                  type="url"
+                  placeholder="https://imgur.com/..."
+                  value={verPhotoUrl}
+                  onChange={(e) => setVerPhotoUrl(e.target.value)}
+                  disabled={verSubmitting}
+                  required
+                />
+              </div>
+
+              {/* Optional: contact info */}
+              <div className="space-y-2">
+                <Label htmlFor="verContactInfo" className="text-sm">{t('verContactInfo')}</Label>
+                <Input
+                  id="verContactInfo"
+                  placeholder={t('verContactInfoPlaceholder')}
+                  value={verContactInfo}
+                  onChange={(e) => setVerContactInfo(e.target.value)}
+                  disabled={verSubmitting}
+                />
+              </div>
+            </>
+          )}
+        </div>
+      )}
+
+      {/* --- MODERATOR FORM --- */}
+      {verType === 'moderator' && (
+        <div className="space-y-4 border-t border-[hsl(var(--forum-border))] pt-4">
+          <div className="p-3 bg-[hsl(var(--forum-surface-alt))] border border-[hsl(var(--forum-border))] rounded-lg">
+            <h4 className="text-sm font-semibold mb-1">{t('verModTitle')}</h4>
+            <p className="text-xs forum-text-muted">{t('verModInstructions')}</p>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="verFullName" className="text-sm">{t('verFullName')} *</Label>
+            <Input
+              id="verFullName"
+              placeholder={t('verFullNamePlaceholder')}
+              value={verFullName}
+              onChange={(e) => setVerFullName(e.target.value)}
+              disabled={verSubmitting}
+              required
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="verMotivation" className="text-sm">{t('verMotivation')} *</Label>
+            <Textarea
+              id="verMotivation"
+              placeholder={t('verMotivationPlaceholder')}
+              value={verMotivation}
+              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setVerMotivation(e.target.value)}
+              disabled={verSubmitting}
+              rows={3}
+              required
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="verExperience" className="text-sm">{t('verExperience')} *</Label>
+            <Textarea
+              id="verExperience"
+              placeholder={t('verExperiencePlaceholder')}
+              value={verExperience}
+              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setVerExperience(e.target.value)}
+              disabled={verSubmitting}
+              rows={3}
+              required
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="verLanguages" className="text-sm">{t('verLanguages')}</Label>
+            <Input
+              id="verLanguages"
+              placeholder={t('verLanguagesPlaceholder')}
+              value={verLanguages}
+              onChange={(e) => setVerLanguages(e.target.value)}
+              disabled={verSubmitting}
+            />
+            <p className="text-xs forum-text-muted">{t('verLanguagesHint')}</p>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="verAvailability" className="text-sm">{t('verAvailability')}</Label>
+            <Input
+              id="verAvailability"
+              placeholder={t('verAvailabilityPlaceholder')}
+              value={verAvailability}
+              onChange={(e) => setVerAvailability(e.target.value)}
+              disabled={verSubmitting}
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="verContactMod" className="text-sm">{t('verContactInfo')}</Label>
+            <Input
+              id="verContactMod"
+              placeholder={t('verContactModPlaceholder')}
+              value={verContactInfo}
+              onChange={(e) => setVerContactInfo(e.target.value)}
+              disabled={verSubmitting}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Submit */}
+      {((verType === 'escort' && verCode) || verType === 'moderator') && (
+        <Button
+          type="submit"
+          disabled={verSubmitting}
+          className="w-full bg-[hsl(var(--forum-accent))] hover:bg-[hsl(var(--forum-accent-hover))]"
+        >
+          {verSubmitting ? (
+            <><Loader2 className="h-4 w-4 mr-2 animate-spin" />{t('verSubmitting')}</>
+          ) : (
+            t('verSubmitRequest')
+          )}
+        </Button>
+      )}
+    </form>
   );
 }
 
@@ -399,41 +980,7 @@ export default function MiCuentaPage() {
               </TabsContent>
 
               <TabsContent value="configuracion">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>{t('settings')}</CardTitle>
-                    <CardDescription>
-                      {t('accountSettings')}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      <div className="p-4 border border-[hsl(var(--forum-border))] rounded">
-                        <h3 className="font-semibold mb-2">{t('notifications')}</h3>
-                        <p className="text-sm forum-text-muted">
-                          {t('notificationsDesc')}
-                        </p>
-                      </div>
-
-                      <div className="p-4 border border-[hsl(var(--forum-border))] rounded">
-                        <h3 className="font-semibold mb-2">{t('privacy')}</h3>
-                        <p className="text-sm forum-text-muted">
-                          {t('privacyDesc')}
-                        </p>
-                      </div>
-
-                      <div className="p-4 border border-[hsl(var(--forum-border))] rounded">
-                        <h3 className="font-semibold mb-2">{t('verification')}</h3>
-                        <p className="text-sm forum-text-muted mb-3">
-                          {t('verificationDesc')}
-                        </p>
-                        <Button variant="outline" size="sm" asChild>
-                          <a href="/verificacion">{t('requestVerification')}</a>
-                        </Button>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                <SettingsTab profile={profile} refreshProfile={refreshProfile} />
               </TabsContent>
             </Tabs>
           </main>

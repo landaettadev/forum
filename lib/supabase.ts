@@ -44,6 +44,18 @@ export type Profile = {
   escort_verified_by: string | null;
   last_seen_at: string;
   created_at: string;
+  // Notification preferences
+  notify_replies: boolean;
+  notify_mentions: boolean;
+  notify_messages: boolean;
+  notify_follows: boolean;
+  notify_email_replies: boolean;
+  notify_email_messages: boolean;
+  // Privacy preferences
+  privacy_show_online: boolean;
+  privacy_show_activity: boolean;
+  privacy_show_profile: boolean;
+  privacy_allow_messages: 'everyone' | 'verified' | 'nobody';
 };
 
 export type Category = {
