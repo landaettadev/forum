@@ -245,7 +245,7 @@ BEGIN
   FROM posts WHERE id = NEW.post_id;
   
   SELECT username INTO v_reactor_name FROM profiles WHERE id = NEW.user_id;
-  SELECT emoji INTO v_emoji FROM reaction_types WHERE id = NEW.reaction_type_id;
+  SELECT emoji INTO v_emoji FROM reaction_types WHERE id = NEW.reaction_type;
 
   IF v_post_author IS NOT NULL AND v_post_author != NEW.user_id THEN
     PERFORM create_notification(

@@ -10,16 +10,16 @@ export function RulesContent() {
   const t = useTranslations('rules');
 
   const rules = [
-    { id: 'respect', icon: Heart, color: 'text-pink-500' },
-    { id: 'adults', icon: UserX, color: 'text-red-500' },
-    { id: 'content', icon: FileWarning, color: 'text-orange-500' },
-    { id: 'privacy', icon: Lock, color: 'text-blue-500' },
-    { id: 'safety', icon: Shield, color: 'text-green-500' },
-    { id: 'verification', icon: BadgeCheck, color: 'text-cyan-500' },
-    { id: 'legal', icon: Scale, color: 'text-purple-500' },
-    { id: 'noExploitation', icon: Ban, color: 'text-red-600' },
-    { id: 'discretion', icon: Eye, color: 'text-indigo-500' },
-    { id: 'reports', icon: Flag, color: 'text-yellow-500' },
+    { id: 'respect', icon: Heart, color: 'text-rose-400/70' },
+    { id: 'adults', icon: UserX, color: 'text-red-400/60' },
+    { id: 'content', icon: FileWarning, color: 'text-amber-500/70' },
+    { id: 'privacy', icon: Lock, color: 'text-slate-400' },
+    { id: 'safety', icon: Shield, color: 'text-emerald-500/70' },
+    { id: 'verification', icon: BadgeCheck, color: 'text-amber-500/60' },
+    { id: 'legal', icon: Scale, color: 'text-indigo-400/70' },
+    { id: 'noExploitation', icon: Ban, color: 'text-red-400/70' },
+    { id: 'discretion', icon: Eye, color: 'text-stone-400' },
+    { id: 'reports', icon: Flag, color: 'text-amber-600/70' },
   ];
 
   return (

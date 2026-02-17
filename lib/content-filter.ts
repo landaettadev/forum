@@ -66,7 +66,7 @@ export async function getContentFilters(): Promise<ContentFilter[]> {
 
   cachedFilters = data || [];
   cacheTime = now;
-  return cachedFilters;
+  return cachedFilters as ContentFilter[];
 }
 
 export function invalidateFilterCache() {

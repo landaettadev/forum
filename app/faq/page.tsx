@@ -19,9 +19,9 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
         <ChevronDown className={`h-5 w-5 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
       </button>
       {isOpen && (
-        <div className="px-6 pb-4 forum-text-secondary">
-          {answer}
-        </div>
+        <div className="px-6 pb-4 forum-text-secondary [&_a]:text-[hsl(var(--forum-accent))] [&_a]:underline [&_a]:hover:opacity-80"
+          dangerouslySetInnerHTML={{ __html: answer }}
+        />
       )}
     </div>
   );
@@ -43,7 +43,7 @@ export default function FAQPage() {
         </div>
 
         <div className="space-y-2">
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((n) => (
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((n) => (
             <FAQItem key={n} question={t(`q${n}`)} answer={t(`a${n}`)} />
           ))}
         </div>

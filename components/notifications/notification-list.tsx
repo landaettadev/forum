@@ -36,14 +36,14 @@ type NotificationListProps = {
 const NOTIFICATION_ICONS: Record<string, React.ReactNode> = {
   mention: <AtSign className="h-4 w-4 text-blue-500" />,
   reply: <MessageSquare className="h-4 w-4 text-green-500" />,
-  quote: <Quote className="h-4 w-4 text-purple-500" />,
+  quote: <Quote className="h-4 w-4 text-indigo-500" />,
   thanks: <ThumbsUp className="h-4 w-4 text-yellow-500" />,
   reaction: <Heart className="h-4 w-4 text-red-500" />,
   new_badge: <Award className="h-4 w-4 text-orange-500" />,
   reputation: <TrendingUp className="h-4 w-4 text-emerald-500" />,
   private_message: <Mail className="h-4 w-4 text-indigo-500" />,
-  thread_reply: <MessageSquare className="h-4 w-4 text-cyan-500" />,
-  follow: <Bell className="h-4 w-4 text-pink-500" />,
+  thread_reply: <MessageSquare className="h-4 w-4 text-slate-400" />,
+  follow: <Bell className="h-4 w-4 text-amber-600" />,
 };
 
 export function NotificationList({ onMarkAllRead, onClose }: NotificationListProps) {

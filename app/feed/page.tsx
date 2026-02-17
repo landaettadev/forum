@@ -20,29 +20,44 @@ export const metadata = genMeta({
 export default async function FeedPage() {
   const supabase = createServerSupabaseClient();
 
-  // Trending threads (most replies in last 7 days)
+  // Trending threads (most replies in last 7 days) with forum info
   const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
 
   const { data: trending } = await supabase
     .from('threads')
-    .select('id, title, replies_count, views_count, last_post_at, created_at, author:profiles!threads_author_id_fkey(username, avatar_url), region:regions(name, country:countries(name_es, flag_emoji))')
+    .select(`
+      id, title, slug, replies_count, views_count, last_post_at, created_at, 
+      author:profiles!threads_author_id_fkey(username, avatar_url, role, is_verified, is_vip),
+      region:regions(name, slug, country:countries(name_es, slug, flag_emoji)),
+      forum:forums(id, name, slug)
+    `)
     .gte('last_post_at', sevenDaysAgo)
     .order('replies_count', { ascending: false })
     .limit(10);
 
-  // Recent threads
+  // Recent threads with forum info
   const { data: recent } = await supabase
     .from('threads')
-    .select('id, title, replies_count, views_count, last_post_at, created_at, author:profiles!threads_author_id_fkey(username, avatar_url), region:regions(name, country:countries(name_es, flag_emoji))')
+    .select(`
+      id, title, slug, replies_count, views_count, last_post_at, created_at,
+      author:profiles!threads_author_id_fkey(username, avatar_url, role, is_verified, is_vip),
+      region:regions(name, slug, country:countries(name_es, slug, flag_emoji)),
+      forum:forums(id, name, slug)
+    `)
     .order('created_at', { ascending: false })
     .limit(15);
 
-  // Hot threads (most views in last 24 hours)
+  // Hot threads (most views in last 24 hours) with forum info
   const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
 
   const { data: hot } = await supabase
     .from('threads')
-    .select('id, title, replies_count, views_count, last_post_at, created_at, author:profiles!threads_author_id_fkey(username, avatar_url), region:regions(name, country:countries(name_es, flag_emoji))')
+    .select(`
+      id, title, slug, replies_count, views_count, last_post_at, created_at,
+      author:profiles!threads_author_id_fkey(username, avatar_url, role, is_verified, is_vip),
+      region:regions(name, slug, country:countries(name_es, slug, flag_emoji)),
+      forum:forums(id, name, slug)
+    `)
     .gte('last_post_at', oneDayAgo)
     .order('views_count', { ascending: false })
     .limit(10);
@@ -124,14 +139,28 @@ function FeedSection({
         {threads.map((thread) => {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const region = thread.region as any;
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const forum = thread.forum as any;
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const author = thread.author as any;
+          
           const location = region?.name
             ? `${region.country?.flag_emoji || ''} ${region.name}`.trim()
             : null;
+          
+          // Build thread URL
+          let threadUrl = `/hilo/${thread.id}`;
+          if (region?.country?.slug && region?.slug && thread.slug) {
+            threadUrl = `/foros/${region.country.slug}/${region.slug}/${thread.slug}`;
+          }
+          
+          // Get forum link
+          const forumUrl = forum?.slug ? `/foro/${forum.slug}` : null;
 
           return (
             <Link
               key={thread.id}
-              href={`/hilo/${thread.id}`}
+              href={threadUrl}
               className="block forum-surface rounded-lg p-3 hover:bg-[hsl(var(--forum-surface-alt))] transition-colors group"
             >
               <div className="flex items-start justify-between gap-3">
@@ -139,8 +168,30 @@ function FeedSection({
                   <h3 className="text-sm font-medium group-hover:text-[hsl(var(--forum-accent))] transition-colors line-clamp-1">
                     {thread.title}
                   </h3>
-                  <div className="flex items-center gap-3 mt-1 text-xs text-muted-foreground">
-                    <span>por @{thread.author?.username}</span>
+                  <div className="flex items-center gap-2 mt-1.5 text-xs text-muted-foreground flex-wrap">
+                    {/* Forum badge */}
+                    {forum?.name && (
+                      <Link 
+                        href={forumUrl || '#'}
+                        onClick={(e) => e.stopPropagation()}
+                        className="px-1.5 py-0.5 rounded bg-[hsl(var(--forum-accent)/0.15)] text-[hsl(var(--forum-accent))] font-medium hover:bg-[hsl(var(--forum-accent)/0.25)] transition-colors"
+                      >
+                        {forum.name}
+                      </Link>
+                    )}
+                    {/* Author with badges */}
+                    <span className="flex items-center gap-1">
+                      por @{author?.username}
+                      {author?.role === 'admin' && (
+                        <span className="text-[10px] px-1 rounded bg-red-500/20 text-red-400">Admin</span>
+                      )}
+                      {author?.role === 'mod' && (
+                        <span className="text-[10px] px-1 rounded bg-blue-500/20 text-blue-400">Mod</span>
+                      )}
+                      {author?.is_verified && (
+                        <span className="text-[10px] px-1 rounded bg-emerald-500/20 text-emerald-400">Verif</span>
+                      )}
+                    </span>
                     {location && <span>{location}</span>}
                     <span>{formatDistanceToNow(new Date(thread.last_post_at || thread.created_at), { addSuffix: true, locale: es })}</span>
                   </div>

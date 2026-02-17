@@ -11,9 +11,11 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSepara
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from '@/components/ui/sheet';
 import { Search, User, LogOut, Settings, MessageSquare, Shield, Bookmark, Megaphone, Bell, Flame, ShoppingBag, Menu, Home, BookOpen } from 'lucide-react';
+import Image from 'next/image';
 import { LanguageSwitcher } from '@/components/language-switcher';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { NotificationsDropdown } from '@/components/notifications/notifications-dropdown';
+import { MessagesButton } from '@/components/messages/messages-button';
 
 export function Header() {
   const { user, profile, signOut } = useAuth();
@@ -34,36 +36,55 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 backdrop-blur-xl border-b border-[hsl(var(--forum-border))]/50" style={{ background: 'hsl(var(--forum-surface) / 0.8)' }}>
+    <header className="sticky top-0 z-50 backdrop-blur-xl" style={{ background: 'hsl(var(--forum-surface) / 0.85)' }}>
+      {/* Animated bottom border line */}
+      <div className="absolute bottom-0 left-0 right-0 h-[1px] overflow-hidden">
+        <div className="absolute inset-0 bg-[hsl(var(--forum-border))]" style={{ opacity: 0.5 }} />
+        <div 
+          className="absolute top-0 h-full w-[15%]"
+          style={{
+            background: 'linear-gradient(90deg, transparent, hsl(var(--forum-accent) / 0.6), hsl(var(--forum-sweep-flash) / 0.4), hsl(var(--forum-accent) / 0.6), transparent)',
+            animation: 'line-light-sweep 8s ease-in-out infinite',
+          }}
+        />
+      </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-8">
-            <Link href="/" className="flex items-center gap-2.5 group">
-              <div className="w-8 h-8 rounded-lg flex items-center justify-center forum-btn-gradient group-hover:scale-105 transition-transform">
-                <span className="text-white font-black text-sm">T</span>
-              </div>
-              <div className="text-xl font-extrabold forum-gradient-text tracking-tight">
+            <Link href="/" className="flex items-center group">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/logo.png"
+                alt="TS Rating"
+                className="h-16 sm:h-20 lg:h-24 w-auto scale-[1.15] sm:scale-[1.3] group-hover:scale-[1.2] transition-transform origin-left"
+                onError={(e) => {
+                  // Fallback to text if logo doesn't exist
+                  e.currentTarget.style.display = 'none';
+                  e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                }}
+              />
+              <span className="hidden text-xl font-extrabold forum-gradient-text tracking-tight">
                 TS Rating
-              </div>
+              </span>
             </Link>
 
             <nav className="hidden md:flex items-center gap-1">
-              <Link href="/" className="text-sm font-medium px-3 py-1.5 rounded-lg hover:bg-[hsl(var(--forum-accent-muted))] hover:text-[hsl(var(--forum-accent))] transition-all">
-                {t('common.home')}
+              <Link href="/" className="text-sm font-medium px-3 py-1.5 rounded-lg hover:bg-[hsl(var(--forum-accent-muted))] transition-all">
+                <span className="forum-hover-sweep">{t('common.home')}</span>
               </Link>
-              <Link href="/publicidad" className="text-sm font-medium px-3 py-1.5 rounded-lg hover:bg-[hsl(var(--forum-accent-muted))] hover:text-[hsl(var(--forum-accent))] transition-all flex items-center gap-1.5">
-                <Megaphone className="w-3.5 h-3.5" />
-                {t('nav.ads')}
+              <Link href="/publicidad" className="text-sm font-medium px-3 py-1.5 rounded-lg hover:bg-[hsl(var(--forum-accent-muted))] transition-all flex items-center gap-1.5 group">
+                <Megaphone className="w-3.5 h-3.5 group-hover:text-[hsl(var(--forum-link-hover))] transition-colors" />
+                <span className="forum-hover-sweep">{t('nav.ads')}</span>
               </Link>
-              <Link href="/feed" className="text-sm font-medium px-3 py-1.5 rounded-lg hover:bg-[hsl(var(--forum-accent-muted))] hover:text-[hsl(var(--forum-accent))] transition-all flex items-center gap-1.5">
-                <Flame className="w-3.5 h-3.5" />
-                Feed
+              <Link href="/feed" className="text-sm font-medium px-3 py-1.5 rounded-lg hover:bg-[hsl(var(--forum-accent-muted))] transition-all flex items-center gap-1.5 group">
+                <Flame className="w-3.5 h-3.5 group-hover:text-[hsl(var(--forum-link-hover))] transition-colors" />
+                <span className="forum-hover-sweep">Feed</span>
               </Link>
-              <Link href="/buscar" className="text-sm font-medium px-3 py-1.5 rounded-lg hover:bg-[hsl(var(--forum-accent-muted))] hover:text-[hsl(var(--forum-accent))] transition-all">
-                {t('common.search')}
+              <Link href="/buscar" className="text-sm font-medium px-3 py-1.5 rounded-lg hover:bg-[hsl(var(--forum-accent-muted))] transition-all">
+                <span className="forum-hover-sweep">{t('common.search')}</span>
               </Link>
-              <Link href="/reglas" className="text-sm font-medium px-3 py-1.5 rounded-lg hover:bg-[hsl(var(--forum-accent-muted))] hover:text-[hsl(var(--forum-accent))] transition-all">
-                {t('nav.rules')}
+              <Link href="/reglas" className="text-sm font-medium px-3 py-1.5 rounded-lg hover:bg-[hsl(var(--forum-accent-muted))] transition-all">
+                <span className="forum-hover-sweep">{t('nav.rules')}</span>
               </Link>
             </nav>
           </div>
@@ -79,7 +100,17 @@ export function Header() {
               <SheetContent side="left" className="w-72 p-0">
                 <div className="flex flex-col h-full">
                   <div className="p-4 border-b border-[hsl(var(--forum-border))]">
-                    <div className="text-lg font-extrabold forum-gradient-text">TS Rating</div>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src="/logo.png"
+                      alt="TS Rating"
+                      className="h-16 w-auto"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                        e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                      }}
+                    />
+                    <span className="hidden text-lg font-extrabold forum-gradient-text">TS Rating</span>
                   </div>
                   <nav className="flex-1 overflow-y-auto p-2 space-y-1">
                     <SheetClose asChild>
@@ -194,6 +225,7 @@ export function Header() {
             {user && profile ? (
               <>
                 <NotificationsDropdown userId={user.id} />
+                <MessagesButton />
 
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>

@@ -253,6 +253,7 @@
   "common": {
     "home": "ホーム",
     "search": "検索",
+    "searchIn": "{location}で検索",
     "login": "ログイン",
     "register": "登録",
     "logout": "ログアウト",
@@ -355,6 +356,80 @@
     "verification": "認証",
     "verificationDesc": "プライベートエリアへのアクセスにはアカウント認証が必要",
     "requestVerification": "認証申請",
+    "settingsSaved": "設定を保存しました",
+    "settingsError": "設定の保存に失敗しました",
+    "notifInApp": "アプリ内通知",
+    "notifReplies": "スレッドへの返信",
+    "notifRepliesDesc": "スレッドや投稿に返信があった時に通知を受け取る",
+    "notifMentions": "メンション",
+    "notifMentionsDesc": "@ユーザー名でメンションされた時に通知を受け取る",
+    "notifMessages": "プライベートメッセージ",
+    "notifMessagesDesc": "プライベートメッセージを受信した時に通知を受け取る",
+    "notifFollows": "新しいフォロワー",
+    "notifFollowsDesc": "誰かにフォローされた時に通知を受け取る",
+    "notifEmail": "メール通知",
+    "notifEmailReplies": "返信時にメール",
+    "notifEmailRepliesDesc": "スレッドに返信があった時にメールを受け取る",
+    "notifEmailMessages": "メッセージ時にメール",
+    "notifEmailMessagesDesc": "プライベートメッセージを受信した時にメールを受け取る",
+    "privShowOnline": "オンライン状態を表示",
+    "privShowOnlineDesc": "他のユーザーにオンライン状態を表示する",
+    "privShowActivity": "最近のアクティビティを表示",
+    "privShowActivityDesc": "他のユーザーにフォーラムでの活動を表示する",
+    "privShowProfile": "公開プロフィール",
+    "privShowProfileDesc": "未登録ユーザーにプロフィールを表示する",
+    "privAllowMessages": "メッセージを送信できるユーザー",
+    "privAllowMessagesDesc": "プライベートメッセージを送信できるユーザーを制御",
+    "privMsgEveryone": "全員",
+    "privMsgVerified": "認証済みユーザーのみ",
+    "privMsgNobody": "なし",
+    "verAlreadyVerified": "アカウント認証済み",
+    "verAlreadyVerifiedDesc": "アカウントは既に認証されています。フォーラムの全エリアにアクセスできます。",
+    "verPending": "申請審査中",
+    "verPendingDesc": "申請はモデレーションチームが審査中です。処理完了時に通知されます。",
+    "verCodeLabel": "認証コード",
+    "verEstimatedTime": "審査予定時間：24〜48時間",
+    "verRejected": "申請却下",
+    "verRejectedDefault": "申請が却下されました。指摘された問題を修正して再申請できます。",
+    "verCopied": "コードをクリップボードにコピーしました",
+    "verSent": "申請を送信しました",
+    "verSentDesc": "モデレーションチームが24〜48時間以内に審査します",
+    "verError": "申請の送信に失敗しました",
+    "verSelectType": "認証タイプ",
+    "verTypeEscort": "エスコート認証",
+    "verTypeEscortDesc": "認証写真で本物のエスコートであることを証明",
+    "verTypeMod": "モデレーター応募",
+    "verTypeModDesc": "コミュニティモデレーターに応募",
+    "verEscortTitle": "エスコート本人確認",
+    "verEscortInstructions": "アカウントを認証するには、固有コード、ユーザー名、本日の日付を書いた紙を持った写真を送信してください。",
+    "verStep1": "ステップ1：コードを生成",
+    "verStep1Desc": "ユーザー名（@{username}）と本日の日付と一緒に紙に書く固有コードを生成してください。",
+    "verGenerateCode": "コードを生成",
+    "verStep2": "ステップ2：写真を撮影",
+    "verStep2Desc": "以下が書かれた紙を持った鮮明な写真を撮影してください：",
+    "verStep2Item1": "あなたのコード：{code}",
+    "verStep2Item2": "ユーザー名：@{username}",
+    "verStep2Item3": "本日の日付：{date}",
+    "verStep3": "ステップ3：写真をアップロード",
+    "verStep3Desc": "Imgur、ImgBBなどのサービスに写真をアップロードし、URLをここに貼り付けてください：",
+    "verContactInfo": "連絡先情報（任意）",
+    "verContactInfoPlaceholder": "Telegram、WhatsApp、メール...",
+    "verModTitle": "モデレーター応募",
+    "verModInstructions": "モデレーターに応募するためにこのフォームに記入してください。フォーラムの品質を維持するための責任感のある活動的な方を探しています。",
+    "verFullName": "氏名",
+    "verFullNamePlaceholder": "あなたの氏名",
+    "verMotivation": "なぜモデレーターになりたいですか？",
+    "verMotivationPlaceholder": "フォーラムモデレーターになりたい動機を説明してください...",
+    "verExperience": "過去の経験",
+    "verExperiencePlaceholder": "他のフォーラムやコミュニティをモデレートした経験はありますか？...",
+    "verLanguages": "話せる言語",
+    "verLanguagesPlaceholder": "日本語、英語、スペイン語...",
+    "verLanguagesHint": "言語をカンマで区切ってください",
+    "verAvailability": "対応可能時間",
+    "verAvailabilityPlaceholder": "例：月〜金、18:00〜22:00 JST",
+    "verContactModPlaceholder": "連絡用のメールまたはTelegram",
+    "verSubmitting": "申請を送信中...",
+    "verSubmitRequest": "認証申請を送信",
     "avatarUpload": "アバターをアップロード",
     "avatarOrUrl": "またはURLを貼り付け",
     "avatarDragDrop": "画像をドラッグまたはクリックして選択",
@@ -404,7 +479,8 @@
     "registerHere": "ここで登録",
     "loginHere": "ここでログイン",
     "completeCaptcha": "セキュリティ認証を完了してください",
-    "captchaFailed": "セキュリティ認証に失敗しました。再試行してください"
+    "captchaFailed": "セキュリティ認証に失敗しました。再試行してください",
+    "usernameExists": "このユーザー名は既に使用されています"
   },
   "forum": {
     "title": "フォーラム",
@@ -537,7 +613,9 @@
     "visitsCount": "閲覧",
     "responsesCount": "返信",
     "unknownUser": "ユーザー",
-    "selectTagPlaceholder": "タグを選択"
+    "selectTagPlaceholder": "タグを選択",
+    "autopromotion": "自己PR",
+    "autopromoDesc": "{country}の認証済みエスコート向け自己PRセクション。認証済みエスコートのみスレッドを作成できます。"
   },
   "thread": {
     "createTitle": "新しいスレッドを作成",
@@ -843,21 +921,29 @@
     "noReputationData": "評判データなし",
     "moderators": "モデレーター",
     "noModerators": "モデレーター未配置",
+    "administrators": "管理者",
+    "superAdministrator": "スーパー管理者",
+    "generalModerator": "一般モデレーター",
     "advertising": "広告",
     "adminRole": "管理者",
     "modRole": "モデレーター",
-    "guests": "ゲスト"
+    "guests": "ゲスト",
+    "guest": "ゲスト",
+    "connected": "接続中"
   },
   "banners": {
     "adSpace": "広告スペース",
-    "advertiseHere": "ここに広告を出す"
+    "advertiseHere": "ここに広告を出す",
+    "posBeforeRelated": "関連前 — 返信と関連ディスカッションの間",
+    "posBeforeRelatedDesc": "スレッド内の返信と関連ディスカッションの間に表示。高エンゲージメント。"
   },
   "footer": {
     "description": "経験を共有しつながるプロフェッショナルコミュニティ。",
     "viewAllForums": "すべてのフォーラムを見る",
     "gallery": "マルチメディアギャラリー",
     "legal": "法的情報",
-    "rights": "全著作権所有。"
+    "rights": "全著作権所有。",
+    "developedBy": "フォーラム開発者"
   },
   "time": {
     "ago": "前"
@@ -1387,14 +1473,30 @@
     "roleSuperMod": "スーパーモデレーター",
     "roleVip": "VIP",
     "roleVerified": "認証済み",
-    "roleUser": "ユーザー"
+    "roleUser": "ユーザー",
+    "roleEscort": "エスコート"
   },
   "post": {
     "posts": "投稿",
     "registered": "登録",
     "edited": "編集済み",
     "report": "報告",
-    "edit": "編集"
+    "edit": "編集",
+    "save": "保存",
+    "saving": "保存中...",
+    "cancel": "キャンセル",
+    "editSuccess": "投稿を編集しました",
+    "editError": "投稿の編集エラー",
+    "advancedEdit": "詳細編集",
+    "advEditSuccess": "スレッドを編集しました",
+    "advEditError": "スレッドの編集エラー",
+    "delete": "削除",
+    "deleting": "削除中...",
+    "confirmDeletePost": "この投稿を削除してもよろしいですか？",
+    "confirmDeleteThread": "このスレッドを削除してもよろしいですか？",
+    "postDeleted": "投稿を削除しました",
+    "threadDeleted": "スレッドを削除しました",
+    "deleteError": "削除エラー"
   },
   "user": {
     "mustLoginToFollow": "ユーザーをフォローするにはログインしてください",
@@ -1640,7 +1742,11 @@
     "a10": "VIPステータスは優秀なコミュニティメンバーに付与されます。詳細は管理チームにお問い合わせください。",
     "notFound": "お探しのものが見つかりませんでしたか？",
     "notFoundDesc": "お問い合わせいただければお手伝いします",
-    "contactBtn": "お問い合わせ"
+    "contactBtn": "お問い合わせ",
+    "q11": "自己PRスレッドの作成方法は？",
+    "a11": "自己PRスレッドを作成するには、エスコートとして認証される必要があります。まず、<a href='/verificacion'>アカウントをエスコートとして認証</a>してください。認証後、サービスを提供する国に移動し、国ページ上部の<strong>自己PR</strong>セクションをクリックして、対応する都市を選択してスレッドを作成してください。認証済みエスコート、管理者、モデレーターのみがスレッドを作成できます。一般ユーザーはコメントできますが作成はできません。",
+    "q12": "エスコートとして認証される方法は？",
+    "a12": "<a href='/verificacion'>認証</a>ページに移動し、<strong>エスコート認証</strong>を選択してください。ユニークなコードを生成し、ユーザー名と今日の日付と共に紙に書き、それを持って写真を撮り、画像をアップロードする必要があります。モデレーションチームが24〜48時間以内にリクエストを審査します。承認されると、認証済みエスコートバッジを受け取り、<a href='https://tsrating.com'>tsrating.com</a>で自己PRスレッドを作成できるようになります。"
   },
   "cookiesPage": {
     "breadcrumb": "Cookieポリシー",
@@ -2248,7 +2354,8 @@
     "loginRequired": "ログインが必要です",
     "titleTooShort": "タイトルは5文字以上必要です",
     "contentTooShort": "コンテンツは10文字以上必要です",
-    "errorUpdatingPost": "投稿の更新エラー"
+    "errorUpdatingPost": "投稿の更新エラー",
+    "escortOnlyForum": "この自己PRフォーラムでは、認証済みエスコート、管理者、モデレーターのみがスレッドを作成できます。"
   },
   "publicidad": {
     "title": "広告を購入",
@@ -2459,5 +2566,13 @@
     "daysLeft": "残り{days}日",
     "noPreview": "画像なし",
     "createdAt": "購入日"
+  },
+  "metadata": {
+    "siteDescription": "ニューハーフ・シーメールのレビューフォーラム #1。認証レビュー、評価、リアル写真 2026年。",
+    "regionMetaTitle": "ニューハーフ {region} — レビューと評価",
+    "regionMetaDesc": "{country} {region}のニューハーフフォーラム。レビュー、評価、認証写真、TS Ratingでのリアルな体験。",
+    "regionPageDesc": "{country} {region}のニューハーフフォーラム。認証レビュー、テスターの意見、{year}年更新のリアル体験。TS Ratingコミュニティ。",
+    "countryPageDesc": "{country}のニューハーフフォーラム。認証レビュー、テスターの意見、{year}年更新のリアル体験。TS Ratingコミュニティ。",
+    "siteTitle": "TS Rating — ニューハーフレビュー・評価"
   }
 }

@@ -46,7 +46,7 @@ export function LeaderboardWidget({ countrySlug, countryName }: LeaderboardWidge
             .limit(5);
 
           if (error) throw error;
-          setUsers((data || []).map(u => ({
+          setUsers((data || []).map((u: { id: string; username: string; avatar_url: string | null; reputation: number | null; reputation_level: string | null }) => ({
             user_id: u.id,
             username: u.username,
             avatar_url: u.avatar_url,

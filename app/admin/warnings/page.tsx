@@ -92,7 +92,7 @@ export default function AdminWarningsPage() {
       .ilike('username', `%${escapeLikePattern(searchQuery)}%`);
 
     if (users && users.length > 0) {
-      const userIds = users.map(u => u.id);
+      const userIds = users.map((u: { id: string }) => u.id);
       const { data } = await supabase
         .from('user_warnings')
         .select(`

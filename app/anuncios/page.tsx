@@ -132,9 +132,9 @@ export default async function AnunciosPage({
 
           <div className="hidden lg:block w-80">
             <div className="space-y-4">
-              <BannerSlot position="sidebar" />
+              <BannerSlot position="sidebar_top" />
               <Sidebar />
-              <BannerSlot position="sidebar" />
+              <BannerSlot position="sidebar_bottom" />
             </div>
           </div>
         </div>

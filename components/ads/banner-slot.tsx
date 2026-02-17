@@ -38,10 +38,11 @@ const POSITION_MAP: Record<string, { bannerPos: BannerPosition; format: BannerFo
   sidebar_top: { bannerPos: 'sidebar_top', format: '300x250' },
   sidebar_bottom: { bannerPos: 'sidebar_bottom', format: '300x250' },
   content: { bannerPos: 'content', format: '728x90' },
+  before_related: { bannerPos: 'before_related', format: '728x90' },
 };
 
 interface BannerSlotProps {
-  position: 'header' | 'footer' | 'sidebar' | 'sidebar_top' | 'sidebar_bottom' | 'content';
+  position: 'header' | 'footer' | 'sidebar' | 'sidebar_top' | 'sidebar_bottom' | 'content' | 'before_related';
   zoneType?: 'home_country' | 'city';
   countryId?: string;
   regionId?: string;
@@ -61,13 +62,15 @@ export function BannerSlot({ position, zoneType, countryId, regionId, className 
   const mapping = POSITION_MAP[position] || POSITION_MAP.header;
 
   // Fixed dimensions prevent CLS (Cumulative Layout Shift) — Google Core Web Vitals
+  // Leaderboard (728x90) banners scale down responsively on mobile
   const dimensions: Record<string, string> = {
-    header: 'min-h-[90px] h-[90px] w-full max-w-[728px]',
-    footer: 'min-h-[90px] h-[90px] w-full max-w-[728px]',
+    header: 'min-h-[50px] sm:min-h-[90px] h-auto sm:h-[90px] w-full max-w-[728px]',
+    footer: 'min-h-[50px] sm:min-h-[90px] h-auto sm:h-[90px] w-full max-w-[728px]',
     sidebar: 'min-h-[250px] h-[250px] w-full max-w-[300px]',
     sidebar_top: 'min-h-[250px] h-[250px] w-full max-w-[300px]',
     sidebar_bottom: 'min-h-[250px] h-[250px] w-full max-w-[300px]',
-    content: 'min-h-[90px] h-[90px] w-full max-w-[728px]',
+    content: 'min-h-[50px] sm:min-h-[90px] h-auto sm:h-[90px] w-full max-w-[728px]',
+    before_related: 'min-h-[50px] sm:min-h-[90px] h-auto sm:h-[90px] w-full max-w-[728px]',
   };
 
   const fetchBanner = useCallback(async () => {
@@ -90,7 +93,7 @@ export function BannerSlot({ position, zoneType, countryId, regionId, className 
       if (zoneType === 'city' && regionId) {
         zoneQuery = zoneQuery.eq('region_id', regionId);
       } else {
-        zoneQuery = zoneQuery.is('region_id', null);
+        zoneQuery = zoneQuery.filter('region_id', 'is', 'null');
       }
 
       const { data: zone, error: zoneError } = await zoneQuery.single();

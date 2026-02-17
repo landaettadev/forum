@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { BookmarkButton } from './bookmark-button';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/auth-context';
-import { Pin, Lock, Eye, MessageCircle, Flame, Tag, User, Calendar, MapPin } from 'lucide-react';
+import { Pin, Lock, Eye, MessageCircle, Flame, Tag, User, Calendar } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 interface ThreadHeaderProps {
@@ -18,9 +18,6 @@ interface ThreadHeaderProps {
   tag?: string;
   authorUsername?: string;
   createdAt?: string;
-  forumName?: string;
-  regionName?: string;
-  countryName?: string;
 }
 
 export function ThreadHeader({
@@ -34,9 +31,6 @@ export function ThreadHeader({
   tag,
   authorUsername,
   createdAt,
-  forumName,
-  regionName,
-  countryName,
 }: ThreadHeaderProps) {
   const { user } = useAuth();
   const t = useTranslations('forum');
@@ -46,96 +40,98 @@ export function ThreadHeader({
     const checkBookmark = async () => {
       if (!user) return;
 
-      const { data } = await supabase
-        .from('thread_bookmarks')
-        .select('id')
-        .eq('thread_id', threadId)
-        .eq('user_id', user.id)
-        .single();
+      try {
+        const { data, error } = await supabase
+          .from('thread_bookmarks')
+          .select('id')
+          .eq('thread_id', threadId)
+          .eq('user_id', user.id)
+          .maybeSingle();
 
-      setIsBookmarked(!!data);
+        if (!error) {
+          setIsBookmarked(!!data);
+        }
+      } catch {
+        // Table may not exist yet
+      }
     };
 
     checkBookmark();
   }, [threadId, user]);
 
   const tagColors: Record<string, string> = {
-    review: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
-    ask: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
-    general: 'bg-slate-500/20 text-slate-400 border-slate-500/30',
+    review: 'bg-emerald-900/15 text-emerald-400/80 border-emerald-800/20',
+    ask: 'bg-slate-700/15 text-slate-400/80 border-slate-600/20',
+    general: 'bg-slate-700/15 text-slate-500/70 border-slate-600/20',
   };
 
   const tagLabels: Record<string, string> = {
     review: '⭐ Review',
     ask: '❓ Question',
-    general: '💬 Discussion',
+    general: '', // Empty - don't show in header, only in card
   };
-
-  const location = regionName
-    ? countryName ? `${regionName}, ${countryName}` : regionName
-    : countryName || forumName;
 
   return (
     <div className="mb-4">
       <div className="flex items-start justify-between gap-4">
         <div className="flex-1">
-          <div className="flex items-center gap-2 flex-wrap mb-2">
+          {/* Status badges — quiet, subdued */}
+          <div className="flex items-center gap-2 flex-wrap mb-3">
             {tag && tagLabels[tag] && (
-              <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium border ${tagColors[tag] || tagColors.general}`}>
-                <Tag className="h-3 w-3" />
+              <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-medium border ${tagColors[tag] || tagColors.general}`}>
+                <Tag className="h-2.5 w-2.5" />
                 {tagLabels[tag]}
               </span>
             )}
             {isPinned && (
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs bg-blue-500/20 text-blue-400">
-                <Pin className="h-3 w-3" />
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] bg-slate-700/15 text-slate-400/70 border border-slate-600/20">
+                <Pin className="h-2.5 w-2.5" />
                 {t('pinned')}
               </span>
             )}
             {isLocked && (
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs bg-red-500/20 text-red-400">
-                <Lock className="h-3 w-3" />
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] bg-red-900/15 text-red-400/60 border border-red-800/20">
+                <Lock className="h-2.5 w-2.5" />
                 {t('locked')}
               </span>
             )}
             {isHot && (
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs bg-orange-500/20 text-orange-400">
-                <Flame className="h-3 w-3" />
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] bg-amber-900/15 text-amber-500/60 border border-amber-800/20">
+                <Flame className="h-2.5 w-2.5" />
                 {t('hotTag')}
               </span>
             )}
           </div>
-          <h1 className="text-2xl font-bold">{title}</h1>
-          <div className="flex items-center gap-4 mt-2 text-sm forum-text-secondary flex-wrap">
+
+          <h1 className="text-lg sm:text-[22px] font-semibold tracking-tight leading-tight">{title}</h1>
+
+          {/* Meta stats — very quiet */}
+          <div className="flex items-center gap-2 sm:gap-3 mt-2 sm:mt-4 text-[11px] sm:text-[12px] forum-text-muted opacity-70 flex-wrap">
             <span className="flex items-center gap-1">
-              <Eye className="h-4 w-4" />
-              {viewsCount.toLocaleString()} {t('visitsCount')}
+              <Eye className="h-3.5 w-3.5 opacity-60" />
+              {viewsCount.toLocaleString()}
             </span>
+            <span className="opacity-30">·</span>
             <span className="flex items-center gap-1">
-              <MessageCircle className="h-4 w-4" />
-              {repliesCount} {t('responsesCount')}
+              <MessageCircle className="h-3.5 w-3.5 opacity-60" />
+              {repliesCount}
             </span>
             {authorUsername && (
-              <span className="flex items-center gap-1">
-                <User className="h-3.5 w-3.5" />
-                {authorUsername}
-              </span>
+              <>
+                <span className="opacity-30">·</span>
+                <span className="flex items-center gap-1">
+                  <User className="h-3 w-3 opacity-60" />
+                  {authorUsername}
+                </span>
+              </>
             )}
             {createdAt && (
-              <span className="flex items-center gap-1">
-                <Calendar className="h-3.5 w-3.5" />
-                <time dateTime={createdAt}>{new Date(createdAt).toLocaleDateString()}</time>
-              </span>
-            )}
-            {location && (
-              <span className="flex items-center gap-1">
-                <MapPin className="h-3.5 w-3.5" />
-                {location}
-              </span>
+              <>
+                <span className="opacity-30">·</span>
+                <time dateTime={createdAt} className="opacity-60">{new Date(createdAt).toLocaleDateString()}</time>
+              </>
             )}
           </div>
-          {/* Site attribution for SEO */}
-          <p className="text-xs forum-text-muted mt-1">TS Rating — Community Forum</p>
         </div>
         <BookmarkButton
           threadId={threadId}

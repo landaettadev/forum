@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { MessageSquare, Pin, Lock, TrendingUp } from 'lucide-react';
+import { MessageSquare, Pin, Lock, TrendingUp, Eye } from 'lucide-react';
 import { formatDistanceToNow, format, isToday, isYesterday } from 'date-fns';
 import { useLocale, useTranslations } from 'next-intl';
 import type { Thread, Profile } from '@/lib/supabase';
@@ -61,16 +61,16 @@ export function ThreadRow({ thread }: ThreadRowProps) {
   const showPages = totalPages > 1;
 
   return (
-    <div className="flex items-center hover:bg-[hsl(var(--forum-surface-hover))] transition-colors border-b border-[hsl(var(--forum-border))] last:border-b-0 px-4 py-3 gap-4">
+    <div className="flex items-center hover:bg-[hsl(var(--forum-surface-hover))] transition-colors border-b border-[hsl(var(--forum-border))] last:border-b-0 px-2.5 sm:px-4 py-2.5 sm:py-3 gap-2.5 sm:gap-4">
       {/* Author avatar */}
       <Link
         href={`/user/${thread.author?.username}`}
         className="flex-shrink-0"
         onClick={(e) => e.stopPropagation()}
       >
-        <Avatar className="h-10 w-10">
+        <Avatar className="h-8 w-8 sm:h-10 sm:w-10">
           <AvatarImage src={thread.author?.avatar_url || undefined} />
-          <AvatarFallback className="text-sm font-bold bg-[hsl(var(--forum-accent))] text-white">
+          <AvatarFallback className="text-xs sm:text-sm font-bold bg-[hsl(var(--forum-accent))] text-white">
             {(thread.author?.username || '?').substring(0, 1).toUpperCase()}
           </AvatarFallback>
         </Avatar>
@@ -89,13 +89,13 @@ export function ThreadRow({ thread }: ThreadRowProps) {
             <Lock className="h-4 w-4 forum-text-muted flex-shrink-0" />
           )}
           {thread.tag && <ThreadTag tag={thread.tag} />}
-          <h3 className="font-semibold text-[15px] hover:text-[hsl(var(--forum-accent))] transition-colors line-clamp-1">
+          <h3 className="font-semibold text-sm sm:text-[15px] line-clamp-1 forum-hover-sweep">
             {thread.title}
           </h3>
         </div>
 
-        <div className="flex items-center gap-2 mt-1 text-xs forum-text-secondary flex-wrap">
-          <span className="text-[hsl(var(--forum-accent))] font-medium">
+        <div className="flex items-center gap-1.5 sm:gap-2 mt-0.5 sm:mt-1 text-[11px] sm:text-xs forum-text-secondary flex-wrap">
+          <span className="text-[hsl(var(--forum-accent))] font-medium truncate max-w-[100px] sm:max-w-none">
             {thread.author?.username}
           </span>
           <CompactBadges 
@@ -118,9 +118,9 @@ export function ThreadRow({ thread }: ThreadRowProps) {
           />
           <span className="forum-text-muted">{format(new Date(thread.created_at), 'd MMM yyyy', { locale: dateLocale })}</span>
           
-          {/* Page numbers */}
+          {/* Page numbers — hide on mobile */}
           {showPages && (
-            <div className="flex items-center gap-0.5">
+            <div className="hidden sm:flex items-center gap-0.5">
               {Array.from({ length: Math.min(totalPages, 4) }, (_, i) => (
                 <span 
                   key={i} 
@@ -139,15 +139,21 @@ export function ThreadRow({ thread }: ThreadRowProps) {
         </div>
       </Link>
 
-      {/* Stats: Responses & Views */}
-      <div className="hidden md:flex items-center gap-0 flex-shrink-0">
-        <div className="w-24 text-center px-3">
-          <div className="text-[11px] forum-text-muted">{tForum('replies')}:</div>
-          <div className="font-bold text-sm">{thread.replies_count.toLocaleString()}</div>
+      {/* Stats: Responses & Views — compact on mobile, expanded on desktop */}
+      <div className="flex items-center gap-0 flex-shrink-0">
+        <div className="w-auto sm:w-24 text-center px-1.5 sm:px-3">
+          <div className="text-[10px] sm:text-[11px] forum-text-muted hidden sm:block">{tForum('replies')}:</div>
+          <div className="font-bold text-xs sm:text-sm flex sm:block items-center gap-0.5">
+            <MessageSquare className="h-3 w-3 sm:hidden forum-text-muted" />
+            {thread.replies_count.toLocaleString()}
+          </div>
         </div>
-        <div className="w-24 text-center px-3">
-          <div className="text-[11px] forum-text-muted">{tForum('views')}:</div>
-          <div className="font-bold text-sm">{thread.views_count.toLocaleString()}</div>
+        <div className="w-auto sm:w-24 text-center px-1.5 sm:px-3">
+          <div className="text-[10px] sm:text-[11px] forum-text-muted hidden sm:block">{tForum('views')}:</div>
+          <div className="font-bold text-xs sm:text-sm flex sm:block items-center gap-0.5">
+            <Eye className="h-3 w-3 sm:hidden forum-text-muted" />
+            {thread.views_count.toLocaleString()}
+          </div>
         </div>
       </div>
 
@@ -160,18 +166,18 @@ export function ThreadRow({ thread }: ThreadRowProps) {
           {thread.last_post_author ? (
             <Link
               href={`/user/${thread.last_post_author.username}`}
-              className="text-xs text-[hsl(var(--forum-accent))] hover:underline truncate block"
+              className="text-xs truncate block"
               onClick={(e) => e.stopPropagation()}
             >
-              {thread.last_post_author.username}
+              <span className="forum-hover-sweep" style={{ '--sweep-base': 'hsl(var(--forum-accent))' } as React.CSSProperties}>{thread.last_post_author.username}</span>
             </Link>
           ) : thread.author && (
             <Link
               href={`/user/${thread.author.username}`}
-              className="text-xs text-[hsl(var(--forum-accent))] hover:underline truncate block"
+              className="text-xs truncate block"
               onClick={(e) => e.stopPropagation()}
             >
-              {thread.author.username}
+              <span className="forum-hover-sweep" style={{ '--sweep-base': 'hsl(var(--forum-accent))' } as React.CSSProperties}>{thread.author.username}</span>
             </Link>
           )}
         </div>

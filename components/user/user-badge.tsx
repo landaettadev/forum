@@ -23,7 +23,7 @@ const activityBadgeConfig = {
   },
   veteran: {
     icon: Award,
-    color: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
+    color: 'bg-indigo-500/20 text-indigo-400 border-indigo-500/30',
     labelKey: 'veteran'
   },
   legend: {

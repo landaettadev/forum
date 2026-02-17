@@ -96,9 +96,9 @@ export function ReplyForm({ threadId, quotes = [], onRemoveQuote, onSuccess }: R
   }
 
   return (
-    <div className="forum-surface p-4">
-      <h3 className="font-semibold mb-3 flex items-center gap-2">
-        <MessageSquare className="h-5 w-5" />
+    <div className="forum-surface p-3 sm:p-4">
+      <h3 className="font-semibold mb-3 flex items-center gap-2 text-sm sm:text-base">
+        <MessageSquare className="h-4 w-4 sm:h-5 sm:w-5" />
         {t('replyToThread')}
       </h3>
 
@@ -125,14 +125,14 @@ export function ReplyForm({ threadId, quotes = [], onRemoveQuote, onSuccess }: R
           />
         </div>
 
-        <div className="flex justify-between items-center">
-          <p className="text-xs forum-text-muted">
+        <div className="flex flex-col-reverse sm:flex-row justify-between items-stretch sm:items-center gap-2">
+          <p className="text-xs forum-text-muted text-center sm:text-left">
             {t('replyingAs')} <span className="font-semibold">{profile.username}</span>
           </p>
           <Button
             type="submit"
             disabled={loading || stripHtml(content).length < 3}
-            className="bg-[hsl(var(--forum-accent))] hover:bg-[hsl(var(--forum-accent-hover))]"
+            className="bg-[hsl(var(--forum-accent))] hover:bg-[hsl(var(--forum-accent-hover))] w-full sm:w-auto"
           >
             {loading ? t('publishing') : t('publishReply')}
           </Button>

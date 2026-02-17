@@ -36,8 +36,8 @@ const LEVEL_CONFIG: Record<ReputationLevel, {
   },
   trusted: { 
     key: 'trusted', 
-    color: 'text-purple-600', 
-    bgColor: 'bg-purple-100',
+    color: 'text-blue-700', 
+    bgColor: 'bg-blue-100',
     icon: '✓',
     minRep: 500
   },

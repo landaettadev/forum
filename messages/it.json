@@ -253,6 +253,7 @@
   "common": {
     "home": "Home",
     "search": "Cerca",
+    "searchIn": "Cerca in {location}",
     "login": "Accedi",
     "register": "Registrati",
     "logout": "Esci",
@@ -355,6 +356,80 @@
     "verification": "Verifica",
     "verificationDesc": "Verifica il tuo account",
     "requestVerification": "Richiedi verifica",
+    "settingsSaved": "Impostazioni salvate",
+    "settingsError": "Errore nel salvare le impostazioni",
+    "notifInApp": "Notifiche nell'app",
+    "notifReplies": "Risposte ai miei thread",
+    "notifRepliesDesc": "Ricevi una notifica quando qualcuno risponde ai tuoi thread o post",
+    "notifMentions": "Menzioni",
+    "notifMentionsDesc": "Ricevi una notifica quando qualcuno ti menziona con @nomeutente",
+    "notifMessages": "Messaggi privati",
+    "notifMessagesDesc": "Ricevi una notifica quando ricevi un messaggio privato",
+    "notifFollows": "Nuovi follower",
+    "notifFollowsDesc": "Ricevi una notifica quando qualcuno inizia a seguirti",
+    "notifEmail": "Notifiche email",
+    "notifEmailReplies": "Email per le risposte",
+    "notifEmailRepliesDesc": "Ricevi un'email quando qualcuno risponde ai tuoi thread",
+    "notifEmailMessages": "Email per i messaggi",
+    "notifEmailMessagesDesc": "Ricevi un'email quando ricevi un messaggio privato",
+    "privShowOnline": "Mostra stato online",
+    "privShowOnlineDesc": "Permetti agli altri di vedere se sei online",
+    "privShowActivity": "Mostra attività recente",
+    "privShowActivityDesc": "Permetti agli altri di vedere la tua attività nel forum",
+    "privShowProfile": "Profilo pubblico",
+    "privShowProfileDesc": "Permetti agli utenti non registrati di vedere il tuo profilo",
+    "privAllowMessages": "Chi può inviarti messaggi?",
+    "privAllowMessagesDesc": "Controlla chi può inviarti messaggi privati",
+    "privMsgEveryone": "Tutti gli utenti",
+    "privMsgVerified": "Solo utenti verificati",
+    "privMsgNobody": "Nessuno",
+    "verAlreadyVerified": "Account verificato",
+    "verAlreadyVerifiedDesc": "Il tuo account è già verificato. Hai accesso completo a tutte le aree del forum.",
+    "verPending": "Richiesta in revisione",
+    "verPendingDesc": "La tua richiesta è in fase di revisione dal team di moderazione. Sarai notificato quando verrà elaborata.",
+    "verCodeLabel": "Codice di verifica",
+    "verEstimatedTime": "Tempo di revisione stimato: 24-48 ore",
+    "verRejected": "Richiesta rifiutata",
+    "verRejectedDefault": "La tua richiesta è stata rifiutata. Puoi inviarne una nuova dopo aver corretto i problemi indicati.",
+    "verCopied": "Codice copiato negli appunti",
+    "verSent": "Richiesta inviata",
+    "verSentDesc": "Il team di moderazione la esaminerà entro 24-48 ore",
+    "verError": "Errore nell'invio della richiesta",
+    "verSelectType": "Tipo di verifica",
+    "verTypeEscort": "Verifica Escort",
+    "verTypeEscortDesc": "Dimostra di essere una escort reale con una foto di verifica",
+    "verTypeMod": "Candidatura Moderatore",
+    "verTypeModDesc": "Candidati per diventare moderatore della comunità",
+    "verEscortTitle": "Verifica identità escort",
+    "verEscortInstructions": "Per verificare il tuo account devi inviare una foto con un foglio con il tuo codice unico, il tuo nome utente e la data odierna.",
+    "verStep1": "Passo 1: Genera il tuo codice",
+    "verStep1Desc": "Genera un codice unico da scrivere su un foglio insieme al tuo nome utente (@{username}) e la data odierna.",
+    "verGenerateCode": "Genera codice",
+    "verStep2": "Passo 2: Scatta la tua foto",
+    "verStep2Desc": "Scatta una foto chiara tenendo un foglio con:",
+    "verStep2Item1": "Il tuo codice: {code}",
+    "verStep2Item2": "Il tuo nome utente: @{username}",
+    "verStep2Item3": "Data odierna: {date}",
+    "verStep3": "Passo 3: Carica la tua foto",
+    "verStep3Desc": "Carica la foto su un servizio come Imgur, ImgBB o simile e incolla l'URL qui:",
+    "verContactInfo": "Info contatto (opzionale)",
+    "verContactInfoPlaceholder": "Telegram, WhatsApp, email...",
+    "verModTitle": "Candidatura moderatore",
+    "verModInstructions": "Compila questo modulo per candidarti come moderatore. Cerchiamo persone responsabili e attive per mantenere la qualità del forum.",
+    "verFullName": "Nome completo",
+    "verFullNamePlaceholder": "Il tuo nome completo",
+    "verMotivation": "Perché vuoi diventare moderatore?",
+    "verMotivationPlaceholder": "Spiega la tua motivazione per diventare moderatore del forum...",
+    "verExperience": "Esperienza precedente",
+    "verExperiencePlaceholder": "Hai moderato altri forum o comunità? Raccontaci la tua esperienza...",
+    "verLanguages": "Lingue parlate",
+    "verLanguagesPlaceholder": "Italiano, Inglese, Spagnolo...",
+    "verLanguagesHint": "Separa le lingue con virgole",
+    "verAvailability": "Disponibilità oraria",
+    "verAvailabilityPlaceholder": "Es.: Lun-Ven, 18:00 - 22:00",
+    "verContactModPlaceholder": "Email o Telegram per contattarti",
+    "verSubmitting": "Invio richiesta...",
+    "verSubmitRequest": "Invia richiesta di verifica",
     "avatarUpload": "Carica avatar",
     "avatarOrUrl": "o incolla un URL",
     "avatarDragDrop": "Trascina un'immagine o clicca per selezionare",
@@ -404,7 +479,8 @@
     "registerHere": "Registrati qui",
     "loginHere": "Accedi qui",
     "completeCaptcha": "Per favore completa la verifica di sicurezza",
-    "captchaFailed": "Verifica di sicurezza fallita. Riprova"
+    "captchaFailed": "Verifica di sicurezza fallita. Riprova",
+    "usernameExists": "Questo nome utente è già in uso"
   },
   "forum": {
     "title": "Forum",
@@ -537,7 +613,9 @@
     "visitsCount": "visite",
     "responsesCount": "risposte",
     "unknownUser": "Utente",
-    "selectTagPlaceholder": "Selezionare l'etichetta"
+    "selectTagPlaceholder": "Selezionare l'etichetta",
+    "autopromotion": "Autopromozione",
+    "autopromoDesc": "Sezione di autopromozione per escort verificate in {country}. Solo escort verificate possono creare thread."
   },
   "thread": {
     "createTitle": "Crea nuova discussione",
@@ -855,21 +933,29 @@
     "noReputationData": "Nessun dato di reputazione",
     "moderators": "Moderatori",
     "noModerators": "Nessun moderatore assegnato",
+    "administrators": "Amministratori",
+    "superAdministrator": "Super Amministratore",
+    "generalModerator": "Moderatore Generale",
     "advertising": "Pubblicità",
     "adminRole": "Admin",
     "modRole": "Mod",
-    "guests": "ospiti"
+    "guests": "ospiti",
+    "guest": "Ospite",
+    "connected": "Connesso"
   },
   "banners": {
     "adSpace": "Spazio pubblicitario",
-    "advertiseHere": "Pubblicizza qui"
+    "advertiseHere": "Pubblicizza qui",
+    "posBeforeRelated": "Pre-Correlati — Tra risposte e discussioni correlate",
+    "posBeforeRelatedDesc": "Visibile nei thread tra le risposte e le discussioni correlate. Alto coinvolgimento."
   },
   "footer": {
     "description": "Comunità professionale per condividere esperienze e connettersi.",
     "viewAllForums": "Vedi tutti i forum",
     "gallery": "Galleria multimediale",
     "legal": "Legale",
-    "rights": "Tutti i diritti riservati."
+    "rights": "Tutti i diritti riservati.",
+    "developedBy": "Forum sviluppato da"
   },
   "time": {
     "ago": "fa"
@@ -1409,14 +1495,30 @@
     "roleSuperMod": "Super Mod",
     "roleVip": "VIP",
     "roleVerified": "Verificata",
-    "roleUser": "Utente"
+    "roleUser": "Utente",
+    "roleEscort": "Escort"
   },
   "post": {
     "posts": "Post",
     "registered": "Registrato",
     "edited": "Modificato",
     "report": "Segnala",
-    "edit": "Modifica"
+    "edit": "Modifica",
+    "save": "Salva",
+    "saving": "Salvataggio...",
+    "cancel": "Annulla",
+    "editSuccess": "Post modificato con successo",
+    "editError": "Errore nella modifica del post",
+    "advancedEdit": "Modifica avanzata",
+    "advEditSuccess": "Thread modificato con successo",
+    "advEditError": "Errore nella modifica del thread",
+    "delete": "Elimina",
+    "deleting": "Eliminazione...",
+    "confirmDeletePost": "Sei sicuro di voler eliminare questo post?",
+    "confirmDeleteThread": "Sei sicuro di voler eliminare questo thread?",
+    "postDeleted": "Post eliminato",
+    "threadDeleted": "Thread eliminato",
+    "deleteError": "Errore nell'eliminazione"
   },
   "user": {
     "mustLoginToFollow": "Accedi per seguire utenti",
@@ -1662,7 +1764,11 @@
     "a10": "Lo status VIP viene concesso ai membri eccezionali. Contatta l'amministrazione.",
     "notFound": "Non hai trovato?",
     "notFoundDesc": "Contattaci e ti aiuteremo",
-    "contactBtn": "Contatta"
+    "contactBtn": "Contatta",
+    "q11": "Come creo un thread di autopromozione?",
+    "a11": "Per creare un thread di autopromozione devi essere verificata come escort. Prima, <a href='/verificacion'>verifica il tuo account come escort</a>. Una volta verificata, entra nel paese dove offri i tuoi servizi, clicca sulla sezione <strong>Autopromozione</strong> in cima alla pagina del paese e crea il tuo thread selezionando la città corrispondente. Solo escort verificate, amministratori e moderatori possono creare thread. Gli utenti regolari possono commentare ma non creare.",
+    "q12": "Come mi verifico come escort?",
+    "a12": "Vai alla pagina di <a href='/verificacion'>Verifica</a> e seleziona <strong>Verifica Escort</strong>. Dovrai generare un codice unico, scriverlo su un foglio con il tuo nome utente e la data di oggi, scattare una foto tenendolo e caricare l'immagine. Il team di moderazione esaminerà la tua richiesta entro 24-48 ore. Una volta approvata, riceverai il badge Escort Verificata e potrai creare thread di autopromozione su <a href='https://tsrating.com'>tsrating.com</a>."
   },
   "cookiesPage": {
     "breadcrumb": "Politica sui cookie",
@@ -2270,7 +2376,8 @@
     "loginRequired": "Devi accedere",
     "titleTooShort": "Il titolo deve avere almeno 5 caratteri",
     "contentTooShort": "Il contenuto deve avere almeno 10 caratteri",
-    "errorUpdatingPost": "Errore nell'aggiornamento del post"
+    "errorUpdatingPost": "Errore nell'aggiornamento del post",
+    "escortOnlyForum": "Solo escort verificate, amministratori e moderatori possono creare thread in questo forum di autopromozione."
   },
   "publicidad": {
     "title": "Acquista pubblicità",
@@ -2481,5 +2588,13 @@
     "daysLeft": "{days} giorni rimanenti",
     "noPreview": "Nessuna immagine",
     "createdAt": "Acquistato il"
+  },
+  "metadata": {
+    "siteDescription": "Forum #1 per recensioni di escort trans e shemale. Recensioni verificate, opinioni, foto reali 2026.",
+    "regionMetaTitle": "Escort Trans {region} — Recensioni e Opinioni",
+    "regionMetaDesc": "Forum di escort trans a {region}, {country}. Recensioni, opinioni, foto verificate ed esperienze reali di tester su TS Rating.",
+    "regionPageDesc": "Forum di escort trans a {region}, {country}. Recensioni verificate, opinioni di tester ed esperienze reali aggiornate {year}. Comunità TS Rating.",
+    "countryPageDesc": "Forum di escort trans in {country}. Recensioni verificate, opinioni di tester ed esperienze reali aggiornate {year}. Comunità TS Rating.",
+    "siteTitle": "TS Rating — Recensioni Escort Trans"
   }
 }

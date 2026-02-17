@@ -75,12 +75,14 @@ export type Forum = {
   slug: string;
   description: string;
   country_code: string | null;
+  country_id: string | null;
   city: string | null;
   threads_count: number;
   posts_count: number;
   last_post_id: string | null;
   display_order: number;
   is_private: boolean;
+  is_escort_only: boolean;
   forum_type: 'support' | 'news' | 'rules' | null;
   created_at: string;
 };
@@ -298,7 +300,7 @@ export type BannerAdZone = {
 
 export type BannerBookingStatus = 'pending' | 'approved' | 'active' | 'rejected' | 'expired' | 'cancelled';
 
-export type BannerPosition = 'header' | 'sidebar_top' | 'sidebar_bottom' | 'footer' | 'content';
+export type BannerPosition = 'header' | 'sidebar_top' | 'sidebar_bottom' | 'footer' | 'content' | 'before_related';
 
 export type BannerFormat = '728x90' | '300x250';
 

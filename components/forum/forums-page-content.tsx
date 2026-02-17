@@ -69,7 +69,7 @@ export function ForumsPageContent({ continentsWithData }: ForumsPageContentProps
                         <span className="text-2xl">{country.flag_emoji}</span>
                         <div>
                           <h3 className="font-semibold text-lg">
-                            {getLocalizedName(country, locale)}
+                            <span className="forum-hover-sweep">{getLocalizedName(country, locale)}</span>
                           </h3>
                           {country.regions.length > 0 && (
                             <p className="text-sm forum-text-muted">

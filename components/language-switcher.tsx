@@ -73,6 +73,8 @@ export function LanguageSwitcher() {
 
   const changeLanguage = (locale: string) => {
     document.cookie = `NEXT_LOCALE=${locale};path=/;max-age=31536000`;
+    // Mark that user manually selected a locale (so auto-detection won't override)
+    document.cookie = `LOCALE_MANUAL=true;path=/;max-age=31536000`;
     setCurrentLocale(locale);
     setOpen(false);
     window.location.reload();
@@ -106,7 +108,7 @@ export function LanguageSwitcher() {
               }`}
             >
               <span className="text-base leading-none">{lang.flag}</span>
-              <span className="flex-1 truncate">{lang.name}</span>
+              <span className="flex-1 truncate forum-hover-sweep">{lang.name}</span>
               {isActive && <Check className="h-3 w-3 flex-shrink-0 text-[hsl(var(--forum-accent))]" />}
             </button>
           );

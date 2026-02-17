@@ -253,6 +253,7 @@
   "common": {
     "home": "Beranda",
     "search": "Cari",
+    "searchIn": "Cari di {location}",
     "login": "Masuk",
     "register": "Daftar",
     "logout": "Keluar",
@@ -355,6 +356,80 @@
     "verification": "Verifikasi",
     "verificationDesc": "Verifikasi untuk area pribadi",
     "requestVerification": "Minta verifikasi",
+    "settingsSaved": "Pengaturan disimpan",
+    "settingsError": "Gagal menyimpan pengaturan",
+    "notifInApp": "Notifikasi dalam aplikasi",
+    "notifReplies": "Balasan ke utas saya",
+    "notifRepliesDesc": "Terima notifikasi saat seseorang membalas utas atau postingan Anda",
+    "notifMentions": "Sebutan",
+    "notifMentionsDesc": "Terima notifikasi saat seseorang menyebut Anda dengan @namapengguna",
+    "notifMessages": "Pesan pribadi",
+    "notifMessagesDesc": "Terima notifikasi saat menerima pesan pribadi",
+    "notifFollows": "Pengikut baru",
+    "notifFollowsDesc": "Terima notifikasi saat seseorang mulai mengikuti Anda",
+    "notifEmail": "Notifikasi email",
+    "notifEmailReplies": "Email saat dibalas",
+    "notifEmailRepliesDesc": "Terima email saat seseorang membalas utas Anda",
+    "notifEmailMessages": "Email saat ada pesan",
+    "notifEmailMessagesDesc": "Terima email saat menerima pesan pribadi",
+    "privShowOnline": "Tampilkan status online",
+    "privShowOnlineDesc": "Izinkan pengguna lain melihat apakah Anda sedang online",
+    "privShowActivity": "Tampilkan aktivitas terbaru",
+    "privShowActivityDesc": "Izinkan orang lain melihat aktivitas forum Anda",
+    "privShowProfile": "Profil publik",
+    "privShowProfileDesc": "Izinkan pengguna tidak terdaftar melihat profil Anda",
+    "privAllowMessages": "Siapa yang bisa mengirim pesan?",
+    "privAllowMessagesDesc": "Kontrol siapa yang bisa mengirim pesan pribadi kepada Anda",
+    "privMsgEveryone": "Semua pengguna",
+    "privMsgVerified": "Hanya pengguna terverifikasi",
+    "privMsgNobody": "Tidak ada",
+    "verAlreadyVerified": "Akun terverifikasi",
+    "verAlreadyVerifiedDesc": "Akun Anda sudah terverifikasi. Anda memiliki akses penuh ke semua area forum.",
+    "verPending": "Permintaan sedang ditinjau",
+    "verPendingDesc": "Permintaan Anda sedang ditinjau oleh tim moderasi. Anda akan diberi tahu saat diproses.",
+    "verCodeLabel": "Kode verifikasi",
+    "verEstimatedTime": "Estimasi waktu peninjauan: 24-48 jam",
+    "verRejected": "Permintaan ditolak",
+    "verRejectedDefault": "Permintaan Anda ditolak. Anda bisa mengajukan yang baru setelah memperbaiki masalah yang ditunjukkan.",
+    "verCopied": "Kode disalin ke clipboard",
+    "verSent": "Permintaan terkirim",
+    "verSentDesc": "Tim moderasi akan meninjaunya dalam 24-48 jam",
+    "verError": "Gagal mengirim permintaan",
+    "verSelectType": "Jenis verifikasi",
+    "verTypeEscort": "Verifikasi Escort",
+    "verTypeEscortDesc": "Buktikan bahwa Anda escort asli dengan foto verifikasi",
+    "verTypeMod": "Lamaran Moderator",
+    "verTypeModDesc": "Lamar untuk menjadi moderator komunitas",
+    "verEscortTitle": "Verifikasi identitas escort",
+    "verEscortInstructions": "Untuk memverifikasi akun, Anda perlu mengirim foto memegang kertas dengan kode unik, nama pengguna, dan tanggal hari ini.",
+    "verStep1": "Langkah 1: Buat kode Anda",
+    "verStep1Desc": "Buat kode unik yang harus ditulis di kertas bersama nama pengguna (@{username}) dan tanggal hari ini.",
+    "verGenerateCode": "Buat kode",
+    "verStep2": "Langkah 2: Ambil foto Anda",
+    "verStep2Desc": "Ambil foto jelas saat memegang kertas dengan:",
+    "verStep2Item1": "Kode Anda: {code}",
+    "verStep2Item2": "Nama pengguna: @{username}",
+    "verStep2Item3": "Tanggal hari ini: {date}",
+    "verStep3": "Langkah 3: Unggah foto Anda",
+    "verStep3Desc": "Unggah foto ke layanan seperti Imgur, ImgBB, dan tempelkan URL di sini:",
+    "verContactInfo": "Info kontak (opsional)",
+    "verContactInfoPlaceholder": "Telegram, WhatsApp, email...",
+    "verModTitle": "Lamaran moderator",
+    "verModInstructions": "Isi formulir ini untuk melamar sebagai moderator. Kami mencari orang yang bertanggung jawab dan aktif untuk menjaga kualitas forum.",
+    "verFullName": "Nama lengkap",
+    "verFullNamePlaceholder": "Nama lengkap Anda",
+    "verMotivation": "Mengapa Anda ingin menjadi moderator?",
+    "verMotivationPlaceholder": "Jelaskan motivasi Anda untuk menjadi moderator forum...",
+    "verExperience": "Pengalaman sebelumnya",
+    "verExperiencePlaceholder": "Apakah Anda pernah memoderasi forum atau komunitas lain? Ceritakan pengalaman Anda...",
+    "verLanguages": "Bahasa yang Anda kuasai",
+    "verLanguagesPlaceholder": "Indonesia, Inggris, Spanyol...",
+    "verLanguagesHint": "Pisahkan bahasa dengan koma",
+    "verAvailability": "Ketersediaan waktu",
+    "verAvailabilityPlaceholder": "Contoh: Sen-Jum, 18:00 - 22:00 WIB",
+    "verContactModPlaceholder": "Email atau Telegram untuk menghubungi Anda",
+    "verSubmitting": "Mengirim permintaan...",
+    "verSubmitRequest": "Kirim permintaan verifikasi",
     "avatarUpload": "Unggah avatar",
     "avatarOrUrl": "atau tempel URL",
     "avatarDragDrop": "Seret gambar atau klik untuk memilih",
@@ -404,7 +479,8 @@
     "registerHere": "Daftar di sini",
     "loginHere": "Masuk di sini",
     "completeCaptcha": "Mohon selesaikan verifikasi keamanan",
-    "captchaFailed": "Verifikasi keamanan gagal. Coba lagi"
+    "captchaFailed": "Verifikasi keamanan gagal. Coba lagi",
+    "usernameExists": "Nama pengguna ini sudah digunakan"
   },
   "forum": {
     "title": "Forum",
@@ -537,7 +613,9 @@
     "visitsCount": "tampilan",
     "responsesCount": "balasan",
     "unknownUser": "Pengguna",
-    "selectTagPlaceholder": "Pilih tag"
+    "selectTagPlaceholder": "Pilih tag",
+    "autopromotion": "Promosi Diri",
+    "autopromoDesc": "Bagian promosi diri untuk escort terverifikasi di {country}. Hanya escort terverifikasi yang dapat membuat thread."
   },
   "thread": {
     "createTitle": "Buat thread baru",
@@ -843,21 +921,29 @@
     "noReputationData": "Tidak ada data reputasi",
     "moderators": "Moderator",
     "noModerators": "Tidak ada moderator",
+    "administrators": "Administrator",
+    "superAdministrator": "Super Administrator",
+    "generalModerator": "Moderator Umum",
     "advertising": "Iklan",
     "adminRole": "Admin",
     "modRole": "Mod",
-    "guests": "tamu"
+    "guests": "tamu",
+    "guest": "Tamu",
+    "connected": "Terhubung"
   },
   "banners": {
     "adSpace": "Ruang iklan",
-    "advertiseHere": "Pasang iklan di sini"
+    "advertiseHere": "Pasang iklan di sini",
+    "posBeforeRelated": "Pra-Terkait — Antara balasan dan diskusi terkait",
+    "posBeforeRelatedDesc": "Terlihat di thread antara balasan dan diskusi terkait. Keterlibatan tinggi."
   },
   "footer": {
     "description": "Komunitas profesional untuk berbagi pengalaman dan terhubung.",
     "viewAllForums": "Lihat semua forum",
     "gallery": "Galeri multimedia",
     "legal": "Hukum",
-    "rights": "Semua hak dilindungi."
+    "rights": "Semua hak dilindungi.",
+    "developedBy": "Forum dikembangkan oleh"
   },
   "time": {
     "ago": "yang lalu"
@@ -1387,14 +1473,30 @@
     "roleSuperMod": "Super Mod",
     "roleVip": "VIP",
     "roleVerified": "Terverifikasi",
-    "roleUser": "Pengguna"
+    "roleUser": "Pengguna",
+    "roleEscort": "Escort"
   },
   "post": {
     "posts": "Postingan",
     "registered": "Registrasi",
     "edited": "Diedit",
     "report": "Laporkan",
-    "edit": "Edit"
+    "edit": "Edit",
+    "save": "Simpan",
+    "saving": "Menyimpan...",
+    "cancel": "Batal",
+    "editSuccess": "Post berhasil diedit",
+    "editError": "Error mengedit post",
+    "advancedEdit": "Edit Lanjutan",
+    "advEditSuccess": "Thread berhasil diedit",
+    "advEditError": "Error mengedit thread",
+    "delete": "Hapus",
+    "deleting": "Menghapus...",
+    "confirmDeletePost": "Yakin ingin menghapus post ini?",
+    "confirmDeleteThread": "Yakin ingin menghapus thread ini?",
+    "postDeleted": "Post dihapus",
+    "threadDeleted": "Thread dihapus",
+    "deleteError": "Error menghapus"
   },
   "user": {
     "mustLoginToFollow": "Masuk untuk mengikuti pengguna",
@@ -1640,7 +1742,11 @@
     "a10": "Status VIP diberikan kepada anggota komunitas yang luar biasa. Hubungi tim admin untuk informasi lebih lanjut.",
     "notFound": "Tidak menemukan yang Anda cari?",
     "notFoundDesc": "Hubungi kami dan kami akan membantu Anda",
-    "contactBtn": "Hubungi"
+    "contactBtn": "Hubungi",
+    "q11": "Bagaimana cara membuat thread promosi diri?",
+    "a11": "Untuk membuat thread promosi diri, Anda harus terverifikasi sebagai escort. Pertama, <a href='/verificacion'>verifikasi akun Anda sebagai escort</a>. Setelah terverifikasi, masuk ke negara tempat Anda menawarkan layanan, klik bagian <strong>Promosi Diri</strong> di bagian atas halaman negara, dan buat thread Anda dengan memilih kota yang sesuai. Hanya escort terverifikasi, administrator, dan moderator yang dapat membuat thread. Pengguna biasa dapat berkomentar tetapi tidak dapat membuat.",
+    "q12": "Bagaimana cara verifikasi sebagai escort?",
+    "a12": "Buka halaman <a href='/verificacion'>Verifikasi</a> dan pilih <strong>Verifikasi Escort</strong>. Anda perlu membuat kode unik, menuliskannya di kertas bersama nama pengguna dan tanggal hari ini, mengambil foto sambil memegangnya, dan mengunggah gambar. Tim moderasi akan meninjau permintaan Anda dalam 24-48 jam. Setelah disetujui, Anda akan menerima lencana Escort Terverifikasi dan dapat membuat thread promosi diri di <a href='https://tsrating.com'>tsrating.com</a>."
   },
   "cookiesPage": {
     "breadcrumb": "Kebijakan Cookie",
@@ -2248,7 +2354,8 @@
     "loginRequired": "Anda harus masuk",
     "titleTooShort": "Judul harus minimal 5 karakter",
     "contentTooShort": "Konten harus minimal 10 karakter",
-    "errorUpdatingPost": "Error memperbarui postingan"
+    "errorUpdatingPost": "Error memperbarui postingan",
+    "escortOnlyForum": "Hanya escort terverifikasi, administrator, dan moderator yang dapat membuat thread di forum promosi diri ini."
   },
   "publicidad": {
     "title": "Beli Iklan",
@@ -2459,5 +2566,13 @@
     "daysLeft": "{days} hari tersisa",
     "noPreview": "Tanpa gambar",
     "createdAt": "Dibeli pada"
+  },
+  "metadata": {
+    "siteDescription": "Forum #1 untuk ulasan escort trans dan shemale. Ulasan terverifikasi, pendapat, foto asli 2026.",
+    "regionMetaTitle": "Escort Trans {region} — Ulasan dan Pendapat",
+    "regionMetaDesc": "Forum escort trans di {region}, {country}. Ulasan, pendapat, foto terverifikasi, dan pengalaman nyata di TS Rating.",
+    "regionPageDesc": "Forum escort trans di {region}, {country}. Ulasan terverifikasi, pendapat tester dan pengalaman nyata diperbarui {year}. Komunitas TS Rating.",
+    "countryPageDesc": "Forum escort trans di {country}. Ulasan terverifikasi, pendapat tester dan pengalaman nyata diperbarui {year}. Komunitas TS Rating.",
+    "siteTitle": "TS Rating — Ulasan & Rating Escort Trans"
   }
 }

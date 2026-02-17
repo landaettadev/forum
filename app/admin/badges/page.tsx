@@ -306,7 +306,7 @@ export default function AdminBadgesPage() {
       .ilike('username', `%${escapeLikePattern(searchQuery)}%`);
 
     if (users && users.length > 0) {
-      const userIds = users.map(u => u.id);
+      const userIds = users.map((u: { id: string }) => u.id);
       const { data } = await supabase
         .from('user_custom_badges')
         .select(`

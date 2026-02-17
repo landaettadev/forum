@@ -253,6 +253,7 @@
   "common": {
     "home": "Inicio",
     "search": "Buscar",
+    "searchIn": "Buscar en {location}",
     "login": "Iniciar sesión",
     "register": "Registrarse",
     "logout": "Cerrar sesión",
@@ -472,13 +473,15 @@
     "unexpectedError": "Error inesperado",
     "passwordsMismatch": "Las contraseñas no coinciden",
     "passwordTooShort": "La contraseña debe tener al menos 6 caracteres",
+    "passwordRequirements": "La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número",
     "mustAcceptRules": "Debes aceptar las reglas del foro",
     "completeCaptcha": "Por favor, completa la verificación de seguridad",
     "captchaFailed": "Verificación de seguridad fallida. Intenta de nuevo",
     "ageConfirmation": "Soy mayor de 18 años y acepto las",
     "forumRules": "reglas del foro",
     "registerHere": "Regístrate aquí",
-    "loginHere": "Inicia sesión aquí"
+    "loginHere": "Inicia sesión aquí",
+    "usernameExists": "Este nombre de usuario ya está en uso"
   },
   "forum": {
     "title": "Foros",
@@ -530,6 +533,8 @@
     "threadsCount": "{count} hilos",
     "noRegionsAvailable": "Sin regiones disponibles",
     "noRegionsConfigured": "No hay ciudades o regiones configuradas para este país todavía.",
+    "autopromotion": "Autopromoción",
+    "autopromoDesc": "Sección de autopromoción para escorts verificadas en {country}. Solo escorts verificadas pueden crear hilos.",
     "generalForumsOf": "Foros generales de {country}",
     "recentThreads": "Hilos recientes",
     "noThreadsYet": "No hay hilos todavía",
@@ -824,7 +829,15 @@
     "messages": "Mensajes",
     "noConversations": "No hay conversaciones",
     "backToConversations": "Volver a conversaciones",
-    "placeholder": "Escribe un mensaje..."
+    "placeholder": "Escribe un mensaje...",
+    "usersOnline": "En línea",
+    "searchPlaceholder": "Buscar usuario...",
+    "typePlaceholder": "Escribe un mensaje...",
+    "back": "Volver",
+    "sendError": "Error al enviar mensaje",
+    "pin": "Fijar",
+    "unpin": "Desfijar",
+    "noUsersOnline": "No hay usuarios en línea"
   },
   "search": {
     "title": "Buscar en el foro",
@@ -904,6 +917,8 @@
     "staffOnline": "Equipo en línea",
     "recentActivity": "Últimas actividades",
     "recentActivityDesc": "Las últimas actividades del foro aparecerán aquí",
+    "showMore": "Ver más",
+    "showLess": "Ver menos",
     "usefulLinks": "Enlaces útiles",
     "rules": "Reglas del foro",
     "verification": "Verificación",
@@ -917,21 +932,30 @@
     "noReputationData": "Sin datos de reputación",
     "moderators": "Moderadores",
     "noModerators": "Sin moderadores asignados",
+    "administrators": "Administradores",
+    "superAdministrator": "Super Administrador",
+    "generalModerator": "Moderador General",
     "advertising": "Publicidad",
     "adminRole": "Admin",
     "modRole": "Mod",
-    "guests": "invitados"
+    "guests": "invitados",
+    "more": "más",
+    "guest": "Invitado",
+    "connected": "Conectado"
   },
   "banners": {
     "adSpace": "Espacio publicitario",
-    "advertiseHere": "Anúnciate aquí"
+    "advertiseHere": "Anúnciate aquí",
+    "posBeforeRelated": "Pre-Relacionados — Entre respuestas y discusiones relacionadas",
+    "posBeforeRelatedDesc": "Visible en hilos entre las respuestas y las discusiones relacionadas. Alto engagement."
   },
   "footer": {
     "description": "Comunidad profesional para compartir experiencias y conectar.",
     "viewAllForums": "Ver todos los foros",
     "gallery": "Galería multimedia",
     "legal": "Legal",
-    "rights": "Todos los derechos reservados."
+    "rights": "Todos los derechos reservados.",
+    "developedBy": "Foro desarrollado por"
   },
   "time": {
     "ago": "hace"
@@ -1461,6 +1485,7 @@
     "roleSuperMod": "Super Mod",
     "roleVip": "VIP",
     "roleVerified": "Verificada",
+    "roleEscort": "Escort",
     "roleUser": "Usuario"
   },
   "post": {
@@ -1468,7 +1493,30 @@
     "registered": "Registro",
     "edited": "Editado",
     "report": "Reportar",
-    "edit": "Editar"
+    "edit": "Editar",
+    "save": "Guardar",
+    "saving": "Guardando...",
+    "cancel": "Cancelar",
+    "editSuccess": "Post editado correctamente",
+    "editError": "Error al editar el post",
+    "advancedEdit": "Editar avanzado",
+    "advTitle": "Título del hilo",
+    "advTitlePlaceholder": "Escribe el título del hilo",
+    "advTitleHint": "Mínimo 5 caracteres",
+    "advTag": "Etiqueta",
+    "advTagPlaceholder": "Selecciona una etiqueta",
+    "advTagAsk": "Pregunta",
+    "advContent": "Contenido",
+    "advContentHint": "Mínimo 10 caracteres",
+    "advEditSuccess": "Hilo editado correctamente",
+    "advEditError": "Error al editar el hilo",
+    "delete": "Eliminar",
+    "deleting": "Eliminando...",
+    "confirmDeletePost": "¿Estás seguro de que quieres eliminar este comentario? Esta acción no se puede deshacer.",
+    "confirmDeleteThread": "¿Estás seguro de que quieres eliminar este hilo completo? Se eliminarán todos los comentarios. Esta acción no se puede deshacer.",
+    "postDeleted": "Comentario eliminado",
+    "threadDeleted": "Hilo eliminado",
+    "deleteError": "Error al eliminar"
   },
   "user": {
     "mustLoginToFollow": "Inicia sesión para seguir usuarios",
@@ -1582,14 +1630,17 @@
     "description": "Descubre todas las insignias que puedes conseguir y cómo desbloquearlas. Las insignias se muestran en tu perfil y demuestran tus logros en la comunidad.",
     "badgesTab": "Insignias",
     "pointsTab": "Puntos",
+    "faqTab": "FAQ",
+    "auto": "Auto",
     "howToGet": "Cómo conseguirlo:",
     "catSystem": "Sistema",
-    "catSystemDesc": "Badges automáticos del sistema",
+    "catSystemDesc": "Insignias automáticas del sistema",
     "catRoles": "Roles",
-    "catRolesDesc": "Badges de rol en el foro",
+    "catRolesDesc": "Insignias de rol en el foro",
     "catVerification": "Verificación",
-    "catVerificationDesc": "Badges de verificación de identidad",
-    "catEscortDesc": "Badges especiales para perfiles escort",
+    "catVerificationDesc": "Insignias de verificación de identidad",
+    "catEscort": "Escort",
+    "catEscortDesc": "Insignias especiales para perfiles escort",
     "catReputation": "Reputación",
     "catReputationDesc": "Badges basados en tu reputación en la comunidad",
     "catActivity": "Actividad",
@@ -1609,8 +1660,10 @@
     "verifiedAccount": "Cuenta Verificada",
     "verifiedAccountDesc": "Identidad verificada por el equipo del foro",
     "verifiedAccountReq": "Solicitar verificación y completar el proceso",
+    "vip": "VIP",
     "vipDesc": "Miembro VIP con beneficios exclusivos",
     "vipReq": "Adquirir membresía VIP",
+    "escort": "Escort",
     "escortDesc": "Perfil de escort",
     "escortReq": "Registrarse como escort",
     "escortVerified": "Escort Verificada",
@@ -1712,6 +1765,10 @@
     "a9": "En la página de login, haz clic en \"¿Olvidaste tu contraseña?\". Ingresa tu email y recibirás un enlace para restablecer tu contraseña.",
     "q10": "¿Cómo puedo convertirme en VIP?",
     "a10": "El estatus VIP se otorga a miembros destacados de la comunidad. Contacta con el equipo de administración para más información.",
+    "q11": "¿Cómo creo un hilo de autopromoción?",
+    "a11": "Para crear un hilo de autopromoción debes estar verificada como escort. Primero, <a href='/verificacion'>verifica tu cuenta como escort</a>. Una vez verificada, entra al país donde ofreces tus servicios, haz clic en la sección <strong>Autopromoción</strong> que aparece al inicio de la página del país, y crea tu hilo seleccionando la ciudad correspondiente. Solo escorts verificadas, administradores y moderadores pueden crear hilos en autopromoción. Los usuarios regulares pueden comentar pero no crear hilos.",
+    "q12": "¿Cómo me verifico como escort?",
+    "a12": "Ve a la página de <a href='/verificacion'>Verificación</a> y selecciona <strong>Verificación de Escort</strong>. Deberás generar un código único, escribirlo en un papel junto con tu nombre de usuario y la fecha actual, tomarte una foto sosteniéndolo y subir la imagen. El equipo de moderación revisará tu solicitud en 24-48 horas. Una vez aprobada, recibirás el badge de Escort Verificada y podrás crear hilos de autopromoción en <a href='https://tsrating.com'>tsrating.com</a>.",
     "notFound": "¿No encontraste lo que buscabas?",
     "notFoundDesc": "Contáctanos y te ayudaremos con tu consulta",
     "contactBtn": "Contactar"
@@ -2302,6 +2359,7 @@
     "tooManyLinks3": "Demasiados enlaces (máximo 3 en respuestas)",
     "forumNotFound": "Foro no encontrado",
     "forumRequiresVerification": "Este foro requiere verificación. Solicita verificación en tu perfil.",
+    "escortOnlyForum": "Solo escorts verificadas, administradores y moderadores pueden crear hilos en este foro de autopromoción.",
     "errorCreatingThread": "Error al crear el hilo",
     "errorCreatingThreadContent": "Error al crear el contenido del hilo",
     "unexpectedErrorThread": "Error inesperado al crear el hilo",
@@ -2322,7 +2380,13 @@
     "titleTooShort": "El título debe tener al menos 5 caracteres",
     "contentTooShort": "El contenido debe tener al menos 10 caracteres",
     "errorUpdatingPost": "Error al actualizar el post",
-    "unexpectedError": "Error inesperado"
+    "errorUpdatingThread": "Error al actualizar el hilo",
+    "unexpectedError": "Error inesperado",
+    "threadCooldown": "Debes esperar {seconds} segundos antes de crear otro hilo",
+    "postCooldown": "Debes esperar {seconds} segundos antes de publicar otra respuesta",
+    "noDeletePermission": "No tienes permiso para eliminar este contenido",
+    "errorDeletingThread": "Error al eliminar el hilo",
+    "errorDeletingPost": "Error al eliminar el comentario"
   },
   "publicidad": {
     "loginRequired": "Debes iniciar sesión para comprar publicidad",
@@ -2533,5 +2597,13 @@
     "daysLeft": "{days} días restantes",
     "noPreview": "Sin imagen",
     "createdAt": "Comprado el"
+  },
+  "metadata": {
+    "siteDescription": "Foro #1 de reseñas de escorts trans, travestis y shemales. Reviews verificadas, opiniones de catadores, fotos reales y experiencias actualizadas 2026.",
+    "regionMetaTitle": "Escorts Trans {region} — Reseñas y Opiniones",
+    "regionMetaDesc": "Foro de escorts trans y travestis en {region}, {country}. Reseñas, opiniones, fotos verificadas y experiencias reales de catadores en TS Rating.",
+    "regionPageDesc": "Foro de escorts trans y travestis en {region}, {country}. Reseñas verificadas, opiniones de catadores y experiencias reales actualizadas {year}. Comunidad TS Rating.",
+    "countryPageDesc": "Foro de escorts trans y travestis en {country}. Reseñas verificadas, opiniones de catadores y experiencias reales actualizadas {year}. Comunidad TS Rating.",
+    "siteTitle": "TS Rating — Reseñas Escorts Trans y Travestis"
   }
 }

@@ -4,98 +4,110 @@
 
 @layer base {
   :root {
-    /* Shadcn UI variables - Light Theme */
-    --background: 0 0% 100%;
-    --foreground: 222 47% 11%;
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
-    --primary: 263 70% 50%;
+    /* Shadcn UI variables — Light Theme (Private Club Illuminated) */
+    --background: 36 18% 95%;
+    --foreground: 222 17% 13%;
+    --card: 36 20% 99%;
+    --card-foreground: 222 17% 13%;
+    --popover: 36 20% 99%;
+    --popover-foreground: 222 17% 13%;
+    --primary: 38 38% 48%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 222 47% 11%;
-    --muted: 220 14% 96%;
-    --muted-foreground: 220 9% 46%;
-    --accent: 263 70% 50%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 263 70% 50%;
-    --radius: 0.75rem;
+    --secondary: 36 16% 93%;
+    --secondary-foreground: 222 17% 13%;
+    --muted: 36 16% 93%;
+    --muted-foreground: 215 10% 50%;
+    --accent: 36 14% 91%;
+    --accent-foreground: 222 17% 13%;
+    --destructive: 0 45% 40%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 30 10% 82%;
+    --input: 30 10% 82%;
+    --ring: 38 38% 48%;
+    --radius: 1rem;
 
-    /* Forum Custom Variables - Modern Light Theme */
-    --forum-bg: 225 25% 97%;
-    --forum-surface: 0 0% 100%;
-    --forum-surface-alt: 225 20% 96%;
-    --forum-surface-hover: 225 20% 93%;
-    --forum-border: 220 13% 91%;
-    --forum-text-primary: 224 71% 4%;
-    --forum-text-secondary: 220 9% 36%;
-    --forum-text-muted: 220 9% 56%;
-    --forum-link: 263 70% 50%;
-    --forum-link-hover: 263 70% 40%;
-    --forum-link-visited: 280 60% 45%;
-    --forum-accent: 263 70% 50%;
-    --forum-accent-hover: 263 70% 42%;
-    --forum-accent-muted: 263 70% 50% / 0.08;
-    --forum-accent-glow: 263 70% 50% / 0.15;
-    --forum-gradient-from: 263 70% 50%;
-    --forum-gradient-to: 230 80% 56%;
-    --forum-online: 152 69% 40%;
-    --forum-mod: 24 95% 53%;
-    --forum-admin: 0 72% 51%;
-    --forum-vip: 43 96% 56%;
-    --forum-verified: 199 89% 48%;
+    /* Forum Custom Variables — Private Club Light */
+    --forum-bg: 36 18% 95%;
+    --forum-surface: 36 20% 99%;
+    --forum-surface-alt: 36 14% 95%;
+    --forum-surface-hover: 36 12% 92%;
+    --forum-border: 30 10% 86%;
+    --forum-text-primary: 222 17% 13%;
+    --forum-text-secondary: 215 11% 38%;
+    --forum-text-muted: 215 10% 55%;
+    --forum-link: 39 39% 38%;
+    --forum-link-hover: 38 42% 46%;
+    --forum-link-visited: 39 25% 36%;
+    --forum-accent: 38 38% 48%;
+    --forum-accent-hover: 38 42% 42%;
+    --forum-accent-muted: 38 38% 48% / 0.10;
+    --forum-accent-glow: 38 38% 48% / 0.15;
+    --forum-gradient-from: 222 17% 25%;
+    --forum-gradient-to: 38 42% 48%;
+    --forum-mood: 345 52% 26%;
+    --forum-online: 165 30% 32%;
+    --forum-mod: 34 38% 36%;
+    --forum-admin: 0 40% 32%;
+    --forum-vip: 38 42% 46%;
+    --forum-verified: 39 39% 38%;
+    --forum-escort: 300 45% 45%;
+    --forum-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 8px 25px rgba(140, 120, 80, 0.07);
+    --forum-shadow-hover: 0 2px 6px rgba(0,0,0,0.05), 0 14px 35px rgba(140, 120, 80, 0.10);
+    --forum-shadow-strong: 0 1px 4px rgba(0,0,0,0.05), 0 6px 20px rgba(140, 120, 80, 0.09);
+    --forum-sweep-flash: 38 50% 30%;
   }
 
   .dark {
-    /* Shadcn UI variables - Dark Theme */
-    --background: 228 25% 8%;
-    --foreground: 220 20% 95%;
-    --card: 227 22% 11%;
-    --card-foreground: 220 20% 95%;
-    --popover: 227 22% 11%;
-    --popover-foreground: 220 20% 95%;
-    --primary: 263 70% 58%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 225 15% 16%;
-    --secondary-foreground: 220 20% 95%;
-    --muted: 225 15% 16%;
-    --muted-foreground: 220 13% 55%;
-    --accent: 263 70% 58%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 220 20% 95%;
-    --border: 225 15% 16%;
-    --input: 225 15% 16%;
-    --ring: 263 70% 58%;
+    /* Shadcn UI variables - Dark Theme (Private Club — Definitive) */
+    --background: 217 30% 5%;
+    --foreground: 220 20% 92%;
+    --card: 219 28% 10%;
+    --card-foreground: 220 20% 92%;
+    --popover: 219 28% 10%;
+    --popover-foreground: 220 20% 92%;
+    --primary: 38 38% 52%;
+    --primary-foreground: 217 30% 5%;
+    --secondary: 218 27% 12%;
+    --secondary-foreground: 220 20% 92%;
+    --muted: 218 27% 12%;
+    --muted-foreground: 220 9% 46%;
+    --accent: 220 28% 15%;
+    --accent-foreground: 220 20% 92%;
+    --destructive: 0 45% 33%;
+    --destructive-foreground: 220 20% 92%;
+    --border: 218 20% 18%;
+    --input: 218 20% 18%;
+    --ring: 38 38% 52%;
 
-    /* Forum Custom Variables - Modern Dark Theme */
-    --forum-bg: 228 25% 8%;
-    --forum-surface: 227 22% 11%;
-    --forum-surface-alt: 225 18% 14%;
-    --forum-surface-hover: 225 18% 18%;
-    --forum-border: 225 15% 16%;
-    --forum-text-primary: 220 20% 95%;
-    --forum-text-secondary: 220 13% 65%;
-    --forum-text-muted: 220 10% 45%;
-    --forum-link: 263 70% 65%;
-    --forum-link-hover: 263 70% 75%;
-    --forum-link-visited: 280 60% 68%;
-    --forum-accent: 263 70% 58%;
-    --forum-accent-hover: 263 70% 68%;
-    --forum-accent-muted: 263 70% 58% / 0.12;
-    --forum-accent-glow: 263 70% 58% / 0.2;
-    --forum-gradient-from: 263 70% 58%;
-    --forum-gradient-to: 230 80% 62%;
-    --forum-online: 152 69% 45%;
-    --forum-mod: 24 95% 53%;
-    --forum-admin: 0 72% 56%;
-    --forum-vip: 43 96% 56%;
-    --forum-verified: 199 89% 55%;
+    /* Forum Custom Variables - Private Club Dark (Definitive) */
+    --forum-bg: 217 30% 5%;
+    --forum-surface: 219 28% 10%;
+    --forum-surface-alt: 218 27% 12%;
+    --forum-surface-hover: 220 28% 15%;
+    --forum-border: 218 20% 18%;
+    --forum-text-primary: 220 20% 92%;
+    --forum-text-secondary: 215 14% 65%;
+    --forum-text-muted: 220 9% 46%;
+    --forum-link: 38 30% 62%;
+    --forum-link-hover: 38 42% 70%;
+    --forum-link-visited: 38 20% 52%;
+    --forum-accent: 38 38% 52%;
+    --forum-accent-hover: 38 42% 58%;
+    --forum-accent-muted: 38 38% 52% / 0.14;
+    --forum-accent-glow: 38 38% 52% / 0.18;
+    --forum-gradient-from: 220 18% 20%;
+    --forum-gradient-to: 38 38% 52%;
+    --forum-mood: 345 52% 24%;
+    --forum-online: 165 30% 38%;
+    --forum-mod: 34 38% 44%;
+    --forum-admin: 0 40% 38%;
+    --forum-vip: 41 40% 58%;
+    --forum-verified: 41 35% 54%;
+    --forum-escort: 300 50% 60%;
+    --forum-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+    --forum-shadow-hover: 0 6px 24px rgba(0, 0, 0, 0.40);
+    --forum-shadow-strong: 0 4px 24px rgba(0, 0, 0, 0.40);
+    --forum-sweep-flash: 0 0% 92%;
   }
 }
 
@@ -126,27 +138,25 @@
 
   ::selection {
     background: hsl(var(--forum-accent) / 0.25);
+    color: hsl(var(--forum-text-primary));
   }
 }
 
 @layer components {
-  /* --- Glass surfaces --- */
+  /* --- Surfaces — layered, theme-aware shadows --- */
   .forum-surface {
-    @apply bg-[hsl(var(--forum-surface))] rounded-xl;
-    border: 1px solid hsl(var(--forum-border) / 0.6);
-    box-shadow:
-      0 0 0 1px hsl(var(--forum-border) / 0.05),
-      0 1px 2px hsl(var(--forum-border) / 0.08),
-      0 4px 16px hsl(var(--forum-border) / 0.04);
+    @apply bg-[hsl(var(--forum-surface))];
+    border: 1px solid hsl(var(--forum-border));
+    border-radius: var(--radius);
+    box-shadow: var(--forum-shadow);
   }
 
   .forum-surface-glass {
-    @apply backdrop-blur-xl rounded-xl;
-    background: hsl(var(--forum-surface) / 0.7);
-    border: 1px solid hsl(var(--forum-border) / 0.4);
-    box-shadow:
-      0 0 0 1px hsl(var(--forum-border) / 0.03),
-      0 4px 24px hsl(var(--forum-bg) / 0.15);
+    @apply backdrop-blur-xl;
+    background: hsl(var(--forum-surface) / 0.8);
+    border: 1px solid hsl(var(--forum-border));
+    border-radius: var(--radius);
+    box-shadow: var(--forum-shadow);
   }
 
   .forum-surface-alt {
@@ -162,90 +172,127 @@
     @apply text-[hsl(var(--forum-text-secondary))];
   }
 
-  /* --- Gradient text --- */
+  /* --- Gradient text with subtle light sweep --- */
   .forum-gradient-text {
     @apply bg-clip-text text-transparent;
     background-image: linear-gradient(
-      135deg,
-      hsl(var(--forum-gradient-from)),
-      hsl(var(--forum-gradient-to))
+      90deg,
+      hsl(var(--forum-gradient-from)) 0%,
+      hsl(var(--forum-gradient-to)) 40%,
+      hsl(var(--forum-gradient-to) / 0.9) 45%,
+      hsl(var(--forum-sweep-flash) / 0.7) 50%,
+      hsl(var(--forum-gradient-to) / 0.9) 55%,
+      hsl(var(--forum-gradient-to)) 60%,
+      hsl(var(--forum-gradient-from)) 100%
     );
+    background-size: 300% 100%;
+    animation: text-light-sweep 6s ease-in-out infinite;
     padding-bottom: 0.1em;
     -webkit-box-decoration-break: clone;
     box-decoration-break: clone;
   }
 
-  /* --- Gradient border glow --- */
+  /* --- Hover light sweep for clickable text --- */
+  .forum-hover-sweep {
+    --sweep-base: hsl(var(--forum-text-primary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(90deg, var(--sweep-base), var(--sweep-base));
+    background-size: 100% 100%;
+  }
+  .forum-hover-sweep:hover {
+    --sweep-glow: hsl(var(--forum-link-hover));
+    background-image: linear-gradient(
+      90deg,
+      var(--sweep-glow) 0%,
+      var(--sweep-glow) 30%,
+      hsl(var(--forum-sweep-flash) / 0.85) 50%,
+      var(--sweep-glow) 70%,
+      var(--sweep-glow) 100%
+    );
+    background-size: 300% 100%;
+    animation: text-light-sweep 1.2s ease-in-out;
+  }
+
+  /* --- Subtle accent glow — restrained, no neon --- */
   .forum-glow {
-    box-shadow:
-      0 0 20px hsl(var(--forum-accent-glow)),
-      0 0 60px hsl(var(--forum-accent-glow));
+    box-shadow: 0 0 16px hsl(var(--forum-accent-glow));
   }
 
   .forum-glow-sm {
-    box-shadow: 0 0 12px hsl(var(--forum-accent-glow));
+    box-shadow: 0 0 8px hsl(var(--forum-accent-glow));
   }
 
-  /* --- Badges --- */
+  /* --- Badges — elegant engraved style, all outline-based --- */
   .badge-admin {
-    @apply text-white text-[10px] px-2 py-0.5 rounded-full font-semibold tracking-wide uppercase;
-    background: linear-gradient(135deg, hsl(var(--forum-admin)), hsl(0 72% 42%));
+    @apply text-[10px] px-2 py-0.5 rounded-full font-semibold tracking-wide uppercase;
+    background: hsl(var(--forum-admin) / 0.12);
+    color: hsl(var(--forum-admin));
+    border: 1px solid hsl(var(--forum-admin) / 0.25);
   }
 
   .badge-mod {
-    @apply text-white text-[10px] px-2 py-0.5 rounded-full font-semibold tracking-wide uppercase;
-    background: linear-gradient(135deg, hsl(var(--forum-mod)), hsl(30 90% 45%));
+    @apply text-[10px] px-2 py-0.5 rounded-full font-semibold tracking-wide uppercase;
+    background: hsl(var(--forum-mod) / 0.12);
+    color: hsl(var(--forum-mod));
+    border: 1px solid hsl(var(--forum-mod) / 0.25);
   }
 
   .badge-vip {
     @apply text-[10px] px-2 py-0.5 rounded-full font-semibold tracking-wide uppercase;
-    background: linear-gradient(135deg, hsl(43 96% 56%), hsl(35 100% 50%));
-    color: #1a1000;
+    background: hsl(var(--forum-vip) / 0.12);
+    color: hsl(var(--forum-vip));
+    border: 1px solid hsl(var(--forum-vip) / 0.25);
   }
 
   .badge-verified {
-    @apply text-white text-[10px] px-2 py-0.5 rounded-full font-semibold tracking-wide uppercase;
-    background: linear-gradient(135deg, hsl(var(--forum-verified)), hsl(210 80% 45%));
+    @apply text-[10px] px-2 py-0.5 rounded-full font-semibold tracking-wide uppercase;
+    background: hsl(var(--forum-verified) / 0.12);
+    color: hsl(var(--forum-verified));
+    border: 1px solid hsl(var(--forum-verified) / 0.25);
+  }
+
+  .badge-escort {
+    @apply text-[10px] px-2 py-0.5 rounded-full font-semibold tracking-wide uppercase;
+    background: hsl(var(--forum-escort) / 0.12);
+    color: hsl(var(--forum-escort));
+    border: 1px solid hsl(var(--forum-escort) / 0.25);
   }
 
   .online-indicator {
     @apply w-2 h-2 rounded-full bg-[hsl(var(--forum-online))];
-    box-shadow: 0 0 6px hsl(var(--forum-online) / 0.6);
+    box-shadow: 0 0 4px hsl(var(--forum-online) / 0.4);
   }
 
-  /* --- Hover card lift --- */
+  /* --- Hover card lift — subtle, no bounce --- */
   .forum-card-hover {
     @apply transition-all duration-300 ease-out;
   }
   .forum-card-hover:hover {
     transform: translateY(-1px);
-    box-shadow:
-      0 4px 12px hsl(var(--forum-border) / 0.12),
-      0 1px 3px hsl(var(--forum-border) / 0.08);
+    box-shadow: var(--forum-shadow-hover);
   }
 
-  /* --- Accent gradient button --- */
+  /* --- Primary CTA button — solid burgundy, subtle hover --- */
   .forum-btn-gradient {
-    @apply text-white font-semibold rounded-xl px-5 py-2.5 transition-all duration-300;
-    background: linear-gradient(
-      135deg,
-      hsl(var(--forum-gradient-from)),
-      hsl(var(--forum-gradient-to))
-    );
+    @apply font-semibold px-5 py-2.5 transition-all duration-300;
+    background: hsl(var(--forum-accent));
+    color: hsl(var(--primary-foreground));
+    border-radius: 14px;
   }
   .forum-btn-gradient:hover {
-    filter: brightness(1.1);
-    box-shadow: 0 4px 20px hsl(var(--forum-accent-glow));
+    background: hsl(var(--forum-accent-hover));
+    box-shadow: var(--forum-shadow);
     transform: translateY(-1px);
   }
 
-  /* --- Subtle animated gradient bg for hero sections --- */
+  /* --- Hero section — barely visible accent wash --- */
   .forum-hero-gradient {
     background: linear-gradient(
-      135deg,
-      hsl(var(--forum-accent) / 0.05) 0%,
-      hsl(var(--forum-gradient-to) / 0.03) 50%,
-      transparent 100%
+      180deg,
+      hsl(var(--forum-bg)) 0%,
+      hsl(var(--forum-surface-hover)) 100%
     );
   }
 }
@@ -262,8 +309,20 @@
 }
 
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 8px hsl(var(--forum-accent-glow)); }
-  50% { box-shadow: 0 0 20px hsl(var(--forum-accent-glow)); }
+  0%, 100% { box-shadow: 0 0 6px hsl(var(--forum-accent-glow)); }
+  50% { box-shadow: 0 0 12px hsl(var(--forum-accent-glow)); }
+}
+
+/* --- Light sweep across gradient text (TS Rating) --- */
+@keyframes text-light-sweep {
+  0%, 100% { background-position: 100% 50%; }
+  50% { background-position: 0% 50%; }
+}
+
+/* --- Light point traveling across the first-post accent line --- */
+@keyframes line-light-sweep {
+  0% { left: -20%; }
+  100% { left: 120%; }
 }
 
 .animate-fade-in {
@@ -285,6 +344,21 @@
   animation: pulse-glow 2s ease-in-out infinite;
 }
 
+/* --- Prevent horizontal scroll on mobile --- */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* --- Scrollbar-none utility --- */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
 /* --- Scrollbar styling --- */
 ::-webkit-scrollbar {
   width: 8px;
@@ -299,4 +373,9 @@
 }
 ::-webkit-scrollbar-thumb:hover {
   background: hsl(var(--forum-text-muted));
+}
+
+/* Hide reCAPTCHA badge globally - only shown via component text */
+.grecaptcha-badge {
+  visibility: hidden !important;
 }

@@ -6,13 +6,17 @@ import { Sidebar } from '@/components/layout/sidebar';
 import { RegionPageContent } from '@/components/forum/region-page-content';
 import { BannerSlot } from '@/components/ads/banner-slot';
 import { notFound } from 'next/navigation';
-import { generateMetadata as genMeta, SITE_NAME } from '@/lib/metadata';
+import { generateMetadata as genMeta } from '@/lib/metadata';
 import { breadcrumbJsonLd } from '@/lib/jsonld';
+import { getTranslations, getLocale } from 'next-intl/server';
+import type { Locale } from '@/i18n';
 
 export const revalidate = 60;
 
 export async function generateMetadata({ params }: { params: { country: string; region: string } }): Promise<Metadata> {
   const supabase = createServerSupabaseClient();
+  const t = await getTranslations('metadata');
+  
   const { data: country } = await supabase
     .from('countries')
     .select('name, name_es, flag_emoji')
@@ -29,8 +33,8 @@ export async function generateMetadata({ params }: { params: { country: string; 
 
   const countryName = `${country.flag_emoji || ''} ${country.name_es || country.name}`.trim();
   return genMeta({
-    title: `Escorts Trans ${region.name} — Reseñas y Opiniones`,
-    description: `Foro de escorts trans y travestis en ${region.name}, ${countryName}. Reseñas, opiniones, fotos verificadas y experiencias reales de catadores en ${SITE_NAME}.`,
+    title: t('regionMetaTitle', { region: region.name }),
+    description: t('regionMetaDesc', { region: region.name, country: countryName }),
     url: `/foros/${params.country}/${params.region}`,
   });
 }
@@ -119,10 +123,7 @@ export default async function RegionForumPage({ params }: PageProps) {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 py-6 w-full flex-1">
-        {/* SEO descriptive text */}
-        <p className="text-sm text-muted-foreground mb-4">
-          {`Foro de escorts trans y travestis en ${region.name}, ${countryDisplayName}. Reseñas verificadas, opiniones de catadores y experiencias reales actualizadas ${new Date().getFullYear()}. Comunidad ${SITE_NAME}.`}
-        </p>
+        {/* SEO descriptive text - rendered via RegionPageContent */}
         <div className="flex gap-6">
           <RegionPageContent 
             country={country} 
@@ -134,11 +135,12 @@ export default async function RegionForumPage({ params }: PageProps) {
           />
 
           <div className="hidden lg:block w-80">
-            <div className="space-y-4">
-              <BannerSlot position="sidebar" zoneType="city" countryId={country.id} regionId={region.id} />
-              <Sidebar countrySlug={params.country} countryName={country.name} />
-              <BannerSlot position="sidebar_bottom" zoneType="city" countryId={country.id} regionId={region.id} />
-            </div>
+            <Sidebar 
+              countrySlug={params.country} 
+              countryName={country.name} 
+              countryId={country.id}
+              regionId={region.id}
+            />
           </div>
         </div>
       </div>

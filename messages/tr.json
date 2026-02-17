@@ -253,6 +253,7 @@
   "common": {
     "home": "Ana Sayfa",
     "search": "Ara",
+    "searchIn": "{location} içinde ara",
     "login": "Giriş",
     "register": "Kayıt",
     "logout": "Çıkış",
@@ -355,6 +356,80 @@
     "verification": "Doğrulama",
     "verificationDesc": "Özel alanlara erişim için doğrulayın",
     "requestVerification": "Doğrulama iste",
+    "settingsSaved": "Ayarlar kaydedildi",
+    "settingsError": "Ayarları kaydetme hatası",
+    "notifInApp": "Uygulama içi bildirimler",
+    "notifReplies": "Konularıma yanıtlar",
+    "notifRepliesDesc": "Birisi konularınıza veya gönderilerinize yanıt verdiğinde bildirim alın",
+    "notifMentions": "Bahsetmeler",
+    "notifMentionsDesc": "Birisi sizi @kullanıcıadı ile bahsettiğinde bildirim alın",
+    "notifMessages": "Özel mesajlar",
+    "notifMessagesDesc": "Özel mesaj aldığınızda bildirim alın",
+    "notifFollows": "Yeni takipçiler",
+    "notifFollowsDesc": "Birisi sizi takip etmeye başladığında bildirim alın",
+    "notifEmail": "E-posta bildirimleri",
+    "notifEmailReplies": "Yanıtlarda e-posta",
+    "notifEmailRepliesDesc": "Birisi konularınıza yanıt verdiğinde e-posta alın",
+    "notifEmailMessages": "Mesajlarda e-posta",
+    "notifEmailMessagesDesc": "Özel mesaj aldığınızda e-posta alın",
+    "privShowOnline": "Çevrimiçi durumu göster",
+    "privShowOnlineDesc": "Diğerlerinin çevrimiçi olduğunuzu görmesine izin verin",
+    "privShowActivity": "Son etkinliği göster",
+    "privShowActivityDesc": "Diğerlerinin forum etkinliğinizi görmesine izin verin",
+    "privShowProfile": "Herkese açık profil",
+    "privShowProfileDesc": "Kayıtsız kullanıcıların profilinizi görmesine izin verin",
+    "privAllowMessages": "Kim mesaj gönderebilir?",
+    "privAllowMessagesDesc": "Size özel mesaj gönderebilecek kişileri kontrol edin",
+    "privMsgEveryone": "Herkes",
+    "privMsgVerified": "Yalnızca doğrulanmış kullanıcılar",
+    "privMsgNobody": "Kimse",
+    "verAlreadyVerified": "Hesap doğrulandı",
+    "verAlreadyVerifiedDesc": "Hesabınız zaten doğrulanmış. Tüm forum alanlarına tam erişiminiz var.",
+    "verPending": "İstek inceleniyor",
+    "verPendingDesc": "İsteğiniz moderasyon ekibi tarafından inceleniyor. İşlendiğinde bilgilendirileceksiniz.",
+    "verCodeLabel": "Doğrulama kodu",
+    "verEstimatedTime": "Tahmini inceleme süresi: 24-48 saat",
+    "verRejected": "İstek reddedildi",
+    "verRejectedDefault": "İsteğiniz reddedildi. Belirtilen sorunları düzelttikten sonra yeni bir istek gönderebilirsiniz.",
+    "verCopied": "Kod panoya kopyalandı",
+    "verSent": "İstek gönderildi",
+    "verSentDesc": "Moderasyon ekibi 24-48 saat içinde inceleyecek",
+    "verError": "İstek gönderme hatası",
+    "verSelectType": "Doğrulama türü",
+    "verTypeEscort": "Eskort Doğrulaması",
+    "verTypeEscortDesc": "Doğrulama fotoğrafıyla gerçek bir eskort olduğunuzu kanıtlayın",
+    "verTypeMod": "Moderatör Başvurusu",
+    "verTypeModDesc": "Topluluk moderatörü olmak için başvurun",
+    "verEscortTitle": "Eskort kimlik doğrulaması",
+    "verEscortInstructions": "Hesabınızı doğrulamak için benzersiz kodunuz, kullanıcı adınız ve bugünün tarihi yazılı bir kağıt tutan fotoğraf göndermeniz gerekiyor.",
+    "verStep1": "Adım 1: Kodunuzu oluşturun",
+    "verStep1Desc": "Kullanıcı adınız (@{username}) ve bugünün tarihiyle birlikte kağıda yazmanız gereken benzersiz bir kod oluşturun.",
+    "verGenerateCode": "Kod oluştur",
+    "verStep2": "Adım 2: Fotoğrafınızı çekin",
+    "verStep2Desc": "Şunları içeren bir kağıt tutarken net bir fotoğraf çekin:",
+    "verStep2Item1": "Kodunuz: {code}",
+    "verStep2Item2": "Kullanıcı adınız: @{username}",
+    "verStep2Item3": "Bugünün tarihi: {date}",
+    "verStep3": "Adım 3: Fotoğrafınızı yükleyin",
+    "verStep3Desc": "Fotoğrafınızı Imgur, ImgBB gibi bir servise yükleyin ve URL'yi buraya yapıştırın:",
+    "verContactInfo": "İletişim bilgileri (isteğe bağlı)",
+    "verContactInfoPlaceholder": "Telegram, WhatsApp, e-posta...",
+    "verModTitle": "Moderatör başvurusu",
+    "verModInstructions": "Moderatör olarak başvurmak için bu formu doldurun. Forum kalitesini korumak için sorumlu ve aktif kişiler arıyoruz.",
+    "verFullName": "Tam ad",
+    "verFullNamePlaceholder": "Tam adınız",
+    "verMotivation": "Neden moderatör olmak istiyorsunuz?",
+    "verMotivationPlaceholder": "Forum moderatörü olma motivasyonunuzu açıklayın...",
+    "verExperience": "Önceki deneyim",
+    "verExperiencePlaceholder": "Başka forumlar veya topluluklar modere ettiniz mi? Deneyiminizi anlatın...",
+    "verLanguages": "Konuştuğunuz diller",
+    "verLanguagesPlaceholder": "Türkçe, İngilizce, İspanyolca...",
+    "verLanguagesHint": "Dilleri virgülle ayırın",
+    "verAvailability": "Zaman uygunluğu",
+    "verAvailabilityPlaceholder": "Ör.: Pzt-Cum, 18:00 - 22:00",
+    "verContactModPlaceholder": "İletişim için e-posta veya Telegram",
+    "verSubmitting": "İstek gönderiliyor...",
+    "verSubmitRequest": "Doğrulama isteği gönder",
     "avatarUpload": "Avatar yükle",
     "avatarOrUrl": "veya URL yapıştır",
     "avatarDragDrop": "Bir resim sürükleyin veya seçmek için tıklayın",
@@ -404,7 +479,8 @@
     "registerHere": "Buradan kayıt olun",
     "loginHere": "Buradan giriş yapın",
     "completeCaptcha": "Lütfen güvenlik doğrulamasını tamamlayın",
-    "captchaFailed": "Güvenlik doğrulaması başarısız. Tekrar deneyin"
+    "captchaFailed": "Güvenlik doğrulaması başarısız. Tekrar deneyin",
+    "usernameExists": "Bu kullanıcı adı zaten alınmış"
   },
   "forum": {
     "title": "Forumlar",
@@ -537,7 +613,9 @@
     "visitsCount": "görüntüleme",
     "responsesCount": "yanıt",
     "unknownUser": "Kullanıcı",
-    "selectTagPlaceholder": "Etiketi seçin"
+    "selectTagPlaceholder": "Etiketi seçin",
+    "autopromotion": "Öz Tanıtım",
+    "autopromoDesc": "{country}'deki onaylı eskortlar için öz tanıtım bölümü. Sadece onaylı eskortlar konu açabilir."
   },
   "thread": {
     "createTitle": "Yeni konu oluştur",
@@ -843,21 +921,29 @@
     "noReputationData": "İtibar verisi yok",
     "moderators": "Moderatörler",
     "noModerators": "Moderatör atanmamış",
+    "administrators": "Yöneticiler",
+    "superAdministrator": "Süper Yönetici",
+    "generalModerator": "Genel Moderatör",
     "advertising": "Reklam",
     "adminRole": "Yönetici",
     "modRole": "Mod",
-    "guests": "misafir"
+    "guests": "misafir",
+    "guest": "Misafir",
+    "connected": "Bağlı"
   },
   "banners": {
     "adSpace": "Reklam alanı",
-    "advertiseHere": "Burada reklam verin"
+    "advertiseHere": "Burada reklam verin",
+    "posBeforeRelated": "İlgili Öncesi — Yanıtlar ve ilgili tartışmalar arasında",
+    "posBeforeRelatedDesc": "Konularda yanıtlar ve ilgili tartışmalar arasında görünür. Yüksek etkileşim."
   },
   "footer": {
     "description": "Deneyim paylaşmak ve bağlantı kurmak için profesyonel topluluk.",
     "viewAllForums": "Tüm forumları gör",
     "gallery": "Multimedya galerisi",
     "legal": "Yasal",
-    "rights": "Tüm hakları saklıdır."
+    "rights": "Tüm hakları saklıdır.",
+    "developedBy": "Forum geliştirici"
   },
   "time": {
     "ago": "önce"
@@ -1387,14 +1473,30 @@
     "roleSuperMod": "Süper Mod",
     "roleVip": "VIP",
     "roleVerified": "Doğrulanmış",
-    "roleUser": "Kullanıcı"
+    "roleUser": "Kullanıcı",
+    "roleEscort": "Eskort"
   },
   "post": {
     "posts": "Gönderiler",
     "registered": "Kayıt",
     "edited": "Düzenlendi",
     "report": "Şikayet et",
-    "edit": "Düzenle"
+    "edit": "Düzenle",
+    "save": "Kaydet",
+    "saving": "Kaydediliyor...",
+    "cancel": "İptal",
+    "editSuccess": "Gönderi başarıyla düzenlendi",
+    "editError": "Gönderi düzenleme hatası",
+    "advancedEdit": "Gelişmiş Düzenleme",
+    "advEditSuccess": "Konu başarıyla düzenlendi",
+    "advEditError": "Konu düzenleme hatası",
+    "delete": "Sil",
+    "deleting": "Siliniyor...",
+    "confirmDeletePost": "Bu gönderiyi silmek istediğinizden emin misiniz?",
+    "confirmDeleteThread": "Bu konuyu silmek istediğinizden emin misiniz?",
+    "postDeleted": "Gönderi silindi",
+    "threadDeleted": "Konu silindi",
+    "deleteError": "Silme hatası"
   },
   "user": {
     "mustLoginToFollow": "Kullanıcıları takip etmek için giriş yapın",
@@ -1640,7 +1742,11 @@
     "a10": "VIP statüsü seçkin topluluk üyelerine verilir. Daha fazla bilgi için yönetim ekibiyle iletişime geçin.",
     "notFound": "Aradığınızı bulamadınız mı?",
     "notFoundDesc": "Bize ulaşın, size yardımcı olalım",
-    "contactBtn": "İletişim"
+    "contactBtn": "İletişim",
+    "q11": "Tanıtım konusu nasıl oluşturulur?",
+    "a11": "Tanıtım konusu oluşturmak için eskort olarak doğrulanmış olmanız gerekir. Önce <a href='/verificacion'>hesabınızı eskort olarak doğrulayın</a>. Doğrulandıktan sonra hizmet sunduğunuz ülkeye gidin, ülke sayfasının üstündeki <strong>Tanıtım</strong> bölümüne tıklayın ve ilgili şehri seçerek konunuzu oluşturun. Sadece doğrulanmış eskortlar, yöneticiler ve moderatörler konu oluşturabilir. Normal kullanıcılar yorum yapabilir ancak konu oluşturamaz.",
+    "q12": "Eskort olarak nasıl doğrulanırım?",
+    "a12": "<a href='/verificacion'>Doğrulama</a> sayfasına gidin ve <strong>Eskort Doğrulama</strong> seçeneğini seçin. Benzersiz bir kod oluşturmanız, kullanıcı adınız ve bugünün tarihiyle birlikte bir kağıda yazmanız, tutarken fotoğraf çekmeniz ve resmi yüklemeniz gerekir. Moderasyon ekibi talebinizi 24-48 saat içinde inceleyecektir. Onaylandığında Doğrulanmış Eskort rozetini alacak ve <a href='https://tsrating.com'>tsrating.com</a> üzerinde tanıtım konuları oluşturabileceksiniz."
   },
   "cookiesPage": {
     "breadcrumb": "Çerez Politikası",
@@ -2248,7 +2354,8 @@
     "loginRequired": "Giriş yapmalısınız",
     "titleTooShort": "Başlık en az 5 karakter olmalı",
     "contentTooShort": "İçerik en az 10 karakter olmalı",
-    "errorUpdatingPost": "Gönderi güncelleme hatası"
+    "errorUpdatingPost": "Gönderi güncelleme hatası",
+    "escortOnlyForum": "Bu tanıtım forumunda sadece doğrulanmış eskortlar, yöneticiler ve moderatörler konu oluşturabilir."
   },
   "publicidad": {
     "title": "Reklam Satın Al",
@@ -2459,5 +2566,13 @@
     "daysLeft": "{days} gün kaldı",
     "noPreview": "Resim yok",
     "createdAt": "Satın alma tarihi"
+  },
+  "metadata": {
+    "siteDescription": "#1 Trans eskort ve shemale yorumları forumu. Doğrulanmış yorumlar, görüşler, gerçek fotoğraflar 2026.",
+    "regionMetaTitle": "Trans Eskort {region} — Yorumlar ve Görüşler",
+    "regionMetaDesc": "{country} {region} trans eskort forumu. TS Rating yorumlar, görüşler, doğrulanmış fotoğraflar ve gerçek deneyimler.",
+    "regionPageDesc": "{country} {region} trans eskort forumu. Doğrulanmış yorumlar, testçi görüşleri ve {year} güncellenmiş gerçek deneyimler. TS Rating topluluğu.",
+    "countryPageDesc": "{country} trans eskort forumu. Doğrulanmış yorumlar, testçi görüşleri ve {year} güncellenmiş gerçek deneyimler. TS Rating topluluğu.",
+    "siteTitle": "TS Rating — Trans Eskort Yorumları ve Değerlendirmeleri"
   }
 }

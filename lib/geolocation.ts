@@ -144,3 +144,120 @@ export const countryCodeToSlug: Record<string, string> = {
 export function getCountrySlugFromCode(countryCode: string): string | undefined {
   return countryCodeToSlug[countryCode.toUpperCase()];
 }
+
+// Map country codes to locale/language
+// Spanish: Latin America + Spain
+// English: USA, UK, Australia, New Zealand, etc.
+// Default: English
+export const countryCodeToLocale: Record<string, string> = {
+  // Spanish-speaking countries
+  'ES': 'es', // Spain
+  'MX': 'es', // Mexico
+  'AR': 'es', // Argentina
+  'CO': 'es', // Colombia
+  'CL': 'es', // Chile
+  'PE': 'es', // Peru
+  'VE': 'es', // Venezuela
+  'EC': 'es', // Ecuador
+  'UY': 'es', // Uruguay
+  'PY': 'es', // Paraguay
+  'BO': 'es', // Bolivia
+  'CR': 'es', // Costa Rica
+  'PA': 'es', // Panama
+  'DO': 'es', // Dominican Republic
+  'GT': 'es', // Guatemala
+  'HN': 'es', // Honduras
+  'SV': 'es', // El Salvador
+  'NI': 'es', // Nicaragua
+  'CU': 'es', // Cuba
+  'PR': 'es', // Puerto Rico
+  'GQ': 'es', // Equatorial Guinea
+  
+  // English-speaking countries
+  'US': 'en', // United States
+  'GB': 'en', // United Kingdom
+  'AU': 'en', // Australia
+  'NZ': 'en', // New Zealand
+  'CA': 'en', // Canada (default to English)
+  'IE': 'en', // Ireland
+  'ZA': 'en', // South Africa
+  'JM': 'en', // Jamaica
+  'TT': 'en', // Trinidad and Tobago
+  'BB': 'en', // Barbados
+  'PH': 'en', // Philippines
+  'SG': 'en', // Singapore
+  'IN': 'en', // India
+  
+  // Portuguese-speaking countries
+  'BR': 'pt', // Brazil
+  'PT': 'pt', // Portugal
+  'AO': 'pt', // Angola
+  'MZ': 'pt', // Mozambique
+  
+  // French-speaking countries
+  'FR': 'fr', // France
+  'BE': 'fr', // Belgium (French part)
+  'CH': 'fr', // Switzerland (French part) - could also be 'de'
+  'SN': 'fr', // Senegal
+  'CI': 'fr', // Ivory Coast
+  'MA': 'fr', // Morocco
+  'TN': 'fr', // Tunisia
+  'DZ': 'fr', // Algeria
+  
+  // German-speaking countries
+  'DE': 'de', // Germany
+  'AT': 'de', // Austria
+  
+  // Italian
+  'IT': 'it', // Italy
+  
+  // Dutch
+  'NL': 'nl', // Netherlands
+  
+  // Japanese
+  'JP': 'ja', // Japan
+  
+  // Chinese
+  'CN': 'zh', // China
+  'TW': 'zh', // Taiwan
+  'HK': 'zh', // Hong Kong
+  
+  // Russian
+  'RU': 'ru', // Russia
+  'BY': 'ru', // Belarus
+  'KZ': 'ru', // Kazakhstan
+  
+  // Arabic
+  'SA': 'ar', // Saudi Arabia
+  'AE': 'ar', // UAE
+  'EG': 'ar', // Egypt
+  'IQ': 'ar', // Iraq
+  'JO': 'ar', // Jordan
+  'KW': 'ar', // Kuwait
+  'QA': 'ar', // Qatar
+  
+  // Korean
+  'KR': 'ko', // South Korea
+  
+  // Turkish
+  'TR': 'tr', // Turkey
+  
+  // Polish
+  'PL': 'pl', // Poland
+  
+  // Swedish
+  'SE': 'sv', // Sweden
+  
+  // Indonesian
+  'ID': 'id', // Indonesia
+  
+  // Thai
+  'TH': 'th', // Thailand
+  
+  // Hindi (India is mapped to English as default, but could be 'hi')
+};
+
+export function getLocaleFromCountryCode(countryCode: string | undefined): string {
+  if (!countryCode) return 'en'; // Default to English
+  return countryCodeToLocale[countryCode.toUpperCase()] || 'en';
+}

@@ -82,7 +82,7 @@ export async function createThread(
     // Verificar que el usuario no esté suspendido
     const { data: profile } = await supabase
       .from('profiles')
-      .select('is_suspended, suspended_until, is_verified')
+      .select('is_suspended, suspended_until, is_verified, is_escort, role')
       .eq('id', user.id)
       .single();
 
@@ -94,6 +94,29 @@ export async function createThread(
         success: false, 
         error: `${t('accountSuspendedUntil')} ${suspendedUntil}` 
       };
+    }
+
+    // Rate limit: 5 minutes between threads (exempt mods/admins)
+    if (profile?.role !== 'admin' && profile?.role !== 'mod') {
+      const { data: lastThread } = await supabase
+        .from('threads')
+        .select('created_at')
+        .eq('author_id', user.id)
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+      if (lastThread) {
+        const elapsed = Date.now() - new Date(lastThread.created_at).getTime();
+        const cooldown = 5 * 60 * 1000; // 5 minutes
+        if (elapsed < cooldown) {
+          const remaining = Math.ceil((cooldown - elapsed) / 1000);
+          return {
+            success: false,
+            error: t('threadCooldown', { seconds: remaining }),
+          };
+        }
+      }
     }
 
     // Sanitize content (Zod schema already does sanitizeHtml, but handle non-Zod path)
@@ -127,7 +150,7 @@ export async function createThread(
     // Verificar que el foro existe
     const { data: forum, error: forumError } = await supabase
       .from('forums')
-      .select('id, is_private')
+      .select('id, is_private, is_escort_only')
       .eq('id', forumId)
       .single();
 
@@ -143,10 +166,37 @@ export async function createThread(
       };
     }
 
-    // Generate SEO slug from title + short random suffix for uniqueness
+    // Si el foro es de autopromoción (escort-only), solo escorts verificadas, admin y mod pueden crear hilos
+    if (forum.is_escort_only) {
+      const isEscort = profile?.is_escort === true;
+      const isStaff = profile?.role === 'admin' || profile?.role === 'mod';
+      if (!isEscort && !isStaff) {
+        return {
+          success: false,
+          error: t('escortOnlyForum'),
+        };
+      }
+    }
+
+    // Generate SEO slug from title - only add suffix if needed for uniqueness
     const baseSlug = generateSlug(title);
-    const slugSuffix = Math.random().toString(36).substring(2, 8);
-    const threadSlug = `${baseSlug}-${slugSuffix}`;
+    let threadSlug = baseSlug;
+    
+    // Check if slug already exists and add numeric suffix if needed
+    const { data: existingThread } = await supabase
+      .from('threads')
+      .select('id')
+      .eq('slug', baseSlug)
+      .maybeSingle();
+    
+    if (existingThread) {
+      // Find next available number
+      const { count } = await supabase
+        .from('threads')
+        .select('id', { count: 'exact', head: true })
+        .like('slug', `${baseSlug}-%`);
+      threadSlug = `${baseSlug}-${(count || 0) + 2}`;
+    }
 
     // Crear el hilo
     const threadInsert: Record<string, unknown> = {
@@ -245,12 +295,35 @@ export async function createPost(formData: FormData): Promise<ActionResult<{ pos
     // Verificar que el usuario no esté suspendido
     const { data: profile } = await supabase
       .from('profiles')
-      .select('is_suspended')
+      .select('is_suspended, role')
       .eq('id', user.id)
       .single();
 
     if (profile?.is_suspended) {
       return { success: false, error: t('accountSuspended') };
+    }
+
+    // Rate limit: 25 seconds between posts (exempt mods/admins)
+    if (profile?.role !== 'admin' && profile?.role !== 'mod') {
+      const { data: lastPost } = await supabase
+        .from('posts')
+        .select('created_at')
+        .eq('author_id', user.id)
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+      if (lastPost) {
+        const elapsed = Date.now() - new Date(lastPost.created_at).getTime();
+        const cooldown = 25 * 1000; // 25 seconds
+        if (elapsed < cooldown) {
+          const remaining = Math.ceil((cooldown - elapsed) / 1000);
+          return {
+            success: false,
+            error: t('postCooldown', { seconds: remaining }),
+          };
+        }
+      }
     }
 
     // Validaciones anti-spam
@@ -451,6 +524,120 @@ export async function thankPost(postId: string): Promise<ActionResult> {
 }
 
 /**
+ * Editar un hilo (título, tag, contenido del primer post) — admin/mod/author
+ */
+export async function editThread(
+  threadId: string,
+  data: { title?: string; tag?: string; content?: string; isNsfw?: boolean }
+): Promise<ActionResult> {
+  try {
+    const t = await getTranslations('serverErrors');
+    const supabase = createServerSupabaseClient();
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+
+    if (authError || !user) {
+      return { success: false, error: t('loginRequired') };
+    }
+
+    // Fetch thread
+    const { data: thread, error: threadError } = await supabase
+      .from('threads')
+      .select('id, author_id, forum_id')
+      .eq('id', threadId)
+      .single();
+
+    if (threadError || !thread) {
+      return { success: false, error: t('threadNotFound') };
+    }
+
+    // Check permissions
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('role')
+      .eq('id', user.id)
+      .single();
+
+    const isModerator = profile?.role === 'mod' || profile?.role === 'admin';
+    const isAuthor = thread.author_id === user.id;
+
+    if (!isAuthor && !isModerator) {
+      return { success: false, error: t('noEditPermission') };
+    }
+
+    // Update thread metadata (title, tag)
+    const threadUpdate: Record<string, unknown> = {};
+    if (data.title && data.title.trim().length >= 5) {
+      threadUpdate.title = data.title.trim();
+      const newBaseSlug = generateSlug(data.title.trim());
+      
+      // Check if new slug already exists (excluding current thread)
+      const { data: existingThread } = await supabase
+        .from('threads')
+        .select('id')
+        .eq('slug', newBaseSlug)
+        .neq('id', threadId)
+        .maybeSingle();
+      
+      if (existingThread) {
+        const { count } = await supabase
+          .from('threads')
+          .select('id', { count: 'exact', head: true })
+          .like('slug', `${newBaseSlug}-%`);
+        threadUpdate.slug = `${newBaseSlug}-${(count || 0) + 2}`;
+      } else {
+        threadUpdate.slug = newBaseSlug;
+      }
+    }
+    if (data.tag) {
+      threadUpdate.tag = data.tag;
+    }
+    if (typeof data.isNsfw === 'boolean') {
+      threadUpdate.is_nsfw = data.isNsfw;
+    }
+
+    if (Object.keys(threadUpdate).length > 0) {
+      const { error: updateErr } = await supabase
+        .from('threads')
+        .update(threadUpdate)
+        .eq('id', threadId);
+
+      if (updateErr) {
+        console.error('Error updating thread:', updateErr);
+        return { success: false, error: t('errorUpdatingThread') };
+      }
+    }
+
+    // Update first post content if provided
+    if (data.content && data.content.trim().length >= 10) {
+      const { sanitizeHtml } = await import('@/lib/sanitize');
+      const sanitized = sanitizeHtml(data.content);
+
+      const { error: postErr } = await supabase
+        .from('posts')
+        .update({
+          content: sanitized,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('thread_id', threadId)
+        .eq('is_first_post', true);
+
+      if (postErr) {
+        console.error('Error updating first post:', postErr);
+        return { success: false, error: t('errorUpdatingPost') };
+      }
+    }
+
+    revalidatePath(`/hilo/${threadId}`);
+    return { success: true, data: null };
+
+  } catch (error) {
+    console.error('Unexpected error in editThread:', error);
+    const tErr = await getTranslations('serverErrors');
+    return { success: false, error: tErr('unexpectedError') };
+  }
+}
+
+/**
  * Editar un post
  */
 export async function editPost(postId: string, content: string): Promise<ActionResult> {
@@ -522,6 +709,80 @@ export async function editPost(postId: string, content: string): Promise<ActionR
 
   } catch (error) {
     console.error('Unexpected error in editPost:', error);
+    const tErr = await getTranslations('serverErrors');
+    return { success: false, error: tErr('unexpectedError') };
+  }
+}
+
+/**
+ * Eliminar un post — admin/mod o autor del post
+ * Si es el primer post del hilo, elimina todo el hilo.
+ */
+export async function deletePost(postId: string): Promise<ActionResult> {
+  try {
+    const t = await getTranslations('serverErrors');
+    const supabase = createServerSupabaseClient();
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+
+    if (authError || !user) {
+      return { success: false, error: t('loginRequired') };
+    }
+
+    const { data: post, error: postError } = await supabase
+      .from('posts')
+      .select('id, author_id, thread_id, is_first_post')
+      .eq('id', postId)
+      .single();
+
+    if (postError || !post) {
+      return { success: false, error: t('postNotFound') };
+    }
+
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('role')
+      .eq('id', user.id)
+      .single();
+
+    const isModerator = profile?.role === 'mod' || profile?.role === 'admin';
+    const isAuthor = post.author_id === user.id;
+
+    if (!isAuthor && !isModerator) {
+      return { success: false, error: t('noDeletePermission') };
+    }
+
+    if (post.is_first_post) {
+      // Deleting the first post = delete the entire thread
+      const { error: delErr } = await supabase
+        .from('threads')
+        .delete()
+        .eq('id', post.thread_id);
+
+      if (delErr) {
+        console.error('Error deleting thread:', delErr);
+        return { success: false, error: t('errorDeletingThread') };
+      }
+
+      revalidatePath('/');
+      return { success: true, data: { deletedThread: true, threadId: post.thread_id } };
+    } else {
+      // Delete just the post
+      const { error: delErr } = await supabase
+        .from('posts')
+        .delete()
+        .eq('id', postId);
+
+      if (delErr) {
+        console.error('Error deleting post:', delErr);
+        return { success: false, error: t('errorDeletingPost') };
+      }
+
+      revalidatePath(`/hilo/${post.thread_id}`);
+      return { success: true, data: { deletedThread: false } };
+    }
+
+  } catch (error) {
+    console.error('Unexpected error in deletePost:', error);
     const tErr = await getTranslations('serverErrors');
     return { success: false, error: tErr('unexpectedError') };
   }

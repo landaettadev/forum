@@ -59,7 +59,7 @@ export function Pagination({ currentPage, totalPages, baseUrl }: PaginationProps
   if (totalPages <= 1) return null;
 
   return (
-    <div className="flex items-center justify-center gap-2 py-4">
+    <div className="flex items-center justify-center gap-1 sm:gap-2 py-3 sm:py-4 flex-wrap">
       <Button
         variant="outline"
         size="sm"
@@ -70,12 +70,12 @@ export function Pagination({ currentPage, totalPages, baseUrl }: PaginationProps
         {currentPage === 1 ? (
           <span>
             <ChevronLeft className="h-4 w-4" />
-            {t('previous')}
+            <span className="hidden sm:inline">{t('previous')}</span>
           </span>
         ) : (
           <Link href={createPageUrl(currentPage - 1)}>
             <ChevronLeft className="h-4 w-4" />
-            {t('previous')}
+            <span className="hidden sm:inline">{t('previous')}</span>
           </Link>
         )}
       </Button>
@@ -121,12 +121,12 @@ export function Pagination({ currentPage, totalPages, baseUrl }: PaginationProps
       >
         {currentPage === totalPages ? (
           <span>
-            {t('next')}
+            <span className="hidden sm:inline">{t('next')}</span>
             <ChevronRight className="h-4 w-4" />
           </span>
         ) : (
           <Link href={createPageUrl(currentPage + 1)}>
-            {t('next')}
+            <span className="hidden sm:inline">{t('next')}</span>
             <ChevronRight className="h-4 w-4" />
           </Link>
         )}

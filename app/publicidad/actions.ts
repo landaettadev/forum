@@ -76,7 +76,7 @@ export async function createBannerBooking(formData: {
     if (zoneType === 'city' && formData.regionId) {
       zoneQuery = zoneQuery.eq('region_id', formData.regionId);
     } else {
-      zoneQuery = zoneQuery.is('region_id', null);
+      zoneQuery = zoneQuery.filter('region_id', 'is', 'null');
     }
 
     let { data: zone } = await zoneQuery.maybeSingle();

@@ -1,9 +1,18 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { createMiddlewareSupabaseClient } from '@/lib/supabase-middleware';
+import { countryCodeToLocale } from '@/lib/geolocation';
 
 // Rate limiting via Upstash Redis (optional — gracefully disabled if not configured)
 import { checkRateLimit } from '@/lib/rate-limit';
+
+// Supported locales
+const SUPPORTED_LOCALES = ['es', 'en', 'pt', 'fr', 'de', 'it', 'nl', 'ja', 'zh', 'ru', 'ar', 'hi', 'ko', 'tr', 'pl', 'sv', 'id', 'th'];
+
+function getLocaleFromCountry(countryCode: string | null): string {
+  if (!countryCode) return 'en';
+  return countryCodeToLocale[countryCode.toUpperCase()] || 'en';
+}
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -37,6 +46,31 @@ export async function middleware(request: NextRequest) {
   // Supabase SSR session refresh — keeps auth cookies in sync
   const { response } = await createMiddlewareSupabaseClient(request);
 
+  // Auto-detect locale from IP if user hasn't set one manually
+  const existingLocale = request.cookies.get('NEXT_LOCALE')?.value;
+  const hasManuallySetLocale = request.cookies.get('LOCALE_MANUAL')?.value === 'true';
+  
+  if (!existingLocale && !hasManuallySetLocale) {
+    // Get country from various headers (Vercel, Cloudflare, etc.)
+    const countryCode = 
+      request.headers.get('x-vercel-ip-country') ||
+      request.headers.get('cf-ipcountry') ||
+      null;
+    
+    if (countryCode) {
+      const detectedLocale = getLocaleFromCountry(countryCode);
+      
+      // Only set if it's a supported locale
+      if (SUPPORTED_LOCALES.includes(detectedLocale)) {
+        response.cookies.set('NEXT_LOCALE', detectedLocale, {
+          path: '/',
+          maxAge: 60 * 60 * 24 * 365, // 1 year
+          sameSite: 'lax',
+        });
+      }
+    }
+  }
+
   // Generate CSP nonce for this request
   const nonce = Buffer.from(crypto.randomUUID()).toString('base64');
   const isDev = process.env.NODE_ENV === 'development';
@@ -44,8 +78,8 @@ export async function middleware(request: NextRequest) {
   // In dev: allow unsafe-eval (needed for Next.js HMR / React Refresh) and unsafe-inline
   // In prod: strict nonce-based CSP
   const scriptSrc = isDev
-    ? `script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://challenges.cloudflare.com`
-    : `script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https://www.googletagmanager.com https://www.google-analytics.com https://challenges.cloudflare.com`;
+    ? `script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://challenges.cloudflare.com https://www.google.com https://www.gstatic.com`
+    : `script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https://www.googletagmanager.com https://www.google-analytics.com https://challenges.cloudflare.com https://www.google.com https://www.gstatic.com`;
 
   const csp = [
     "default-src 'self'",
@@ -53,8 +87,8 @@ export async function middleware(request: NextRequest) {
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "img-src 'self' data: blob: https://*.supabase.co https://www.google-analytics.com https://flagcdn.com",
     "font-src 'self' https://fonts.gstatic.com",
-    "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://www.google-analytics.com https://ipapi.co https://challenges.cloudflare.com",
-    "frame-src 'self' https://challenges.cloudflare.com",
+    "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://www.google-analytics.com https://ipapi.co https://challenges.cloudflare.com https://www.google.com",
+    "frame-src 'self' https://challenges.cloudflare.com https://www.google.com https://www.gstatic.com",
     "object-src 'none'",
     "base-uri 'self'",
     "form-action 'self'",

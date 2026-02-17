@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState } from 'react';
-import type { User, Provider, AuthError } from '@supabase/supabase-js';
+import type { User, Provider, AuthError, Session } from '@supabase/supabase-js';
 import { supabase } from './supabase';
 import type { Profile } from './supabase';
 
@@ -41,20 +41,32 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  // Update user presence (last_seen_at)
+  const updatePresence = async (userId: string) => {
+    try {
+      await supabase.rpc('update_user_presence', { p_user_id: userId });
+    } catch (err) {
+      // Silently fail - presence is not critical
+      console.debug('Presence update failed:', err);
+    }
+  };
+
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(({ data: { session } }: { data: { session: Session | null } }) => {
       setUser(session?.user ?? null);
       if (session?.user) {
         fetchProfile(session.user.id);
+        updatePresence(session.user.id);
       }
       setLoading(false);
     });
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event: string, session: Session | null) => {
       (async () => {
         setUser(session?.user ?? null);
         if (session?.user) {
           await fetchProfile(session.user.id);
+          await updatePresence(session.user.id);
         } else {
           setProfile(null);
         }
@@ -63,6 +75,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     return () => subscription.unsubscribe();
   }, []);
+
+  // Update presence periodically while user is active
+  useEffect(() => {
+    if (!user) return;
+    
+    const interval = setInterval(() => {
+      updatePresence(user.id);
+    }, 60000); // Every minute
+    
+    return () => clearInterval(interval);
+  }, [user]);
 
   const signIn = async (email: string, password: string) => {
     const { error } = await supabase.auth.signInWithPassword({

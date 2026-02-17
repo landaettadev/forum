@@ -253,6 +253,7 @@
   "common": {
     "home": "Home",
     "search": "Search",
+    "searchIn": "Search in {location}",
     "login": "Login",
     "register": "Register",
     "logout": "Logout",
@@ -478,7 +479,8 @@
     "ageConfirmation": "I am 18 or older and accept the",
     "forumRules": "forum rules",
     "registerHere": "Register here",
-    "loginHere": "Login here"
+    "loginHere": "Login here",
+    "usernameExists": "This username is already taken"
   },
   "forum": {
     "title": "Forums",
@@ -530,6 +532,8 @@
     "threadsCount": "{count} threads",
     "noRegionsAvailable": "No regions available",
     "noRegionsConfigured": "No cities or regions configured for this country yet.",
+    "autopromotion": "Self-Promotion",
+    "autopromoDesc": "Self-promotion section for verified escorts in {country}. Only verified escorts can create threads.",
     "generalForumsOf": "General forums of {country}",
     "recentThreads": "Recent threads",
     "noThreadsYet": "No threads yet",
@@ -836,7 +840,15 @@
     "messages": "Messages",
     "noConversations": "No conversations",
     "backToConversations": "Back to conversations",
-    "placeholder": "Write a message..."
+    "placeholder": "Write a message...",
+    "usersOnline": "Online",
+    "searchPlaceholder": "Search user...",
+    "typePlaceholder": "Type a message...",
+    "back": "Back",
+    "sendError": "Error sending message",
+    "pin": "Pin",
+    "unpin": "Unpin",
+    "noUsersOnline": "No users online"
   },
   "search": {
     "title": "Search the forum",
@@ -916,6 +928,8 @@
     "staffOnline": "Staff online",
     "recentActivity": "Recent activity",
     "recentActivityDesc": "The latest forum activities will appear here",
+    "showMore": "Show more",
+    "showLess": "Show less",
     "usefulLinks": "Useful links",
     "rules": "Forum rules",
     "verification": "Verification",
@@ -929,21 +943,30 @@
     "noReputationData": "No reputation data",
     "moderators": "Moderators",
     "noModerators": "No moderators assigned",
+    "administrators": "Administrators",
+    "superAdministrator": "Super Administrator",
+    "generalModerator": "General Moderator",
     "advertising": "Advertising",
     "adminRole": "Admin",
     "modRole": "Mod",
-    "guests": "guests"
+    "guests": "guests",
+    "more": "more",
+    "guest": "Guest",
+    "connected": "Connected"
   },
   "banners": {
     "adSpace": "Ad Space",
-    "advertiseHere": "Advertise here"
+    "advertiseHere": "Advertise here",
+    "posBeforeRelated": "Pre-Related — Between replies and related discussions",
+    "posBeforeRelatedDesc": "Visible in threads between replies and related discussions. High engagement."
   },
   "footer": {
     "description": "Professional community to share experiences and connect.",
     "viewAllForums": "View all forums",
     "gallery": "Multimedia Gallery",
     "legal": "Legal",
-    "rights": "All rights reserved."
+    "rights": "All rights reserved.",
+    "developedBy": "Forum developed by"
   },
   "time": {
     "ago": "ago"
@@ -1501,14 +1524,37 @@
     "roleMod": "Mod",
     "roleSuperMod": "Super Mod",
     "roleVip": "VIP",
-    "roleVerified": "Verified"
+    "roleVerified": "Verified",
+    "roleEscort": "Escort"
   },
   "post": {
     "report": "Report",
     "edit": "Edit",
     "posts": "Posts",
     "registered": "Joined",
-    "edited": "Edited"
+    "edited": "Edited",
+    "save": "Save",
+    "saving": "Saving...",
+    "cancel": "Cancel",
+    "editSuccess": "Post edited successfully",
+    "advancedEdit": "Advanced Edit",
+    "advEditSuccess": "Thread edited successfully",
+    "advEditError": "Error editing thread",
+    "advTitle": "Thread title",
+    "advTitlePlaceholder": "Enter thread title",
+    "advTitleHint": "Minimum 5 characters",
+    "advTag": "Tag",
+    "advTagPlaceholder": "Select a tag",
+    "advTagAsk": "Question",
+    "advContent": "Content",
+    "advContentHint": "Minimum 10 characters",
+    "delete": "Delete",
+    "deleting": "Deleting...",
+    "confirmDeletePost": "Are you sure you want to delete this post? This action cannot be undone.",
+    "confirmDeleteThread": "Are you sure you want to delete this entire thread? All posts will be removed. This action cannot be undone.",
+    "postDeleted": "Post deleted",
+    "threadDeleted": "Thread deleted",
+    "deleteError": "Error deleting"
   },
   "user": {
     "following": "Following",
@@ -1594,26 +1640,23 @@
     "threads": "Threads"
   },
   "reputationPage": {
-    "catReputation": "Reputation",
-    "moderator": "Moderator",
-    "activePoster": "Active",
-    "veteran": "Veteran",
-    "foundingMember": "Founding Member",
-    "pointsTab": "Points",
-    "likesTitle": "Like",
-    "catVerification": "Verification",
-    "trusted": "Trusted",
     "breadcrumb": "Reputation & Badges",
     "title": "Reputation & Badges",
     "description": "Discover all the badges you can earn and how to unlock them. Badges are displayed on your profile and posts.",
     "badgesTab": "Badges",
+    "pointsTab": "Points",
+    "faqTab": "FAQ",
+    "auto": "Auto",
     "howToGet": "How to get it:",
     "catSystem": "System",
     "catSystemDesc": "Automatic system badges",
     "catRoles": "Roles",
     "catRolesDesc": "Forum role badges",
+    "catVerification": "Verification",
     "catVerificationDesc": "Identity verification badges",
+    "catEscort": "Escort",
     "catEscortDesc": "Special badges for escort profiles",
+    "catReputation": "Reputation",
     "catReputationDesc": "Badges based on your community reputation",
     "catActivity": "Activity",
     "catActivityDesc": "Badges for your forum participation",
@@ -1631,8 +1674,10 @@
     "verifiedAccount": "Verified Account",
     "verifiedAccountDesc": "Identity verified by the forum team",
     "verifiedAccountReq": "Request verification and complete the process",
+    "vip": "VIP",
     "vipDesc": "VIP member with exclusive benefits",
     "vipReq": "Acquire VIP membership",
+    "escort": "Escort",
     "escortDesc": "Escort profile",
     "escortReq": "Register as escort",
     "escortVerified": "Verified Escort",
@@ -2292,6 +2337,7 @@
     "tooManyLinks3": "Too many links (maximum 3 in replies)",
     "forumNotFound": "Forum not found",
     "forumRequiresVerification": "This forum requires verification. Request verification on your profile.",
+    "escortOnlyForum": "Only verified escorts, administrators and moderators can create threads in this self-promotion forum.",
     "errorCreatingThreadContent": "Error creating thread content",
     "unexpectedErrorThread": "Unexpected error creating thread",
     "threadNotFound": "Thread not found",
@@ -2310,7 +2356,13 @@
     "loginRequired": "You must sign in",
     "titleTooShort": "Title must be at least 5 characters",
     "contentTooShort": "Content must be at least 10 characters",
-    "errorUpdatingPost": "Error updating post"
+    "errorUpdatingPost": "Error updating post",
+    "errorUpdatingThread": "Error updating thread",
+    "threadCooldown": "You must wait {seconds} seconds before creating another thread",
+    "postCooldown": "You must wait {seconds} seconds before posting another reply",
+    "noDeletePermission": "You don't have permission to delete this content",
+    "errorDeletingThread": "Error deleting thread",
+    "errorDeletingPost": "Error deleting post"
   },
   "rating": {
     "cantRateSelf": "You can't rate yourself",
@@ -2472,6 +2524,10 @@
     "a9": "On the login page, click \"Forgot your password?\". Enter your email and you'll receive a link to reset your password.",
     "q10": "How can I become VIP?",
     "a10": "VIP status is granted to outstanding community members. Contact the admin team for more information.",
+    "q11": "How do I create a self-promotion thread?",
+    "a11": "To create a self-promotion thread you must be verified as an escort. First, <a href='/verificacion'>verify your account as an escort</a>. Once verified, go to the country where you offer your services, click on the <strong>Self-Promotion</strong> section at the top of the country page, and create your thread selecting the corresponding city. Only verified escorts, administrators and moderators can create threads in self-promotion. Regular users can comment but not create threads.",
+    "q12": "How do I get verified as an escort?",
+    "a12": "Go to the <a href='/verificacion'>Verification</a> page and select <strong>Escort Verification</strong>. You'll need to generate a unique code, write it on a piece of paper along with your username and today's date, take a photo holding it, and upload the image. The moderation team will review your request within 24-48 hours. Once approved, you'll receive the Verified Escort badge and will be able to create self-promotion threads on <a href='https://tsrating.com'>tsrating.com</a>.",
     "notFound": "Didn't find what you were looking for?",
     "notFoundDesc": "Contact us and we'll help you with your inquiry",
     "contactBtn": "Contact"
@@ -2556,5 +2612,13 @@
     "daysLeft": "{days} days left",
     "noPreview": "No image",
     "createdAt": "Purchased on"
+  },
+  "metadata": {
+    "siteDescription": "#1 Forum for trans escort and shemale reviews. Verified reviews, opinions, real photos and updated experiences 2026.",
+    "regionMetaTitle": "Trans Escorts {region} — Reviews and Opinions",
+    "regionMetaDesc": "Trans escort and shemale forum in {region}, {country}. Reviews, opinions, verified photos and real experiences from testers at TS Rating.",
+    "regionPageDesc": "Trans escort and shemale forum in {region}, {country}. Verified reviews, tester opinions and real experiences updated {year}. TS Rating community.",
+    "countryPageDesc": "Trans escort and shemale forum in {country}. Verified reviews, tester opinions and real experiences updated {year}. TS Rating community.",
+    "siteTitle": "TS Rating — Trans Escort Reviews & Ratings"
   }
 }

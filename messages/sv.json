@@ -253,6 +253,7 @@
   "common": {
     "home": "Hem",
     "search": "Sök",
+    "searchIn": "Sök i {location}",
     "login": "Logga in",
     "register": "Registrera",
     "logout": "Logga ut",
@@ -355,6 +356,80 @@
     "verification": "Verifiering",
     "verificationDesc": "Verifiera för privata områden",
     "requestVerification": "Begär verifiering",
+    "settingsSaved": "Inställningar sparade",
+    "settingsError": "Fel vid sparande av inställningar",
+    "notifInApp": "Aviseringar i appen",
+    "notifReplies": "Svar på mina trådar",
+    "notifRepliesDesc": "Få avisering när någon svarar på dina trådar eller inlägg",
+    "notifMentions": "Omnämnanden",
+    "notifMentionsDesc": "Få avisering när någon nämner dig med @användarnamn",
+    "notifMessages": "Privata meddelanden",
+    "notifMessagesDesc": "Få avisering när du får ett privat meddelande",
+    "notifFollows": "Nya följare",
+    "notifFollowsDesc": "Få avisering när någon börjar följa dig",
+    "notifEmail": "E-postaviseringar",
+    "notifEmailReplies": "E-post vid svar",
+    "notifEmailRepliesDesc": "Få e-post när någon svarar på dina trådar",
+    "notifEmailMessages": "E-post vid meddelanden",
+    "notifEmailMessagesDesc": "Få e-post när du får ett privat meddelande",
+    "privShowOnline": "Visa onlinestatus",
+    "privShowOnlineDesc": "Tillåt andra att se om du är online",
+    "privShowActivity": "Visa senaste aktivitet",
+    "privShowActivityDesc": "Tillåt andra att se din forumaktivitet",
+    "privShowProfile": "Offentlig profil",
+    "privShowProfileDesc": "Tillåt oregistrerade användare att se din profil",
+    "privAllowMessages": "Vem kan skicka meddelanden?",
+    "privAllowMessagesDesc": "Kontrollera vem som kan skicka privata meddelanden till dig",
+    "privMsgEveryone": "Alla användare",
+    "privMsgVerified": "Endast verifierade användare",
+    "privMsgNobody": "Ingen",
+    "verAlreadyVerified": "Konto verifierat",
+    "verAlreadyVerifiedDesc": "Ditt konto är redan verifierat. Du har full åtkomst till alla forumområden.",
+    "verPending": "Förfrågan under granskning",
+    "verPendingDesc": "Din förfrågan granskas av moderationsteamet. Du meddelas när den har behandlats.",
+    "verCodeLabel": "Verifieringskod",
+    "verEstimatedTime": "Beräknad granskningstid: 24-48 timmar",
+    "verRejected": "Förfrågan avvisad",
+    "verRejectedDefault": "Din förfrågan avvisades. Du kan skicka en ny efter att ha åtgärdat de angivna problemen.",
+    "verCopied": "Kod kopierad till urklipp",
+    "verSent": "Förfrågan skickad",
+    "verSentDesc": "Moderationsteamet granskar den inom 24-48 timmar",
+    "verError": "Fel vid sändning av förfrågan",
+    "verSelectType": "Verifieringstyp",
+    "verTypeEscort": "Escort-verifiering",
+    "verTypeEscortDesc": "Bevisa att du är en riktig escort med ett verifieringsfoto",
+    "verTypeMod": "Moderatoransökan",
+    "verTypeModDesc": "Ansök om att bli community-moderator",
+    "verEscortTitle": "Escort-identitetsverifiering",
+    "verEscortInstructions": "För att verifiera ditt konto behöver du skicka ett foto där du håller ett papper med din unika kod, ditt användarnamn och dagens datum.",
+    "verStep1": "Steg 1: Generera din kod",
+    "verStep1Desc": "Generera en unik kod som du ska skriva på ett papper tillsammans med ditt användarnamn (@{username}) och dagens datum.",
+    "verGenerateCode": "Generera kod",
+    "verStep2": "Steg 2: Ta ditt foto",
+    "verStep2Desc": "Ta ett tydligt foto där du håller ett papper med:",
+    "verStep2Item1": "Din kod: {code}",
+    "verStep2Item2": "Ditt användarnamn: @{username}",
+    "verStep2Item3": "Dagens datum: {date}",
+    "verStep3": "Steg 3: Ladda upp ditt foto",
+    "verStep3Desc": "Ladda upp ditt foto till en tjänst som Imgur, ImgBB eller liknande och klistra in URL:en här:",
+    "verContactInfo": "Kontaktinformation (valfritt)",
+    "verContactInfoPlaceholder": "Telegram, WhatsApp, e-post...",
+    "verModTitle": "Moderatoransökan",
+    "verModInstructions": "Fyll i detta formulär för att ansöka som moderator. Vi söker ansvarsfulla och aktiva personer för att upprätthålla forumkvaliteten.",
+    "verFullName": "Fullständigt namn",
+    "verFullNamePlaceholder": "Ditt fullständiga namn",
+    "verMotivation": "Varför vill du bli moderator?",
+    "verMotivationPlaceholder": "Förklara din motivation att bli forummoderator...",
+    "verExperience": "Tidigare erfarenhet",
+    "verExperiencePlaceholder": "Har du modererat andra forum eller communities? Berätta om din erfarenhet...",
+    "verLanguages": "Språk du talar",
+    "verLanguagesPlaceholder": "Svenska, Engelska, Spanska...",
+    "verLanguagesHint": "Separera språk med kommatecken",
+    "verAvailability": "Tillgänglighet",
+    "verAvailabilityPlaceholder": "T.ex.: Mån-Fre, 18:00 - 22:00",
+    "verContactModPlaceholder": "E-post eller Telegram för att kontakta dig",
+    "verSubmitting": "Skickar förfrågan...",
+    "verSubmitRequest": "Skicka verifieringsförfrågan",
     "avatarUpload": "Ladda upp avatar",
     "avatarOrUrl": "eller klistra in URL",
     "avatarDragDrop": "Dra en bild eller klicka för att välja",
@@ -404,7 +479,8 @@
     "registerHere": "Registrera dig här",
     "loginHere": "Logga in här",
     "completeCaptcha": "Vänligen slutför säkerhetsverifieringen",
-    "captchaFailed": "Säkerhetsverifiering misslyckades. Försök igen"
+    "captchaFailed": "Säkerhetsverifiering misslyckades. Försök igen",
+    "usernameExists": "Detta användarnamn är redan taget"
   },
   "forum": {
     "title": "Forum",
@@ -537,7 +613,9 @@
     "visitsCount": "visningar",
     "responsesCount": "svar",
     "unknownUser": "Användare",
-    "selectTagPlaceholder": "Välj tagg"
+    "selectTagPlaceholder": "Välj tagg",
+    "autopromotion": "Självmarknadsföring",
+    "autopromoDesc": "Självmarknadsföringssektion för verifierade escorts i {country}. Endast verifierade escorts kan skapa trådar."
   },
   "thread": {
     "createTitle": "Skapa ny tråd",
@@ -843,21 +921,29 @@
     "noReputationData": "Ingen ryktesdata",
     "moderators": "Moderatorer",
     "noModerators": "Inga moderatorer tilldelade",
+    "administrators": "Administratörer",
+    "superAdministrator": "Superadministratör",
+    "generalModerator": "Allmän Moderator",
     "advertising": "Reklam",
     "adminRole": "Admin",
     "modRole": "Mod",
-    "guests": "gäster"
+    "guests": "gäster",
+    "guest": "Gäst",
+    "connected": "Ansluten"
   },
   "banners": {
     "adSpace": "Annonsplats",
-    "advertiseHere": "Annonsera här"
+    "advertiseHere": "Annonsera här",
+    "posBeforeRelated": "Före-Relaterade — Mellan svar och relaterade diskussioner",
+    "posBeforeRelatedDesc": "Synlig i trådar mellan svar och relaterade diskussioner. Högt engagemang."
   },
   "footer": {
     "description": "Professionell gemenskap för att dela erfarenheter och ansluta.",
     "viewAllForums": "Visa alla forum",
     "gallery": "Multimediagalleri",
     "legal": "Juridiskt",
-    "rights": "Alla rättigheter förbehållna."
+    "rights": "Alla rättigheter förbehållna.",
+    "developedBy": "Forum utvecklat av"
   },
   "time": {
     "ago": "sedan"
@@ -1387,14 +1473,30 @@
     "roleSuperMod": "Super Mod",
     "roleVip": "VIP",
     "roleVerified": "Verifierad",
-    "roleUser": "Användare"
+    "roleUser": "Användare",
+    "roleEscort": "Escort"
   },
   "post": {
     "posts": "Inlägg",
     "registered": "Registrerad",
     "edited": "Redigerad",
     "report": "Rapportera",
-    "edit": "Redigera"
+    "edit": "Redigera",
+    "save": "Spara",
+    "saving": "Sparar...",
+    "cancel": "Avbryt",
+    "editSuccess": "Inlägg redigerat",
+    "editError": "Fel vid redigering av inlägg",
+    "advancedEdit": "Avancerad redigering",
+    "advEditSuccess": "Tråd redigerad",
+    "advEditError": "Fel vid redigering av tråd",
+    "delete": "Ta bort",
+    "deleting": "Tar bort...",
+    "confirmDeletePost": "Är du säker på att du vill ta bort detta inlägg?",
+    "confirmDeleteThread": "Är du säker på att du vill ta bort denna tråd?",
+    "postDeleted": "Inlägg borttaget",
+    "threadDeleted": "Tråd borttagen",
+    "deleteError": "Fel vid borttagning"
   },
   "user": {
     "mustLoginToFollow": "Logga in för att följa användare",
@@ -1640,7 +1742,11 @@
     "a10": "VIP-status ges till framstående medlemmar. Kontakta admin-teamet för mer information.",
     "notFound": "Hittade du inte det du letade efter?",
     "notFoundDesc": "Kontakta oss så hjälper vi dig",
-    "contactBtn": "Kontakt"
+    "contactBtn": "Kontakt",
+    "q11": "Hur skapar jag en självpromotions-tråd?",
+    "a11": "För att skapa en självpromotions-tråd måste du vara verifierad som escort. Först, <a href='/verificacion'>verifiera ditt konto som escort</a>. När du är verifierad, gå till landet där du erbjuder dina tjänster, klicka på sektionen <strong>Självpromotion</strong> överst på landssidan och skapa din tråd genom att välja motsvarande stad. Endast verifierade escorts, administratörer och moderatorer kan skapa trådar. Vanliga användare kan kommentera men inte skapa.",
+    "q12": "Hur verifierar jag mig som escort?",
+    "a12": "Gå till <a href='/verificacion'>Verifieringssidan</a> och välj <strong>Escort-verifiering</strong>. Du behöver generera en unik kod, skriva den på ett papper med ditt användarnamn och dagens datum, ta ett foto medan du håller det och ladda upp bilden. Moderationsteamet granskar din förfrågan inom 24-48 timmar. När den godkänts får du märket Verifierad Escort och kan skapa självpromotions-trådar på <a href='https://tsrating.com'>tsrating.com</a>."
   },
   "cookiesPage": {
     "breadcrumb": "Cookiepolicy",
@@ -2248,7 +2354,8 @@
     "loginRequired": "Du måste logga in",
     "titleTooShort": "Titeln måste vara minst 5 tecken",
     "contentTooShort": "Innehållet måste vara minst 10 tecken",
-    "errorUpdatingPost": "Fel vid uppdatering av inlägg"
+    "errorUpdatingPost": "Fel vid uppdatering av inlägg",
+    "escortOnlyForum": "Endast verifierade escorts, administratörer och moderatorer kan skapa trådar i detta självpromotionsforum."
   },
   "publicidad": {
     "title": "Köp Annonsering",
@@ -2459,5 +2566,13 @@
     "daysLeft": "{days} dagar kvar",
     "noPreview": "Ingen bild",
     "createdAt": "Köpt den"
+  },
+  "metadata": {
+    "siteDescription": "#1 Forum för trans escort och shemale recensioner. Verifierade recensioner, åsikter, riktiga foton 2026.",
+    "regionMetaTitle": "Trans Escorts {region} — Recensioner och Åsikter",
+    "regionMetaDesc": "Trans escort forum i {region}, {country}. Recensioner, åsikter, verifierade foton och verkliga erfarenheter på TS Rating.",
+    "regionPageDesc": "Trans escort forum i {region}, {country}. Verifierade recensioner, testeråsikter och verkliga erfarenheter uppdaterade {year}. TS Rating community.",
+    "countryPageDesc": "Trans escort forum i {country}. Verifierade recensioner, testeråsikter och verkliga erfarenheter uppdaterade {year}. TS Rating community.",
+    "siteTitle": "TS Rating — Trans Escort Recensioner & Betyg"
   }
 }

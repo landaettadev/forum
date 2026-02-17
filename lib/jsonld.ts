@@ -1,12 +1,15 @@
-import { SITE_NAME, SITE_URL } from '@/lib/metadata';
+import { SITE_NAME, SITE_URL, getSiteDescription } from '@/lib/metadata';
+import type { Locale } from '@/i18n';
+import { defaultLocale } from '@/i18n';
 
-export function websiteJsonLd() {
+export function websiteJsonLd(locale: Locale = defaultLocale) {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: SITE_NAME,
     url: SITE_URL,
-    description: 'Foro de escorts trans, travestis y shemales — reseñas, opiniones, fotos verificadas y experiencias reales.',
+    inLanguage: locale,
+    description: getSiteDescription(locale),
     potentialAction: {
       '@type': 'SearchAction',
       target: {

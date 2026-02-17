@@ -253,6 +253,7 @@
   "common": {
     "home": "Home",
     "search": "Zoeken",
+    "searchIn": "Zoeken in {location}",
     "login": "Inloggen",
     "register": "Registreren",
     "logout": "Uitloggen",
@@ -355,6 +356,80 @@
     "verification": "Verificatie",
     "verificationDesc": "Verifieer voor privégebieden",
     "requestVerification": "Verificatie aanvragen",
+    "settingsSaved": "Instellingen opgeslagen",
+    "settingsError": "Fout bij opslaan van instellingen",
+    "notifInApp": "In-app meldingen",
+    "notifReplies": "Reacties op mijn onderwerpen",
+    "notifRepliesDesc": "Melding ontvangen wanneer iemand reageert op je onderwerpen of berichten",
+    "notifMentions": "Vermeldingen",
+    "notifMentionsDesc": "Melding ontvangen wanneer iemand je vermeldt met @gebruikersnaam",
+    "notifMessages": "Privéberichten",
+    "notifMessagesDesc": "Melding ontvangen wanneer je een privébericht ontvangt",
+    "notifFollows": "Nieuwe volgers",
+    "notifFollowsDesc": "Melding ontvangen wanneer iemand je begint te volgen",
+    "notifEmail": "E-mailmeldingen",
+    "notifEmailReplies": "E-mail bij reacties",
+    "notifEmailRepliesDesc": "E-mail ontvangen wanneer iemand reageert op je onderwerpen",
+    "notifEmailMessages": "E-mail bij berichten",
+    "notifEmailMessagesDesc": "E-mail ontvangen wanneer je een privébericht ontvangt",
+    "privShowOnline": "Online status tonen",
+    "privShowOnlineDesc": "Anderen toestaan te zien of je online bent",
+    "privShowActivity": "Recente activiteit tonen",
+    "privShowActivityDesc": "Anderen toestaan je forumactiviteit te zien",
+    "privShowProfile": "Openbaar profiel",
+    "privShowProfileDesc": "Niet-geregistreerde gebruikers toestaan je profiel te bekijken",
+    "privAllowMessages": "Wie kan je berichten sturen?",
+    "privAllowMessagesDesc": "Bepaal wie je privéberichten kan sturen",
+    "privMsgEveryone": "Iedereen",
+    "privMsgVerified": "Alleen geverifieerde gebruikers",
+    "privMsgNobody": "Niemand",
+    "verAlreadyVerified": "Account geverifieerd",
+    "verAlreadyVerifiedDesc": "Je account is al geverifieerd. Je hebt volledige toegang tot alle forumgebieden.",
+    "verPending": "Aanvraag in behandeling",
+    "verPendingDesc": "Je aanvraag wordt beoordeeld door het moderatieteam. Je ontvangt een melding wanneer deze is verwerkt.",
+    "verCodeLabel": "Verificatiecode",
+    "verEstimatedTime": "Geschatte beoordelingstijd: 24-48 uur",
+    "verRejected": "Aanvraag afgewezen",
+    "verRejectedDefault": "Je aanvraag is afgewezen. Je kunt een nieuwe indienen na het oplossen van de aangegeven problemen.",
+    "verCopied": "Code gekopieerd naar klembord",
+    "verSent": "Aanvraag verzonden",
+    "verSentDesc": "Het moderatieteam beoordeelt deze binnen 24-48 uur",
+    "verError": "Fout bij verzenden van aanvraag",
+    "verSelectType": "Verificatietype",
+    "verTypeEscort": "Escort verificatie",
+    "verTypeEscortDesc": "Bewijs dat je een echte escort bent met een verificatiefoto",
+    "verTypeMod": "Moderator aanvraag",
+    "verTypeModDesc": "Solliciteer als community moderator",
+    "verEscortTitle": "Escort identiteitsverificatie",
+    "verEscortInstructions": "Om je account te verifiëren moet je een foto sturen waarop je een papier vasthoudt met je unieke code, gebruikersnaam en de datum van vandaag.",
+    "verStep1": "Stap 1: Genereer je code",
+    "verStep1Desc": "Genereer een unieke code die je op een papier moet schrijven samen met je gebruikersnaam (@{username}) en de datum van vandaag.",
+    "verGenerateCode": "Code genereren",
+    "verStep2": "Stap 2: Maak je foto",
+    "verStep2Desc": "Maak een duidelijke foto waarop je een papier vasthoudt met:",
+    "verStep2Item1": "Je code: {code}",
+    "verStep2Item2": "Je gebruikersnaam: @{username}",
+    "verStep2Item3": "Datum van vandaag: {date}",
+    "verStep3": "Stap 3: Upload je foto",
+    "verStep3Desc": "Upload je foto naar een dienst zoals Imgur, ImgBB of vergelijkbaar en plak de URL hier:",
+    "verContactInfo": "Contactinformatie (optioneel)",
+    "verContactInfoPlaceholder": "Telegram, WhatsApp, e-mail...",
+    "verModTitle": "Moderator aanvraag",
+    "verModInstructions": "Vul dit formulier in om te solliciteren als moderator. We zoeken verantwoordelijke en actieve personen om de forumkwaliteit te handhaven.",
+    "verFullName": "Volledige naam",
+    "verFullNamePlaceholder": "Je volledige naam",
+    "verMotivation": "Waarom wil je moderator worden?",
+    "verMotivationPlaceholder": "Leg je motivatie uit om forummoderator te worden...",
+    "verExperience": "Eerdere ervaring",
+    "verExperiencePlaceholder": "Heb je andere forums of communities gemodereerd? Vertel ons over je ervaring...",
+    "verLanguages": "Talen die je spreekt",
+    "verLanguagesPlaceholder": "Nederlands, Engels, Spaans...",
+    "verLanguagesHint": "Scheid talen met komma's",
+    "verAvailability": "Beschikbaarheid",
+    "verAvailabilityPlaceholder": "Bijv.: Ma-Vr, 18:00 - 22:00",
+    "verContactModPlaceholder": "E-mail of Telegram om contact op te nemen",
+    "verSubmitting": "Aanvraag verzenden...",
+    "verSubmitRequest": "Verificatieaanvraag indienen",
     "avatarUpload": "Avatar uploaden",
     "avatarOrUrl": "of plak een URL",
     "avatarDragDrop": "Sleep een afbeelding of klik om te selecteren",
@@ -404,7 +479,8 @@
     "registerHere": "Registreer hier",
     "loginHere": "Log hier in",
     "completeCaptcha": "Voltooi de beveiligingsverificatie",
-    "captchaFailed": "Beveiligingsverificatie mislukt. Probeer opnieuw"
+    "captchaFailed": "Beveiligingsverificatie mislukt. Probeer opnieuw",
+    "usernameExists": "Deze gebruikersnaam is al in gebruik"
   },
   "forum": {
     "title": "Forums",
@@ -537,7 +613,9 @@
     "visitsCount": "weergaven",
     "responsesCount": "antwoorden",
     "unknownUser": "Gebruiker",
-    "selectTagPlaceholder": "Selecteer de tag"
+    "selectTagPlaceholder": "Selecteer de tag",
+    "autopromotion": "Zelfpromotie",
+    "autopromoDesc": "Zelfpromotiesectie voor geverifieerde escorts in {country}. Alleen geverifieerde escorts kunnen threads maken."
   },
   "thread": {
     "createTitle": "Nieuw onderwerp maken",
@@ -843,21 +921,29 @@
     "noReputationData": "Geen reputatiegegevens",
     "moderators": "Moderatoren",
     "noModerators": "Geen moderatoren toegewezen",
+    "administrators": "Beheerders",
+    "superAdministrator": "Super Beheerder",
+    "generalModerator": "Algemene Moderator",
     "advertising": "Advertentie",
     "adminRole": "Admin",
     "modRole": "Mod",
-    "guests": "gasten"
+    "guests": "gasten",
+    "guest": "Gast",
+    "connected": "Verbonden"
   },
   "banners": {
     "adSpace": "Advertentieruimte",
-    "advertiseHere": "Adverteer hier"
+    "advertiseHere": "Adverteer hier",
+    "posBeforeRelated": "Pre-Gerelateerd — Tussen reacties en gerelateerde discussies",
+    "posBeforeRelatedDesc": "Zichtbaar in threads tussen reacties en gerelateerde discussies. Hoge betrokkenheid."
   },
   "footer": {
     "description": "Professionele gemeenschap om ervaringen te delen en te verbinden.",
     "viewAllForums": "Bekijk alle forums",
     "gallery": "Multimediagalerij",
     "legal": "Juridisch",
-    "rights": "Alle rechten voorbehouden."
+    "rights": "Alle rechten voorbehouden.",
+    "developedBy": "Forum ontwikkeld door"
   },
   "time": {
     "ago": "geleden"
@@ -1387,14 +1473,30 @@
     "roleSuperMod": "Super Mod",
     "roleVip": "VIP",
     "roleVerified": "Geverifieerd",
-    "roleUser": "Gebruiker"
+    "roleUser": "Gebruiker",
+    "roleEscort": "Escort"
   },
   "post": {
     "posts": "Berichten",
     "registered": "Registratie",
     "edited": "Bewerkt",
     "report": "Rapporteren",
-    "edit": "Bewerken"
+    "edit": "Bewerken",
+    "save": "Opslaan",
+    "saving": "Opslaan...",
+    "cancel": "Annuleren",
+    "editSuccess": "Post succesvol bewerkt",
+    "editError": "Fout bij bewerken post",
+    "advancedEdit": "Geavanceerd bewerken",
+    "advEditSuccess": "Thread succesvol bewerkt",
+    "advEditError": "Fout bij bewerken thread",
+    "delete": "Verwijderen",
+    "deleting": "Verwijderen...",
+    "confirmDeletePost": "Weet je zeker dat je deze post wilt verwijderen?",
+    "confirmDeleteThread": "Weet je zeker dat je deze thread wilt verwijderen?",
+    "postDeleted": "Post verwijderd",
+    "threadDeleted": "Thread verwijderd",
+    "deleteError": "Fout bij verwijderen"
   },
   "user": {
     "mustLoginToFollow": "Log in om gebruikers te volgen",
@@ -1640,7 +1742,11 @@
     "a10": "VIP-status wordt toegekend aan actieve leden. Neem contact op met het admin-team voor meer informatie.",
     "notFound": "Niet gevonden wat je zocht?",
     "notFoundDesc": "Neem contact op en we helpen je",
-    "contactBtn": "Contact"
+    "contactBtn": "Contact",
+    "q11": "Hoe maak ik een zelfpromotie-thread aan?",
+    "a11": "Om een zelfpromotie-thread aan te maken, moet je geverifieerd zijn als escort. Eerst, <a href='/verificacion'>verifieer je account als escort</a>. Eenmaal geverifieerd, ga naar het land waar je je diensten aanbiedt, klik op de sectie <strong>Zelfpromotie</strong> bovenaan de landpagina en maak je thread aan met de bijbehorende stad. Alleen geverifieerde escorts, beheerders en moderatoren kunnen threads aanmaken. Reguliere gebruikers kunnen reageren maar niet aanmaken.",
+    "q12": "Hoe word ik geverifieerd als escort?",
+    "a12": "Ga naar de <a href='/verificacion'>Verificatiepagina</a> en selecteer <strong>Escort Verificatie</strong>. Je moet een unieke code genereren, deze op een papier schrijven met je gebruikersnaam en de datum van vandaag, een foto maken terwijl je het vasthoudt en de afbeelding uploaden. Het moderatieteam zal je verzoek binnen 24-48 uur beoordelen. Na goedkeuring ontvang je het Geverifieerde Escort-badge en kun je zelfpromotie-threads aanmaken op <a href='https://tsrating.com'>tsrating.com</a>."
   },
   "cookiesPage": {
     "breadcrumb": "Cookiebeleid",
@@ -2248,7 +2354,8 @@
     "loginRequired": "Je moet inloggen",
     "titleTooShort": "Titel moet minimaal 5 tekens bevatten",
     "contentTooShort": "Inhoud moet minimaal 10 tekens bevatten",
-    "errorUpdatingPost": "Fout bij bijwerken van bericht"
+    "errorUpdatingPost": "Fout bij bijwerken van bericht",
+    "escortOnlyForum": "Alleen geverifieerde escorts, beheerders en moderatoren kunnen threads aanmaken in dit zelfpromotieforum."
   },
   "publicidad": {
     "title": "Advertentie Kopen",
@@ -2459,5 +2566,13 @@
     "daysLeft": "{days} dagen over",
     "noPreview": "Geen afbeelding",
     "createdAt": "Gekocht op"
+  },
+  "metadata": {
+    "siteDescription": "#1 Forum voor trans escort en shemale reviews. Geverifieerde reviews, meningen, echte fotos 2026.",
+    "regionMetaTitle": "Trans Escorts {region} — Reviews en Meningen",
+    "regionMetaDesc": "Trans escort forum in {region}, {country}. Reviews, meningen, geverifieerde fotos en echte ervaringen op TS Rating.",
+    "regionPageDesc": "Trans escort forum in {region}, {country}. Geverifieerde reviews, tester meningen en echte ervaringen bijgewerkt {year}. TS Rating community.",
+    "countryPageDesc": "Trans escort forum in {country}. Geverifieerde reviews, tester meningen en echte ervaringen bijgewerkt {year}. TS Rating community.",
+    "siteTitle": "TS Rating — Trans Escort Reviews & Beoordelingen"
   }
 }

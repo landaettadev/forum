@@ -9,17 +9,22 @@ import { Toaster } from '@/components/ui/sonner';
 import { FloatingChat } from '@/components/chat/floating-chat';
 import { CookieBanner } from '@/components/cookie-banner';
 import { AnalyticsProvider } from './providers';
-import { generateMetadata as genMeta, DEFAULT_DESCRIPTION } from '@/lib/metadata';
+import { generateMetadata as genMeta, getSiteDescription } from '@/lib/metadata';
 import { websiteJsonLd, organizationJsonLd } from '@/lib/jsonld';
+import type { Locale } from '@/i18n';
 
 const inter = Inter({ subsets: ['latin'] });
 
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || '';
 
-export const metadata = genMeta({
-  title: undefined,
-  description: DEFAULT_DESCRIPTION,
-});
+export async function generateMetadata() {
+  const locale = (await getLocale()) as Locale;
+  return genMeta({
+    title: undefined,
+    description: getSiteDescription(locale),
+    locale,
+  });
+}
 
 export default async function RootLayout({
   children,
@@ -34,7 +39,7 @@ export default async function RootLayout({
       <head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd()) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd(locale as Locale)) }}
         />
         <script
           type="application/ld+json"
@@ -58,7 +63,7 @@ export default async function RootLayout({
         )}
       </head>
       <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="light" disableTransitionOnChange>
+        <ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange>
           <NextIntlClientProvider messages={messages}>
             <AuthProvider>
               <AnalyticsProvider>

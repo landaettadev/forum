@@ -12,12 +12,27 @@ import { Badge } from '@/components/ui/badge';
 import { useSearchParams } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import { escapeLikePattern } from '@/lib/sanitize';
-import { Search, MessageSquare, User, FileText, Loader2 } from 'lucide-react';
+import { Search, MessageSquare, User, FileText, Loader2, MapPin, Globe } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { getDateFnsLocale } from '@/lib/date-locale';
 import { useLocale, useTranslations } from 'next-intl';
 
 type SearchType = 'all' | 'threads' | 'posts' | 'users';
+
+type Country = {
+  id: string;
+  name: string;
+  name_es: string;
+  slug: string;
+  flag_emoji: string;
+};
+
+type Region = {
+  id: string;
+  name: string;
+  slug: string;
+  country_id: string;
+};
 
 type ThreadResult = {
   id: string;
@@ -48,17 +63,58 @@ type UserResult = {
 export default function BuscarPage() {
   const locale = useLocale();
   const t = useTranslations('search');
+  const tCommon = useTranslations('common');
   const dateLocale = getDateFnsLocale(locale);
   const searchParams = useSearchParams();
   const initialQuery = searchParams?.get('q') || '';
+  const initialCountry = searchParams?.get('country') || '';
+  const initialRegion = searchParams?.get('region') || '';
   const [query, setQuery] = useState(initialQuery);
   const [searchType, setSearchType] = useState<SearchType>('all');
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
 
+  const [countries, setCountries] = useState<Country[]>([]);
+  const [regions, setRegions] = useState<Region[]>([]);
+  const [selectedCountry, setSelectedCountry] = useState(initialCountry);
+  const [selectedRegion, setSelectedRegion] = useState(initialRegion);
+
   const [threadResults, setThreadResults] = useState<ThreadResult[]>([]);
   const [postResults, setPostResults] = useState<PostResult[]>([]);
   const [userResults, setUserResults] = useState<UserResult[]>([]);
+
+  // Fetch countries on mount
+  useEffect(() => {
+    const fetchCountries = async () => {
+      const { data } = await supabase
+        .from('countries')
+        .select('id, name, name_es, slug, flag_emoji')
+        .order('name');
+      if (data) setCountries(data);
+    };
+    fetchCountries();
+  }, []);
+
+  // Fetch regions when country changes
+  useEffect(() => {
+    const fetchRegions = async () => {
+      if (!selectedCountry) {
+        setRegions([]);
+        setSelectedRegion('');
+        return;
+      }
+      const country = countries.find(c => c.slug === selectedCountry);
+      if (!country) return;
+      
+      const { data } = await supabase
+        .from('regions')
+        .select('id, name, slug, country_id')
+        .eq('country_id', country.id)
+        .order('name');
+      if (data) setRegions(data);
+    };
+    fetchRegions();
+  }, [selectedCountry, countries]);
 
   const executeSearch = useCallback(async (searchQuery: string) => {
     if (searchQuery.trim().length < 2) return;
@@ -68,28 +124,60 @@ export default function BuscarPage() {
     try {
       const searchPattern = `%${escapeLikePattern(searchQuery.trim())}%`;
 
+      // Get country and region IDs for filtering
+      const countryObj = countries.find(c => c.slug === selectedCountry);
+      const regionObj = regions.find(r => r.slug === selectedRegion);
+
       if (searchType === 'all' || searchType === 'threads') {
-        const { data: threads } = await supabase
+        let threadQuery = supabase
           .from('threads')
-          .select('id, title, created_at, replies_count, author:profiles!threads_author_id_fkey(username, is_verified), forum:forums!threads_forum_id_fkey(name, slug)')
+          .select('id, title, created_at, replies_count, region_id, author:profiles!threads_author_id_fkey(username, is_verified), forum:forums!threads_forum_id_fkey(name, slug, country_id)')
           .ilike('title', searchPattern)
           .order('created_at', { ascending: false })
-          .limit(20);
+          .limit(50);
+
+        const { data: threads } = await threadQuery;
+
+        // Filter by country/region client-side (since forum has country_id)
+        let filteredThreads = threads || [];
+        if (countryObj) {
+          filteredThreads = filteredThreads.filter((t: { forum?: { country_id?: string } }) => 
+            t.forum?.country_id === countryObj.id
+          );
+        }
+        if (regionObj) {
+          filteredThreads = filteredThreads.filter((t: { region_id?: string }) => 
+            t.region_id === regionObj.id
+          );
+        }
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        setThreadResults((threads || []) as any);
+        setThreadResults(filteredThreads.slice(0, 20) as any);
       }
 
       if (searchType === 'all' || searchType === 'posts') {
         const { data: posts } = await supabase
           .from('posts')
-          .select('id, content, created_at, author:profiles!posts_author_id_fkey(username, is_verified), thread:threads!posts_thread_id_fkey(id, title)')
+          .select('id, content, created_at, author:profiles!posts_author_id_fkey(username, is_verified), thread:threads!posts_thread_id_fkey(id, title, region_id, forum:forums!threads_forum_id_fkey(country_id))')
           .ilike('content', searchPattern)
           .order('created_at', { ascending: false })
-          .limit(20);
+          .limit(50);
+
+        // Filter by country/region
+        let filteredPosts = posts || [];
+        if (countryObj) {
+          filteredPosts = filteredPosts.filter((p: { thread?: { forum?: { country_id?: string } } }) => 
+            p.thread?.forum?.country_id === countryObj.id
+          );
+        }
+        if (regionObj) {
+          filteredPosts = filteredPosts.filter((p: { thread?: { region_id?: string } }) => 
+            p.thread?.region_id === regionObj.id
+          );
+        }
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        setPostResults((posts || []) as any);
+        setPostResults(filteredPosts.slice(0, 20) as any);
       }
 
       if (searchType === 'all' || searchType === 'users') {
@@ -107,7 +195,7 @@ export default function BuscarPage() {
     } finally {
       setLoading(false);
     }
-  }, [searchType]);
+  }, [searchType, selectedCountry, selectedRegion, countries, regions]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -149,7 +237,7 @@ export default function BuscarPage() {
               <h1 className="text-3xl font-bold mb-6">{t('title')}</h1>
 
               <form onSubmit={handleSearch} className="space-y-4">
-                <div className="flex gap-2">
+                <div className="flex flex-col sm:flex-row gap-2">
                   <div className="relative flex-1">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 forum-text-muted" />
                     <Input
@@ -163,7 +251,7 @@ export default function BuscarPage() {
                     />
                   </div>
                   <Select value={searchType} onValueChange={(v) => setSearchType(v as SearchType)}>
-                    <SelectTrigger className="w-40">
+                    <SelectTrigger className="w-full sm:w-40">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -176,7 +264,7 @@ export default function BuscarPage() {
                   <Button
                     type="submit"
                     disabled={loading || query.trim().length < 2}
-                    className="bg-[hsl(var(--forum-accent))] hover:bg-[hsl(var(--forum-accent-hover))]"
+                    className="bg-[hsl(var(--forum-accent))] hover:bg-[hsl(var(--forum-accent-hover))] w-full sm:w-auto"
                   >
                     {loading ? (
                       <>
@@ -187,6 +275,55 @@ export default function BuscarPage() {
                       t('button')
                     )}
                   </Button>
+                </div>
+
+                {/* Location Filters */}
+                <div className="flex flex-col sm:flex-row gap-2 pt-2 border-t border-[hsl(var(--forum-border))]">
+                  <div className="flex items-center gap-2 text-sm forum-text-muted">
+                    <MapPin className="h-4 w-4" />
+                    <span>{t('filterByLocation')}:</span>
+                  </div>
+                  <Select value={selectedCountry} onValueChange={(v) => { setSelectedCountry(v === 'all' ? '' : v); setSelectedRegion(''); }}>
+                    <SelectTrigger className="w-full sm:w-48">
+                      <Globe className="h-4 w-4 mr-2" />
+                      <SelectValue placeholder={t('allCountries')} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">{t('allCountries')}</SelectItem>
+                      {countries.map((country) => (
+                        <SelectItem key={country.id} value={country.slug}>
+                          {country.flag_emoji} {locale === 'es' ? country.name_es || country.name : country.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {selectedCountry && regions.length > 0 && (
+                    <Select value={selectedRegion} onValueChange={(v) => setSelectedRegion(v === 'all' ? '' : v)}>
+                      <SelectTrigger className="w-full sm:w-48">
+                        <MapPin className="h-4 w-4 mr-2" />
+                        <SelectValue placeholder={t('allRegions')} />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">{t('allRegions')}</SelectItem>
+                        {regions.map((region) => (
+                          <SelectItem key={region.id} value={region.slug}>
+                            {region.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  )}
+                  {(selectedCountry || selectedRegion) && (
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => { setSelectedCountry(''); setSelectedRegion(''); }}
+                      className="text-xs"
+                    >
+                      {t('clearFilters')}
+                    </Button>
+                  )}
                 </div>
               </form>
             </div>

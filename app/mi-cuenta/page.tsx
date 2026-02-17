@@ -342,7 +342,6 @@ function SettingsTab({ profile, refreshProfile }: { profile: Profile; refreshPro
                 className="w-full sm:w-64 rounded-md border border-[hsl(var(--forum-border))] bg-[hsl(var(--forum-surface))] px-3 py-2 text-sm"
               >
                 <option value="everyone">{t('privMsgEveryone')}</option>
-                <option value="verified">{t('privMsgVerified')}</option>
                 <option value="nobody">{t('privMsgNobody')}</option>
               </select>
             </div>

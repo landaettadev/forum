@@ -88,9 +88,9 @@ export function ProfileStats({ userId, compact = false }: ProfileStatsProps) {
     { icon: MessageSquare, label: t('posts'), value: stats.posts_count, color: 'text-blue-500' },
     { icon: FileText, label: t('threads'), value: stats.threads_count, color: 'text-green-500' },
     { icon: ThumbsUp, label: t('thanksReceived'), value: stats.thanks_received, color: 'text-yellow-500' },
-    { icon: Users, label: t('followers'), value: stats.followers_count, color: 'text-purple-500' },
-    { icon: Users, label: t('following'), value: stats.following_count, color: 'text-pink-500' },
-    { icon: Eye, label: t('profileViews'), value: stats.profile_views, color: 'text-cyan-500' },
+    { icon: Users, label: t('followers'), value: stats.followers_count, color: 'text-indigo-400' },
+    { icon: Users, label: t('following'), value: stats.following_count, color: 'text-slate-400' },
+    { icon: Eye, label: t('profileViews'), value: stats.profile_views, color: 'text-stone-400' },
   ];
 
   return (

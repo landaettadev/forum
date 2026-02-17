@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { CountryRow } from '@/components/forum/country-row';
+import { RecentActivityWidget } from '@/components/layout/recent-activity-widget';
 import Link from 'next/link';
 import { MapPin, Headphones, Megaphone, BookOpen, ChevronRight, Folder } from 'lucide-react';
 
@@ -90,6 +91,11 @@ export function HomeContent({ countriesByContinent, userCountrySlug, userCountry
           </p>
         </div>
       ) : null}
+
+      {/* Recent Activity - Mobile only (between featured country and regions) */}
+      <div className="lg:hidden mb-6">
+        <RecentActivityWidget compact />
+      </div>
 
       {continentEntries.map(([continentSlug, info]) => (
         <CountryRow key={continentSlug} title={`${tForum('region')}: ${info.label}`} countries={info.countries} />

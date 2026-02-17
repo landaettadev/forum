@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useEffect, useState, useCallback } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/lib/auth-context';
 import { Header } from '@/components/layout/header';
 import { Breadcrumbs } from '@/components/layout/breadcrumbs';
@@ -24,6 +24,7 @@ type UserResult = {
 export default function MensajesPage() {
   const { user } = useAuth();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const t = useTranslations('messages');
   const [selectedConversation, setSelectedConversation] = useState<string | null>(null);
   const [otherUser, setOtherUser] = useState<UserResult | null>(null);
@@ -31,12 +32,48 @@ export default function MensajesPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<UserResult[]>([]);
   const [searching, setSearching] = useState(false);
+  const [initializedFromUrl, setInitializedFromUrl] = useState(false);
+
+  // Handle ?to= parameter to auto-start conversation
+  const handleToParam = useCallback(async (targetUsername: string) => {
+    if (!user || initializedFromUrl) return;
+    
+    setInitializedFromUrl(true);
+    
+    // Find the user by username
+    const { data: targetUser } = await supabase
+      .from('profiles')
+      .select('id, username, avatar_url')
+      .ilike('username', targetUsername)
+      .single();
+    
+    if (targetUser && targetUser.id !== user.id) {
+      // Get or create conversation
+      const { data: conversationId } = await supabase
+        .rpc('get_or_create_conversation', {
+          p_user_id: user.id,
+          p_other_user_id: targetUser.id
+        });
+      
+      if (conversationId) {
+        setOtherUser(targetUser);
+        setSelectedConversation(conversationId);
+      }
+    }
+  }, [user, initializedFromUrl]);
 
   useEffect(() => {
     if (!user) {
       router.push('/login');
+      return;
     }
-  }, [user, router]);
+    
+    // Check for ?to= parameter
+    const toUsername = searchParams?.get('to');
+    if (toUsername && !initializedFromUrl) {
+      handleToParam(toUsername);
+    }
+  }, [user, router, searchParams, handleToParam, initializedFromUrl]);
 
   const handleSelectConversation = async (conversationId: string) => {
     setSelectedConversation(conversationId);

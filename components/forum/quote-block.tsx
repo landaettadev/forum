@@ -47,9 +47,9 @@ export function QuoteBlock({
   // Different border colors for nesting levels
   const borderColors = [
     'border-[hsl(var(--forum-accent))]',
-    'border-blue-500',
-    'border-green-500',
-    'border-orange-500'
+    'border-slate-500',
+    'border-stone-500',
+    'border-zinc-500'
   ];
 
   return (
@@ -57,7 +57,7 @@ export function QuoteBlock({
       {/* Quote header */}
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-2 text-sm flex-wrap">
-          <MessageSquareQuote className={`h-4 w-4 ${effectiveDepth === 0 ? 'text-[hsl(var(--forum-accent))]' : effectiveDepth === 1 ? 'text-blue-500' : 'text-green-500'}`} />
+          <MessageSquareQuote className={`h-4 w-4 ${effectiveDepth === 0 ? 'text-[hsl(var(--forum-accent))]' : effectiveDepth === 1 ? 'text-slate-500' : 'text-stone-500'}`} />
           <span className="font-medium">
             {authorId ? (
               <Link 

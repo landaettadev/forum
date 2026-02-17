@@ -107,7 +107,7 @@ export function ChatView({ conversationId, otherUser, onBack }: ChatViewProps) {
           schema: 'public',
           table: 'private_messages',
           filter: `conversation_id=eq.${conversationId}`
-        }, (payload) => {
+        }, (payload: { new: { id: string } }) => {
           fetchMessageWithSender(payload.new.id);
           markAsRead();
         })

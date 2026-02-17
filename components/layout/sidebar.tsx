@@ -3,8 +3,9 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import { Users, MessageSquare, FileText, Clock, Megaphone } from 'lucide-react';
-import { ModeratorsWidget } from './moderators-widget';
+import { Users, MessageSquare, FileText, Megaphone } from 'lucide-react';
+import { RecentActivityWidget } from './recent-activity-widget';
+import { BannerSlot } from '@/components/ads/banner-slot';
 import { supabase } from '@/lib/supabase';
 
 type ForumStats = {
@@ -18,12 +19,14 @@ type ForumStats = {
 type SidebarProps = {
   countrySlug?: string;
   countryName?: string;
+  countryId?: string;
+  regionId?: string;
   stats?: ForumStats;
 };
 
 const defaultStats: ForumStats = { totalUsers: 0, totalThreads: 0, totalPosts: 0, onlineRegistered: 0, onlineGuests: 0 };
 
-export function Sidebar({ countrySlug: _countrySlug, countryName: _countryName, stats }: SidebarProps = {}) {
+export function Sidebar({ countrySlug: _countrySlug, countryName, countryId, regionId, stats }: SidebarProps = {}) {
   const t = useTranslations('sidebar');
   const [fetchedStats, setFetchedStats] = useState<ForumStats | null>(null);
 
@@ -52,9 +55,46 @@ export function Sidebar({ countrySlug: _countrySlug, countryName: _countryName, 
   }, [stats]);
 
   const s = stats ?? fetchedStats ?? defaultStats;
+  const zoneType = countryId ? ('city' as const) : ('home_country' as const);
 
   return (
-    <aside className="w-64 flex-shrink-0 space-y-4">
+    <aside className="w-80 flex-shrink-0 space-y-4">
+      {/* 1. Recent Activity */}
+      <RecentActivityWidget countryId={countryId} countryName={countryName} />
+
+      {/* 2. Banner */}
+      <BannerSlot position="sidebar" zoneType={zoneType} countryId={countryId} regionId={regionId} />
+
+      {/* 3. Useful Links */}
+      <div className="forum-surface p-4">
+        <h3 className="font-semibold mb-3 text-xs tracking-wider uppercase forum-text-muted">{t('usefulLinks')}</h3>
+        <div className="space-y-1.5 text-sm">
+          <Link href="/reglas" className="block hover:text-[hsl(var(--forum-accent))] transition-colors">
+            {t('rules')}
+          </Link>
+          <Link href="/verificacion" className="block hover:text-[hsl(var(--forum-accent))] transition-colors">
+            {t('verification')}
+          </Link>
+          <Link href="/buscar" className="block hover:text-[hsl(var(--forum-accent))] transition-colors">
+            {t('advancedSearch')}
+          </Link>
+          <Link href="/faq" className="block hover:text-[hsl(var(--forum-accent))] transition-colors">
+            {t('faq')}
+          </Link>
+          <Link href="/contacto" className="block hover:text-[hsl(var(--forum-accent))] transition-colors">
+            {t('contact')}
+          </Link>
+          <Link href="/reputacion" className="block hover:text-[hsl(var(--forum-accent))] transition-colors">
+            {t('reputation')}
+          </Link>
+          <Link href="/publicidad" className="flex items-center gap-2 hover:text-[hsl(var(--forum-accent))] transition-colors font-medium text-[hsl(var(--forum-accent))]">
+            <Megaphone className="h-3.5 w-3.5" />
+            {t('advertising')}
+          </Link>
+        </div>
+      </div>
+
+      {/* 5. Forum Stats (moved to bottom) */}
       <div className="forum-surface p-4">
         <h3 className="font-semibold mb-3 text-xs tracking-wider uppercase forum-text-muted">{t('forumStats')}</h3>
         <div className="grid grid-cols-2 gap-2">
@@ -92,45 +132,8 @@ export function Sidebar({ countrySlug: _countrySlug, countryName: _countryName, 
         </div>
       </div>
 
-      <div className="forum-surface p-4">
-        <h3 className="font-semibold mb-3 text-xs tracking-wider uppercase forum-text-muted flex items-center gap-2">
-          <Clock className="h-3.5 w-3.5" />
-          {t('recentActivity')}
-        </h3>
-        <div className="space-y-2 text-xs forum-text-secondary">
-          <p>{t('recentActivityDesc')}</p>
-        </div>
-      </div>
-
-      <ModeratorsWidget />
-
-      <div className="forum-surface p-4">
-        <h3 className="font-semibold mb-3 text-xs tracking-wider uppercase forum-text-muted">{t('usefulLinks')}</h3>
-        <div className="space-y-1.5 text-sm">
-          <Link href="/reglas" className="block hover:text-[hsl(var(--forum-accent))] transition-colors">
-            {t('rules')}
-          </Link>
-          <Link href="/verificacion" className="block hover:text-[hsl(var(--forum-accent))] transition-colors">
-            {t('verification')}
-          </Link>
-          <Link href="/buscar" className="block hover:text-[hsl(var(--forum-accent))] transition-colors">
-            {t('advancedSearch')}
-          </Link>
-          <Link href="/faq" className="block hover:text-[hsl(var(--forum-accent))] transition-colors">
-            {t('faq')}
-          </Link>
-          <Link href="/contacto" className="block hover:text-[hsl(var(--forum-accent))] transition-colors">
-            {t('contact')}
-          </Link>
-          <Link href="/reputacion" className="block hover:text-[hsl(var(--forum-accent))] transition-colors">
-            {t('reputation')}
-          </Link>
-          <Link href="/publicidad" className="flex items-center gap-2 hover:text-[hsl(var(--forum-accent))] transition-colors font-medium text-[hsl(var(--forum-accent))]">
-            <Megaphone className="h-3.5 w-3.5" />
-            {t('advertising')}
-          </Link>
-        </div>
-      </div>
+      {/* Bottom banner */}
+      <BannerSlot position="sidebar_bottom" zoneType={zoneType} countryId={countryId} regionId={regionId} />
     </aside>
   );
 }

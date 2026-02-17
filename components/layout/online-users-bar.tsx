@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
+import { useAuth } from '@/lib/auth-context';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Users } from 'lucide-react';
+import { Users, Circle } from 'lucide-react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 
@@ -16,6 +17,7 @@ interface OnlineUser {
 
 export function OnlineUsersBar() {
   const t = useTranslations('sidebar');
+  const { user, profile } = useAuth();
   const [onlineUsers, setOnlineUsers] = useState<OnlineUser[]>([]);
   const [onlineCount, setOnlineCount] = useState(0);
 
@@ -41,20 +43,34 @@ export function OnlineUsersBar() {
     return () => clearInterval(interval);
   }, []);
 
+  const isLoggedIn = !!user;
+
   return (
     <div className="forum-surface border-t border-b border-[hsl(var(--forum-border))]">
-      <div className="max-w-7xl mx-auto px-4 py-4">
-        <div className="flex items-center gap-3 mb-3">
-          <Users className="h-4 w-4 text-green-500" />
-          <span className="text-sm font-semibold">{t('onlineNow')}</span>
-          <span className="bg-green-500 text-white text-xs px-2 py-0.5 rounded-full font-medium">
-            {onlineCount}
-          </span>
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 py-3 sm:py-4">
+        <div className="flex items-center justify-between mb-2 sm:mb-3">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <Users className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-green-500" />
+            <span className="text-xs sm:text-sm font-semibold">{t('onlineNow')}</span>
+            <span className="bg-green-500 text-white text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 rounded-full font-medium">
+              {onlineCount}
+            </span>
+          </div>
+          
+          {/* Current user connection status */}
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <Circle 
+              className={`h-2.5 w-2.5 sm:h-3 sm:w-3 ${isLoggedIn ? 'fill-green-500 text-green-500' : 'fill-gray-400 text-gray-400'}`} 
+            />
+            <span className={`text-[10px] sm:text-xs font-medium ${isLoggedIn ? 'text-green-500' : 'text-gray-400'}`}>
+              {isLoggedIn ? profile?.username || t('connected') : t('guest')}
+            </span>
+          </div>
         </div>
 
         {onlineUsers.length > 0 ? (
-          <div className="flex flex-wrap gap-2">
-            {onlineUsers.map((user) => (
+          <div className="flex flex-wrap gap-2 items-center">
+            {onlineUsers.slice(0, 5).map((user) => (
               <Link
                 key={user.id}
                 href={`/user/${user.username}`}
@@ -84,6 +100,11 @@ export function OnlineUsersBar() {
                 )}
               </Link>
             ))}
+            {onlineCount > 5 && (
+              <span className="text-xs font-medium forum-text-muted px-2 py-1">
+                + {onlineCount - 5} {t('more')}
+              </span>
+            )}
           </div>
         ) : (
           <p className="text-xs forum-text-muted">{t('noUsersOnline')}</p>

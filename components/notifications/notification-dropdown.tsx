@@ -93,7 +93,7 @@ export function NotificationDropdown() {
       case 'follow':
         return <UserPlus className="h-4 w-4 text-green-500" />;
       case 'mention':
-        return <AtSign className="h-4 w-4 text-purple-500" />;
+        return <AtSign className="h-4 w-4 text-blue-500" />;
       default:
         return <Bell className="h-4 w-4 text-[hsl(var(--forum-accent))]" />;
     }

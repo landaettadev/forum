@@ -110,14 +110,40 @@ export default async function CountryForumPage({ params }: PageProps) {
     }
   }
 
+  // Fetch autopromoción forum for this country
+  const { data: autoPromoForum } = await supabase
+    .from('forums')
+    .select('id, name, slug, description')
+    .eq('country_id', country.id)
+    .eq('is_escort_only', true)
+    .maybeSingle();
+
+  // Fetch autopromo stats
+  const autoPromoStats = { threads_count: 0, posts_count: 0 };
+  if (autoPromoForum) {
+    const { data: apThreads } = await supabaseAdmin
+      .from('threads')
+      .select('id')
+      .eq('forum_id', autoPromoForum.id);
+    if (apThreads && apThreads.length > 0) {
+      autoPromoStats.threads_count = apThreads.length;
+      const { count } = await supabaseAdmin
+        .from('posts')
+        .select('id', { count: 'exact', head: true })
+        .in('thread_id', apThreads.map(t => t.id));
+      autoPromoStats.posts_count = count ?? 0;
+    }
+  }
+
   const { data: rawForums } = await supabase
     .from('forums')
     .select('id, name, slug, description')
     .eq('country_code', country.iso_code)
+    .eq('is_escort_only', false)
     .order('display_order');
 
   // Compute real thread/post counts for country forums using admin client
-  let forums: { id: string; name: string; slug: string; description: string; threads_count: number; posts_count: number }[] = (rawForums || []).map(f => ({ ...f, threads_count: 0, posts_count: 0 }));
+  const forums: { id: string; name: string; slug: string; description: string; threads_count: number; posts_count: number }[] = (rawForums || []).map(f => ({ ...f, threads_count: 0, posts_count: 0 }));
   if (forums.length > 0) {
     const fIds = forums.map(f => f.id);
     const { data: fThreads } = await supabaseAdmin
@@ -180,14 +206,16 @@ export default async function CountryForumPage({ params }: PageProps) {
             forums={forums}
             regionStats={regionStats}
             lastThreadsByRegion={lastThreadsByRegion}
+            autoPromoForum={autoPromoForum}
+            autoPromoStats={autoPromoStats}
           />
 
           <div className="hidden lg:block w-80">
-            <div className="space-y-4">
-              <BannerSlot position="sidebar" zoneType="home_country" countryId={country.id} />
-              <Sidebar countrySlug={params.country} countryName={country.name} />
-              <BannerSlot position="sidebar_bottom" zoneType="home_country" countryId={country.id} />
-            </div>
+            <Sidebar 
+              countrySlug={params.country} 
+              countryName={country.name_es || country.name}
+              countryId={country.id}
+            />
           </div>
         </div>
       </div>

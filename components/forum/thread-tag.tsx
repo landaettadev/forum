@@ -14,23 +14,23 @@ export function ThreadTag({ tag, size = 'sm' }: ThreadTagProps) {
     review: {
       label: t('tagReview'),
       icon: '⭐',
-      bgColor: 'bg-green-100',
-      textColor: 'text-green-800',
-      borderColor: 'border-green-200',
+      bgColor: 'bg-emerald-900/20',
+      textColor: 'text-emerald-400',
+      borderColor: 'border-emerald-700/30',
     },
     ask: {
       label: t('tagAsk'),
       icon: '❓',
-      bgColor: 'bg-blue-100',
-      textColor: 'text-blue-800',
-      borderColor: 'border-blue-200',
+      bgColor: 'bg-slate-700/20',
+      textColor: 'text-slate-300',
+      borderColor: 'border-slate-600/30',
     },
     general: {
       label: t('tagGeneral'),
       icon: '💬',
-      bgColor: 'bg-gray-100',
-      textColor: 'text-gray-800',
-      borderColor: 'border-gray-200',
+      bgColor: 'bg-slate-700/20',
+      textColor: 'text-slate-400',
+      borderColor: 'border-slate-600/30',
     },
   };
 

@@ -10,6 +10,7 @@ import { ThreadContent } from '@/components/forum/thread-content';
 import { PollDisplay } from '@/components/forum/poll-display';
 import { RelatedThreads } from '@/components/forum/related-threads';
 import { Footer } from '@/components/layout/footer';
+import { BannerSlot } from '@/components/ads/banner-slot';
 import { getTranslations } from 'next-intl/server';
 import { generateThreadMetadata } from '@/lib/metadata';
 import { SITE_URL } from '@/lib/metadata';
@@ -147,24 +148,31 @@ export default async function ThreadSlugPage({ params, searchParams }: PageParam
       <div className="max-w-7xl mx-auto px-4 py-6 w-full">
         <Breadcrumbs items={breadcrumbItems} />
 
+        <ThreadHeader
+          threadId={thread.id}
+          title={thread.title}
+          viewsCount={thread.views_count}
+          repliesCount={thread.replies_count}
+          isPinned={thread.is_pinned}
+          isLocked={thread.is_locked}
+          isHot={thread.is_hot}
+          tag={thread.tag}
+          authorUsername={thread.author?.username}
+          createdAt={thread.created_at}
+        />
+
+        {/* Ad banner: below thread header, above first comment */}
+        <div className="my-4 flex justify-center">
+          <BannerSlot
+            position="content"
+            zoneType={country ? 'home_country' : undefined}
+            countryId={country?.id}
+            regionId={region?.id}
+          />
+        </div>
+
         <div className="flex gap-6">
           <main className="flex-1">
-            <ThreadHeader
-              threadId={thread.id}
-              title={thread.title}
-              viewsCount={thread.views_count}
-              repliesCount={thread.replies_count}
-              isPinned={thread.is_pinned}
-              isLocked={thread.is_locked}
-              isHot={thread.is_hot}
-              tag={thread.tag}
-              authorUsername={thread.author?.username}
-              createdAt={thread.created_at}
-              forumName={thread.forum?.name}
-              regionName={region?.name}
-              countryName={country?.name_es || country?.name}
-            />
-
             <PollDisplay threadId={thread.id} />
 
             {posts && posts.length > 0 ? (
@@ -183,6 +191,16 @@ export default async function ThreadSlugPage({ params, searchParams }: PageParam
               </div>
             )}
 
+            {/* Ad banner: between replies and related discussions */}
+            <div className="my-4 flex justify-center">
+              <BannerSlot
+                position="before_related"
+                zoneType={country ? 'home_country' : undefined}
+                countryId={country?.id}
+                regionId={region?.id}
+              />
+            </div>
+
             <RelatedThreads
               threadId={thread.id}
               regionId={region?.id}
@@ -192,7 +210,11 @@ export default async function ThreadSlugPage({ params, searchParams }: PageParam
           </main>
 
           <div className="hidden lg:block">
-            <Sidebar />
+            <Sidebar 
+              countryId={country?.id} 
+              countryName={country?.name_es || country?.name}
+              regionId={region?.id}
+            />
           </div>
         </div>
       </div>

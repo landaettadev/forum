@@ -10,15 +10,24 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { toast } from 'sonner';
 import { ArrowLeft, Mail } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { RecaptchaWidget } from '@/components/recaptcha-widget';
 
 export default function RecuperarContrasenaPage() {
   const t = useTranslations('passwordRecovery');
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Verify CAPTCHA if configured
+    if (process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY && !captchaToken) {
+      toast.error(t('completeCaptcha') || 'Completa el CAPTCHA');
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -47,9 +56,21 @@ export default function RecuperarContrasenaPage() {
     <div className="min-h-screen flex items-center justify-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <div className="mb-4">
-            <Link href="/" className="text-3xl font-bold bg-gradient-to-r from-[hsl(var(--forum-accent))] to-[hsl(var(--forum-accent-hover))] bg-clip-text text-transparent">
-              TS Rating
+          <div className="mb-4 flex justify-center">
+            <Link href="/" className="inline-block">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/logo.png"
+                alt="TS Rating"
+                className="h-36 w-auto"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                  e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                }}
+              />
+              <span className="hidden text-3xl font-bold bg-gradient-to-r from-[hsl(var(--forum-accent))] to-[hsl(var(--forum-accent-hover))] bg-clip-text text-transparent">
+                TS Rating
+              </span>
             </Link>
           </div>
           <CardTitle>{t('title')}</CardTitle>
@@ -73,6 +94,11 @@ export default function RecuperarContrasenaPage() {
                   disabled={loading}
                 />
               </div>
+
+              <RecaptchaWidget
+                onVerify={(token) => setCaptchaToken(token)}
+                className="flex justify-center"
+              />
             </CardContent>
             <CardFooter className="flex flex-col gap-3">
               <Button

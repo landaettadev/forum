@@ -28,7 +28,8 @@ export async function resolveZone(
   if (zoneType === 'city' && regionId) {
     query = query.eq('region_id', regionId);
   } else if (zoneType === 'home_country') {
-    query = query.is('region_id', null);
+    // Use filter instead of is() to avoid 406 error
+    query = query.filter('region_id', 'is', 'null');
   }
 
   const { data } = await query.single();

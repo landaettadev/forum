@@ -216,8 +216,8 @@ export function subscribeToNotifications(
         table: 'notifications',
         filter: `user_id=eq.${userId}`,
       },
-      (payload) => {
-        onNotification(payload.new as Notification);
+      (payload: { new: Record<string, unknown> }) => {
+        onNotification(payload.new as unknown as Notification);
       }
     )
     .subscribe();

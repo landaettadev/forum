@@ -6,17 +6,22 @@ import { ReplyForm } from './reply-form';
 import type { QuoteData } from './quote-button';
 import type { Post, Profile } from '@/lib/supabase';
 import { useTranslations } from 'next-intl';
+import { useAuth } from '@/lib/auth-context';
 
 interface ThreadContentProps {
   posts: (Post & { author: Profile })[];
   threadId: string;
+  threadTitle?: string;
+  threadTag?: string;
   isLocked: boolean;
   currentPage: number;
 }
 
-export function ThreadContent({ posts, threadId, isLocked, currentPage }: ThreadContentProps) {
+export function ThreadContent({ posts, threadId, threadTitle, threadTag, isLocked, currentPage }: ThreadContentProps) {
   const t = useTranslations('forum');
+  const { profile } = useAuth();
   const [quotes, setQuotes] = useState<QuoteData[]>([]);
+  const canModerate = profile?.role === 'admin' || profile?.role === 'mod';
 
   const handleQuote = (quoteData: QuoteData) => {
     // Avoid duplicate quotes
@@ -46,7 +51,10 @@ export function ThreadContent({ posts, threadId, isLocked, currentPage }: Thread
           key={post.id}
           post={post}
           threadId={threadId}
+          threadTitle={threadTitle}
+          threadTag={threadTag}
           isFirstPost={currentPage === 1 && index === 0}
+          canModerate={canModerate}
           onQuote={handleQuote}
         />
       ))}

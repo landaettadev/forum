@@ -231,7 +231,7 @@ export function RichTextEditor({
   return (
     <div className="border border-[hsl(var(--forum-border))] rounded-lg overflow-hidden bg-[hsl(var(--forum-surface))]">
       {/* Toolbar */}
-      <div className="flex flex-wrap items-center gap-1 p-2 border-b border-[hsl(var(--forum-border))] bg-[hsl(var(--forum-surface-alt))]">
+      <div className="flex flex-wrap items-center gap-0.5 sm:gap-1 p-1.5 sm:p-2 border-b border-[hsl(var(--forum-border))] bg-[hsl(var(--forum-surface-alt))]">
         {/* Text Format Dropdown */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -256,7 +256,7 @@ export function RichTextEditor({
           </DropdownMenuContent>
         </DropdownMenu>
 
-        <Separator orientation="vertical" className="h-6 mx-1" />
+        <Separator orientation="vertical" className="h-6 mx-1 hidden sm:block" />
 
         {/* Basic Formatting */}
         <Button
@@ -296,7 +296,7 @@ export function RichTextEditor({
           <Strikethrough className="h-4 w-4" />
         </Button>
 
-        <Separator orientation="vertical" className="h-6 mx-1" />
+        <Separator orientation="vertical" className="h-6 mx-1 hidden sm:block" />
 
         {/* Lists */}
         <Button
@@ -339,7 +339,7 @@ export function RichTextEditor({
           </DropdownMenuContent>
         </DropdownMenu>
 
-        <Separator orientation="vertical" className="h-6 mx-1" />
+        <Separator orientation="vertical" className="h-6 mx-1 hidden sm:block" />
 
         {/* Link */}
         <Popover>
@@ -485,7 +485,7 @@ export function RichTextEditor({
           <TableIcon className="h-4 w-4" />
         </Button>
 
-        <Separator orientation="vertical" className="h-6 mx-1" />
+        <Separator orientation="vertical" className="h-6 mx-1 hidden sm:block" />
 
         {/* Undo/Redo */}
         <Button

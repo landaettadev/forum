@@ -9,7 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { approveVerification, rejectVerification, resolveReport, fetchAdminData } from './actions';
-import { Users, Flag, Shield, BarChart3, CheckCircle, XCircle, Eye, FolderOpen, History, AlertTriangle, Filter, Award, Megaphone } from 'lucide-react';
+import { Users, Flag, Shield, BarChart3, CheckCircle, XCircle, Eye, FolderOpen, History, AlertTriangle, Filter, Award, Megaphone, MessageSquare, Settings } from 'lucide-react';
 import Link from 'next/link';
 import { Footer } from '@/components/layout/footer';
 import { formatDistanceToNow } from 'date-fns';
@@ -177,6 +177,18 @@ export default function AdminPage() {
               </Card>
             </Link>
 
+            <Link href="/admin/messages">
+              <Card className="hover:bg-[hsl(var(--forum-surface-alt))] transition-colors cursor-pointer">
+                <CardHeader className="flex flex-row items-center gap-3">
+                  <MessageSquare className="h-8 w-8 text-indigo-500" />
+                  <div>
+                    <CardTitle className="text-lg">Visor de Mensajes</CardTitle>
+                    <CardDescription>Ver historial de conversaciones y mensajes privados</CardDescription>
+                  </div>
+                </CardHeader>
+              </Card>
+            </Link>
+
             <Link href="/admin/warnings">
               <Card className="hover:bg-[hsl(var(--forum-surface-alt))] transition-colors cursor-pointer">
                 <CardHeader className="flex flex-row items-center gap-3">
@@ -244,6 +256,18 @@ export default function AdminPage() {
                   <div>
                     <CardTitle className="text-lg">Publicidad</CardTitle>
                     <CardDescription>Gestionar banners, solicitudes y anuncios de terceros</CardDescription>
+                  </div>
+                </CardHeader>
+              </Card>
+            </Link>
+
+            <Link href="/admin/settings">
+              <Card className="hover:bg-[hsl(var(--forum-surface-alt))] transition-colors cursor-pointer">
+                <CardHeader className="flex flex-row items-center gap-3">
+                  <Settings className="h-8 w-8 text-[hsl(var(--forum-accent))]" />
+                  <div>
+                    <CardTitle className="text-lg">Configuración</CardTitle>
+                    <CardDescription>Redes sociales y ajustes globales del sitio</CardDescription>
                   </div>
                 </CardHeader>
               </Card>

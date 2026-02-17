@@ -31,9 +31,14 @@ export async function generateMetadata({ params }: { params: { username: string 
 
 type PageProps = {
   params: { username: string };
+  searchParams: { threadsPage?: string; postsPage?: string };
 };
 
-export default async function UserProfilePage({ params }: PageProps) {
+export default async function UserProfilePage({ params, searchParams }: PageProps) {
+  const threadsPage = Math.max(1, parseInt(searchParams.threadsPage || '1', 10));
+  const postsPage = Math.max(1, parseInt(searchParams.postsPage || '1', 10));
+  const pageSize = 10;
+
   const supabase = createServerSupabaseClient();
   const { data: profile } = await supabase
     .from('profiles')
@@ -50,14 +55,14 @@ export default async function UserProfilePage({ params }: PageProps) {
     .select('*, forum:forums(name, slug)', { count: 'exact' })
     .eq('author_id', profile.id)
     .order('created_at', { ascending: false })
-    .limit(10);
+    .range((threadsPage - 1) * pageSize, threadsPage * pageSize - 1);
 
-  const { data: recentPosts } = await supabase
+  const { data: recentPosts, count: postsCount } = await supabase
     .from('posts')
-    .select('*, thread:threads(id, title)')
+    .select('*, thread:threads(id, title)', { count: 'exact' })
     .eq('author_id', profile.id)
     .order('created_at', { ascending: false })
-    .limit(10);
+    .range((postsPage - 1) * pageSize, postsPage * pageSize - 1);
 
   const { count: followersCount } = await supabase
     .from('user_followers')
@@ -88,8 +93,12 @@ export default async function UserProfilePage({ params }: PageProps) {
               threads={threads || []}
               recentPosts={recentPosts || []}
               threadsCount={threadsCount || 0}
+              postsCount={postsCount || 0}
               followersCount={followersCount || 0}
               followingCount={followingCount || 0}
+              threadsPage={threadsPage}
+              postsPage={postsPage}
+              pageSize={pageSize}
             />
           </main>
 

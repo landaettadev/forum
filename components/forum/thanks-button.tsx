@@ -97,8 +97,8 @@ export function ThanksButton({
               sizeClasses[size],
               'transition-all',
               hasThanked 
-                ? 'text-pink-500 hover:text-pink-600 bg-pink-500/10 hover:bg-pink-500/20' 
-                : 'text-muted-foreground hover:text-pink-500 hover:bg-pink-500/10',
+                ? 'text-[hsl(var(--forum-accent))] hover:text-[hsl(var(--forum-accent-hover))] bg-[hsl(var(--forum-accent-muted))] hover:bg-[hsl(var(--forum-accent)/0.2)]' 
+                : 'text-muted-foreground hover:text-[hsl(var(--forum-accent))] hover:bg-[hsl(var(--forum-accent-muted))]',
               isOwnPost && 'opacity-50 cursor-not-allowed'
             )}
           >

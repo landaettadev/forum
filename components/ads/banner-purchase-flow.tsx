@@ -9,6 +9,8 @@ import { createBannerBooking } from '@/app/publicidad/actions';
 import {
   BANNER_FORMATS,
   POSITION_LABELS,
+  POSITION_DESCRIPTIONS,
+  POSITION_VISIBILITY,
   getPrice,
   getPriceTable,
   getMinStartDate,
@@ -31,6 +33,7 @@ import {
   Calendar as CalendarIcon,
   MapPin,
   Monitor,
+  Smartphone,
   DollarSign,
   CheckCircle,
   Loader2,
@@ -119,7 +122,7 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
       if (selectedZoneType === 'city' && selectedRegionId) {
         q = q.eq('region_id', selectedRegionId);
       } else {
-        q = q.is('region_id', null);
+        q = q.filter('region_id', 'is', 'null');
       }
       const { data: zone } = await q.maybeSingle();
       if (!zone) {
@@ -437,52 +440,184 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
             {selectedFormat && (
               <div>
                 <Label className="mb-3 block">{t('pagePosition')}</Label>
-                <div className="grid gap-2">
-                  {BANNER_FORMATS.find(f => f.format === selectedFormat)?.positions.map(pos => (
-                    <button
-                      key={pos}
-                      onClick={() => setSelectedPosition(pos)}
-                      className={cn(
-                        'p-3 rounded-lg border text-left transition-all',
-                        selectedPosition === pos
-                          ? 'border-[hsl(var(--forum-accent))] bg-[hsl(var(--forum-accent))]/5'
-                          : 'border-[hsl(var(--forum-border))] hover:border-[hsl(var(--forum-accent))]/50'
-                      )}
-                    >
-                      <div className="font-medium text-sm">{POSITION_LABELS[pos]}</div>
-                    </button>
-                  ))}
+                <div className="grid gap-3">
+                  {BANNER_FORMATS.find(f => f.format === selectedFormat)?.positions.map(pos => {
+                    const vis = POSITION_VISIBILITY[pos];
+                    return (
+                      <button
+                        key={pos}
+                        onClick={() => setSelectedPosition(pos)}
+                        className={cn(
+                          'p-4 rounded-lg border text-left transition-all',
+                          selectedPosition === pos
+                            ? 'border-[hsl(var(--forum-accent))] bg-[hsl(var(--forum-accent))]/5 shadow-md'
+                            : 'border-[hsl(var(--forum-border))] hover:border-[hsl(var(--forum-accent))]/50'
+                        )}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="font-semibold text-sm">{POSITION_LABELS[pos]}</div>
+                          <div className="flex items-center gap-1.5">
+                            <span className={cn('inline-flex items-center gap-1 text-[10px] px-1.5 py-0.5 rounded-full font-medium',
+                              vis.pc ? 'bg-green-500/15 text-green-600' : 'bg-red-500/15 text-red-500'
+                            )}>
+                              <Monitor className="h-3 w-3" /> PC
+                            </span>
+                            <span className={cn('inline-flex items-center gap-1 text-[10px] px-1.5 py-0.5 rounded-full font-medium',
+                              vis.mobile ? 'bg-green-500/15 text-green-600' : 'bg-red-500/15 text-red-500'
+                            )}>
+                              <Smartphone className="h-3 w-3" /> Móvil
+                            </span>
+                          </div>
+                        </div>
+                        <div className="text-xs forum-text-muted mt-1">{POSITION_DESCRIPTIONS[pos]}</div>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
             )}
 
-            {/* Visual site mockup */}
-            {selectedPosition && (
-              <div className="mt-4 p-4 bg-[hsl(var(--forum-surface-alt))] rounded-lg">
-                <Label className="mb-2 block text-xs">{t('siteLocation')}</Label>
-                <div className="border border-[hsl(var(--forum-border))] rounded-lg overflow-hidden bg-background text-[10px]">
-                  <div className={cn('p-2 text-center border-b border-[hsl(var(--forum-border))]', selectedPosition === 'header' ? 'bg-[hsl(var(--forum-accent))]/20 font-bold text-[hsl(var(--forum-accent))]' : 'forum-text-muted')}>
-                    HEADER (728×90) {selectedPosition === 'header' && `← ${t('yourBanner')}`}
-                  </div>
-                  <div className="flex">
-                    <div className={cn('flex-1 p-4 min-h-[80px] border-r border-[hsl(var(--forum-border))]', selectedPosition === 'content' ? 'bg-[hsl(var(--forum-accent))]/20 font-bold text-[hsl(var(--forum-accent))]' : 'forum-text-muted')}>
-                      {t('contentArea')} {selectedPosition === 'content' && `← ${t('yourBanner')}`}
-                    </div>
-                    <div className="w-24 p-2 space-y-2">
-                      <div className={cn('p-1 text-center rounded', selectedPosition === 'sidebar_top' ? 'bg-[hsl(var(--forum-accent))]/20 font-bold text-[hsl(var(--forum-accent))]' : 'bg-[hsl(var(--forum-surface-alt))] forum-text-muted')}>
-                        SIDEBAR TOP {selectedPosition === 'sidebar_top' && '↑'}
-                      </div>
-                      <div className={cn('p-1 text-center rounded', selectedPosition === 'sidebar_bottom' ? 'bg-[hsl(var(--forum-accent))]/20 font-bold text-[hsl(var(--forum-accent))]' : 'bg-[hsl(var(--forum-surface-alt))] forum-text-muted')}>
-                        SIDEBAR BTM {selectedPosition === 'sidebar_bottom' && '↑'}
-                      </div>
-                    </div>
-                  </div>
-                  <div className={cn('p-2 text-center border-t border-[hsl(var(--forum-border))]', selectedPosition === 'footer' ? 'bg-[hsl(var(--forum-accent))]/20 font-bold text-[hsl(var(--forum-accent))]' : 'forum-text-muted')}>
-                    FOOTER (728×90) {selectedPosition === 'footer' && `← ${t('yourBanner')}`}
+            {/* Visual site mockup — numbered positions */}
+            <div className="mt-4 p-4 bg-[hsl(var(--forum-surface-alt))] rounded-lg">
+              <Label className="mb-2 block text-xs font-semibold uppercase tracking-wide">{t('siteLocation')}</Label>
+              <div className="border border-[hsl(var(--forum-border))] rounded-lg overflow-hidden bg-background text-[11px] shadow-sm">
+                {/* Nav bar mock */}
+                <div className="px-3 py-1.5 bg-[hsl(var(--forum-surface))] border-b border-[hsl(var(--forum-border))] flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-[hsl(var(--forum-accent))]/40" />
+                  <span className="font-bold text-[10px] forum-text-muted">TS Rating</span>
+                  <div className="flex-1" />
+                  <div className="flex gap-1">
+                    <div className="w-8 h-1.5 rounded bg-[hsl(var(--forum-border))]" />
+                    <div className="w-8 h-1.5 rounded bg-[hsl(var(--forum-border))]" />
+                    <div className="w-8 h-1.5 rounded bg-[hsl(var(--forum-border))]" />
                   </div>
                 </div>
+
+                {/* ① Header banner */}
+                <div className={cn(
+                  'px-3 py-2.5 text-center border-b border-[hsl(var(--forum-border))] transition-colors',
+                  selectedPosition === 'header'
+                    ? 'bg-[hsl(var(--forum-accent))]/20 ring-2 ring-inset ring-[hsl(var(--forum-accent))]/40'
+                    : 'bg-[hsl(var(--forum-surface-alt))]'
+                )}>
+                  <span className={cn('font-bold', selectedPosition === 'header' ? 'text-[hsl(var(--forum-accent))]' : 'forum-text-muted')}>
+                    ① HEADER (728×90)
+                  </span>
+                  {selectedPosition === 'header' && <span className="ml-1 text-[hsl(var(--forum-accent))]"> ← Tu banner aquí</span>}
+                </div>
+
+                {/* Main body */}
+                <div className="flex">
+                  {/* Left: content area */}
+                  <div className="flex-1 border-r border-[hsl(var(--forum-border))] p-2 space-y-1.5">
+                    {/* Thread title mock */}
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-16 h-1.5 rounded bg-[hsl(var(--forum-border))]" />
+                      <div className="w-24 h-1.5 rounded bg-[hsl(var(--forum-border))]" />
+                    </div>
+
+                    {/* ② Content banner */}
+                    <div className={cn(
+                      'py-2.5 px-2 text-center rounded transition-colors',
+                      selectedPosition === 'content'
+                        ? 'bg-[hsl(var(--forum-accent))]/20 ring-2 ring-[hsl(var(--forum-accent))]/40'
+                        : 'bg-[hsl(var(--forum-surface-alt))]'
+                    )}>
+                      <span className={cn('font-bold', selectedPosition === 'content' ? 'text-[hsl(var(--forum-accent))]' : 'forum-text-muted')}>
+                        ② CONTENIDO (728×90)
+                      </span>
+                      {selectedPosition === 'content' && <span className="ml-1 text-[hsl(var(--forum-accent))]"> ← Tu banner</span>}
+                    </div>
+
+                    {/* Posts mock */}
+                    <div className="space-y-1">
+                      <div className="h-4 rounded bg-[hsl(var(--forum-border))]/30" />
+                      <div className="h-4 rounded bg-[hsl(var(--forum-border))]/30" />
+                      <div className="h-4 rounded bg-[hsl(var(--forum-border))]/20 w-3/4" />
+                    </div>
+                  </div>
+
+                  {/* Right: sidebar */}
+                  <div className="w-28 p-2 space-y-2">
+                    {/* ③ Sidebar top */}
+                    <div className={cn(
+                      'py-3 px-1 text-center rounded transition-colors',
+                      selectedPosition === 'sidebar_top'
+                        ? 'bg-[hsl(var(--forum-accent))]/20 ring-2 ring-[hsl(var(--forum-accent))]/40'
+                        : 'bg-[hsl(var(--forum-surface-alt))]'
+                    )}>
+                      <span className={cn('font-bold', selectedPosition === 'sidebar_top' ? 'text-[hsl(var(--forum-accent))]' : 'forum-text-muted')}>
+                        ③ SIDEBAR
+                      </span>
+                      <div className="text-[9px] forum-text-muted">300×250</div>
+                      {selectedPosition === 'sidebar_top' && <div className="text-[hsl(var(--forum-accent))] text-[9px] mt-0.5">↑ Tu banner</div>}
+                    </div>
+
+                    {/* Sidebar content mock */}
+                    <div className="h-3 rounded bg-[hsl(var(--forum-border))]/20" />
+                    <div className="h-3 rounded bg-[hsl(var(--forum-border))]/20 w-2/3" />
+
+                    {/* ④ Sidebar bottom */}
+                    <div className={cn(
+                      'py-3 px-1 text-center rounded transition-colors',
+                      selectedPosition === 'sidebar_bottom'
+                        ? 'bg-[hsl(var(--forum-accent))]/20 ring-2 ring-[hsl(var(--forum-accent))]/40'
+                        : 'bg-[hsl(var(--forum-surface-alt))]'
+                    )}>
+                      <span className={cn('font-bold', selectedPosition === 'sidebar_bottom' ? 'text-[hsl(var(--forum-accent))]' : 'forum-text-muted')}>
+                        ④ SIDEBAR
+                      </span>
+                      <div className="text-[9px] forum-text-muted">300×250</div>
+                      {selectedPosition === 'sidebar_bottom' && <div className="text-[hsl(var(--forum-accent))] text-[9px] mt-0.5">↑ Tu banner</div>}
+                    </div>
+                  </div>
+                </div>
+
+                {/* ⑤ Pre-Related banner */}
+                <div className={cn(
+                  'px-3 py-2.5 text-center border-t border-[hsl(var(--forum-border))] transition-colors',
+                  selectedPosition === 'before_related'
+                    ? 'bg-[hsl(var(--forum-accent))]/20 ring-2 ring-inset ring-[hsl(var(--forum-accent))]/40'
+                    : 'bg-[hsl(var(--forum-surface-alt))]'
+                )}>
+                  <span className={cn('font-bold', selectedPosition === 'before_related' ? 'text-[hsl(var(--forum-accent))]' : 'forum-text-muted')}>
+                    ⑤ PRE-RELATED (728×90)
+                  </span>
+                  {selectedPosition === 'before_related' && <span className="ml-1 text-[hsl(var(--forum-accent))]"> ← Tu banner aquí</span>}
+                </div>
+
+                {/* ⑥ Footer banner */}
+                <div className={cn(
+                  'px-3 py-2.5 text-center border-t border-[hsl(var(--forum-border))] transition-colors',
+                  selectedPosition === 'footer'
+                    ? 'bg-[hsl(var(--forum-accent))]/20 ring-2 ring-inset ring-[hsl(var(--forum-accent))]/40'
+                    : 'bg-[hsl(var(--forum-surface-alt))]'
+                )}>
+                  <span className={cn('font-bold', selectedPosition === 'footer' ? 'text-[hsl(var(--forum-accent))]' : 'forum-text-muted')}>
+                    ⑥ FOOTER (728×90)
+                  </span>
+                  {selectedPosition === 'footer' && <span className="ml-1 text-[hsl(var(--forum-accent))]"> ← Tu banner aquí</span>}
+                </div>
               </div>
-            )}
+
+              {/* Visibility legend */}
+              {selectedPosition && (
+                <div className="mt-3 flex items-center gap-4 text-[11px]">
+                  <div className="flex items-center gap-1.5">
+                    {POSITION_VISIBILITY[selectedPosition].pc
+                      ? <><Monitor className="h-3.5 w-3.5 text-green-600" /> <span className="text-green-600 font-medium">Visible en PC</span></>
+                      : <><Monitor className="h-3.5 w-3.5 text-red-500" /> <span className="text-red-500">No visible en PC</span></>
+                    }
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    {POSITION_VISIBILITY[selectedPosition].mobile
+                      ? <><Smartphone className="h-3.5 w-3.5 text-green-600" /> <span className="text-green-600 font-medium">Visible en móvil</span></>
+                      : <><Smartphone className="h-3.5 w-3.5 text-red-500" /> <span className="text-red-500">No visible en móvil</span></>
+                    }
+                  </div>
+                </div>
+              )}
+            </div>
           </CardContent>
         </Card>
       )}
@@ -672,6 +807,20 @@ export function BannerPurchaseFlow({ countries, regions }: BannerPurchaseFlowPro
               <div>
                 <span className="forum-text-muted">{t('position')}:</span>
                 <div className="font-medium">{selectedPosition && POSITION_LABELS[selectedPosition]}</div>
+                {selectedPosition && (
+                  <div className="flex items-center gap-2 mt-1">
+                    <span className={cn('inline-flex items-center gap-1 text-[10px] px-1.5 py-0.5 rounded-full font-medium',
+                      POSITION_VISIBILITY[selectedPosition].pc ? 'bg-green-500/15 text-green-600' : 'bg-red-500/15 text-red-500'
+                    )}>
+                      <Monitor className="h-3 w-3" /> PC
+                    </span>
+                    <span className={cn('inline-flex items-center gap-1 text-[10px] px-1.5 py-0.5 rounded-full font-medium',
+                      POSITION_VISIBILITY[selectedPosition].mobile ? 'bg-green-500/15 text-green-600' : 'bg-red-500/15 text-red-500'
+                    )}>
+                      <Smartphone className="h-3 w-3" /> Móvil
+                    </span>
+                  </div>
+                )}
               </div>
               <div>
                 <span className="forum-text-muted">{t('dates')}:</span>

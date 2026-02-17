@@ -253,6 +253,7 @@
   "common": {
     "home": "首页",
     "search": "搜索",
+    "searchIn": "在{location}搜索",
     "login": "登录",
     "register": "注册",
     "logout": "退出",
@@ -355,6 +356,80 @@
     "verification": "验证",
     "verificationDesc": "验证账户以访问私密区域",
     "requestVerification": "申请验证",
+    "settingsSaved": "设置已保存",
+    "settingsError": "保存设置时出错",
+    "notifInApp": "应用内通知",
+    "notifReplies": "我的帖子回复",
+    "notifRepliesDesc": "当有人回复你的帖子或主题时收到通知",
+    "notifMentions": "提及",
+    "notifMentionsDesc": "当有人用 @用户名 提及你时收到通知",
+    "notifMessages": "私信",
+    "notifMessagesDesc": "收到私信时收到通知",
+    "notifFollows": "新关注者",
+    "notifFollowsDesc": "当有人开始关注你时收到通知",
+    "notifEmail": "邮件通知",
+    "notifEmailReplies": "回复时发邮件",
+    "notifEmailRepliesDesc": "当有人回复你的主题时收到邮件",
+    "notifEmailMessages": "消息时发邮件",
+    "notifEmailMessagesDesc": "收到私信时收到邮件",
+    "privShowOnline": "显示在线状态",
+    "privShowOnlineDesc": "允许其他用户看到你是否在线",
+    "privShowActivity": "显示最近活动",
+    "privShowActivityDesc": "允许其他人看到你的论坛活动",
+    "privShowProfile": "公开个人资料",
+    "privShowProfileDesc": "允许未注册用户查看你的个人资料",
+    "privAllowMessages": "谁可以给你发消息？",
+    "privAllowMessagesDesc": "控制谁可以给你发私信",
+    "privMsgEveryone": "所有用户",
+    "privMsgVerified": "仅已验证用户",
+    "privMsgNobody": "没有人",
+    "verAlreadyVerified": "账户已验证",
+    "verAlreadyVerifiedDesc": "你的账户已经验证。你可以访问论坛的所有区域。",
+    "verPending": "申请审核中",
+    "verPendingDesc": "你的申请正在由管理团队审核。处理完毕后会通知你。",
+    "verCodeLabel": "验证码",
+    "verEstimatedTime": "预计审核时间：24-48小时",
+    "verRejected": "申请被拒绝",
+    "verRejectedDefault": "你的申请已被拒绝。修正所指出的问题后可以重新提交。",
+    "verCopied": "验证码已复制到剪贴板",
+    "verSent": "申请已提交",
+    "verSentDesc": "管理团队将在24-48小时内审核",
+    "verError": "提交申请时出错",
+    "verSelectType": "验证类型",
+    "verTypeEscort": "陪护验证",
+    "verTypeEscortDesc": "通过验证照片证明你是真实的陪护",
+    "verTypeMod": "版主申请",
+    "verTypeModDesc": "申请成为社区版主",
+    "verEscortTitle": "陪护身份验证",
+    "verEscortInstructions": "要验证你的账户，你需要发送一张手持纸张的照片，纸上写有你的唯一代码、用户名和今天的日期。",
+    "verStep1": "第1步：生成你的代码",
+    "verStep1Desc": "生成一个唯一代码，你需要将它与用户名（@{username}）和今天的日期一起写在纸上。",
+    "verGenerateCode": "生成代码",
+    "verStep2": "第2步：拍照",
+    "verStep2Desc": "拍一张清晰的照片，手持写有以下内容的纸张：",
+    "verStep2Item1": "你的代码：{code}",
+    "verStep2Item2": "你的用户名：@{username}",
+    "verStep2Item3": "今天的日期：{date}",
+    "verStep3": "第3步：上传照片",
+    "verStep3Desc": "将照片上传到 Imgur、ImgBB 等服务，然后将URL粘贴到这里：",
+    "verContactInfo": "联系方式（可选）",
+    "verContactInfoPlaceholder": "Telegram、WhatsApp、邮箱...",
+    "verModTitle": "版主申请",
+    "verModInstructions": "填写此表格申请成为版主。我们正在寻找负责任且活跃的人来维护论坛质量。",
+    "verFullName": "全名",
+    "verFullNamePlaceholder": "你的全名",
+    "verMotivation": "你为什么想成为版主？",
+    "verMotivationPlaceholder": "说明你想成为论坛版主的动机...",
+    "verExperience": "以往经验",
+    "verExperiencePlaceholder": "你是否管理过其他论坛或社区？讲述你的经验...",
+    "verLanguages": "你会说的语言",
+    "verLanguagesPlaceholder": "中文、英语、西班牙语...",
+    "verLanguagesHint": "用逗号分隔语言",
+    "verAvailability": "可用时间",
+    "verAvailabilityPlaceholder": "例如：周一至周五，18:00 - 22:00",
+    "verContactModPlaceholder": "联系用的邮箱或Telegram",
+    "verSubmitting": "正在提交申请...",
+    "verSubmitRequest": "提交验证申请",
     "avatarUpload": "上传头像",
     "avatarOrUrl": "或粘贴URL",
     "avatarDragDrop": "拖放图片或点击选择",
@@ -404,7 +479,8 @@
     "registerHere": "在此注册",
     "loginHere": "在此登录",
     "completeCaptcha": "请完成安全验证",
-    "captchaFailed": "安全验证失败。请重试"
+    "captchaFailed": "安全验证失败。请重试",
+    "usernameExists": "此用户名已被使用"
   },
   "forum": {
     "title": "论坛",
@@ -537,7 +613,9 @@
     "visitsCount": "浏览",
     "responsesCount": "回复",
     "unknownUser": "用户",
-    "selectTagPlaceholder": "选择标签"
+    "selectTagPlaceholder": "选择标签",
+    "autopromotion": "自我推广",
+    "autopromoDesc": "{country}认证伴游的自我推广区。仅认证伴游可以创建主题。"
   },
   "thread": {
     "createTitle": "创建新主题",
@@ -843,21 +921,29 @@
     "noReputationData": "没有声誉数据",
     "moderators": "版主",
     "noModerators": "未分配版主",
+    "administrators": "管理员",
+    "superAdministrator": "超级管理员",
+    "generalModerator": "普通版主",
     "advertising": "广告",
     "adminRole": "管理员",
     "modRole": "版主",
-    "guests": "访客"
+    "guests": "访客",
+    "guest": "访客",
+    "connected": "已连接"
   },
   "banners": {
     "adSpace": "广告位",
-    "advertiseHere": "在此做广告"
+    "advertiseHere": "在此做广告",
+    "posBeforeRelated": "相关前 — 在回复和相关讨论之间",
+    "posBeforeRelatedDesc": "在帖子中回复和相关讨论之间可见。高参与度。"
   },
   "footer": {
     "description": "分享经验并建立联系的专业社区。",
     "viewAllForums": "查看所有论坛",
     "gallery": "多媒体画廊",
     "legal": "法律信息",
-    "rights": "版权所有。"
+    "rights": "版权所有。",
+    "developedBy": "论坛开发者"
   },
   "time": {
     "ago": "前"
@@ -1387,14 +1473,30 @@
     "roleSuperMod": "超级版主",
     "roleVip": "VIP",
     "roleVerified": "已验证",
-    "roleUser": "用户"
+    "roleUser": "用户",
+    "roleEscort": "陪护"
   },
   "post": {
     "posts": "帖子",
     "registered": "注册",
     "edited": "已编辑",
     "report": "举报",
-    "edit": "编辑"
+    "edit": "编辑",
+    "save": "保存",
+    "saving": "保存中...",
+    "cancel": "取消",
+    "editSuccess": "帖子编辑成功",
+    "editError": "编辑帖子时出错",
+    "advancedEdit": "高级编辑",
+    "advEditSuccess": "主题编辑成功",
+    "advEditError": "编辑主题时出错",
+    "delete": "删除",
+    "deleting": "删除中...",
+    "confirmDeletePost": "确定要删除此帖子吗？",
+    "confirmDeleteThread": "确定要删除此主题吗？",
+    "postDeleted": "帖子已删除",
+    "threadDeleted": "主题已删除",
+    "deleteError": "删除时出错"
   },
   "user": {
     "mustLoginToFollow": "登录以关注用户",
@@ -1640,7 +1742,11 @@
     "a10": "VIP地位授予杰出的社区成员。联系管理团队了解更多信息。",
     "notFound": "没有找到您要找的内容？",
     "notFoundDesc": "联系我们，我们将帮助您",
-    "contactBtn": "联系"
+    "contactBtn": "联系",
+    "q11": "如何创建自我推广帖子？",
+    "a11": "要创建自我推广帖子，您必须作为陪护通过认证。首先，<a href='/verificacion'>将您的账号认证为陪护</a>。认证后，进入您提供服务的国家，点击国家页面顶部的<strong>自我推广</strong>部分，选择相应城市创建帖子。只有认证陪护、管理员和版主可以创建帖子。普通用户可以评论但不能创建。",
+    "q12": "如何认证为陪护？",
+    "a12": "前往<a href='/verificacion'>认证</a>页面，选择<strong>陪护认证</strong>。您需要生成唯一代码，将其与用户名和今天的日期一起写在纸上，拿着它拍照并上传图片。审核团队将在24-48小时内审查您的请求。批准后，您将获得认证陪护徽章，并可在<a href='https://tsrating.com'>tsrating.com</a>上创建自我推广帖子。"
   },
   "cookiesPage": {
     "breadcrumb": "Cookie政策",
@@ -2248,7 +2354,8 @@
     "loginRequired": "您必须登录",
     "titleTooShort": "标题至少需要5个字符",
     "contentTooShort": "内容至少需要10个字符",
-    "errorUpdatingPost": "更新帖子出错"
+    "errorUpdatingPost": "更新帖子出错",
+    "escortOnlyForum": "只有认证陪护、管理员和版主可以在此自我推广论坛创建帖子。"
   },
   "publicidad": {
     "title": "购买广告",
@@ -2459,5 +2566,13 @@
     "daysLeft": "剩余{days}天",
     "noPreview": "无图片",
     "createdAt": "购买日期"
+  },
+  "metadata": {
+    "siteDescription": "#1 跨性别伴游评论论坛。认证评论、意见、真实照片 2026年。",
+    "regionMetaTitle": "跨性别伴游 {region} — 评论和意见",
+    "regionMetaDesc": "{country} {region}跨性别伴游论坛。TS Rating上的评论、意见、认证照片和真实体验。",
+    "regionPageDesc": "{country} {region}跨性别伴游论坛。认证评论、测试者意见、{year}年更新的真实体验。TS Rating社区。",
+    "countryPageDesc": "{country}跨性别伴游论坛。认证评论、测试者意见、{year}年更新的真实体验。TS Rating社区。",
+    "siteTitle": "TS Rating — 跨性别伴游评论与评价"
   }
 }
